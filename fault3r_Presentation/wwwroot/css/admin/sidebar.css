@@ -1,0 +1,76 @@
+﻿/*  
+    Black: #101010
+    Gray:  #282828
+    White: #D5D5D5
+           #D2D5EF  *Custom
+    Blues:  *Dark to Light
+           #0C0032
+           #190061
+           #240090
+           #3500D3
+           #4D58D5  *Custom
+*/
+
+.sidebar-container {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: nowrap;
+    gap: 1px;
+}
+    .sidebar-container .title {
+        font-family: 'B Elham','Comic Sans MS';
+        font-size: 20px;
+        font-weight: bold;
+        text-align: center;
+        text-shadow: -1px -1px 2px #3500D3;
+        white-space: nowrap;
+        color: #4D58D5;
+        background-image: radial-gradient(circle at left, #240090, #190061, #0C0032, #3500D3);
+        border-radius: 10px;
+        border: 2px solid #3500D3;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 5px;
+        margin-bottom: 3px;
+    }
+        .sidebar-container .title i {
+            font-size: 24px;
+        }
+    .sidebar-container .sidebar-item {
+        display: flex;
+        flex-direction: column;
+        flex-wrap: nowrap;
+        gap: 1px;
+        padding: 1px 5px 1px 5px;
+    }
+        .sidebar-container .sidebar-item .sidebar-subs {
+            display: flex;
+            flex-direction: column;
+            flex-wrap: nowrap;
+            gap: 1px;
+            margin-right: 20px;
+            opacity: 0.4;
+            transition: all 0.5s ease;
+        }
+        .sidebar-container .sidebar-item a {
+            text-decoration: none;
+            font-size: 16px;
+            font-weight: bold;
+            white-space: nowrap;
+            color: #D2D5EF;
+            border: none;
+            border-bottom: 2px solid #4D58D5;
+            width: 0;
+            display: flex;
+            align-items:center;
+            gap: 5px;
+            transition: all 0.3s ease;
+        }
+            .sidebar-container .sidebar-item a:hover {
+                width: 100%;
+                color: #4D58D5;
+            }   
+        .sidebar-container .sidebar-item:hover .sidebar-subs {
+            opacity: 1;
+        }

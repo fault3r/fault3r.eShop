@@ -1,0 +1,64 @@
+﻿
+@using fault3r_Presentation.Areas.AdminPanel.Models.ViewModels.Forums
+@model List<ForumViewModel>
+
+@{
+    ViewData["Title"] = "مدیریت انجمن ها";
+    Layout = "~/Areas/AdminPanel/Views/Shared/_Layout.cshtml";
+}
+
+@section Styles{
+    <link rel="stylesheet" href="~/css/admin/main.css" />
+}
+
+
+<div class="main-container">
+     <span class="title"><i class="fa fa-weixin"></i>مدیریت انجمن ها</span>     
+     <div class="main">
+         <table>
+             <tr>
+                 <th>تصویر</th>
+                 <th>عنوان</th>
+                 <th>شرح</th>
+                 <th>امکانات</th>
+             </tr>
+            @{
+                foreach(var forum in Model)
+                {
+                    <tr class="parent">
+                        <td><img src="data:image/*;base64,@forum.Image"></td>
+                        <td><b>@forum.Title</b></td>
+                        <td><b>@forum.Description</b></td>                       
+                        <td class="options">
+                            <div class="menu-container">
+                                <button>امکانات</button>
+                                <div class=menu-content>
+                                    <a href="/AdminPanel/Forums/Add?id=@forum.Id">افزودن زیر انجمن</a>
+                                    <a href="/AdminPanel/Forums/Edit?id=@forum.Id">ویرایش انجمن</a>
+                                    <a href="/AdminPanel/Forums/Delete?id=@forum.Id">حذف انجمن</a>
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                    foreach(var sub in forum.SubForums)
+                    {
+                        <tr>
+                            <td><img src="data:image/*;base64,@sub.Image"></td>
+                            <td>@sub.Title</td>
+                            <td>@sub.Description</td>                       
+                            <td class="options">
+                                <div class="menu-container">
+                                    <button>امکانات</button>
+                                    <div class=menu-content>
+                                        <a href="/AdminPanel/Forums/Edit?id=@sub.Id">ویرایش زیر انجمن</a>
+                                        <a href="/AdminPanel/Forums/Delete?id=@sub.Id">حذف زیر انجمن</a>
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+                    }
+                }
+            }
+         </table>
+     </div>
+</div>

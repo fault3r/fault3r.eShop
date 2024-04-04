@@ -1,0 +1,32 @@
+﻿
+@using fault3r_Presentation.Areas.AdminPanel.Models.ViewModels.Forums
+@model List<ForumViewModel>
+
+@{
+    ViewData["Title"] = "انجمن ها";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@section Styles{
+    <link rel="stylesheet" href="~/css/site/main.css" />
+}
+
+<div class="forum-container">
+    <div class="forum-item">
+        <div class="image" style="background-image: url('data:image/*;base64,address')">Image</div>
+        <div class="title">
+            <span>Title</span>
+            <span>Description</span>
+        </div>
+    </div>
+    <div class="sub-item">
+        <div class="image" style="background-image: url('data:image/*;base64,address')">SubImage</div>
+        <div class="title">
+            <span>Title</span>
+            <span>Description</span>
+        </div>            
+        <div class="topics">T</div>
+        <div class="posts">P</div>
+        <div class="lastupdate">LastUpdate</div>
+    </div>
+</div>

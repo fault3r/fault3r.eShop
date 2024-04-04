@@ -1,0 +1,55 @@
+﻿
+@using fault3r_Presentation.Areas.AdminPanel.Models.ViewModels.Forums
+@model EditForumViewModel
+
+
+@{
+    ViewData["Title"] = "ویرایش انجمن";
+    Layout = "~/Areas/AdminPanel/Views/Shared/_Layout.cshtml";
+}
+
+@section Styles{
+    <link rel="stylesheet" href="~/css/admin/main.css" />
+}
+
+
+<div class="form-container">
+     <span class="title"><i class="fa fa-code"></i>ویرایش انجمن</span>     
+     <div class="main">
+        <table>
+            <form asp-area="AdminPanel" asp-controller="Forums" asp-action="Edit" method="post" enctype="multipart/form-data">
+                <input asp-for="Id" type="hidden" />
+                <tr>
+                    <td>عنوان:</td>
+                    <td><input asp-for="Title" /></td>
+                </tr>
+                <tr>
+                    <td>شرح:</td>
+                    <td><input asp-for="Description" /></td>
+                </tr>
+                <tr>
+                    <td>تصویر:</td>
+                    <td class="choose">
+                        <input asp-for="Image" type="file" accept=".jpg,.png" />        
+                        <span><i class="fa fa-lightbulb-o"></i> برای تغییر ندادن تصویر انجمن فایلی انتخاب نکنید.</span>                        
+                    </td>
+                </tr>
+                <tr>
+                    <td>انجمن:</td>
+                    <td>
+                        <select asp-for="ParentId" asp-items="@ViewBag.ParentsList">
+                            <option value="null">[هیچکدام]</option>
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td><button type="submit"><i class="fa fa-code"></i>ویرایش</button></td>
+                </tr>
+                <tr>
+                    <td class="validation" colspan="2"><div asp-validation-summary="All"></div></td>
+                </tr>            
+            </form>
+        </table>
+    </div>
+</div>

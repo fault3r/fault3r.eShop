@@ -1,0 +1,52 @@
+﻿
+@using fault3r_Presentation.Models.ViewModels.Accounts
+@model SignUpViewModel
+
+@{
+    ViewData["Title"] = "ثبت نام کاربر";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@section Styles {
+    <link rel="stylesheet" href="~/css/accounts.css" />
+}
+
+<div class="accounts">
+    <div class="accounts-content">
+        <div class="content">
+            <i class="fa fa-user-circle"></i>
+            <span class="title">ایجاد حساب کاربری</span>
+            <span>با وارد کردن اطلاعات زیر حساب کاربری خود را ایجاد کنید.</span>
+            <form asp-controller="Accounts" asp-action="SignUp" method="post">
+                <span>ایمیل:</span>              
+                <input asp-for="Email" autocomplete="off" />                                
+                <i class="fa fa-envelope-o"></i><br />  
+                <span>کلمه عبور:</span>
+                <input asp-for="Password" type="password" />
+                <i class="fa fa-key"></i><br />  
+                <span>تکرار کلمه عبور:</span>
+                <input asp-for="RePassword" type="password" />
+                <span>نام:</span>
+                <input asp-for="Name" autocomplete="off" />     
+                <i class="fa fa-user-o"></i><br />  
+                <div class="terms">
+                    <input asp-for="Terms" id="Terms" />
+                    <label for="Terms">با قوانین وبسایت موافقم.</label>                   
+                </div>
+                <button>ثبت نام</button>
+                <div class="validation" asp-validation-summary="All"></div>
+            </form>
+            <div>
+                <span>قبلا ثبت نام کرده اید؟</span>
+                <a href="/Accounts/SignIn">ورود</a>
+            </div>
+        </div>
+    </div>  
+    <div class="accounts-side">
+        <div class="side">
+            <span class="title">خوش آمدید.</span>
+            <span class="description">برای برقراری ارتباط با دیگر اعضای انجمن حساب کاربری خود را ایجاد کنید.</span>
+        </div>
+    </div>
+</div>
+

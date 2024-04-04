@@ -1,0 +1,15 @@
+﻿
+@{
+    Layout = "~/Views/Shared/_BaseLayout.cshtml";
+}
+
+@section Styles{
+    @RenderSection("Styles",required:false)
+    <link rel="stylesheet" href="~/css/site/sidebar.css" />
+}
+
+@section Sidebar{
+    <span>این منو کناری سایت است.</span>
+}
+
+@RenderBody()

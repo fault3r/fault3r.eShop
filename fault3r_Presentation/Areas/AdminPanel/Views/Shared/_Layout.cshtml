@@ -1,0 +1,30 @@
+﻿
+@{    
+    Layout = "~/Views/Shared/_BaseLayout.cshtml";
+}
+
+@section Styles{    
+    @RenderSection("Styles",required:false)
+    <link rel="stylesheet" href="~/css/admin/sidebar.css" />
+}
+
+@section Sidebar{
+    <div class="sidebar-container">        
+        <span class="title"><i class="fa fa-circle-o"></i>پنل مدیریت</span>
+        <div class="sidebar-item">             
+             <a href="/AdminPanel/Forums/Index"><i class="fa fa-weixin"></i>انجمن ها</a>   
+             <div class="sidebar-subs">
+                 <a href="/AdminPanel/Forums/Add">افزودن انجمن</a>
+             </div>
+        </div>  
+        <div class="sidebar-item">             
+             <a href="/AdminPanel/Users/Index"><i class="fa fa-user-circle"></i>کاربران</a>    
+             <div class="sidebar-subs">
+                 <a href="#">رتبه ها</a>
+             </div>
+        </div>    
+
+    </div>
+}
+
+@RenderBody()

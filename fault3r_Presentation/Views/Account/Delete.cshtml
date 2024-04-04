@@ -1,0 +1,34 @@
+﻿
+@using fault3r_Presentation.Models.ViewModels.Account
+@model DeleteAccountViewModel
+
+@{
+    ViewData["Title"] = "حذف حساب کاربری";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@section Styles{
+    <link rel="stylesheet" href="~/css/account.css" />
+}
+
+<div class="form-container">
+    <span class="title"><i class="fa fa-user-circle"></i>ویرایش حساب کاربری</span>
+    <table>
+        <form asp-controller="Account" asp-action="Delete" method="post">
+            <tr>                                    
+                <td class="right">   
+                    <div class="del-confirm">
+                        <input asp-for="DeleteConfirm" id="DeleteConfirm" />
+                        <label for="DeleteConfirm">با حذف این حساب کاربری موافقم.</label>                              
+                    </div>
+                </td>
+            </tr>            
+            <tr>                 
+                <td><button><i class="fa fa-trash"></i>حذف حساب کاربری</button></td>
+            </tr>   
+            <tr>                   
+                <td class="right"><div asp-validation-summary="All" class="validation"></div></td>
+            </tr>
+        </form>
+    </table>
+</div>

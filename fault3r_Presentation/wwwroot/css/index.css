@@ -1,0 +1,236 @@
+﻿
+body {
+    font-family: 'B Elham', 'Comic Sans MS';
+    font-size: 15px;
+    font-weight: bold;
+}
+
+.main {
+    color: gray;
+    border: 5px solid gray; 
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    justify-content: center;
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    min-height: 600px;
+    min-width: 700px;
+}
+    .main a {
+        text-decoration: none;
+    }
+
+.dark-side {
+    width: 50%;
+    background-image: linear-gradient(to left,#090909, #101010);
+    text-align: left;
+    position: relative;
+    color: #bfb9b9;
+    direction: rtl;
+}
+
+    .dark-side .dark-menu {
+        position: absolute;
+        top: 20px;
+        left: 20px;
+        display: flex;
+        flex-direction: row;
+        flex-wrap: nowrap;
+        align-items: center;
+        gap: 10px;
+    }
+        .dark-side .dark-menu a {
+            color: #bfb9b9;
+            font-size: 17px;            
+        }
+            .dark-side .dark-menu a:hover {
+                text-shadow: 0px 0px 30px white, 0px 0px 40px white;
+            }
+          
+        .dark-side .dark-menu i {
+            font-size: 30px;
+        }
+
+    .dark-side .dark-content {
+        position: absolute;
+        bottom: 80px;
+        left: 10%;
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 5px;
+        font-weight: normal;
+    }
+
+        .dark-side .dark-content .search {
+            display: flex;
+            flex-direction: row;
+            flex-wrap: nowrap;            
+        }
+
+        .dark-side .dark-content input {
+            width: 200px;
+            border: 1px solid white;
+            border-left: none;
+            border-radius: 0px 2px 15px 0px;
+            outline: none;
+            background-image: radial-gradient(gray,lightgray);
+            font-size: 16px;
+            padding: 0px 7px 0px 0px;
+        }
+
+        .dark-side .dark-content i {
+            border-right: none;
+            border-radius: 15px 0px 0px 2px;
+            font-size: 30px;
+            background-image: radial-gradient(gray,lightgray);
+            color: #030303;
+            padding: 3px 7px 5px 5px;
+        }
+
+            .dark-side .dark-content i:hover {
+                text-shadow: 0px 0px 10px white, 0px 0px 15px white, 0px 0px 20px white, 0px 0px 25px white;
+            }
+
+    .dark-side .dark-foot {
+        position: absolute;
+        bottom: 20px;
+        right: 0;        
+    }
+
+        .dark-side .dark-foot a {
+            color: #bfb9b9;
+            font-size: 16px;
+        }
+
+.light-side {
+    width: 50%;
+    background-image: linear-gradient(to right, #efefef, #a4a4a4 );
+    text-align: right;
+    position: relative;
+    color: #030303;
+    direction: rtl;
+}
+
+    .light-side .light-content {
+        position: absolute;
+        top: 80px;
+        right: 10%;
+        left: 20%;
+        display: flex;
+        flex-direction: column;
+        flex-wrap: nowrap;
+        align-items: flex-start;
+        gap: 10px;
+    }
+        .light-side .light-content i {
+            padding: 5px;
+            color: #151515;
+        }
+        .light-side .light-content .title {
+            font-size: 35px;            
+            text-shadow: 1px 1px 3px #030303;
+        }
+        .light-side .light-content .description {
+        }
+
+        .light-side .light-content a {
+            width: 60%;
+            padding: 2px; 
+            color: #0a0a0a;
+            font-weight: bold;
+            font-size: 17px;
+            text-align: center;
+            white-space: nowrap;
+            border: 2px solid gray;
+            border-radius: 10px;
+            background-image: radial-gradient(gray, #0d0d0d);
+            text-shadow: -1px -1px 2px white;
+            transition: all 0.3s ease;
+        }
+            .light-side .light-content a:hover {
+                border: 2px solid #0d0d0d;
+                background-image: radial-gradient(darkgray, #333333);
+            }      
+           
+
+    .light-side .light-foot {
+        position: absolute;
+        bottom: 20px;
+        left: 0;
+    }
+
+        .light-side .light-foot a {
+            color: #030303;
+            font-size: 16px;
+        }
+
+    .light-side .by {
+        font-family: "Comic Sans MS";
+        font-size: 10px;
+        position: absolute;
+        transform: rotate(-90deg);
+        bottom: 25px;
+        right: -15px;
+        color: #424242;
+    }
+
+.dark-matter {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+    width: 200px;
+    height: 200px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: url('/images/logobackground.gif');
+    background-position: center;
+    background-repeat: no-repeat;
+    border-radius: 100%;
+    box-shadow: 15px 0px 50px 10px #D2D5EF;
+    animation: dark-matter;
+    animation-duration: 30s;
+    animation-delay: 0s;
+    animation-direction: alternate;
+    animation-iteration-count: infinite;
+    animation-timing-function: linear;
+}        
+    @keyframes dark-matter {
+        0% {
+            box-shadow: 15px 0px 50px 10px #D2D5EF;
+        }
+        16% {
+            box-shadow: 15px 0px 50px 10px #4D58D5;
+        }
+        32% {
+            box-shadow: 15px 0px 50px 10px #3500D3;
+        }
+        48% {
+            box-shadow: 15px 0px 50px 10px #240090;
+        }
+        64% {
+            box-shadow: 15px 0px 50px 10px #190061;
+        }
+        80% {
+            box-shadow: 15px 0px 50px 10px #0C0032;
+        }
+        100% {
+            box-shadow: 15px 0px 50px 10px #101010;
+        }
+    }
+    .dark-matter .header {
+        font-size: 51px;
+        font-weight: bold;
+        color: transparent;
+        text-align: center;
+        display: flex;
+        flex-direction: column;
+        flex-wrap: nowrap;
+        color: white;
+    }
