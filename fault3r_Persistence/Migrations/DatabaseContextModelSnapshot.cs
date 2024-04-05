@@ -117,7 +117,7 @@ namespace fault3r_Persistence.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("d9d6a0fa-657e-41b8-bf70-83668f35b927"),
+                            Id = new Guid("3ac60bda-df89-4106-82af-c7ffd1c4ba61"),
                             RankName = "کاربر سایت",
                             RankNumber = 1
                         });

@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace fault3r_Persistence.Migrations
 {
-    public partial class Initialdb : Migration
+    public partial class Initial : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -124,7 +124,7 @@ namespace fault3r_Persistence.Migrations
             migrationBuilder.InsertData(
                 table: "Ranks",
                 columns: new[] { "Id", "ForumId", "RankName", "RankNumber" },
-                values: new object[] { new Guid("d9d6a0fa-657e-41b8-bf70-83668f35b927"), null, "کاربر سایت", 1 });
+                values: new object[] { new Guid("3ac60bda-df89-4106-82af-c7ffd1c4ba61"), null, "کاربر سایت", 1 });
 
             migrationBuilder.InsertData(
                 table: "Roles",
