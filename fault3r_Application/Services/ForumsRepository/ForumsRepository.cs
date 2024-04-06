@@ -84,7 +84,7 @@ namespace fault3r_Application.Services.ForumsRepository
             {
                 Title = forum.Title,
                 Description = forum.Description,
-                Image = forum.UseDefaultImage == true ? ResourceMemorizer.DefaultForumPicture.ToArray() : ImageResizer.ResizeImage(forum.Image, 200, 200).ToArray(),
+                Image = forum.UseDefaultImage == true ? ResourceMemorizer.DefaultForumPicture.ToArray() : ImageResizer.ResizeImage(forum.Image, 100, 100).ToArray(),
                 ParentForumId = forum.ParentId == "null" ? null : Guid.Parse(forum.ParentId),
             };
             _databaseContext.Forums.Add(tForum);
@@ -99,7 +99,7 @@ namespace fault3r_Application.Services.ForumsRepository
             tForum.Title = forum.Title;
             tForum.Description = forum.Description;
             if (forum.Image != null)
-                tForum.Image = ImageResizer.ResizeImage(forum.Image, 200, 200).ToArray();
+                tForum.Image = ImageResizer.ResizeImage(forum.Image, 100, 100).ToArray();
             if (forum.ParentId == "null")
                 tForum.ParentForumId = null;
             else
