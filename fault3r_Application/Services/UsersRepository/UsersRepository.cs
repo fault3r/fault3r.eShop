@@ -38,5 +38,22 @@ namespace fault3r_Application.Services.UsersRepository
                 .ToList();
             return new UsersDto { Users = users, Pagination = pagination };
         }
+
+        public List<RankDto> GetRanks()
+        {
+            var ranks = _databaseContext.Ranks.AsQueryable()
+                .Include(e => e.Forum)
+                .OrderBy(p => p.RankNumber)
+                .Select(r => new RankDto
+                {
+                    RankNumber = r.RankNumber,
+                    RankName = r.RankName,
+                    IsAdmin = r.ForumId != null ? "بلی" : "خیر",
+                    ForumName = r.ForumId != null ? r.Forum.Title : "---",
+                })
+                .ToList();
+            return ranks;
+        }
+        
     }
 }

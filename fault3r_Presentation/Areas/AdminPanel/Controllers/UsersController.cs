@@ -1,6 +1,7 @@
 ﻿using fault3r_Application.Services.UsersRepository;
 using fault3r_Presentation.Areas.AdminPanel.Models.ViewModels.Users;
 using Microsoft.AspNetCore.Mvc;
+using System.Collections.Generic;
 
 namespace fault3r_Presentation.Areas.AdminPanel.Controllers
 {
@@ -37,6 +38,25 @@ namespace fault3r_Presentation.Areas.AdminPanel.Controllers
             users.Search = search;
             users.Pagination = tUsers.Pagination;
             return View(users);
-        }                  
+        }       
+        
+        [Route("Ranks")]
+        [HttpGet]
+        public IActionResult Ranks()
+        {
+            var tRanks = _usersRepository.GetRanks();
+            List<RankViewModel> ranks = new();
+            foreach(var rank in tRanks)
+            {
+                ranks.Add(new RankViewModel
+                {
+                    RankNumber = rank.RankNumber,
+                    RankName = rank.RankName,
+                    IsAdmin = rank.IsAdmin,
+                    ForumName = rank.ForumName,
+                });
+            }
+            return View("Ranks",ranks);
+        }
     }
 }

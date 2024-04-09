@@ -1,0 +1,47 @@
+﻿
+@using fault3r_Presentation.Areas.AdminPanel.Models.ViewModels.Users
+@model List<RankViewModel>
+
+@{
+    ViewData["Title"] = "Ranks";
+    Layout = "~/Areas/AdminPanel/Views/Shared/_Layout.cshtml";
+}
+
+@section Styles{
+    <link rel="stylesheet" href="~/css/admin/main.css" />
+}
+
+<div class="main-container">
+    <span class="title"><i class="fa fa-user-circle"></i>رتبه ها</span>
+    <div class="main">
+        <table>
+            <tr>
+                <th>شماره رتبه</th>
+                <th>نام رتبه</th>
+                <th>مدیر انجمن</th>
+                <th>نام انجمن</th>            
+                <th>امکانات</th>
+            </tr>
+            @{
+                foreach(var rank in Model)
+                {
+                    <tr>
+                        <td>@rank.RankNumber</td>
+                        <td>@rank.RankName</td>
+                        <td>@rank.IsAdmin</td>
+                        <td>@rank.ForumName</td>                        
+                        <td class="options">
+                            <div class="menu-container">
+                                <button>امکانات</button>
+                                <div class=menu-content>
+                                    <a href="#">ویرایش</a>
+                                    <a href="#">حذف</a>
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                }
+            }
+        </table>
+    </div>
+</div>
