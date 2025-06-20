@@ -1,4 +1,4 @@
-- It's a forum.
+- forum implement in Dotnet
   - Csharp
   - .Net Core
   - CSS
