@@ -7,4 +7,9 @@ if (app.Environment.IsDevelopment())
     app.UseDeveloperExceptionPage();
 }
 
+app.MapGet("/", () =>
+{
+    return new { service = "CatalogService" };
+});
+
 app.Run();
