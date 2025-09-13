@@ -1,0 +1,10 @@
+{
+  "version": 2,
+  "dgSpecHash": "kJwzaZlJA4g=",
+  "success": true,
+  "projectFilePath": "/home/hamed-damavandi/Documents/fault3r.eShop/src/services/CatalogService/src/CatalogService.Api/CatalogService.Api.csproj",
+  "expectedPackageFiles": [
+    "/home/hamed-damavandi/.nuget/packages/microsoft.netcore.app.host.linux-x64/8.0.18/microsoft.netcore.app.host.linux-x64.8.0.18.nupkg.sha512"
+  ],
+  "logs": []
+}
