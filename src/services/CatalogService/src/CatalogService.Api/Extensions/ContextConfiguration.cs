@@ -8,12 +8,13 @@ namespace CatalogService.Api.Extensions
 {
     public static class ContextConfiguration
     {
-        public static IServiceCollection AddContextConfiguration(this IServiceCollection services, IConfigurationSection settings)
+        public static IServiceCollection AddContextConfiguration(this IServiceCollection services,
+            IConfigurationSection configuration)
         {
-            services.Configure<MongodbSettings>(settings);
+            services.Configure<ContextSettings>(configuration);
             services.AddSingleton<CatalogContext>(provider =>
             {
-                var settings = provider.GetRequiredService<IOptions<MongodbSettings>>().Value;
+                var settings = provider.GetRequiredService<IOptions<ContextSettings>>().Value;
                 return new CatalogContext(settings);
             });
             return services;

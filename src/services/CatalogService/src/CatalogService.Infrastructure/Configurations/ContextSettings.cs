@@ -3,7 +3,7 @@ using System;
 
 namespace CatalogService.Infrastructure.Configurations
 {
-    public class MongodbSettings
+    public class ContextSettings
     {
         public required string ConnectionString { get; set; }
 

@@ -1,20 +1,20 @@
 
 using System;
-using CatalogService.Domain.Entities;
 using CatalogService.Infrastructure.Configurations;
+using CatalogService.Infrastructure.Data.Documents;
 using MongoDB.Driver;
 
 namespace CatalogService.Infrastructure.Data.Contexts
 {
     public class CatalogContext
     {
-        public readonly IMongoCollection<Item> Items;
+        public readonly IMongoCollection<ItemDocument> Items;
 
-        public CatalogContext(MongodbSettings settings)
+        public CatalogContext(ContextSettings settings)
         {
             var client = new MongoClient(settings.ConnectionString);
             var database = client.GetDatabase(settings.DatabaseName);
-            Items = database.GetCollection<Item>(settings.CollectionName);
+            Items = database.GetCollection<ItemDocument>(settings.CollectionName);
         }
     }
 }

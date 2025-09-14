@@ -11,18 +11,10 @@ namespace CatalogService.Domain.Entities
 
         public required string Description { get; set; }
 
-        public decimal Price { get; set; }
+        public required decimal Price { get; set; }
 
-        public ICollection<string> Pictures { get; set; }
+        public required ICollection<string> Pictures { get; set; }
 
-        public DateTime Updated { get; set; }
-
-        Item()
-        {
-            Id = Guid.NewGuid().ToString();
-            Pictures = [];
-            Description = "";
-            Updated = DateTime.UtcNow;
-        }
+        public required DateTime Updated { get; set; }
     }
 }

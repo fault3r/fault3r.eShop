@@ -15,7 +15,7 @@ internal class Program
         );
 
         builder.Services.AddContextConfiguration(
-            builder.Configuration.GetSection(nameof(MongodbSettings)));
+            builder.Configuration.GetSection(nameof(ContextSettings)));
 
         var app = builder.Build();
 
