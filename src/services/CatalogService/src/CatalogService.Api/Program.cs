@@ -1,24 +1,34 @@
+
+using System;
+using CatalogService.Api.Extensions;
 using CatalogService.Infrastructure.Configurations;
-using CatalogService.Infrastructure.Data.Contexts;
-using Microsoft.Extensions.Options;
 
-var builder = WebApplication.CreateBuilder(args);
-
-builder.Services.Configure<MongodbSettings>(
-    builder.Configuration.GetSection(nameof(MongodbSettings)));
-
-builder.Services.AddSingleton<CatalogContext>();
-
-var app = builder.Build();
-
-if (app.Environment.IsDevelopment())
+internal class Program
 {
-    app.UseDeveloperExceptionPage();
+    private static void Main(string[] args)
+    {
+        var builder = WebApplication.CreateBuilder(args);
+
+        builder.WebHost.UseUrls(
+            builder.Configuration["Urls"]?.Split(';') ??
+            throw new Exception()
+        );
+
+        builder.Services.AddContextConfiguration(
+            builder.Configuration.GetSection(nameof(MongodbSettings)));
+
+        var app = builder.Build();
+
+        if (app.Environment.IsDevelopment())
+        {
+            app.UseDeveloperExceptionPage();
+        }
+
+        app.MapGet("/", () =>
+        {            
+            return new { service = "CatalogService" };
+        });
+
+        app.Run();
+    }
 }
-
-app.MapGet("/", () =>
-{
-    return new { service = "CatalogService" };
-});
-
-app.Run();

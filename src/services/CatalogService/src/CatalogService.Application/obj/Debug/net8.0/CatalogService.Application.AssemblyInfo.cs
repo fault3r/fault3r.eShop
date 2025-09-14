@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("CatalogService.Application")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+187071d06f335999caf30ae64e1b72062a721f81")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+44b1bafc0972027adea0a337ab169b66eadf7736")]
 [assembly: System.Reflection.AssemblyProductAttribute("CatalogService.Application")]
 [assembly: System.Reflection.AssemblyTitleAttribute("CatalogService.Application")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
