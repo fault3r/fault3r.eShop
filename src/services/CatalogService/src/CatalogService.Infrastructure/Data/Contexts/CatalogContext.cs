@@ -10,11 +10,10 @@ namespace CatalogService.Infrastructure.Data.Contexts
     {
         public readonly IMongoCollection<ItemDocument> Items;
 
-        public CatalogContext(ContextSettings settings)
+        public CatalogContext(MongoClient client, string DatabaseName, string CollectionName)
         {
-            var client = new MongoClient(settings.ConnectionString);
-            var database = client.GetDatabase(settings.DatabaseName);
-            Items = database.GetCollection<ItemDocument>(settings.CollectionName);
+            var database = client.GetDatabase(DatabaseName);
+            Items = database.GetCollection<ItemDocument>(CollectionName);
         }
     }
 }

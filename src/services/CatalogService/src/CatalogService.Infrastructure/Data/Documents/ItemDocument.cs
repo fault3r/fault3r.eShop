@@ -1,4 +1,5 @@
 using System;
+using CatalogService.Domain.Entities;
 using CatalogService.Infrastructure.Data.Documents.BaseDocument;
 
 namespace CatalogService.Infrastructure.Data.Documents
@@ -19,7 +20,20 @@ namespace CatalogService.Infrastructure.Data.Documents
         {
             Description = "";
             Pictures = [];
-            Updated = DateTime.UtcNow;            
+            Updated = DateTime.UtcNow;
+        }
+
+        public Item ToDomain()
+        {
+            return new Item
+            {
+                Id = this.Id.ToString(),
+                Name = this.Name,
+                Description = this.Description,
+                Price = this.Price,
+                Pictures = this.Pictures,
+                Updated = this.Updated,
+            };
         }
     }
 }
