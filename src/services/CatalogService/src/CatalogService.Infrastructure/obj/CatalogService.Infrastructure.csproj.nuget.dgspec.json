@@ -111,10 +111,6 @@
         "net8.0": {
           "targetAlias": "net8.0",
           "dependencies": {
-            "Microsoft.Extensions.Options": {
-              "target": "Package",
-              "version": "[9.0.9, )"
-            },
             "MongoDB.Driver": {
               "target": "Package",
               "version": "[3.5.0, )"

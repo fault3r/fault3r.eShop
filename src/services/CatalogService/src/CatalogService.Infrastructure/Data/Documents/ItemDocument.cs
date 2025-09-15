@@ -1,6 +1,7 @@
 using System;
 using CatalogService.Domain.Entities;
 using CatalogService.Infrastructure.Data.Documents.BaseDocument;
+using MongoDB.Bson;
 
 namespace CatalogService.Infrastructure.Data.Documents
 {
