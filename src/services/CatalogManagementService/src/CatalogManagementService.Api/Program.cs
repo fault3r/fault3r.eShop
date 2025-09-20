@@ -1,42 +1,42 @@
-var builder = WebApplication.CreateBuilder(args);
 
-builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
+using System;
+using CatalogManagementService.Api.Extensions;
+using CatalogManagementService.Domain.Interfaces;
+using CatalogManagementService.Infrastructure.Configurations;
+using CatalogManagementService.Infrastructure.Repositories;
 
-var app = builder.Build();
-
-// Configure the HTTP request pipeline.
-if (app.Environment.IsDevelopment())
+internal class Program
 {
-    app.UseSwagger();
-    app.UseSwaggerUI();
-}
+    private static void Main(string[] args)
+    {
+        var builder = WebApplication.CreateBuilder(args);
 
-app.UseHttpsRedirection();
+        builder.Services.AddControllers();
 
-var summaries = new[]
-{
-    "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
-};
+        builder.WebHost.UseUrls(
+            builder.Configuration["Urls"]?.Split(';') ??
+            throw new Exception()
+        );
 
-app.MapGet("/weatherforecast", () =>
-{
-    var forecast =  Enumerable.Range(1, 5).Select(index =>
-        new WeatherForecast
-        (
-            DateOnly.FromDateTime(DateTime.Now.AddDays(index)),
-            Random.Shared.Next(-20, 55),
-            summaries[Random.Shared.Next(summaries.Length)]
-        ))
-        .ToArray();
-    return forecast;
-})
-.WithName("GetWeatherForecast")
-.WithOpenApi();
+        builder.Services.AddContextConfiguration(
+            builder.Configuration.GetSection(nameof(ContextSettings)));
 
-app.Run();
+        builder.Services.AddScoped<ICatalogManagementRepository, CatalogManagementRepository>();
 
-record WeatherForecast(DateOnly Date, int TemperatureC, string? Summary)
-{
-    public int TemperatureF => 32 + (int)(TemperatureC / 0.5556);
+        var app = builder.Build();
+
+        if (app.Environment.IsDevelopment())
+        {
+            app.UseDeveloperExceptionPage();
+        }
+
+        app.MapGet("/", () =>
+        {            
+            return new { service = "CatalogManagementService" };
+        });
+
+        app.MapControllers();
+
+        app.Run();
+    }
 }

@@ -4,14 +4,14 @@
     "/home/hamed-damavandi/Documents/fault3r.eShop/src/services/CatalogManagementService/src/CatalogManagementService.Infrastructure/CatalogManagementService.Infrastructure.csproj": {}
   },
   "projects": {
-    "/home/hamed-damavandi/Documents/fault3r.eShop/src/services/CatalogManagementService/src/CatalogManagementService.Infrastructure/CatalogManagementService.Infrastructure.csproj": {
+    "/home/hamed-damavandi/Documents/fault3r.eShop/src/services/CatalogManagementService/src/CatalogManagementService.Domain/CatalogManagementService.Domain.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "/home/hamed-damavandi/Documents/fault3r.eShop/src/services/CatalogManagementService/src/CatalogManagementService.Infrastructure/CatalogManagementService.Infrastructure.csproj",
-        "projectName": "CatalogManagementService.Infrastructure",
-        "projectPath": "/home/hamed-damavandi/Documents/fault3r.eShop/src/services/CatalogManagementService/src/CatalogManagementService.Infrastructure/CatalogManagementService.Infrastructure.csproj",
+        "projectUniqueName": "/home/hamed-damavandi/Documents/fault3r.eShop/src/services/CatalogManagementService/src/CatalogManagementService.Domain/CatalogManagementService.Domain.csproj",
+        "projectName": "CatalogManagementService.Domain",
+        "projectPath": "/home/hamed-damavandi/Documents/fault3r.eShop/src/services/CatalogManagementService/src/CatalogManagementService.Domain/CatalogManagementService.Domain.csproj",
         "packagesPath": "/home/hamed-damavandi/.nuget/packages/",
-        "outputPath": "/home/hamed-damavandi/Documents/fault3r.eShop/src/services/CatalogManagementService/src/CatalogManagementService.Infrastructure/obj/",
+        "outputPath": "/home/hamed-damavandi/Documents/fault3r.eShop/src/services/CatalogManagementService/src/CatalogManagementService.Domain/obj/",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "/home/hamed-damavandi/.nuget/NuGet/NuGet.Config"
@@ -45,6 +45,87 @@
       "frameworks": {
         "net8.0": {
           "targetAlias": "net8.0",
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48",
+            "net481"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "downloadDependencies": [
+            {
+              "name": "Microsoft.AspNetCore.App.Ref",
+              "version": "[8.0.20, 8.0.20]"
+            },
+            {
+              "name": "Microsoft.NETCore.App.Ref",
+              "version": "[8.0.20, 8.0.20]"
+            }
+          ],
+          "frameworkReferences": {
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "/usr/lib/dotnet/sdk/9.0.110/PortableRuntimeIdentifierGraph.json"
+        }
+      }
+    },
+    "/home/hamed-damavandi/Documents/fault3r.eShop/src/services/CatalogManagementService/src/CatalogManagementService.Infrastructure/CatalogManagementService.Infrastructure.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "/home/hamed-damavandi/Documents/fault3r.eShop/src/services/CatalogManagementService/src/CatalogManagementService.Infrastructure/CatalogManagementService.Infrastructure.csproj",
+        "projectName": "CatalogManagementService.Infrastructure",
+        "projectPath": "/home/hamed-damavandi/Documents/fault3r.eShop/src/services/CatalogManagementService/src/CatalogManagementService.Infrastructure/CatalogManagementService.Infrastructure.csproj",
+        "packagesPath": "/home/hamed-damavandi/.nuget/packages/",
+        "outputPath": "/home/hamed-damavandi/Documents/fault3r.eShop/src/services/CatalogManagementService/src/CatalogManagementService.Infrastructure/obj/",
+        "projectStyle": "PackageReference",
+        "configFilePaths": [
+          "/home/hamed-damavandi/.nuget/NuGet/NuGet.Config"
+        ],
+        "originalTargetFrameworks": [
+          "net8.0"
+        ],
+        "sources": {
+          "/home/hamed-damavandi/.nuget/packages": {},
+          "/usr/lib/dotnet/library-packs": {},
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net8.0": {
+            "targetAlias": "net8.0",
+            "projectReferences": {
+              "/home/hamed-damavandi/Documents/fault3r.eShop/src/services/CatalogManagementService/src/CatalogManagementService.Domain/CatalogManagementService.Domain.csproj": {
+                "projectPath": "/home/hamed-damavandi/Documents/fault3r.eShop/src/services/CatalogManagementService/src/CatalogManagementService.Domain/CatalogManagementService.Domain.csproj"
+              }
+            }
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        },
+        "restoreAuditProperties": {
+          "enableAudit": "true",
+          "auditLevel": "low",
+          "auditMode": "direct"
+        },
+        "SdkAnalysisLevel": "9.0.100"
+      },
+      "frameworks": {
+        "net8.0": {
+          "targetAlias": "net8.0",
+          "dependencies": {
+            "MongoDB.Driver": {
+              "target": "Package",
+              "version": "[3.5.0, )"
+            }
+          },
           "imports": [
             "net461",
             "net462",

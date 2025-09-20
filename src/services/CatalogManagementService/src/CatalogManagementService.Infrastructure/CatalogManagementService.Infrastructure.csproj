@@ -6,4 +6,13 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <PackageReference Include="MongoDB.Driver" Version="3.5.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="../CatalogManagementService.Domain/CatalogManagementService.Domain.csproj" />
+  </ItemGroup>
+
+
 </Project>

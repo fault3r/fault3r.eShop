@@ -1,7 +1,7 @@
 
 using System;
 
-namespace CatalogService.Domain.Entities
+namespace CatalogManagementService.Domain.Entities
 {
     public class Item
     {
