@@ -32,6 +32,9 @@ internal class Program
 
         app.MapControllers();
 
-        app.Run("http://+:5012");
+        string url = builder.Configuration.GetValue<string>("Url") ??
+            throw new Exception(); 
+            
+        app.Run(url);
     }
 }
