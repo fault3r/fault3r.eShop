@@ -1,18 +1,18 @@
 #!/bin/bash
 
 if [ $# -ne 1 ]; then
-  echo "Usage: $0 {clean|build}"
+  echo "Usage: $0 {-c|-b}"
   exit 1
 fi
 
 operation="$1"
 
 case "$operation" in
-  "clean")
+  "-c")
     verb="Cleaning"
     cmd="clean"
     ;;
-  "build")
+  "-b")
     verb="Building"
     cmd="build"
     ;;
@@ -31,6 +31,7 @@ for sln in "${solutions[@]}"; do
   if [ -f "$sln" ]; then
     echo "$verb $sln ..."
     dotnet $cmd "$sln"
+    echo $'\n'
   else
     echo "Solution file $sln not found!"
   fi
