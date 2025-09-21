@@ -1,0 +1,12 @@
+/home/hamed-damavandi/Documents/fault3r.eShop/src/services/CatalogManagementService/publish/CatalogManagementService.Infrastructure.dll
+/home/hamed-damavandi/Documents/fault3r.eShop/src/services/CatalogManagementService/publish/CatalogManagementService.Infrastructure.deps.json
+/home/hamed-damavandi/Documents/fault3r.eShop/src/services/CatalogManagementService/publish/CatalogManagementService.Infrastructure.pdb
+/home/hamed-damavandi/Documents/fault3r.eShop/src/services/CatalogManagementService/publish/DnsClient.dll
+/home/hamed-damavandi/Documents/fault3r.eShop/src/services/CatalogManagementService/publish/Microsoft.Extensions.Logging.Abstractions.dll
+/home/hamed-damavandi/Documents/fault3r.eShop/src/services/CatalogManagementService/publish/MongoDB.Bson.dll
+/home/hamed-damavandi/Documents/fault3r.eShop/src/services/CatalogManagementService/publish/MongoDB.Driver.dll
+/home/hamed-damavandi/Documents/fault3r.eShop/src/services/CatalogManagementService/publish/SharpCompress.dll
+/home/hamed-damavandi/Documents/fault3r.eShop/src/services/CatalogManagementService/publish/Snappier.dll
+/home/hamed-damavandi/Documents/fault3r.eShop/src/services/CatalogManagementService/publish/ZstdSharp.dll
+/home/hamed-damavandi/Documents/fault3r.eShop/src/services/CatalogManagementService/publish/CatalogManagementService.Domain.dll
+/home/hamed-damavandi/Documents/fault3r.eShop/src/services/CatalogManagementService/publish/CatalogManagementService.Domain.pdb

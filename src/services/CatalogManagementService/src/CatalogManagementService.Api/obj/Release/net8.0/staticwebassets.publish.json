@@ -1,0 +1,12 @@
+{
+  "Version": 1,
+  "Hash": "eOiWlcCnD7hSMkTLpytPvbkXQT9tbdzokU3GsBQ8KCo=",
+  "Source": "CatalogManagementService.Api",
+  "BasePath": "_content/CatalogManagementService.Api",
+  "Mode": "Default",
+  "ManifestType": "Publish",
+  "ReferencedProjectsConfiguration": [],
+  "DiscoveryPatterns": [],
+  "Assets": [],
+  "Endpoints": []
+}

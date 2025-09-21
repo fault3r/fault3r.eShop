@@ -1,0 +1,3 @@
+/home/hamed-damavandi/Documents/fault3r.eShop/src/services/CatalogManagementService/publish/CatalogManagementService.Application.dll
+/home/hamed-damavandi/Documents/fault3r.eShop/src/services/CatalogManagementService/publish/CatalogManagementService.Application.deps.json
+/home/hamed-damavandi/Documents/fault3r.eShop/src/services/CatalogManagementService/publish/CatalogManagementService.Application.pdb

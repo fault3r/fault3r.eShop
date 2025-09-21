@@ -1,0 +1,12 @@
+/home/hamed-damavandi/Documents/fault3r.eShop/src/services/CatalogManagementService/src/CatalogManagementService.Domain/bin/Release/net8.0/CatalogManagementService.Domain.deps.json
+/home/hamed-damavandi/Documents/fault3r.eShop/src/services/CatalogManagementService/src/CatalogManagementService.Domain/bin/Release/net8.0/CatalogManagementService.Domain.dll
+/home/hamed-damavandi/Documents/fault3r.eShop/src/services/CatalogManagementService/src/CatalogManagementService.Domain/bin/Release/net8.0/CatalogManagementService.Domain.pdb
+/home/hamed-damavandi/Documents/fault3r.eShop/src/services/CatalogManagementService/src/CatalogManagementService.Domain/obj/Release/net8.0/CatalogManagementService.Domain.GeneratedMSBuildEditorConfig.editorconfig
+/home/hamed-damavandi/Documents/fault3r.eShop/src/services/CatalogManagementService/src/CatalogManagementService.Domain/obj/Release/net8.0/CatalogManagementService.Domain.AssemblyInfoInputs.cache
+/home/hamed-damavandi/Documents/fault3r.eShop/src/services/CatalogManagementService/src/CatalogManagementService.Domain/obj/Release/net8.0/CatalogManagementService.Domain.AssemblyInfo.cs
+/home/hamed-damavandi/Documents/fault3r.eShop/src/services/CatalogManagementService/src/CatalogManagementService.Domain/obj/Release/net8.0/CatalogManagementService.Domain.csproj.CoreCompileInputs.cache
+/home/hamed-damavandi/Documents/fault3r.eShop/src/services/CatalogManagementService/src/CatalogManagementService.Domain/obj/Release/net8.0/CatalogManagementService.Domain.sourcelink.json
+/home/hamed-damavandi/Documents/fault3r.eShop/src/services/CatalogManagementService/src/CatalogManagementService.Domain/obj/Release/net8.0/CatalogManagementService.Domain.dll
+/home/hamed-damavandi/Documents/fault3r.eShop/src/services/CatalogManagementService/src/CatalogManagementService.Domain/obj/Release/net8.0/refint/CatalogManagementService.Domain.dll
+/home/hamed-damavandi/Documents/fault3r.eShop/src/services/CatalogManagementService/src/CatalogManagementService.Domain/obj/Release/net8.0/CatalogManagementService.Domain.pdb
+/home/hamed-damavandi/Documents/fault3r.eShop/src/services/CatalogManagementService/src/CatalogManagementService.Domain/obj/Release/net8.0/ref/CatalogManagementService.Domain.dll

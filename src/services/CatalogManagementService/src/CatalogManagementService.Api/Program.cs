@@ -13,11 +13,6 @@ internal class Program
 
         builder.Services.AddControllers();
 
-        builder.WebHost.UseUrls(
-            builder.Configuration["Urls"]?.Split(';') ??
-            throw new Exception()
-        );
-
         builder.Services.AddContextConfiguration(
             builder.Configuration.GetSection(nameof(ContextSettings)));
 
@@ -37,6 +32,6 @@ internal class Program
 
         app.MapControllers();
 
-        app.Run();
+        app.Run("http://+:5012");
     }
 }

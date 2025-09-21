@@ -1,5 +1,4 @@
 
-
 using System;
 using CatalogManagementService.Infrastructure.Configurations;
 using CatalogManagementService.Infrastructure.Data.Contexts;
