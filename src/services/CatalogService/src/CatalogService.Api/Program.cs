@@ -35,6 +35,6 @@ internal class Program
         string url = builder.Configuration.GetValue<string>("Url") ??
             throw new Exception(); 
             
-        app.Run();
+        app.Run(url);
     }
 }

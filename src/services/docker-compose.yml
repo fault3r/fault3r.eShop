@@ -1,0 +1,48 @@
+version: '3.8'
+
+services:
+
+  mongo:
+    image: mongo
+    container_name: mongo
+    ports:
+      - 27017:27017
+    volumes:
+      - mongodbdata:/data/db
+    networks:
+      - eshop
+
+  catalogservice:
+    container_name: catalogservice
+    build:
+      context: ./CatalogService
+      dockerfile: Dockerfile
+    depends_on:
+      - mongo
+    ports:
+      - 5011:5011
+    networks:
+      - eshop
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+
+  catalogmanagementservice:
+    container_name: catalogmanagementservice
+    build:
+      context: ./CatalogManagementService
+      dockerfile: Dockerfile
+    depends_on:
+      - mongo
+    ports:
+      - 5012:5012
+    networks:
+      - eshop
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+
+volumes:
+  mongodbdata:
+
+networks:
+  eshop:
+    driver: bridge
