@@ -25,10 +25,7 @@ internal class Program
             app.UseDeveloperExceptionPage();
         }
 
-        app.MapGet("/", () =>
-        {            
-            return new { service = "CatalogService" };
-        });
+        app.MapGet("/", () => "CatalogService");
 
         app.MapControllers();
 
