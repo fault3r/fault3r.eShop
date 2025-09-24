@@ -7,11 +7,11 @@ namespace CatalogManagementService.Application.Interfaces
     {
         Task<IEnumerable<ItemDto>> GetAllAsync();
 
-        Task<(bool Success, ItemDto? Item)> GetByIdAsync(string id);
+        Task<ItemDto?> GetByIdAsync(string id);
 
-        Task<(bool Success, ItemDto? Item)> CreateAsync(CreateItemDto item);
+        Task<ItemDto?> CreateAsync(CreateItemDto item);
 
-        Task<(bool Success, ItemDto? Item)> UpdateAsync(UpdateItemDto item);
+        Task<ItemDto?> UpdateAsync(string id, UpdateItemDto item);
 
         Task<bool> DeleteAsync(string id);
     }

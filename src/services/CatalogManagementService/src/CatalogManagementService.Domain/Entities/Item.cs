@@ -11,10 +11,10 @@ namespace CatalogManagementService.Domain.Entities
 
         public required string Description { get; set; }
 
-        public required decimal Price { get; set; }
+        public decimal Price { get; set; }
 
         public required IEnumerable<string> Pictures { get; set; }
 
-        public required DateTime Updated { get; set; }
+        public DateTime Updated { get; set; }
     }
 }

@@ -1,6 +1,7 @@
 using System;
 using CatalogManagementService.Application.DTOs;
 using CatalogManagementService.Application.Interfaces;
+using CatalogManagementService.Domain.Entities;
 using CatalogManagementService.Domain.Interfaces;
 
 namespace CatalogManagementService.Application.Services
@@ -15,20 +16,30 @@ namespace CatalogManagementService.Application.Services
             return items.Select(item => ItemDTOs.ToDto(item));
         }
 
-        public async Task<(bool Success, ItemDto? Item)> GetByIdAsync(string id)
+        public async Task<ItemDto?> GetByIdAsync(string id)
         {
             var result = await _catalogRepository.GetByIdAsync(id);
             if (result.Item is null)
-                return (Success: false, Item: null);
-            return (Success: true, Item: ItemDTOs.ToDto(result.Item));
+                return null;
+            return ItemDTOs.ToDto(result.Item);
         }
 
-        public async Task<(bool Success, ItemDto? Item)> CreateAsync(CreateItemDto item)
+        public async Task<ItemDto?> CreateAsync(CreateItemDto item)
         {
-            throw new NotImplementedException();
+            var result = await _catalogRepository.CreateAsync(new Item
+            {
+                Id = "[new]",
+                Name = item.Name,
+                Description = item.Description,
+                Price = item.Price,
+                Pictures = item.Pictures,
+            });
+            if (result.Item is null)
+                return null;
+            return ItemDTOs.ToDto(result.Item);
         }
 
-        public async Task<(bool Success, ItemDto? Item)> UpdateAsync(UpdateItemDto item)
+        public async Task<ItemDto?> UpdateAsync(string id, UpdateItemDto item)
         {
             throw new NotImplementedException();
         }
