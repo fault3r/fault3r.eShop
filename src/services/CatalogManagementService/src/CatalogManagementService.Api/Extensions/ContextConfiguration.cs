@@ -19,7 +19,7 @@ namespace CatalogManagementService.Api.Extensions
                 return new MongoClient(settings.ConnectionString);
                 
             });
-            services.AddScoped<CatalogManagementContext>((provider) =>
+            services.AddScoped<CatalogManagementContext>(provider =>
             {
                 var settings = provider.GetRequiredService<IOptions<ContextSettings>>().Value;
                 var client = provider.GetRequiredService<MongoClient>();

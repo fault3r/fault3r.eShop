@@ -13,13 +13,13 @@ namespace CatalogManagementService.Infrastructure.Data.Documents
 
         public decimal Price { get; set; }
 
-        public ICollection<string> Pictures { get; set; } = [];
+        public ICollection<string> Pictures { get; set; }
 
         public DateTime Updated { get; set; }
 
         public ItemDocument()
         {
-            Description = "";
+            Description = string.Empty;
             Pictures = [];
             Updated = DateTime.UtcNow;
         }
@@ -28,12 +28,12 @@ namespace CatalogManagementService.Infrastructure.Data.Documents
         {
             return new Item
             {
-                Id = this.Id.ToString(),
-                Name = this.Name,
-                Description = this.Description,
-                Price = this.Price,
-                Pictures = this.Pictures,
-                Updated = this.Updated,
+                Id = Id.ToString(),
+                Name = Name,
+                Description = Description,
+                Price = Price,
+                Pictures = Pictures,
+                Updated = Updated,
             };
         }
     }

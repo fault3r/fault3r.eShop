@@ -7,12 +7,14 @@ namespace CatalogManagementService.Infrastructure.Data.Contexts
 {
     public class CatalogManagementContext
     {
+        public readonly IMongoDatabase Database;
+
         public readonly IMongoCollection<ItemDocument> Documents;
 
         public CatalogManagementContext(MongoClient client, string DatabaseName, string CollectionName)
         {
-            var database = client.GetDatabase(DatabaseName);
-            Documents = database.GetCollection<ItemDocument>(CollectionName);
+            Database = client.GetDatabase(DatabaseName);
+            Documents = Database.GetCollection<ItemDocument>(CollectionName);
         }
     }
 }
