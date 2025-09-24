@@ -10,18 +10,15 @@ namespace CatalogManagementService.Api.Extensions
     public static class ContextConfiguration
     {
         public static IServiceCollection AddContextConfiguration(this IServiceCollection services,
-            IConfigurationSection configuration)
+            ContextSettings settings)
         {
-            services.Configure<ContextSettings>(configuration);
             services.AddSingleton<MongoClient>((provider) =>
             {
-                var settings = provider.GetRequiredService<IOptions<ContextSettings>>().Value;
                 return new MongoClient(settings.ConnectionString);
                 
             });
             services.AddScoped<CatalogManagementContext>(provider =>
             {
-                var settings = provider.GetRequiredService<IOptions<ContextSettings>>().Value;
                 var client = provider.GetRequiredService<MongoClient>();
                 return new CatalogManagementContext(client, settings.DatabaseName, settings.CollectionName);
             });

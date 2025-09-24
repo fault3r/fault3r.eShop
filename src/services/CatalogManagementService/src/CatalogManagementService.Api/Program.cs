@@ -5,33 +5,30 @@ using CatalogManagementService.Domain.Interfaces;
 using CatalogManagementService.Infrastructure.Configurations;
 using CatalogManagementService.Infrastructure.Repositories;
 
-internal class Program
+var builder = WebApplication.CreateBuilder(args);
+
+var appSettings = builder.Configuration.GetSection(nameof(ApplicationSettings))
+    .Get<ApplicationSettings>() ??
+    throw new NullReferenceException();
+
+builder.Services.AddControllers();
+
+var contextSettings = builder.Configuration.GetSection(nameof(ContextSettings))
+    .Get<ContextSettings>() ??
+    throw new NullReferenceException();
+builder.Services.AddContextConfiguration(contextSettings);
+
+builder.Services.AddScoped<ICatalogManagementRepository, CatalogManagementRepository>();
+
+var app = builder.Build();
+
+if (app.Environment.IsDevelopment())
 {
-    private static void Main(string[] args)
-    {
-        var builder = WebApplication.CreateBuilder(args);
-
-        builder.Services.AddControllers();
-
-        builder.Services.AddContextConfiguration(
-            builder.Configuration.GetSection(nameof(ContextSettings)));
-
-        builder.Services.AddScoped<ICatalogManagementRepository, CatalogManagementRepository>();
-
-        var app = builder.Build();
-
-        if (app.Environment.IsDevelopment())
-        {
-            app.UseDeveloperExceptionPage();
-        }
-
-        app.MapGet("/", () => "CatalogManagementService");
-
-        app.MapControllers();
-
-        string url = builder.Configuration.GetValue<string>("Url") ??
-            throw new Exception(); 
-            
-        app.Run(url);
-    }
+    app.UseDeveloperExceptionPage();
 }
+
+app.MapGet("/", () => $"{appSettings.Name}: {appSettings.Description}");
+
+app.MapControllers();
+
+app.Run(appSettings.Url);
