@@ -18,7 +18,7 @@ var contextSettings = builder.Configuration.GetSection(nameof(ContextSettings))
     throw new NullReferenceException();
 builder.Services.AddContextConfiguration(contextSettings);
 
-builder.Services.AddScoped<ICatalogManagementRepository, CatalogManagementRepository>();
+builder.Services.AddScoped<ICatalogMRepository, CatalogRepository>();
 
 var app = builder.Build();
 

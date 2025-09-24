@@ -5,13 +5,13 @@ using MongoDB.Driver;
 
 namespace CatalogManagementService.Infrastructure.Data.Contexts
 {
-    public class CatalogManagementContext
+    public class CatalogContext
     {
         public readonly IMongoDatabase Database;
 
         public readonly IMongoCollection<ItemDocument> Documents;
 
-        public CatalogManagementContext(MongoClient client, string DatabaseName, string CollectionName)
+        public CatalogContext(MongoClient client, string DatabaseName, string CollectionName)
         {
             Database = client.GetDatabase(DatabaseName);
             Documents = Database.GetCollection<ItemDocument>(CollectionName);

@@ -8,13 +8,13 @@ using MongoDB.Driver;
 
 namespace CatalogManagementService.Infrastructure.Repositories
 {
-    public class CatalogManagementRepository : ICatalogManagementRepository
+    public class CatalogRepository : ICatalogMRepository
     {
-        private readonly CatalogManagementContext _context;
+        private readonly CatalogContext _context;
 
         private readonly FilterDefinitionBuilder<ItemDocument> filter;
 
-        public CatalogManagementRepository(CatalogManagementContext context)
+        public CatalogRepository(CatalogContext context)
         {
             _context = context;
             filter = Builders<ItemDocument>.Filter;

@@ -4,7 +4,7 @@ using CatalogManagementService.Domain.Entities;
 
 namespace CatalogManagementService.Domain.Interfaces
 {
-    public interface ICatalogManagementRepository
+    public interface ICatalogMRepository
     {
         Task<IEnumerable<Item>> GetAllAsync();
 

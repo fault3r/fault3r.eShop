@@ -2,7 +2,6 @@
 using System;
 using CatalogManagementService.Infrastructure.Configurations;
 using CatalogManagementService.Infrastructure.Data.Contexts;
-using Microsoft.Extensions.Options;
 using MongoDB.Driver;
 
 namespace CatalogManagementService.Api.Extensions
@@ -17,10 +16,10 @@ namespace CatalogManagementService.Api.Extensions
                 return new MongoClient(settings.ConnectionString);
                 
             });
-            services.AddScoped<CatalogManagementContext>(provider =>
+            services.AddScoped<CatalogContext>(provider =>
             {
                 var client = provider.GetRequiredService<MongoClient>();
-                return new CatalogManagementContext(client, settings.DatabaseName, settings.CollectionName);
+                return new CatalogContext(client, settings.DatabaseName, settings.CollectionName);
             });
             return services;
         }

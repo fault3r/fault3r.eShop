@@ -23,13 +23,13 @@ case "$operation" in
 esac
 
 solutions=(
-  "CatalogService/CatalogService.sln"
+  # "CatalogService/CatalogService.sln"
   "CatalogManagementService/CatalogManagementService.sln"
 )
 
 for sln in "${solutions[@]}"; do
   if [ -f "$sln" ]; then
-    echo "$verb $sln ..."
+	echo -e "\e[48;2;0;200;200m\e[1m\e[38;2;0;0;0m$verb $sln\e[0m"
     dotnet $cmd "$sln"
     echo $'\n'
   else

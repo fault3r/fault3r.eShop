@@ -12,20 +12,6 @@ services:
     networks:
       - eshop
 
-  catalogservice:
-    container_name: catalogservice
-    build:
-      context: ./CatalogService
-      dockerfile: Dockerfile
-    depends_on:
-      - mongo
-    ports:
-      - 5011:5011
-    networks:
-      - eshop
-    environment:
-      - ASPNETCORE_ENVIRONMENT=Development
-
   catalogmanagementservice:
     container_name: catalogmanagementservice
     build:
