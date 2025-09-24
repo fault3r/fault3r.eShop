@@ -24,7 +24,7 @@ namespace CatalogManagementService.Infrastructure.Repositories
         {
             var documents = await _context.Documents.Find(filter.Empty)
                 .ToListAsync();
-            return documents.Select(x => x.ToDomain());
+            return documents.Select(document => document.ToDomain());
         }
 
         public async Task<(bool Success, Item? Item)> GetByIdAsync(string id)

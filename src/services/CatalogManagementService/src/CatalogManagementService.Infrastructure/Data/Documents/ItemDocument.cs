@@ -13,7 +13,7 @@ namespace CatalogManagementService.Infrastructure.Data.Documents
 
         public decimal Price { get; set; }
 
-        public ICollection<string> Pictures { get; set; }
+        public IEnumerable<string> Pictures { get; set; }
 
         public DateTime Updated { get; set; }
 

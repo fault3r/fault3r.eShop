@@ -13,7 +13,7 @@ namespace CatalogManagementService.Domain.Entities
 
         public required decimal Price { get; set; }
 
-        public required ICollection<string> Pictures { get; set; }
+        public required IEnumerable<string> Pictures { get; set; }
 
         public required DateTime Updated { get; set; }
     }

@@ -27,7 +27,7 @@ if (app.Environment.IsDevelopment())
     app.UseDeveloperExceptionPage();
 }
 
-app.MapGet("/", () => $"{appSettings.Name}: {appSettings.Description}");
+app.MapGet("/", () => appSettings.Name);
 
 app.MapControllers();
 
