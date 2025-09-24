@@ -8,7 +8,7 @@ using MongoDB.Driver;
 
 namespace CatalogManagementService.Infrastructure.Repositories
 {
-    public class CatalogRepository : ICatalogMRepository
+    public class CatalogRepository : ICatalogRepository
     {
         private readonly CatalogContext _context;
 
