@@ -1,6 +1,8 @@
 
 using System;
 using CatalogManagementService.Api.Extensions;
+using CatalogManagementService.Application.Interfaces;
+using CatalogManagementService.Application.Services;
 using CatalogManagementService.Domain.Interfaces;
 using CatalogManagementService.Infrastructure.Configurations;
 using CatalogManagementService.Infrastructure.Repositories;
@@ -11,6 +13,8 @@ var appSettings = builder.Configuration.GetSection(nameof(ApplicationSettings))
     .Get<ApplicationSettings>() ??
     throw new NullReferenceException();
 
+builder.Services.AddVersioningConfiguration(appSettings.Version);
+
 builder.Services.AddControllers();
 
 var contextSettings = builder.Configuration.GetSection(nameof(ContextSettings))
@@ -19,6 +23,8 @@ var contextSettings = builder.Configuration.GetSection(nameof(ContextSettings))
 builder.Services.AddContextConfiguration(contextSettings);
 
 builder.Services.AddScoped<ICatalogRepository, CatalogRepository>();
+
+builder.Services.AddScoped<ICatalogService, CatalogService>();
 
 var app = builder.Build();
 
