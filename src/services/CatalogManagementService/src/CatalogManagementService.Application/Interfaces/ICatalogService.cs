@@ -5,14 +5,14 @@ namespace CatalogManagementService.Application.Interfaces
 {
     public interface ICatalogService
     {
-        Task<IEnumerable<ItemDto>> GetAllAsync();
+        Task<(string Message, IEnumerable<ItemDto> Items)> GetAllAsync();
 
-        Task<ItemDto?> GetByIdAsync(string id);
+        Task<(string Message,ItemDto? Item)> GetByIdAsync(string id);
 
-        Task<ItemDto?> CreateAsync(CreateItemDto item);
+        Task<(string Message,ItemDto? Item)> CreateAsync(CreateItemDto item);
 
-        Task<ItemDto?> UpdateAsync(string id, UpdateItemDto item);
+        Task<(string Message,ItemDto? Item)> UpdateAsync(string id, UpdateItemDto item);
 
-        Task<bool> DeleteAsync(string id);
+        Task<(string Message, bool Success)> DeleteAsync(string id);
     }
 }

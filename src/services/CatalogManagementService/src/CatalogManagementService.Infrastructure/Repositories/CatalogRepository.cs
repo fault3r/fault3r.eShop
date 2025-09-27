@@ -1,4 +1,5 @@
 using System;
+using CatalogManagementService.Domain.DTOs;
 using CatalogManagementService.Domain.Entities;
 using CatalogManagementService.Domain.Interfaces;
 using CatalogManagementService.Infrastructure.Data.Contexts;
@@ -20,23 +21,33 @@ namespace CatalogManagementService.Infrastructure.Repositories
             filter = Builders<ItemDocument>.Filter;
         }
 
-        public async Task<IEnumerable<Item>> GetAllAsync()
+        public async Task<RepositoryResult> GetAllAsync()
         {
             var documents = await _context.Documents.Find(filter.Empty)
                 .ToListAsync();
-            return documents.Select(document => document.ToDomain());
+            return new RepositoryResult
+            {
+                Success = true,
+                Message = "success.",
+                Items = documents.Select(document => document.ToDomain()),
+            };
         }
 
-        public async Task<(bool Success, Item? Item)> GetByIdAsync(string id)
+        public async Task<RepositoryResult> GetByIdAsync(string id)
         {
             var document = await _context.Documents.Find(filter.Eq(p => p.Id, ObjectId.Parse(id)))
                 .FirstOrDefaultAsync();
             if (document is null)
-                return (Success: false, Item: null);
-            return (Success: true, Item: document.ToDomain());
+                return new RepositoryResult { Message = "not found!" };
+            return new RepositoryResult
+            {
+                Success = true,
+                Message = "success.",
+                Items = [document.ToDomain()],
+            };
         }
 
-        public async Task<(bool Success, Item? Item)> CreateAsync(Item item)
+        public async Task<RepositoryResult> CreateAsync(Item item)
         {
             var document = new ItemDocument
             {
@@ -46,12 +57,15 @@ namespace CatalogManagementService.Infrastructure.Repositories
                 Pictures = item.Pictures,
             };
             await _context.Documents.InsertOneAsync(document);
-            if (document.Id == ObjectId.Empty)
-                return (Success: false, Item: null);
-            return (Success: true, Item: document.ToDomain());
+            return new RepositoryResult
+            {
+                Success = true,
+                Message = "success.",
+                Items = [document.ToDomain()],
+            };
         }
 
-        public async Task<(bool Success, Item? Item)> UpdateAsync(Item item)
+        public async Task<RepositoryResult> UpdateAsync(Item item)
         {
             var document = new ItemDocument
             {
@@ -65,15 +79,26 @@ namespace CatalogManagementService.Infrastructure.Repositories
             var updated = await _context.Documents.FindOneAndReplaceAsync(
                 filter.Eq(p => p.Id, document.Id), document);
             if (updated is null)
-                return (Success: false, Item: null);
-            return (Success: true, Item: document.ToDomain());
+                return new RepositoryResult { Message = "not found!" };
+            return new RepositoryResult
+            {
+                Success = true,
+                Message = "success",
+                Items = [document.ToDomain()],
+            };
         }
 
-        public async Task<bool> DeleteAsync(string id)
+        public async Task<RepositoryResult> DeleteAsync(string id)
         {
             var result = await _context.Documents.DeleteOneAsync(
                 filter.Eq(p => p.Id, ObjectId.Parse(id)));
-            return result.DeletedCount == 0;
+            if (result.DeletedCount == 0)
+                return new RepositoryResult { Message = "not found!" };
+            return new RepositoryResult
+            {
+                Success = true,
+                Message = "success",
+            };
         }
     }
 }

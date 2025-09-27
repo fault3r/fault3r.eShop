@@ -1,6 +1,7 @@
 using System;
 using CatalogManagementService.Application.DTOs;
 using CatalogManagementService.Application.Interfaces;
+using CatalogManagementService.Domain.DTOs;
 using CatalogManagementService.Domain.Entities;
 using CatalogManagementService.Domain.Interfaces;
 
@@ -10,18 +11,16 @@ namespace CatalogManagementService.Application.Services
     {
         private readonly ICatalogRepository _catalogRepository = catalogRepository;
 
-        public async Task<IEnumerable<ItemDto>> GetAllAsync()
+        public async Task<(string Message, IEnumerable<ItemDto> Items)> GetAllAsync()
         {
-            var items = await _catalogRepository.GetAllAsync();
-            return items.Select(item => ItemDTOs.ToDto(item));
+            var result = await _catalogRepository.GetAllAsync();
+            return (Message: result.Message,Items: result.Items.Select(item => ItemDTOs.ToDto(item)));
         }
 
-        public async Task<ItemDto?> GetByIdAsync(string id)
+        public async Task<(string Message,ItemDto? Item)> GetByIdAsync(string id)
         {
             var result = await _catalogRepository.GetByIdAsync(id);
-            if (result.Item is null)
-                return null;
-            return ItemDTOs.ToDto(result.Item);
+            return (Message: result.Message, Item: result.Items.Select(item => ItemDTOs.ToDto(item)).FirstOrDefault());
         }
 
         public async Task<ItemDto?> CreateAsync(CreateItemDto item)

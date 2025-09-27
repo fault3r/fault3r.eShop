@@ -1,19 +1,20 @@
 
 using System;
+using CatalogManagementService.Domain.DTOs;
 using CatalogManagementService.Domain.Entities;
 
 namespace CatalogManagementService.Domain.Interfaces
 {
     public interface ICatalogRepository
     {
-        Task<IEnumerable<Item>> GetAllAsync();
+        Task<RepositoryResult> GetAllAsync();
 
-        Task<(bool Success, Item? Item)> GetByIdAsync(string id);
+        Task<RepositoryResult> GetByIdAsync(string id);
 
-        Task<(bool Success, Item? Item)> CreateAsync(Item item);
+        Task<RepositoryResult> CreateAsync(Item item);
 
-        Task<(bool Success, Item? Item)> UpdateAsync(Item item);
+        Task<RepositoryResult> UpdateAsync(Item item);
 
-        Task<bool> DeleteAsync(string id);
+        Task<RepositoryResult> DeleteAsync(string id);
     }
 }
