@@ -41,12 +41,23 @@ namespace CatalogManagementService.Application.Services
 
         public async Task<ItemDto?> UpdateAsync(string id, UpdateItemDto item)
         {
-            throw new NotImplementedException();
+            var result = await _catalogRepository.UpdateAsync(new Item
+            {
+                Id = id,
+                Name = item.Name,
+                Description = item.Description,
+                Price = item.Price,
+                Pictures = item.Pictures,
+            });
+            if (result.Item is null)
+                return null;
+            return ItemDTOs.ToDto(result.Item);
         }
 
         public async Task<bool> DeleteAsync(string id)
         {
-            throw new NotImplementedException();
+            var result = await _catalogRepository.DeleteAsync(id);
+            return result;
         }
     }
 }
