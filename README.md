@@ -6,6 +6,4 @@
 
 
 ### todo:
-- repo res dto
-- ser res tuple
-- mediator final res
+- comp mediatr
