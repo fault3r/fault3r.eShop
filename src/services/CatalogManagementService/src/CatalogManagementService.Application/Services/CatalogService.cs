@@ -1,7 +1,6 @@
 using System;
 using CatalogManagementService.Application.DTOs;
 using CatalogManagementService.Application.Interfaces;
-using CatalogManagementService.Domain.DTOs;
 using CatalogManagementService.Domain.Entities;
 using CatalogManagementService.Domain.Interfaces;
 
@@ -14,16 +13,20 @@ namespace CatalogManagementService.Application.Services
         public async Task<(string Message, IEnumerable<ItemDto> Items)> GetAllAsync()
         {
             var result = await _catalogRepository.GetAllAsync();
-            return (Message: result.Message,Items: result.Items.Select(item => ItemDTOs.ToDto(item)));
+            return (
+                Message: result.Message,
+                Items: result.Items.Select(item => ItemDTOs.ToDto(item)));
         }
 
         public async Task<(string Message,ItemDto? Item)> GetByIdAsync(string id)
         {
             var result = await _catalogRepository.GetByIdAsync(id);
-            return (Message: result.Message, Item: result.Items.Select(item => ItemDTOs.ToDto(item)).FirstOrDefault());
+            return (
+                Message: result.Message,
+                Item: result.Items.Select(item => ItemDTOs.ToDto(item)).FirstOrDefault());
         }
 
-        public async Task<ItemDto?> CreateAsync(CreateItemDto item)
+        public async Task<(string Message,ItemDto? Item)> CreateAsync(CreateItemDto item)
         {
             var result = await _catalogRepository.CreateAsync(new Item
             {
@@ -33,12 +36,12 @@ namespace CatalogManagementService.Application.Services
                 Price = item.Price,
                 Pictures = item.Pictures,
             });
-            if (result.Item is null)
-                return null;
-            return ItemDTOs.ToDto(result.Item);
+            return (
+                Message: result.Message,
+                Item: result.Items.Select(item => ItemDTOs.ToDto(item)).FirstOrDefault());
         }
 
-        public async Task<ItemDto?> UpdateAsync(string id, UpdateItemDto item)
+        public async Task<(string Message,ItemDto? Item)> UpdateAsync(string id, UpdateItemDto item)
         {
             var result = await _catalogRepository.UpdateAsync(new Item
             {
@@ -48,15 +51,17 @@ namespace CatalogManagementService.Application.Services
                 Price = item.Price,
                 Pictures = item.Pictures,
             });
-            if (result.Item is null)
-                return null;
-            return ItemDTOs.ToDto(result.Item);
+            return (
+                Message: result.Message,
+                Item: result.Items.Select(item => ItemDTOs.ToDto(item)).FirstOrDefault());
         }
 
-        public async Task<bool> DeleteAsync(string id)
+        public async Task<(string Message, bool Success)> DeleteAsync(string id)
         {
             var result = await _catalogRepository.DeleteAsync(id);
-            return result;
+            return (
+                Message: result.Message,
+                Success: result.Success);
         }
     }
 }
