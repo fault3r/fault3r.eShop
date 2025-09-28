@@ -11,13 +11,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="MediatR/Handlers/" />
-    <Folder Include="MediatR/Handlers/Commands/" />
-    <Folder Include="MediatR/Handlers/Queries/" />
-    <Folder Include="MediatR/Queries/" />
-  </ItemGroup>
-
-  <ItemGroup>
     <PackageReference Include="MediatR" Version="13.0.0" />
   </ItemGroup>
 

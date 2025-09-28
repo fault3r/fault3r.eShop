@@ -18,7 +18,7 @@ namespace CatalogManagementService.Application.Services
                 Items: result.Items.Select(item => ItemDTOs.ToDto(item)));
         }
 
-        public async Task<(string Message,ItemDto? Item)> GetByIdAsync(string id)
+        public async Task<(string Message, ItemDto? Item)> GetByIdAsync(string id)
         {
             var result = await _catalogRepository.GetByIdAsync(id);
             return (
@@ -26,7 +26,7 @@ namespace CatalogManagementService.Application.Services
                 Item: result.Items.Select(item => ItemDTOs.ToDto(item)).FirstOrDefault());
         }
 
-        public async Task<(string Message,ItemDto? Item)> CreateAsync(CreateItemDto item)
+        public async Task<(string Message, ItemDto? Item)> CreateAsync(CreateItemDto item)
         {
             var result = await _catalogRepository.CreateAsync(new Item
             {
@@ -41,7 +41,7 @@ namespace CatalogManagementService.Application.Services
                 Item: result.Items.Select(item => ItemDTOs.ToDto(item)).FirstOrDefault());
         }
 
-        public async Task<(string Message,ItemDto? Item)> UpdateAsync(string id, UpdateItemDto item)
+        public async Task<(string Message, ItemDto? Item)> UpdateAsync(string id, UpdateItemDto item)
         {
             var result = await _catalogRepository.UpdateAsync(new Item
             {
