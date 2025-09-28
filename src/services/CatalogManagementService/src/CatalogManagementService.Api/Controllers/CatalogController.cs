@@ -1,5 +1,6 @@
-using CatalogManagementService.Application.DTOs;
-using CatalogManagementService.Application.Interfaces;
+
+using System;
+using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CatalogManagementService.Api.Controllers
@@ -7,15 +8,9 @@ namespace CatalogManagementService.Api.Controllers
     [Route("api/v1/catalog")]
     [ApiController]
     [ApiVersion("1.0")]
-    public class CatalogController(ICatalogService catalogService) : ControllerBase
+    public class CatalogController(IMediator mediator) : ControllerBase
     {
-        private readonly ICatalogService _catalogService = catalogService;
+        private readonly IMediator _mediator = mediator;
 
-        [HttpGet]
-        public async Task<ActionResult> Get()
-        {
-            var items = await _catalogService.GetAllAsync();
-            return Ok(items);
-        }
     }
 }

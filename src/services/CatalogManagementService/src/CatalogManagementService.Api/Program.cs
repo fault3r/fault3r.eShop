@@ -15,7 +15,12 @@ var appSettings = builder.Configuration.GetSection(nameof(ApplicationSettings))
 
 builder.Services.AddVersioningConfiguration(appSettings.Version);
 
-builder.Services.AddControllers();
+builder.Services.AddControllers(options =>
+{
+    options.SuppressAsyncSuffixInActionNames = false;
+});
+
+builder.Services.AddMediatrConfiguration();
 
 var contextSettings = builder.Configuration.GetSection(nameof(ContextSettings))
     .Get<ContextSettings>() ??
