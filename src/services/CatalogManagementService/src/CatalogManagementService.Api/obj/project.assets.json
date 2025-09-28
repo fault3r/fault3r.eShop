@@ -1708,6 +1708,7 @@
     "net8.0": [
       "CatalogManagementService.Application >= 1.0.0",
       "CatalogManagementService.Infrastructure >= 1.0.0",
+      "MediatR >= 13.0.0",
       "Microsoft.AspNetCore.Mvc.Versioning >= 5.1.0",
       "Microsoft.AspNetCore.OpenApi >= 8.0.19",
       "MongoDB.Driver >= 3.5.0",
@@ -1766,6 +1767,10 @@
       "net8.0": {
         "targetAlias": "net8.0",
         "dependencies": {
+          "MediatR": {
+            "target": "Package",
+            "version": "[13.0.0, )"
+          },
           "Microsoft.AspNetCore.Mvc.Versioning": {
             "target": "Package",
             "version": "[5.1.0, )"

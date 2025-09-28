@@ -6,11 +6,11 @@ using MediatR;
 
 namespace CatalogManagementService.Application.MediatR.Handlers.Commands
 {
-    public class CreateItemCommandHandler : IRequestHandler<CreateItemCommand, ItemDto?>
+    public class CreateCommandHandler : IRequestHandler<CreateItemCommand, ItemDto?>
     {
         private readonly ICatalogService _catalogService;
 
-        public CreateItemCommandHandler(ICatalogService catalogService)
+        public CreateCommandHandler(ICatalogService catalogService)
         {
             _catalogService = catalogService;
         }

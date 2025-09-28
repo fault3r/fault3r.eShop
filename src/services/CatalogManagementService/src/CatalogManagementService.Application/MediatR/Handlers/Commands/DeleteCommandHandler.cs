@@ -5,11 +5,11 @@ using MediatR;
 
 namespace CatalogManagementService.Application.MediatR.Handlers.Commands
 {
-    public class DeleteItemCommandHandler : IRequestHandler<DeleteItemCommand, bool>
+    public class DeleteCommandHandler : IRequestHandler<DeleteItemCommand, bool>
     {
         private readonly ICatalogService _catalogService;
 
-        public DeleteItemCommandHandler(ICatalogService catalogService)
+        public DeleteCommandHandler(ICatalogService catalogService)
         {
             _catalogService = catalogService;
         }
