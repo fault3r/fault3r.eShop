@@ -6,7 +6,7 @@ using MediatR;
 
 namespace CatalogManagementService.Application.MediatR.Handlers.Commands
 {
-    public class CreateCommandHandler : IRequestHandler<CreateItemCommand, ItemDto?>
+    public class CreateCommandHandler : IRequestHandler<CreateCommand, ItemDto?>
     {
         private readonly ICatalogService _catalogService;
 
@@ -15,7 +15,7 @@ namespace CatalogManagementService.Application.MediatR.Handlers.Commands
             _catalogService = catalogService;
         }
 
-        public async Task<ItemDto?> Handle(CreateItemCommand request, CancellationToken cancellationToken)
+        public async Task<ItemDto?> Handle(CreateCommand request, CancellationToken cancellationToken)
         {
             var result = await _catalogService.CreateAsync(request.Item);
             return result.Item;

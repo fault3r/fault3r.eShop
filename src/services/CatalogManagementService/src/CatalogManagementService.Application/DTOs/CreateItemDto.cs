@@ -6,6 +6,5 @@ namespace CatalogManagementService.Application.DTOs
         string Name,
         string Description,
         decimal Price,
-        IEnumerable<string> Pictures
-    );
+        IEnumerable<string> Pictures);
 }
