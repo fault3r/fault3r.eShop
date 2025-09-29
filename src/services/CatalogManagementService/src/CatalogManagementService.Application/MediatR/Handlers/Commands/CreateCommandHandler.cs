@@ -17,8 +17,8 @@ namespace CatalogManagementService.Application.MediatR.Handlers.Commands
 
         public async Task<ItemDto?> Handle(CreateCommand request, CancellationToken cancellationToken)
         {
-            var result = await _catalogService.CreateAsync(request.Item);
-            return result.Item;
+            var (Success, Message, Item) = await _catalogService.CreateAsync(request.Item);
+            return Item;
         }
     }
 }

@@ -16,8 +16,8 @@ namespace CatalogManagementService.Application.MediatR.Handlers.Commands
 
         public async Task<bool> Handle(DeleteCommand request, CancellationToken cancellationToken)
         {
-            var result = await _catalogService.DeleteAsync(request.Id);
-            return result.Success;
+            var (Success, Message) = await _catalogService.DeleteAsync(request.Id);
+            return Success;
         }
     }
 }

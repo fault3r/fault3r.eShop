@@ -1,10 +1,12 @@
 
 using System;
+using System.Text.Json;
 using CatalogManagementService.Application.DTOs;
 using CatalogManagementService.Application.MediatR.Commands;
 using CatalogManagementService.Application.MediatR.Queries;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
+using MongoDB.Bson;
 
 namespace CatalogManagementService.Api.Controllers
 {
@@ -35,9 +37,29 @@ namespace CatalogManagementService.Api.Controllers
         [HttpPost]
         public async Task<ActionResult<ItemDto?>> Create([FromBody] CreateItemDto item)
         {
-            var newItem = await _mediator.Send(new CreateCommand { Item = item });
-            return Ok();
-
+            var createdItem = await _mediator.Send(new CreateCommand { Item = item });
+            return Ok(createdItem);
         }
+
+        [HttpPut]
+        [Route("{id}")]
+        public async Task<ActionResult> Update([FromRoute] string id, [FromBody] UpdateItemDto item)
+        {
+            var updatedItem = await _mediator.Send(new UpdateCommand { Id = id, Item = item });
+            if (updatedItem is null)
+                return NotFound();
+            return Ok(updatedItem);
+        }
+
+        [HttpDelete]
+        [Route("{id}")]
+        public async Task<ActionResult> Delete([FromRoute] string id)
+        {
+            bool result = await _mediator.Send(new DeleteCommand { Id = id });
+            if (!result)
+                return NotFound();
+            return NoContent();
+        }
+        
     }
 }

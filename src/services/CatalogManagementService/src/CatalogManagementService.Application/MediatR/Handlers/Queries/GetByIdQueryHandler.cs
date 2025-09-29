@@ -17,8 +17,8 @@ namespace CatalogManagementService.Application.MediatR.Handlers.Queries
 
         public async Task<ItemDto?> Handle(GetByIdQuery request, CancellationToken cancellationToken)
         {
-            var result = await _catalogService.GetByIdAsync(request.Id);
-            return result.Item;
+            var (Success, Message, Item) = await _catalogService.GetByIdAsync(request.Id);
+            return Item;
         }
     }
 }
