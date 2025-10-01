@@ -20,6 +20,11 @@ builder.Services.AddControllers(options =>
     options.SuppressAsyncSuffixInActionNames = false;
 });
 
+var jwtSettings = builder.Configuration.GetSection(nameof(JwtSettings))
+    .Get<JwtSettings>() ??
+    throw new NullReferenceException();
+builder.Services.AddJwtConfiguration(jwtSettings);
+
 builder.Services.AddMediatrConfiguration();
 
 var contextSettings = builder.Configuration.GetSection(nameof(ContextSettings))
