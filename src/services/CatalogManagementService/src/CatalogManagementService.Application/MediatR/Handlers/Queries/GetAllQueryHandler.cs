@@ -6,7 +6,7 @@ using MediatR;
 
 namespace CatalogManagementService.Application.MediatR.Handlers.Queries
 {
-    public class GetAllQueryHandler : IRequestHandler<GetAllQuery, IEnumerable<ItemDto>>
+    public class GetAllQueryHandler : IRequestHandler<GetAllQuery, (int Code, IEnumerable<ItemDto> Items)>
     {
         private readonly ICatalogService _catalogService;
 
@@ -15,10 +15,9 @@ namespace CatalogManagementService.Application.MediatR.Handlers.Queries
             _catalogService = catalogService;
         }
 
-        public async Task<IEnumerable<ItemDto>> Handle(GetAllQuery request, CancellationToken cancellationToken)
+        public async Task<(int Code, IEnumerable<ItemDto> Items)> Handle(GetAllQuery request, CancellationToken cancellationToken)
         {
-            var (Success, Message, Items) = await _catalogService.GetAllAsync();
-            return Items;
+           return await _catalogService.GetAllAsync();
         }
     }
 }

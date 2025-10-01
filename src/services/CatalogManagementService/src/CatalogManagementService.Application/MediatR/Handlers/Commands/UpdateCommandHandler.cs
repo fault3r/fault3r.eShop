@@ -6,7 +6,7 @@ using MediatR;
 
 namespace CatalogManagementService.Application.MediatR.Handlers.Commands
 {
-    public class UpdateCommandHandler : IRequestHandler<UpdateCommand, ItemDto?>
+    public class UpdateCommandHandler : IRequestHandler<UpdateCommand, (int Code, ItemDto? Item)>
     {
         private readonly ICatalogService _catalogService;
 
@@ -15,10 +15,9 @@ namespace CatalogManagementService.Application.MediatR.Handlers.Commands
             _catalogService = catalogService;
         }
 
-        public async Task<ItemDto?> Handle(UpdateCommand request, CancellationToken cancellationToken)
+        public async Task<(int Code, ItemDto? Item)> Handle(UpdateCommand request, CancellationToken cancellationToken)
         {
-            var (Success, Message, Item) = await _catalogService.UpdateAsync(request.Id, request.Item);
-            return Item;
+            return await _catalogService.UpdateAsync(request.Id, request.Item);
         }
     }
 }

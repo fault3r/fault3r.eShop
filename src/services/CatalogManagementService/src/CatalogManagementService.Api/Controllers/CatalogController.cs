@@ -1,6 +1,5 @@
 
 using System;
-using System.Text.Json;
 using CatalogManagementService.Application.DTOs;
 using CatalogManagementService.Application.MediatR.Commands;
 using CatalogManagementService.Application.MediatR.Queries;

@@ -6,7 +6,7 @@ using MediatR;
 
 namespace CatalogManagementService.Application.MediatR.Handlers.Queries
 {
-    public class GetByIdQueryHandler : IRequestHandler<GetByIdQuery, ItemDto?>
+    public class GetByIdQueryHandler : IRequestHandler<GetByIdQuery, (int Code, ItemDto? Item)>
     {
         private readonly ICatalogService _catalogService;
 
@@ -15,10 +15,9 @@ namespace CatalogManagementService.Application.MediatR.Handlers.Queries
             _catalogService = catalogService;
         }
 
-        public async Task<ItemDto?> Handle(GetByIdQuery request, CancellationToken cancellationToken)
+        public async Task<(int Code, ItemDto? Item)> Handle(GetByIdQuery request, CancellationToken cancellationToken)
         {
-            var (Success, Message, Item) = await _catalogService.GetByIdAsync(request.Id);
-            return Item;
+            return await _catalogService.GetByIdAsync(request.Id);
         }
     }
 }

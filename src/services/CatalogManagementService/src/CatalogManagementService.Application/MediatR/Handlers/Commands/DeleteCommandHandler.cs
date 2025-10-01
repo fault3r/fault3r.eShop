@@ -5,7 +5,7 @@ using MediatR;
 
 namespace CatalogManagementService.Application.MediatR.Handlers.Commands
 {
-    public class DeleteCommandHandler : IRequestHandler<DeleteCommand, bool>
+    public class DeleteCommandHandler : IRequestHandler<DeleteCommand, int>
     {
         private readonly ICatalogService _catalogService;
 
@@ -14,10 +14,9 @@ namespace CatalogManagementService.Application.MediatR.Handlers.Commands
             _catalogService = catalogService;
         }
 
-        public async Task<bool> Handle(DeleteCommand request, CancellationToken cancellationToken)
+        public async Task<int> Handle(DeleteCommand request, CancellationToken cancellationToken)
         {
-            var (Success, Message) = await _catalogService.DeleteAsync(request.Id);
-            return Success;
+            return await _catalogService.DeleteAsync(request.Id);
         }
     }
 }
