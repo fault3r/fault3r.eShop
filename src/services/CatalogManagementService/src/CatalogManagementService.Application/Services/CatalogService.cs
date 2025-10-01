@@ -10,25 +10,23 @@ namespace CatalogManagementService.Application.Services
     {
         private readonly ICatalogRepository _catalogRepository = catalogRepository;
 
-        public async Task<(bool Success, string Message, IEnumerable<ItemDto> Items)> GetAllAsync()
+        public async Task<(int Code, IEnumerable<ItemDto> Items)> GetAllAsync()
         {
             var result = await _catalogRepository.GetAllAsync();
             return (
-                    Success: result.Success,
-                    Message: result.Message,
-                    Items: result.Items.Select(item => ItemDTOs.ToDto(item)));
+                Code: result.Code,
+                Items: result.Items.Select(item => ItemDTOs.ToDto(item)));
         }
 
-        public async Task<(bool Success, string Message, ItemDto? Item)> GetByIdAsync(string id)
+        public async Task<(int Code, ItemDto? Item)> GetByIdAsync(string id)
         {
             var result = await _catalogRepository.GetByIdAsync(id);
             return (
-                Success: result.Success,                
-                Message: result.Message,
+                Code: result.Code,
                 Item: result.Items.Select(item => ItemDTOs.ToDto(item)).FirstOrDefault());
         }
 
-        public async Task<(bool Success, string Message, ItemDto? Item)> CreateAsync(CreateItemDto item)
+        public async Task<(int Code, ItemDto? Item)> CreateAsync(CreateItemDto item)
         {
             var result = await _catalogRepository.CreateAsync(new Item
             {
@@ -39,12 +37,11 @@ namespace CatalogManagementService.Application.Services
                 Pictures = item.Pictures,
             });
             return (
-                Success: result.Success,                                   
-                Message: result.Message,
+                Code: result.Code,
                 Item: result.Items.Select(item => ItemDTOs.ToDto(item)).FirstOrDefault());
         }
 
-        public async Task<(bool Success, string Message, ItemDto? Item)> UpdateAsync(string id, UpdateItemDto item)
+        public async Task<(int Code, ItemDto? Item)> UpdateAsync(string id, UpdateItemDto item)
         {
             var result = await _catalogRepository.UpdateAsync(new Item
             {
@@ -55,17 +52,15 @@ namespace CatalogManagementService.Application.Services
                 Pictures = item.Pictures,
             });
             return (
-                Success: result.Success,
-                Message: result.Message,
+                Code: result.Code,
                 Item: result.Items.Select(item => ItemDTOs.ToDto(item)).FirstOrDefault());
         }
 
-        public async Task<(bool Success, string Message)> DeleteAsync(string id)
+        public async Task<int> DeleteAsync(string id)
         {
             var result = await _catalogRepository.DeleteAsync(id);
-            return (
-                Success: result.Success,
-                Message: result.Message);
+            return result.Code;
         }
+        
     }
 }

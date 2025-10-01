@@ -6,8 +6,6 @@ namespace CatalogManagementService.Domain.DTOs
 {
     public class RepositoryResult
     {
-        public bool Success { get; set; } = false;
-
         public int Code { get; set; } = 0;
 
         public IEnumerable<Item> Items { get; set; } = [];

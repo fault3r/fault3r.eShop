@@ -6,7 +6,6 @@ using CatalogManagementService.Infrastructure.Data.Contexts;
 using CatalogManagementService.Infrastructure.Data.Documents;
 using MongoDB.Bson;
 using MongoDB.Driver;
-using SharpCompress.Common;
 
 namespace CatalogManagementService.Infrastructure.Repositories
 {
@@ -33,7 +32,6 @@ namespace CatalogManagementService.Infrastructure.Repositories
                     .ToListAsync();
                 return new RepositoryResult
                 {
-                    Success = true,
                     Code = (int)RepositoryResultCode.Ok,
                     Items = documents.Select(i => i.ToDomain()),
                 };
@@ -66,7 +64,6 @@ namespace CatalogManagementService.Infrastructure.Repositories
                     };
                 return new RepositoryResult
                 {
-                    Success = true,
                     Code = (int)RepositoryResultCode.Ok,
                     Items = [document.ToDomain()],
                 };
@@ -94,7 +91,6 @@ namespace CatalogManagementService.Infrastructure.Repositories
                 await _context.Documents.InsertOneAsync(document);
                 return new RepositoryResult
                 {
-                    Success = true,
                     Code = (int)RepositoryResultCode.Created,
                     Items = [document.ToDomain()],
                 };
@@ -135,7 +131,6 @@ namespace CatalogManagementService.Infrastructure.Repositories
                     };
                 return new RepositoryResult
                 {
-                    Success = true,
                     Code = (int)RepositoryResultCode.Ok,
                     Items = [document.ToDomain()],
                 };
@@ -167,7 +162,6 @@ namespace CatalogManagementService.Infrastructure.Repositories
                     };
                 return new RepositoryResult
                 {
-                    Success = true,
                     Code = (int)RepositoryResultCode.NoContent,
                 };
             }
