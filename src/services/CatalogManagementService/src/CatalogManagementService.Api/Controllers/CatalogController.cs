@@ -16,47 +16,41 @@ namespace CatalogManagementService.Api.Controllers
         private readonly IMediator _mediator = mediator;
 
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<ItemDto>>> GetAllAsync()
+        public async Task<ActionResult> GetAllAsync()
         {
-            var items = await _mediator.Send(new GetAllQuery());
-            return Ok(items);
+            var (Code, Items) = await _mediator.Send(new GetAllQuery());
+            return StatusCode(Code, Items);
         }
 
         [HttpGet]
         [Route("{id}")]
-        public async Task<ActionResult<ItemDto?>> GetByIdAsync([FromRoute] string id)
+        public async Task<ActionResult> GetByIdAsync([FromRoute] string id)
         {
-            var item = await _mediator.Send(new GetByIdQuery { Id = id });
-            if (item is null)
-                return NotFound();
-            return Ok(item);
+            var (Code, Item) = await _mediator.Send(new GetByIdQuery { Id = id });
+            return StatusCode(Code, Item);
         }
 
         [HttpPost]
-        public async Task<ActionResult<ItemDto?>> CreateAsync([FromBody] CreateItemDto item)
+        public async Task<ActionResult> CreateAsync([FromBody] CreateItemDto item)
         {
-            var createdItem = await _mediator.Send(new CreateCommand { Item = item });
-            return Ok();
+            var (Code, Item) = await _mediator.Send(new CreateCommand { Item = item });
+            return StatusCode(Code, Item);
         }
 
         [HttpPut]
         [Route("{id}")]
         public async Task<ActionResult> UpdateAsync([FromRoute] string id, [FromBody] UpdateItemDto item)
         {
-            var updatedItem = await _mediator.Send(new UpdateCommand { Id = id, Item = item });
-            if (updatedItem is null)
-                return NotFound();
-            return Ok(updatedItem);
+            var (Code, Item) = await _mediator.Send(new UpdateCommand { Id = id, Item = item });
+            return StatusCode(Code, Item);
         }
 
         [HttpDelete]
         [Route("{id}")]
         public async Task<ActionResult> DeleteAsync([FromRoute] string id)
         {
-            bool result = await _mediator.Send(new DeleteCommand { Id = id });
-            if (!result)
-                return NotFound();
-            return NoContent();
+            int Code = await _mediator.Send(new DeleteCommand { Id = id });
+            return StatusCode(Code);
         }
         
     }
