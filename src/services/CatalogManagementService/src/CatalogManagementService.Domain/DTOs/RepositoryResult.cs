@@ -8,8 +8,18 @@ namespace CatalogManagementService.Domain.DTOs
     {
         public bool Success { get; set; } = false;
 
-        public string Message { get; set; } = string.Empty;
+        public int Code { get; set; } = 0;
 
-        public IEnumerable<Item> Items { get; set; } = [];  
+        public IEnumerable<Item> Items { get; set; } = [];
+    }
+
+    public enum RepositoryResultCode
+    {
+        Ok = 200,
+        Created = 201,
+        NoContent = 204,
+        BadRequest = 400,
+        NotFound = 404,
+        InternalServerError = 500,
     }
 }

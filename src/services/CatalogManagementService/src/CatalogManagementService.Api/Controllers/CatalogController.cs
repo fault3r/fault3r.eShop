@@ -6,7 +6,6 @@ using CatalogManagementService.Application.MediatR.Commands;
 using CatalogManagementService.Application.MediatR.Queries;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
-using MongoDB.Bson;
 
 namespace CatalogManagementService.Api.Controllers
 {
@@ -18,7 +17,7 @@ namespace CatalogManagementService.Api.Controllers
         private readonly IMediator _mediator = mediator;
 
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<ItemDto>>> GetAll()
+        public async Task<ActionResult<IEnumerable<ItemDto>>> GetAllAsync()
         {
             var items = await _mediator.Send(new GetAllQuery());
             return Ok(items);
@@ -26,7 +25,7 @@ namespace CatalogManagementService.Api.Controllers
 
         [HttpGet]
         [Route("{id}")]
-        public async Task<ActionResult<ItemDto?>> GetById([FromRoute] string id)
+        public async Task<ActionResult<ItemDto?>> GetByIdAsync([FromRoute] string id)
         {
             var item = await _mediator.Send(new GetByIdQuery { Id = id });
             if (item is null)
@@ -35,15 +34,15 @@ namespace CatalogManagementService.Api.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult<ItemDto?>> Create([FromBody] CreateItemDto item)
+        public async Task<ActionResult<ItemDto?>> CreateAsync([FromBody] CreateItemDto item)
         {
             var createdItem = await _mediator.Send(new CreateCommand { Item = item });
-            return Ok(createdItem);
+            return Ok();
         }
 
         [HttpPut]
         [Route("{id}")]
-        public async Task<ActionResult> Update([FromRoute] string id, [FromBody] UpdateItemDto item)
+        public async Task<ActionResult> UpdateAsync([FromRoute] string id, [FromBody] UpdateItemDto item)
         {
             var updatedItem = await _mediator.Send(new UpdateCommand { Id = id, Item = item });
             if (updatedItem is null)
@@ -53,7 +52,7 @@ namespace CatalogManagementService.Api.Controllers
 
         [HttpDelete]
         [Route("{id}")]
-        public async Task<ActionResult> Delete([FromRoute] string id)
+        public async Task<ActionResult> DeleteAsync([FromRoute] string id)
         {
             bool result = await _mediator.Send(new DeleteCommand { Id = id });
             if (!result)

@@ -6,6 +6,7 @@ using CatalogManagementService.Infrastructure.Data.Contexts;
 using CatalogManagementService.Infrastructure.Data.Documents;
 using MongoDB.Bson;
 using MongoDB.Driver;
+using SharpCompress.Common;
 
 namespace CatalogManagementService.Infrastructure.Repositories
 {
@@ -21,6 +22,9 @@ namespace CatalogManagementService.Infrastructure.Repositories
             filter = Builders<ItemDocument>.Filter;
         }
 
+        private static bool IdValidation(string id) =>
+            ObjectId.TryParse(id, out var result);   
+
         public async Task<RepositoryResult> GetAllAsync()
         {
             try
@@ -30,13 +34,16 @@ namespace CatalogManagementService.Infrastructure.Repositories
                 return new RepositoryResult
                 {
                     Success = true,
-                    Message = "success.",
-                    Items = documents.Select(document => document.ToDomain()),
+                    Code = (int)RepositoryResultCode.Ok,
+                    Items = documents.Select(i => i.ToDomain()),
                 };
             }
-            catch (Exception ex)
+            catch
             {
-                return new RepositoryResult { Message = ex.Message };
+                return new RepositoryResult
+                {
+                    Code = (int)RepositoryResultCode.InternalServerError,
+                };
             }
         }
 
@@ -44,20 +51,32 @@ namespace CatalogManagementService.Infrastructure.Repositories
         {
             try
             {
-                var document = await _context.Documents.Find(filter.Eq(p => p.Id, ObjectId.Parse(id)))
+                if(!IdValidation(id))
+                    return new RepositoryResult
+                    {
+                        Code = (int)RepositoryResultCode.BadRequest,
+                    };                
+                var document = await _context.Documents
+                    .Find(filter.Eq(p => p.Id, ObjectId.Parse(id)))
                     .FirstOrDefaultAsync();
                 if (document is null)
-                    return new RepositoryResult { Message = "not found!" };
+                    return new RepositoryResult
+                    {
+                        Code = (int)RepositoryResultCode.NotFound
+                    };
                 return new RepositoryResult
                 {
                     Success = true,
-                    Message = "success.",
+                    Code = (int)RepositoryResultCode.Ok,
                     Items = [document.ToDomain()],
                 };
             }
-            catch (Exception ex)
+            catch
             {
-                return new RepositoryResult { Message = ex.Message };
+                return new RepositoryResult
+                {
+                    Code = (int)RepositoryResultCode.InternalServerError,
+                };
             }
         }
 
@@ -76,13 +95,16 @@ namespace CatalogManagementService.Infrastructure.Repositories
                 return new RepositoryResult
                 {
                     Success = true,
-                    Message = "success.",
+                    Code = (int)RepositoryResultCode.Created,
                     Items = [document.ToDomain()],
                 };
             }
-            catch (Exception ex)
+            catch
             {
-                return new RepositoryResult { Message = ex.Message };
+                return new RepositoryResult
+                {
+                    Code = (int)RepositoryResultCode.InternalServerError,
+                };
             }
         }
 
@@ -90,6 +112,11 @@ namespace CatalogManagementService.Infrastructure.Repositories
         {
             try
             {
+                if (!IdValidation(item.Id))
+                    return new RepositoryResult
+                    {
+                        Code = (int)RepositoryResultCode.BadRequest,
+                    };
                 var document = new ItemDocument
                 {
                     Id = ObjectId.Parse(item.Id),
@@ -102,17 +129,23 @@ namespace CatalogManagementService.Infrastructure.Repositories
                 var updated = await _context.Documents.FindOneAndReplaceAsync(
                     filter.Eq(p => p.Id, document.Id), document);
                 if (updated is null)
-                    return new RepositoryResult { Message = "not found!" };
+                    return new RepositoryResult
+                    {
+                        Code = (int)RepositoryResultCode.NotFound
+                    };
                 return new RepositoryResult
                 {
                     Success = true,
-                    Message = "success",
+                    Code = (int)RepositoryResultCode.Ok,
                     Items = [document.ToDomain()],
                 };
             }
-            catch (Exception ex)
+            catch
             {
-                return new RepositoryResult { Message = ex.Message };
+                return new RepositoryResult
+                {
+                    Code = (int)RepositoryResultCode.InternalServerError,
+                };
             }
         }
 
@@ -120,21 +153,32 @@ namespace CatalogManagementService.Infrastructure.Repositories
         {
             try
             {
+                if (!IdValidation(id))
+                    return new RepositoryResult
+                    {
+                        Code = (int)RepositoryResultCode.BadRequest,
+                    };
                 var result = await _context.Documents.DeleteOneAsync(
                     filter.Eq(p => p.Id, ObjectId.Parse(id)));
                 if (result.DeletedCount == 0)
-                    return new RepositoryResult { Message = "not found!" };
+                    return new RepositoryResult
+                    {
+                        Code = (int)RepositoryResultCode.NotFound
+                    };
                 return new RepositoryResult
                 {
                     Success = true,
-                    Message = "success",
+                    Code = (int)RepositoryResultCode.NoContent,
                 };
             }
-            catch (Exception ex)
+            catch
             {
-                return new RepositoryResult { Message = ex.Message };
+                return new RepositoryResult
+                {
+                    Code = (int)RepositoryResultCode.InternalServerError,
+                };
             }
-        }
+        }                 
         
     }
 }
