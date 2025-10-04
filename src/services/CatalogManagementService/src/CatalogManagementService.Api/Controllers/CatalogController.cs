@@ -27,6 +27,8 @@ namespace CatalogManagementService.Api.Controllers
         public async Task<ActionResult> GetByIdAsync([FromRoute] string id)
         {
             var (Code, Item) = await _mediator.Send(new GetByIdQuery { Id = id });
+            if (Code == 404)
+                return NotFound();
             return StatusCode(Code, Item);
         }
 
