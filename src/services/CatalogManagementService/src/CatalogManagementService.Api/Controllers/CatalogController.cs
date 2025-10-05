@@ -13,7 +13,7 @@ namespace CatalogManagementService.Api.Controllers
     [ApiVersion("1.0")]
     public class CatalogController(IMediator mediator) : ControllerBase
     {
-        private readonly IMediator _mediator = mediator;        
+        private readonly IMediator _mediator = mediator;
 
         [HttpGet]
         public async Task<ActionResult> GetAllAsync()
@@ -21,7 +21,7 @@ namespace CatalogManagementService.Api.Controllers
             var (Code, Items) = await _mediator.Send(new GetAllQuery());
             return Code switch
             {
-                200 => Ok(Items),
+                StatusCodes.Status200OK => Ok(Items),
                 _ => StatusCode(Code),
             };
         }
@@ -33,9 +33,9 @@ namespace CatalogManagementService.Api.Controllers
             var (Code, Item) = await _mediator.Send(new GetByIdQuery { Id = id });
             return Code switch
             {
-                200 => Ok(Item),
-                400 => BadRequest(),
-                404 => NotFound(),
+                StatusCodes.Status200OK => Ok(Item),
+                StatusCodes.Status400BadRequest => BadRequest(),
+                StatusCodes.Status404NotFound => NotFound(),
                 _ => StatusCode(Code),
             };
         }
@@ -46,7 +46,7 @@ namespace CatalogManagementService.Api.Controllers
             var (Code, Item) = await _mediator.Send(new CreateCommand { Item = item });
             return Code switch
             {
-                201 => CreatedAtAction(nameof(GetByIdAsync), new { id = Item.Id }, Item),
+                StatusCodes.Status201Created => CreatedAtAction(nameof(GetByIdAsync), new { id = Item.Id }, Item),
                 _ => StatusCode(Code),
             };
         }
@@ -58,9 +58,9 @@ namespace CatalogManagementService.Api.Controllers
             var (Code, Item) = await _mediator.Send(new UpdateCommand { Id = id, Item = item });
             return Code switch
             {
-                200 => Ok(Item),
-                400 => BadRequest(),
-                404 => NotFound(),
+                StatusCodes.Status200OK => Ok(Item),
+                StatusCodes.Status400BadRequest => BadRequest(),
+                StatusCodes.Status404NotFound => NotFound(),
                 _ => StatusCode(Code),
             };
         }
@@ -72,12 +72,12 @@ namespace CatalogManagementService.Api.Controllers
             int Code = await _mediator.Send(new DeleteCommand { Id = id });
             return Code switch
             {
-                204 => NoContent(),
-                400 => BadRequest(),
-                404 => NotFound(),
+                StatusCodes.Status204NoContent => NoContent(),
+                StatusCodes.Status400BadRequest => BadRequest(),
+                StatusCodes.Status404NotFound => NotFound(),
                 _ => StatusCode(Code),
             };
         }
-        
+
     }
 }
