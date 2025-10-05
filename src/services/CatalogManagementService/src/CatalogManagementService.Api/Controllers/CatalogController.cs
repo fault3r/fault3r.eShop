@@ -46,7 +46,8 @@ namespace CatalogManagementService.Api.Controllers
             var (Code, Item) = await _mediator.Send(new CreateCommand { Item = item });
             return Code switch
             {
-                StatusCodes.Status201Created => CreatedAtAction(nameof(GetByIdAsync), new { id = Item.Id }, Item),
+                StatusCodes.Status201Created =>
+                    CreatedAtAction(nameof(GetByIdAsync), new { id = Item.Id }, Item),
                 _ => StatusCode(Code),
             };
         }
