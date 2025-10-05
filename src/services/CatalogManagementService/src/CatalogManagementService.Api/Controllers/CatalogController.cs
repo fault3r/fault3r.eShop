@@ -56,7 +56,13 @@ namespace CatalogManagementService.Api.Controllers
         public async Task<ActionResult> UpdateAsync([FromRoute] string id, [FromBody] UpdateItemDto item)
         {
             var (Code, Item) = await _mediator.Send(new UpdateCommand { Id = id, Item = item });
-            return StatusCode(Code, Item);
+            return Code switch
+            {
+                200 => Ok(Item),
+                400 => BadRequest(),
+                404 => NotFound(),
+                _ => StatusCode(Code),
+            };
         }
 
         [HttpDelete]
@@ -64,7 +70,13 @@ namespace CatalogManagementService.Api.Controllers
         public async Task<ActionResult> DeleteAsync([FromRoute] string id)
         {
             int Code = await _mediator.Send(new DeleteCommand { Id = id });
-            return StatusCode(Code);
+            return Code switch
+            {
+                204 => NoContent(),
+                400 => BadRequest(),
+                404 => NotFound(),
+                _ => StatusCode(Code),
+            };
         }
         
     }
