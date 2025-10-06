@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "xRxCqDMgZSM=",
+  "dgSpecHash": "ybgQioVYnjU=",
   "success": true,
   "projectFilePath": "/home/hamed-damavandi/Documents/fault3r.eShop/src/services/CatalogManagementService/src/CatalogManagementService.Api/CatalogManagementService.Api.csproj",
   "expectedPackageFiles": [
@@ -25,14 +25,17 @@
     "/home/hamed-damavandi/.nuget/packages/microsoft.win32.registry/5.0.0/microsoft.win32.registry.5.0.0.nupkg.sha512",
     "/home/hamed-damavandi/.nuget/packages/mongodb.bson/3.5.0/mongodb.bson.3.5.0.nupkg.sha512",
     "/home/hamed-damavandi/.nuget/packages/mongodb.driver/3.5.0/mongodb.driver.3.5.0.nupkg.sha512",
+    "/home/hamed-damavandi/.nuget/packages/rabbitmq.client/7.1.2/rabbitmq.client.7.1.2.nupkg.sha512",
     "/home/hamed-damavandi/.nuget/packages/sharpcompress/0.30.1/sharpcompress.0.30.1.nupkg.sha512",
     "/home/hamed-damavandi/.nuget/packages/snappier/1.0.0/snappier.1.0.0.nupkg.sha512",
     "/home/hamed-damavandi/.nuget/packages/system.buffers/4.5.1/system.buffers.4.5.1.nupkg.sha512",
     "/home/hamed-damavandi/.nuget/packages/system.identitymodel.tokens.jwt/7.1.2/system.identitymodel.tokens.jwt.7.1.2.nupkg.sha512",
+    "/home/hamed-damavandi/.nuget/packages/system.io.pipelines/8.0.0/system.io.pipelines.8.0.0.nupkg.sha512",
     "/home/hamed-damavandi/.nuget/packages/system.memory/4.5.5/system.memory.4.5.5.nupkg.sha512",
     "/home/hamed-damavandi/.nuget/packages/system.runtime.compilerservices.unsafe/5.0.0/system.runtime.compilerservices.unsafe.5.0.0.nupkg.sha512",
     "/home/hamed-damavandi/.nuget/packages/system.security.accesscontrol/5.0.0/system.security.accesscontrol.5.0.0.nupkg.sha512",
     "/home/hamed-damavandi/.nuget/packages/system.security.principal.windows/5.0.0/system.security.principal.windows.5.0.0.nupkg.sha512",
+    "/home/hamed-damavandi/.nuget/packages/system.threading.ratelimiting/8.0.0/system.threading.ratelimiting.8.0.0.nupkg.sha512",
     "/home/hamed-damavandi/.nuget/packages/zstdsharp.port/0.7.3/zstdsharp.port.0.7.3.nupkg.sha512",
     "/home/hamed-damavandi/.nuget/packages/microsoft.netcore.app.host.linux-x64/8.0.20/microsoft.netcore.app.host.linux-x64.8.0.20.nupkg.sha512"
   ],

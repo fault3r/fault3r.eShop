@@ -36,6 +36,11 @@ builder.Services.AddScoped<IItemsRepository, ItemsRepository>();
 
 builder.Services.AddScoped<IItemsService, ItemsService>();
 
+var rabbitmqSettings = builder.Configuration.GetSection(nameof(RabbitmqSettings))
+    .Get<RabbitmqSettings>() ??
+    throw new NullReferenceException();
+builder.Services.AddRabbitmqConfiguration(rabbitmqSettings);
+
 var app = builder.Build();
 
 if (app.Environment.IsDevelopment())
