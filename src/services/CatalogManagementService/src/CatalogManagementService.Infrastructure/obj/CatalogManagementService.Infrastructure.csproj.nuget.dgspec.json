@@ -4,6 +4,77 @@
     "/home/hamed-damavandi/Documents/fault3r.eShop/src/services/CatalogManagementService/src/CatalogManagementService.Infrastructure/CatalogManagementService.Infrastructure.csproj": {}
   },
   "projects": {
+    "/home/hamed-damavandi/Documents/fault3r.eShop/src/services/CatalogManagementService/src/CatalogManagementService.Application/CatalogManagementService.Application.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "/home/hamed-damavandi/Documents/fault3r.eShop/src/services/CatalogManagementService/src/CatalogManagementService.Application/CatalogManagementService.Application.csproj",
+        "projectName": "CatalogManagementService.Application",
+        "projectPath": "/home/hamed-damavandi/Documents/fault3r.eShop/src/services/CatalogManagementService/src/CatalogManagementService.Application/CatalogManagementService.Application.csproj",
+        "packagesPath": "/home/hamed-damavandi/.nuget/packages/",
+        "outputPath": "/home/hamed-damavandi/Documents/fault3r.eShop/src/services/CatalogManagementService/src/CatalogManagementService.Application/obj/",
+        "projectStyle": "PackageReference",
+        "configFilePaths": [
+          "/home/hamed-damavandi/.nuget/NuGet/NuGet.Config"
+        ],
+        "originalTargetFrameworks": [
+          "net8.0"
+        ],
+        "sources": {
+          "/home/hamed-damavandi/.nuget/packages": {},
+          "/usr/lib/dotnet/library-packs": {},
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net8.0": {
+            "targetAlias": "net8.0",
+            "projectReferences": {
+              "/home/hamed-damavandi/Documents/fault3r.eShop/src/services/CatalogManagementService/src/CatalogManagementService.Domain/CatalogManagementService.Domain.csproj": {
+                "projectPath": "/home/hamed-damavandi/Documents/fault3r.eShop/src/services/CatalogManagementService/src/CatalogManagementService.Domain/CatalogManagementService.Domain.csproj"
+              }
+            }
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        },
+        "restoreAuditProperties": {
+          "enableAudit": "true",
+          "auditLevel": "low",
+          "auditMode": "direct"
+        },
+        "SdkAnalysisLevel": "9.0.100"
+      },
+      "frameworks": {
+        "net8.0": {
+          "targetAlias": "net8.0",
+          "dependencies": {
+            "MediatR": {
+              "target": "Package",
+              "version": "[13.0.0, )"
+            }
+          },
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48",
+            "net481"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "/usr/lib/dotnet/sdk/9.0.110/PortableRuntimeIdentifierGraph.json"
+        }
+      }
+    },
     "/home/hamed-damavandi/Documents/fault3r.eShop/src/services/CatalogManagementService/src/CatalogManagementService.Domain/CatalogManagementService.Domain.csproj": {
       "version": "1.0.0",
       "restore": {
@@ -89,6 +160,9 @@
           "net8.0": {
             "targetAlias": "net8.0",
             "projectReferences": {
+              "/home/hamed-damavandi/Documents/fault3r.eShop/src/services/CatalogManagementService/src/CatalogManagementService.Application/CatalogManagementService.Application.csproj": {
+                "projectPath": "/home/hamed-damavandi/Documents/fault3r.eShop/src/services/CatalogManagementService/src/CatalogManagementService.Application/CatalogManagementService.Application.csproj"
+              },
               "/home/hamed-damavandi/Documents/fault3r.eShop/src/services/CatalogManagementService/src/CatalogManagementService.Domain/CatalogManagementService.Domain.csproj": {
                 "projectPath": "/home/hamed-damavandi/Documents/fault3r.eShop/src/services/CatalogManagementService/src/CatalogManagementService.Domain/CatalogManagementService.Domain.csproj"
               }

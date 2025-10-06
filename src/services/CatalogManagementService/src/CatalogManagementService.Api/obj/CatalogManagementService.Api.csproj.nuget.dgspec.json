@@ -255,6 +255,9 @@
           "net8.0": {
             "targetAlias": "net8.0",
             "projectReferences": {
+              "/home/hamed-damavandi/Documents/fault3r.eShop/src/services/CatalogManagementService/src/CatalogManagementService.Application/CatalogManagementService.Application.csproj": {
+                "projectPath": "/home/hamed-damavandi/Documents/fault3r.eShop/src/services/CatalogManagementService/src/CatalogManagementService.Application/CatalogManagementService.Application.csproj"
+              },
               "/home/hamed-damavandi/Documents/fault3r.eShop/src/services/CatalogManagementService/src/CatalogManagementService.Domain/CatalogManagementService.Domain.csproj": {
                 "projectPath": "/home/hamed-damavandi/Documents/fault3r.eShop/src/services/CatalogManagementService/src/CatalogManagementService.Domain/CatalogManagementService.Domain.csproj"
               }

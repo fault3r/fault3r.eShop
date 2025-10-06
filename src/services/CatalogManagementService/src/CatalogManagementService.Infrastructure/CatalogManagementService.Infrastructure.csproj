@@ -11,6 +11,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="../CatalogManagementService.Application/CatalogManagementService.Application.csproj" />
     <ProjectReference Include="../CatalogManagementService.Domain/CatalogManagementService.Domain.csproj" />
   </ItemGroup>
 
