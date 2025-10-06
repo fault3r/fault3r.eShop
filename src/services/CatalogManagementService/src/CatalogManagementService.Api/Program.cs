@@ -1,6 +1,6 @@
 
 using System;
-using CatalogManagementService.Api.Extensions;
+using CatalogManagementService.Api.Configurations;
 using CatalogManagementService.Application.Interfaces;
 using CatalogManagementService.Application.Services;
 using CatalogManagementService.Domain.Interfaces;
@@ -27,14 +27,14 @@ builder.Services.AddJwtConfiguration(jwtSettings);
 
 builder.Services.AddMediatrConfiguration();
 
-var contextSettings = builder.Configuration.GetSection(nameof(ContextSettings))
-    .Get<ContextSettings>() ??
+var mongoContextSettings = builder.Configuration.GetSection(nameof(MongoSettings))
+    .Get<MongoSettings>() ??
     throw new NullReferenceException();
-builder.Services.AddContextConfiguration(contextSettings);
+builder.Services.AddMongoContextConfiguration(mongoContextSettings);
 
-builder.Services.AddScoped<ICatalogRepository, CatalogRepository>();
+builder.Services.AddScoped<IItemsRepository, ItemsRepository>();
 
-builder.Services.AddScoped<ICatalogService, CatalogService>();
+builder.Services.AddScoped<IItemsService, ItemsService>();
 
 var app = builder.Build();
 

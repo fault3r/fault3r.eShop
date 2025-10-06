@@ -7,15 +7,15 @@ using MongoDB.Driver;
 
 namespace CatalogManagementService.Tests.Integrations.Infrastructure.Tests
 {
-    public class CatalogContextTests
+    public class MongoContextTests
     {
         [Fact]
-        public void CatalogContext_CanCommunicateWithMongo()
+        public void MongoContext_CanCommunicateWithMongo()
         {
             string databaseName = "TestDatabase";
             string collectionName = "TestCollection";
             var client = new MongoClient("mongodb://localhost:27017");
-            var context = new CatalogContext(client, databaseName, collectionName);
+            var context = new MongoContext(client, databaseName, collectionName);
             string expected = "TestItem";
             try
             {

@@ -10,7 +10,7 @@ using Xunit;
 
 namespace CatalogManagementService.Tests.Infrastructure.Tests.Repositories.Tests
 {
-    public class CatalogRepositoryUnitTests
+    public class ItemsRepositoryUnitTests
     {
         private static Mock<IMongoCollection<ItemDocument>> CreateCollectionMock()
         {
@@ -40,10 +40,10 @@ namespace CatalogManagementService.Tests.Infrastructure.Tests.Repositories.Tests
             collection.Setup(c => c.Find(It.IsAny<FilterDefinition<ItemDocument>>(), It.IsAny<FindOptions>()))
                 .Returns(findFluent.Object);
 
-            var context = new Mock<CatalogContext>();
+            var context = new Mock<MongoContext>();
             context.Setup(c => c.Documents).Returns(collection.Object);
 
-            var repo = new CatalogRepository(context.Object);
+            var repo = new ItemsRepository(context.Object);
 
             var result = await repo.GetAllAsync();
 
@@ -63,10 +63,10 @@ namespace CatalogManagementService.Tests.Infrastructure.Tests.Repositories.Tests
             collection.Setup(c => c.Find(It.IsAny<FilterDefinition<ItemDocument>>(), It.IsAny<FindOptions>()))
                 .Returns(findFluent.Object);
 
-            var context = new Mock<CatalogContext>();
+            var context = new Mock<MongoContext>();
             context.Setup(c => c.Documents).Returns(collection.Object);
 
-            var repo = new CatalogRepository(context.Object);
+            var repo = new ItemsRepository(context.Object);
 
             var result = await repo.GetAllAsync();
 
@@ -77,9 +77,9 @@ namespace CatalogManagementService.Tests.Infrastructure.Tests.Repositories.Tests
         public async Task GetByIdAsync_BadRequest_InvalidId()
         {
             var collection = CreateCollectionMock();
-            var context = new Mock<CatalogContext>();
+            var context = new Mock<MongoContext>();
             context.Setup(c => c.Documents).Returns(collection.Object);
-            var repo = new CatalogRepository(context.Object);
+            var repo = new ItemsRepository(context.Object);
 
             var result = await repo.GetByIdAsync("not-an-objectid");
 
@@ -96,10 +96,10 @@ namespace CatalogManagementService.Tests.Infrastructure.Tests.Repositories.Tests
             collection.Setup(c => c.Find(It.IsAny<FilterDefinition<ItemDocument>>(), It.IsAny<FindOptions>()))
                 .Returns(findFluent.Object);
 
-            var context = new Mock<CatalogContext>();
+            var context = new Mock<MongoContext>();
             context.Setup(c => c.Documents).Returns(collection.Object);
 
-            var repo = new CatalogRepository(context.Object);
+            var repo = new ItemsRepository(context.Object);
 
             var id = ObjectId.GenerateNewId().ToString();
             var result = await repo.GetByIdAsync(id);
@@ -118,10 +118,10 @@ namespace CatalogManagementService.Tests.Infrastructure.Tests.Repositories.Tests
             collection.Setup(c => c.Find(It.IsAny<FilterDefinition<ItemDocument>>(), It.IsAny<FindOptions>()))
                 .Returns(findFluent.Object);
 
-            var context = new Mock<CatalogContext>();
+            var context = new Mock<MongoContext>();
             context.Setup(c => c.Documents).Returns(collection.Object);
 
-            var repo = new CatalogRepository(context.Object);
+            var repo = new ItemsRepository(context.Object);
 
             var result = await repo.GetByIdAsync(document.Id.ToString());
 
@@ -137,10 +137,10 @@ namespace CatalogManagementService.Tests.Infrastructure.Tests.Repositories.Tests
             collection.Setup(c => c.InsertOneAsync(It.IsAny<ItemDocument>(), It.IsAny<InsertOneOptions>(), It.IsAny<CancellationToken>()))
                 .Returns(Task.CompletedTask);
 
-            var context = new Mock<CatalogContext>();
+            var context = new Mock<MongoContext>();
             context.Setup(c => c.Documents).Returns(collection.Object);
 
-            var repo = new CatalogRepository(context.Object);
+            var repo = new ItemsRepository(context.Object);
 
             var item = new Domain.Entities.Item { Id = ObjectId.GenerateNewId().ToString(), Name = "n", Description = "d", Price = 3m, Pictures = new[] { "p" } };
             var result = await repo.CreateAsync(item);
@@ -157,10 +157,10 @@ namespace CatalogManagementService.Tests.Infrastructure.Tests.Repositories.Tests
             collection.Setup(c => c.InsertOneAsync(It.IsAny<ItemDocument>(), It.IsAny<InsertOneOptions>(), It.IsAny<CancellationToken>()))
                 .Returns<Task>(_ => throw new Exception("fail insert"));
 
-            var context = new Mock<CatalogContext>();
+            var context = new Mock<MongoContext>();
             context.Setup(c => c.Documents).Returns(collection.Object);
 
-            var repo = new CatalogRepository(context.Object);
+            var repo = new ItemsRepository(context.Object);
 
             var item = new Domain.Entities.Item { Id = ObjectId.GenerateNewId().ToString(), Name = "n", Description = "d", Price = 3m, Pictures = new[] { "p" } };
             var result = await repo.CreateAsync(item);
@@ -172,9 +172,9 @@ namespace CatalogManagementService.Tests.Infrastructure.Tests.Repositories.Tests
         public async Task UpdateAsync_BadRequest_InvalidId()
         {
             var collection = CreateCollectionMock();
-            var context = new Mock<CatalogContext>();
+            var context = new Mock<MongoContext>();
             context.Setup(c => c.Documents).Returns(collection.Object);
-            var repo = new CatalogRepository(context.Object);
+            var repo = new ItemsRepository(context.Object);
 
             var item = new Domain.Entities.Item { Id = "bad-id", Name = "n", Description = "d", Price = 1m, Pictures = Array.Empty<string>() };
             var result = await repo.UpdateAsync(item);
@@ -192,10 +192,10 @@ namespace CatalogManagementService.Tests.Infrastructure.Tests.Repositories.Tests
             collection.Setup(c => c.Find(It.IsAny<FilterDefinition<ItemDocument>>(), It.IsAny<FindOptions>()))
                 .Returns(findFluent.Object);
 
-            var context = new Mock<CatalogContext>();
+            var context = new Mock<MongoContext>();
             context.Setup(c => c.Documents).Returns(collection.Object);
 
-            var repo = new CatalogRepository(context.Object);
+            var repo = new ItemsRepository(context.Object);
 
             var id = ObjectId.GenerateNewId().ToString();
             var result = await repo.GetByIdAsync(id);
@@ -211,10 +211,10 @@ namespace CatalogManagementService.Tests.Infrastructure.Tests.Repositories.Tests
             collection.Setup(c => c.FindOneAndReplaceAsync(It.IsAny<FilterDefinition<ItemDocument>>(), It.IsAny<ItemDocument>(), It.IsAny<FindOneAndReplaceOptions<ItemDocument, ItemDocument>>(), It.IsAny<CancellationToken>()))
                 .ReturnsAsync(old);
 
-            var context = new Mock<CatalogContext>();
+            var context = new Mock<MongoContext>();
             context.Setup(c => c.Documents).Returns(collection.Object);
 
-            var repo = new CatalogRepository(context.Object);
+            var repo = new ItemsRepository(context.Object);
 
             var item = new Domain.Entities.Item { Id = old.Id.ToString(), Name = "new", Description = "d2", Price = 6m, Pictures = new[] { "y" } };
             var result = await repo.UpdateAsync(item);
@@ -228,9 +228,9 @@ namespace CatalogManagementService.Tests.Infrastructure.Tests.Repositories.Tests
         public async Task DeleteAsync_BadRequest_InvalidId()
         {
             var collection = CreateCollectionMock();
-            var context = new Mock<CatalogContext>();
+            var context = new Mock<MongoContext>();
             context.Setup(c => c.Documents).Returns(collection.Object);
-            var repo = new CatalogRepository(context.Object);
+            var repo = new ItemsRepository(context.Object);
 
             var result = await repo.DeleteAsync("not-an-id");
 
@@ -247,10 +247,10 @@ namespace CatalogManagementService.Tests.Infrastructure.Tests.Repositories.Tests
             collection.Setup(c => c.DeleteOneAsync(It.IsAny<FilterDefinition<ItemDocument>>(), It.IsAny<CancellationToken>()))
                 .ReturnsAsync(noneResult);
 
-            var context = new Mock<CatalogContext>();
+            var context = new Mock<MongoContext>();
             context.Setup(c => c.Documents).Returns(collection.Object);
 
-            var repo = new CatalogRepository(context.Object);
+            var repo = new ItemsRepository(context.Object);
 
             var result = await repo.DeleteAsync(ObjectId.GenerateNewId().ToString());
 
@@ -266,10 +266,10 @@ namespace CatalogManagementService.Tests.Infrastructure.Tests.Repositories.Tests
             collection.Setup(c => c.DeleteOneAsync(It.IsAny<FilterDefinition<ItemDocument>>(), It.IsAny<CancellationToken>()))
                 .ReturnsAsync(oneResult);
 
-            var context = new Mock<CatalogContext>();
+            var context = new Mock<MongoContext>();
             context.Setup(c => c.Documents).Returns(collection.Object);
 
-            var repo = new CatalogRepository(context.Object);
+            var repo = new ItemsRepository(context.Object);
 
             var result = await repo.DeleteAsync(ObjectId.GenerateNewId().ToString());
 
@@ -283,10 +283,10 @@ namespace CatalogManagementService.Tests.Infrastructure.Tests.Repositories.Tests
             collection.Setup(c => c.DeleteOneAsync(It.IsAny<FilterDefinition<ItemDocument>>(), It.IsAny<CancellationToken>()))
                 .ThrowsAsync(new Exception("boom"));
 
-            var context = new Mock<CatalogContext>();
+            var context = new Mock<MongoContext>();
             context.Setup(c => c.Documents).Returns(collection.Object);
 
-            var repo = new CatalogRepository(context.Object);
+            var repo = new ItemsRepository(context.Object);
 
             var result = await repo.DeleteAsync(ObjectId.GenerateNewId().ToString());
 

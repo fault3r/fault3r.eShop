@@ -1,0 +1,24 @@
+
+using System;
+using CatalogManagementService.Infrastructure.Configurations;
+using CatalogManagementService.Infrastructure.Data.Contexts;
+using MongoDB.Driver;
+
+namespace CatalogManagementService.Api.Configurations
+{
+    public static class MongoContextConfiguration
+    {
+        public static IServiceCollection AddMongoContextConfiguration(this IServiceCollection services,
+            MongoSettings settings)
+        {
+            services.AddSingleton<MongoClient>(provider => new MongoClient(settings.ConnectionString));
+            services.AddScoped<MongoContext>(provider =>
+            {
+                var client = provider.GetRequiredService<MongoClient>();
+                return new MongoContext(client, settings.DatabaseName, settings.CollectionName);
+            });
+            return services;
+        }
+
+    }
+}
