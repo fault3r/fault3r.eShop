@@ -12,6 +12,7 @@ namespace CatalogManagementService.Api.Configurations
         {
             var settingsSection = configuration.GetSection(nameof(RabbitmqSettings)) ??
                 throw new NullReferenceException();
+
             services.Configure<RabbitmqSettings>(settingsSection);
             services.AddScoped<IEventPublisher, RabbitmqEventPublisher>();
             return services;
