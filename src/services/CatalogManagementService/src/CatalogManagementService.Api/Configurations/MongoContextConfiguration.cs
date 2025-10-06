@@ -9,8 +9,11 @@ namespace CatalogManagementService.Api.Configurations
     public static class MongoContextConfiguration
     {
         public static IServiceCollection AddMongoContextConfiguration(this IServiceCollection services,
-            MongoSettings settings)
+            ConfigurationManager configuration)
         {
+            var settings = configuration.GetSection(nameof(MongoSettings))
+                .Get<MongoSettings>() ??
+                throw new NullReferenceException();
             services.AddSingleton<MongoClient>(provider => new MongoClient(settings.ConnectionString));
             services.AddScoped<MongoContext>(provider =>
             {

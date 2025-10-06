@@ -39,13 +39,6 @@ namespace CatalogManagementService.Application.Services
                 Price = item.Price,
                 Pictures = item.Pictures,
             });
-
-            //event
-            await _eventPublisher.PublishAsync(new ItemCreatedEvent
-            {
-                Item = result.Items.FirstOrDefault() ?? throw new InvalidOperationException(),
-            });
-
             return (
                 Code: result.Code,
                 Item: result.Items.Select(item => ItemDTOs.ToDto(item)).FirstOrDefault());

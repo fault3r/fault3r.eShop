@@ -8,8 +8,11 @@ namespace CatalogManagementService.Api.Configurations
     public static class JwtConfiguration
     {
         public static IServiceCollection AddJwtConfiguration(this IServiceCollection services,
-            JwtSettings settings)
+            ConfigurationManager configuration)
         {
+            var settings = configuration.GetSection(nameof(JwtSettings))
+                .Get<JwtSettings>() ??
+                throw new NullReferenceException();
             services.AddAuthentication(options =>
             {
                 options.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
@@ -26,7 +29,7 @@ namespace CatalogManagementService.Api.Configurations
                         IssuerSigningKey = new SymmetricSecurityKey(
                             Encoding.UTF8.GetBytes(settings.Key)),
                         ValidIssuer = settings.Issuer,
-                        ValidAudience = settings.Audience,                        
+                        ValidAudience = settings.Audience,
                     };
                 });
             return services;

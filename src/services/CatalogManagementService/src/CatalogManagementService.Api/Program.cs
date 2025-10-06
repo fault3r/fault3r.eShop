@@ -20,33 +20,22 @@ builder.Services.AddControllers(options =>
     options.SuppressAsyncSuffixInActionNames = false;
 });
 
-var jwtSettings = builder.Configuration.GetSection(nameof(JwtSettings))
-    .Get<JwtSettings>() ??
-    throw new NullReferenceException();
-builder.Services.AddJwtConfiguration(jwtSettings);
+builder.Services.AddJwtConfiguration(builder.Configuration);
 
 builder.Services.AddMediatrConfiguration();
 
-var mongoContextSettings = builder.Configuration.GetSection(nameof(MongoSettings))
-    .Get<MongoSettings>() ??
-    throw new NullReferenceException();
-builder.Services.AddMongoContextConfiguration(mongoContextSettings);
+builder.Services.AddMongoContextConfiguration(builder.Configuration);
 
 builder.Services.AddScoped<IItemsRepository, ItemsRepository>();
 
 builder.Services.AddScoped<IItemsService, ItemsService>();
 
-var rabbitmqSettings = builder.Configuration.GetSection(nameof(RabbitmqSettings))
-    .Get<RabbitmqSettings>() ??
-    throw new NullReferenceException();
-builder.Services.AddRabbitmqConfiguration(rabbitmqSettings);
+builder.Services.AddRabbitmqConfiguration(builder.Configuration);
 
 var app = builder.Build();
 
 if (app.Environment.IsDevelopment())
-{
     app.UseDeveloperExceptionPage();
-}
 
 app.MapGet("/", () => appSettings.Name);
 
