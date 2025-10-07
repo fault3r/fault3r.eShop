@@ -1,5 +1,6 @@
 
 using System;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Text.Json;
 using CatalogManagementService.Application.Interfaces;
@@ -9,29 +10,38 @@ using RabbitMQ.Client;
 
 namespace CatalogManagementService.Infrastructure.EventBus
 {
-    public class RabbitmqEventPublisher(IOptions<RabbitmqSettings> settings) : IEventPublisher
+    public class RabbitmqEventPublisher : IEventPublisher
     {
-        private readonly RabbitmqSettings _settings = settings.Value;
 
-        public async Task PublishAsync<T>(T @event)
+        private readonly IConnection _connection;
+
+        private readonly IModel channel;
+
+        private readonly RabbitmqSettings _settings;
+
+        public RabbitmqEventPublisher(IConnection connection, RabbitmqSettings settings)
         {
-            var factory = new ConnectionFactory
-            {
-                HostName = _settings.HostName,
-            };
-            await using var connection = await factory.CreateConnectionAsync();
-            await using var channel = await connection.CreateChannelAsync();
-            await channel.ExchangeDeclareAsync(
+            _settings = settings;
+            _connection = connection;
+            channel = _connection.CreateModel();
+            channel.ExchangeDeclare(
                 exchange: _settings.QueueName,
-                type: ExchangeType.Direct
-            );
-            var body = Encoding.UTF8.GetBytes(
-                JsonSerializer.Serialize(@event));
-            await channel.BasicPublishAsync(
+                ExchangeType.Direct);
+        }
+
+        public (bool Success, string Message) PublishAsync<TEvent>(TEvent @event) where TEvent : class
+        {
+
+            var json = JsonSerializer.Serialize<TEvent>(@event);
+            var body = Encoding.UTF8.GetBytes(json);
+
+            channel.BasicPublish(
                 exchange: _settings.QueueName,
                 routingKey: _settings.QueueName,
+                basicProperties: null,
                 body: body
             );
+            return (true, "Message published.");
         }
     }
 }
