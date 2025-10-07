@@ -7,11 +7,9 @@ using CatalogManagementService.Domain.Interfaces;
 
 namespace CatalogManagementService.Application.Services
 {
-    public class ItemsService(IItemsRepository itemsRepository, IEventPublisher eventPublisher) : IItemsService
+    public class ItemsService(IItemsRepository itemsRepository) : IItemsService
     {
         private readonly IItemsRepository _itemsRepository = itemsRepository;
-
-        private readonly IEventPublisher _eventPublisher = eventPublisher ;
 
         public async Task<(int Code, IEnumerable<ItemDto> Items)> GetAllAsync()
         {
@@ -38,11 +36,6 @@ namespace CatalogManagementService.Application.Services
                 Description = item.Description,
                 Price = item.Price,
                 Pictures = item.Pictures,
-            });
-
-            _eventPublisher.PublishAsync(new ItemCreatedEvent
-            {
-                Item = result.Items.FirstOrDefault(),
             });
             return (
                 Code: result.Code,

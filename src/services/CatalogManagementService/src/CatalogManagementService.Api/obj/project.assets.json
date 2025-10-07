@@ -1433,7 +1433,8 @@
       "MediatR >= 13.0.0",
       "Microsoft.AspNetCore.Authentication.JwtBearer >= 8.0.19",
       "Microsoft.AspNetCore.Mvc.Versioning >= 5.1.0",
-      "MongoDB.Driver >= 3.5.0"
+      "MongoDB.Driver >= 3.5.0",
+      "RabbitMQ.Client >= 6.0.0"
     ]
   },
   "packageFolders": {
@@ -1503,6 +1504,10 @@
           "MongoDB.Driver": {
             "target": "Package",
             "version": "[3.5.0, )"
+          },
+          "RabbitMQ.Client": {
+            "target": "Package",
+            "version": "[6.0.0, )"
           }
         },
         "imports": [

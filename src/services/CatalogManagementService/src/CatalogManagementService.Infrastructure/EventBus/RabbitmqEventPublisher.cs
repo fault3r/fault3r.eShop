@@ -15,44 +15,44 @@ namespace CatalogManagementService.Infrastructure.EventBus
 
         private readonly IModel channel;
 
-        private readonly RabbitmqSettings _settings;
+        private readonly RabbitmqSettings settings;
 
         public RabbitmqEventPublisher(IConnection connection, RabbitmqSettings settings)
         {
-            _settings = settings;
             _connection = connection;
             channel = _connection.CreateModel();
-            InitialChannel();
+            this.settings = settings;
+            InitialRabbitmqChannel();
         }
 
-        public void InitialChannel()
+        private void InitialRabbitmqChannel()
         {
             channel.ExchangeDeclare(
-                exchange: _settings.ExchangeName,
+                exchange: settings.ExchangeName,
                 type: ExchangeType.Direct,
                 durable: true,
                 autoDelete: false,
                 arguments: null);
             channel.QueueDeclare(
-                queue: _settings.QueueName,
+                queue: settings.QueueName,
                 durable: true,
                 exclusive: false,
                 autoDelete: false,
                 arguments: null);
             channel.QueueBind(
-                queue: _settings.QueueName,
-                exchange: _settings.ExchangeName,
-                routingKey: _settings.RoutingKey);
+                queue: settings.QueueName,
+                exchange: settings.ExchangeName,
+                routingKey: settings.RoutingKey);
         }
 
-        public (bool Success, string Message) PublishAsync<TEvent>(TEvent @event)
+        public (bool Success, string Message) Publish<TEvent>(TEvent @event)
             where TEvent : class
         {
             var json = JsonSerializer.Serialize<TEvent>(@event);
             var body = Encoding.UTF8.GetBytes(json);
             channel.BasicPublish(
-                exchange: _settings.ExchangeName,
-                routingKey: _settings.RoutingKey,
+                exchange: settings.ExchangeName,
+                routingKey: settings.RoutingKey,
                 basicProperties: null,
                 body: body);
             return (true, $"{nameof(TEvent)} published.");
