@@ -13,5 +13,7 @@ namespace CatalogManagementService.Infrastructure.Configurations
         public required string ExchangeName { get; set; }
 
         public required string QueueName { get; set; }
+
+        public required string RoutingKey { get; set; }
     }
 }

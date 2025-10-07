@@ -1,11 +1,9 @@
 
 using System;
-using System.Runtime.CompilerServices;
 using System.Text;
 using System.Text.Json;
 using CatalogManagementService.Application.Interfaces;
 using CatalogManagementService.Infrastructure.Configurations;
-using Microsoft.Extensions.Options;
 using RabbitMQ.Client;
 
 namespace CatalogManagementService.Infrastructure.EventBus
@@ -24,24 +22,40 @@ namespace CatalogManagementService.Infrastructure.EventBus
             _settings = settings;
             _connection = connection;
             channel = _connection.CreateModel();
-            channel.ExchangeDeclare(
-                exchange: _settings.QueueName,
-                ExchangeType.Direct);
+            InitialChannel();
         }
 
-        public (bool Success, string Message) PublishAsync<TEvent>(TEvent @event) where TEvent : class
+        public void InitialChannel()
         {
+            channel.ExchangeDeclare(
+                exchange: _settings.ExchangeName,
+                type: ExchangeType.Direct,
+                durable: true,
+                autoDelete: false,
+                arguments: null);
+            channel.QueueDeclare(
+                queue: _settings.QueueName,
+                durable: true,
+                exclusive: false,
+                autoDelete: false,
+                arguments: null);
+            channel.QueueBind(
+                queue: _settings.QueueName,
+                exchange: _settings.ExchangeName,
+                routingKey: _settings.RoutingKey);
+        }
 
+        public (bool Success, string Message) PublishAsync<TEvent>(TEvent @event)
+            where TEvent : class
+        {
             var json = JsonSerializer.Serialize<TEvent>(@event);
             var body = Encoding.UTF8.GetBytes(json);
-
             channel.BasicPublish(
-                exchange: _settings.QueueName,
-                routingKey: _settings.QueueName,
+                exchange: _settings.ExchangeName,
+                routingKey: _settings.RoutingKey,
                 basicProperties: null,
-                body: body
-            );
-            return (true, "Message published.");
+                body: body);
+            return (true, $"{nameof(TEvent)} published.");
         }
     }
 }
