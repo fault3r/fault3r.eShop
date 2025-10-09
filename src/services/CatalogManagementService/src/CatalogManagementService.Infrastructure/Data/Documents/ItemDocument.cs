@@ -13,28 +13,21 @@ namespace CatalogManagementService.Infrastructure.Data.Documents
 
         public decimal Price { get; set; }
 
-        public IEnumerable<string> Pictures { get; set; }
-
         public DateTime Updated { get; set; }
 
         public ItemDocument()
         {
             Description = string.Empty;
-            Pictures = [];
             Updated = DateTime.UtcNow;
         }
 
-        public Item ToDomain()
+        public Item ToDomain() => new()
         {
-            return new Item
-            {
-                Id = Id.ToString(),
-                Name = Name,
-                Description = Description,
-                Price = Price,
-                Pictures = Pictures,
-                Updated = Updated,
-            };
-        }
+            Id = Id.ToString(),
+            Name = Name,
+            Description = Description,
+            Price = Price,
+            Updated = Updated,
+        };
     }
 }

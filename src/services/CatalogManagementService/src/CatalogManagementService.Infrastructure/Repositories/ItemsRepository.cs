@@ -86,7 +86,6 @@ namespace CatalogManagementService.Infrastructure.Repositories
                     Name = item.Name,
                     Description = item.Description,
                     Price = item.Price,
-                    Pictures = item.Pictures,
                 };
                 await _context.Documents.InsertOneAsync(document);
                 return new ItemsRepositoryResult
@@ -119,7 +118,6 @@ namespace CatalogManagementService.Infrastructure.Repositories
                     Name = item.Name,
                     Description = item.Description,
                     Price = item.Price,
-                    Pictures = item.Pictures,
                     Updated = DateTime.UtcNow,
                 };
                 var updated = await _context.Documents.FindOneAndReplaceAsync(

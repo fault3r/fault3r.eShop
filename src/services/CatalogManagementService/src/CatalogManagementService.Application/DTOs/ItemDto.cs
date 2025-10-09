@@ -8,7 +8,6 @@ namespace CatalogManagementService.Application.DTOs
         string Name,
         string Description,
         decimal Price,
-        IEnumerable<string> Pictures,
         DateTime Updated
     );
 
@@ -21,7 +20,6 @@ namespace CatalogManagementService.Application.DTOs
                 item.Name,
                 item.Description,
                 item.Price,
-                item.Pictures,
                 item.Updated);
         }
     }

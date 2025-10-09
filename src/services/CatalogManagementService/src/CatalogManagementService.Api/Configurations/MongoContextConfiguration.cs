@@ -14,7 +14,10 @@ namespace CatalogManagementService.Api.Configurations
             var settings = configuration.GetSection(nameof(MongoSettings))
                 .Get<MongoSettings>() ??
                 throw new NullReferenceException();
-            services.AddSingleton<MongoClient>(provider => new MongoClient(settings.ConnectionString));
+            services.AddSingleton<MongoClient>(provider =>
+            {
+                return new MongoClient(settings.ConnectionString);
+            });
             services.AddScoped<MongoContext>(provider =>
             {
                 var client = provider.GetRequiredService<MongoClient>();

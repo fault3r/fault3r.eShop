@@ -1,15 +1,20 @@
+
 using System;
 using CatalogManagementService.Application.DTOs;
 using CatalogManagementService.Application.Interfaces;
 using CatalogManagementService.Domain.Entities;
 using CatalogManagementService.Domain.Events;
+using CatalogManagementService.Domain.Events.BaseEvent;
 using CatalogManagementService.Domain.Interfaces;
 
 namespace CatalogManagementService.Application.Services
 {
-    public class ItemsService(IItemsRepository itemsRepository) : IItemsService
+    public class ItemsService(
+        IItemsRepository itemsRepository, IEventPublisher eventPublisher) : IItemsService
     {
         private readonly IItemsRepository _itemsRepository = itemsRepository;
+
+        private readonly IEventPublisher _eventPublisher = eventPublisher;
 
         public async Task<(int Code, IEnumerable<ItemDto> Items)> GetAllAsync()
         {
@@ -35,8 +40,9 @@ namespace CatalogManagementService.Application.Services
                 Name = item.Name,
                 Description = item.Description,
                 Price = item.Price,
-                Pictures = item.Pictures,
             });
+            _eventPublisher.Publish(
+                ItemEvent.ToCreateDto(result.Items.First()));
             return (
                 Code: result.Code,
                 Item: result.Items.Select(item => ItemDTOs.ToDto(item)).FirstOrDefault());
@@ -50,7 +56,6 @@ namespace CatalogManagementService.Application.Services
                 Name = item.Name,
                 Description = item.Description,
                 Price = item.Price,
-                Pictures = item.Pictures,
             });
             return (
                 Code: result.Code,

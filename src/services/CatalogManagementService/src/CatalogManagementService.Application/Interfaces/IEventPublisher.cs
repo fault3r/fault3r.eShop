@@ -1,10 +1,13 @@
+
 using System;
+using CatalogManagementService.Domain.Events.BaseEvent;
 
 namespace CatalogManagementService.Application.Interfaces
 {
     public interface IEventPublisher
     {
-        (bool Success, string Message) Publish<TEvent>(TEvent @event)
-            where TEvent : class;
+        bool Publish<T>(T @event)
+            where T : ItemEvent;
+
     }
 }

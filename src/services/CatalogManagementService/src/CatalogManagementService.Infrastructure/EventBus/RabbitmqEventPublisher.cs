@@ -3,6 +3,7 @@ using System;
 using System.Text;
 using System.Text.Json;
 using CatalogManagementService.Application.Interfaces;
+using CatalogManagementService.Domain.Events.BaseEvent;
 using CatalogManagementService.Infrastructure.Configurations;
 using RabbitMQ.Client;
 
@@ -22,10 +23,10 @@ namespace CatalogManagementService.Infrastructure.EventBus
             _connection = connection;
             channel = _connection.CreateModel();
             this.settings = settings;
-            InitialRabbitmqChannel();
+            InitialChannel();
         }
 
-        private void InitialRabbitmqChannel()
+        private void InitialChannel()
         {
             channel.ExchangeDeclare(
                 exchange: settings.ExchangeName,
@@ -45,17 +46,25 @@ namespace CatalogManagementService.Infrastructure.EventBus
                 routingKey: settings.RoutingKey);
         }
 
-        public (bool Success, string Message) Publish<TEvent>(TEvent @event)
-            where TEvent : class
+        public bool Publish<T>(T @event)
+            where T : ItemEvent
         {
-            var json = JsonSerializer.Serialize<TEvent>(@event);
-            var body = Encoding.UTF8.GetBytes(json);
-            channel.BasicPublish(
-                exchange: settings.ExchangeName,
-                routingKey: settings.RoutingKey,
-                basicProperties: null,
-                body: body);
-            return (true, $"{nameof(TEvent)} published.");
+            try
+            {
+                var json = JsonSerializer.Serialize<T>(@event);
+                var body = Encoding.UTF8.GetBytes(json);
+                channel.BasicPublish(
+                    exchange: settings.ExchangeName,
+                    routingKey: settings.RoutingKey,
+                    basicProperties: null,
+                    body: body);
+                return true;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
         }
+        
     }
 }
