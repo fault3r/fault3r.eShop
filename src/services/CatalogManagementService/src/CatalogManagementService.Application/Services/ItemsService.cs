@@ -2,9 +2,9 @@
 using System;
 using CatalogManagementService.Application.DTOs;
 using CatalogManagementService.Application.Interfaces;
+using CatalogManagementService.Domain.DTOs;
 using CatalogManagementService.Domain.Entities;
 using CatalogManagementService.Domain.Events;
-using CatalogManagementService.Domain.Events.BaseEvent;
 using CatalogManagementService.Domain.Interfaces;
 
 namespace CatalogManagementService.Application.Services
@@ -41,8 +41,9 @@ namespace CatalogManagementService.Application.Services
                 Description = item.Description,
                 Price = item.Price,
             });
-            _eventPublisher.Publish(
-                ItemEvent.ToCreateDto(result.Items.First()));
+            if (result.Code == (int)ItemsRepositoryResultCode.Created)
+                _eventPublisher.Publish<ItemCreatedEvent>(
+                    ItemCreatedEvent.Parse(result.Items.First()));
             return (
                 Code: result.Code,
                 Item: result.Items.Select(item => ItemDTOs.ToDto(item)).FirstOrDefault());
@@ -57,6 +58,9 @@ namespace CatalogManagementService.Application.Services
                 Description = item.Description,
                 Price = item.Price,
             });
+            if (result.Code == (int)ItemsRepositoryResultCode.Ok)
+                _eventPublisher.Publish<ItemUpdatedEvent>(
+                    ItemUpdatedEvent.Parse(result.Items.First()));
             return (
                 Code: result.Code,
                 Item: result.Items.Select(item => ItemDTOs.ToDto(item)).FirstOrDefault());
@@ -65,8 +69,11 @@ namespace CatalogManagementService.Application.Services
         public async Task<int> DeleteAsync(string id)
         {
             var result = await _itemsRepository.DeleteAsync(id);
+            if (result.Code == (int)ItemsRepositoryResultCode.NoContent)
+                _eventPublisher.Publish<ItemDeletedEvent>(
+                    new ItemDeletedEvent { Id = id });
             return result.Code;
         }
-        
+
     }
 }
