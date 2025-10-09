@@ -6,7 +6,7 @@ namespace CatalogManagementService.Domain.Events
 {
     public class ItemDeletedEvent : ItemEvent
     {
-        public required string Id { get; set; }
+        public override string EventType => nameof(ItemDeletedEvent);
         
     }
 }

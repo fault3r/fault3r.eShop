@@ -7,8 +7,8 @@ namespace CatalogManagementService.Domain.Events
 {
     public class ItemCreatedEvent : ItemEvent
     {
-        public required string Id { get; set; }
-        
+        public override string EventType => nameof(ItemCreatedEvent);
+                       
         public required string Name { get; set; }
 
         public required string Description { get; set; }

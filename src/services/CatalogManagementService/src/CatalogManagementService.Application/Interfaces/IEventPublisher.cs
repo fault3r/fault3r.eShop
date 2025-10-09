@@ -6,8 +6,8 @@ namespace CatalogManagementService.Application.Interfaces
 {
     public interface IEventPublisher
     {
-        bool Publish<T>(T @event)
-            where T : ItemEvent;
+        bool Publish<TEvent>(TEvent @event)
+            where TEvent : ItemEvent;
 
     }
 }

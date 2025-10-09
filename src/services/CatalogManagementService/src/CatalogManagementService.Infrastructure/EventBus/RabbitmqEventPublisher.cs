@@ -46,17 +46,19 @@ namespace CatalogManagementService.Infrastructure.EventBus
                 routingKey: settings.RoutingKey);
         }
 
-        public bool Publish<T>(T @event)
-            where T : ItemEvent
+        public bool Publish<TEvent>(TEvent @event)
+            where TEvent : ItemEvent
         {
             try
             {
-                var json = JsonSerializer.Serialize<T>(@event);
+                var json = JsonSerializer.Serialize<TEvent>(@event);
                 var body = Encoding.UTF8.GetBytes(json);
+                var prop = channel.CreateBasicProperties();
+                prop.Type = typeof(TEvent).Name;
                 channel.BasicPublish(
                     exchange: settings.ExchangeName,
                     routingKey: settings.RoutingKey,
-                    basicProperties: null,
+                    basicProperties: prop,
                     body: body);
                 return true;
             }
