@@ -11,7 +11,6 @@ namespace CatalogManagementService.Infrastructure.EventBus
 {
     public class RabbitmqEventPublisher : IEventPublisher
     {
-
         private readonly IConnection _connection;
 
         private readonly IModel channel;
@@ -42,7 +41,6 @@ namespace CatalogManagementService.Infrastructure.EventBus
                 routingKey: settings.RoutingKey);
         }
 
-
         public bool Publish<TEvent>(TEvent @event)
             where TEvent : ItemEvent
         {
@@ -59,10 +57,7 @@ namespace CatalogManagementService.Infrastructure.EventBus
                     body: body);
                 return true;
             }
-            catch (Exception ex)
-            {
-                throw new Exception(ex.Message);
-            }
+            catch { throw; }
         }
 
         private static JsonSerializerOptions JsonOptions =>
