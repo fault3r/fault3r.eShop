@@ -5,7 +5,7 @@ using MongoDB.Bson.Serialization.Attributes;
 
 namespace CatalogManagementService.Infrastructure.Data.Documents.BaseDocument
 {
-    public class ItemBaseDocument
+    public abstract class ItemBaseDocument
     {
         [BsonId]
         [BsonRepresentation(BsonType.ObjectId)]

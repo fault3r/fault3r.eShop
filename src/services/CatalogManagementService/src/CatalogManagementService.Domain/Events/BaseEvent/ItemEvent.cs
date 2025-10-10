@@ -7,6 +7,5 @@ namespace CatalogManagementService.Domain.Events.BaseEvent
     {
         public required string Id { get; set; }
 
-        public abstract string EventType { get;}        
     }
 }

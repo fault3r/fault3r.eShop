@@ -30,35 +30,32 @@ namespace CatalogManagementService.Infrastructure.EventBus
         {
             channel.ExchangeDeclare(
                 exchange: settings.ExchangeName,
-                type: ExchangeType.Direct,
-                durable: true,
-                autoDelete: false,
-                arguments: null);
+                type: ExchangeType.Fanout,
+                durable: true);
             channel.QueueDeclare(
                 queue: settings.QueueName,
                 durable: true,
-                exclusive: false,
-                autoDelete: false,
-                arguments: null);
+                exclusive: false);
             channel.QueueBind(
                 queue: settings.QueueName,
                 exchange: settings.ExchangeName,
                 routingKey: settings.RoutingKey);
         }
 
+
         public bool Publish<TEvent>(TEvent @event)
             where TEvent : ItemEvent
         {
             try
             {
-                var json = JsonSerializer.Serialize<TEvent>(@event);
-                var body = Encoding.UTF8.GetBytes(json);
-                var prop = channel.CreateBasicProperties();
-                prop.Type = typeof(TEvent).Name;
+                var jsonBody = JsonSerializer.Serialize<TEvent>(@event, JsonOptions);
+                var body = Encoding.UTF8.GetBytes(jsonBody);
+                var properties = channel.CreateBasicProperties();
+                properties.Type = typeof(TEvent).Name;
                 channel.BasicPublish(
                     exchange: settings.ExchangeName,
                     routingKey: settings.RoutingKey,
-                    basicProperties: prop,
+                    basicProperties: properties,
                     body: body);
                 return true;
             }
@@ -67,6 +64,9 @@ namespace CatalogManagementService.Infrastructure.EventBus
                 throw new Exception(ex.Message);
             }
         }
-        
+
+        private static JsonSerializerOptions JsonOptions =>
+            new() { WriteIndented = true };
+
     }
 }
