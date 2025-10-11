@@ -32,5 +32,6 @@ namespace CatalogManagementService.Application.UseCases.CreateItem
                 Code: result.Code,
                 Item: result.Items.Select(item => ItemDTOs.ToDto(item)).FirstOrDefault());
         }
+        
     }
 }
