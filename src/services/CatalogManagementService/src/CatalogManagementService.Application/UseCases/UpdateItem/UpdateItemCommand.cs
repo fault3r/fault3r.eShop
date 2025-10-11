@@ -1,8 +1,9 @@
+
 using System;
 using CatalogManagementService.Application.DTOs;
 using MediatR;
 
-namespace CatalogManagementService.Application.Mediator.Commands
+namespace CatalogManagementService.Application.UseCases.UpdateItem
 {
     public class UpdateItemCommand : IRequest<(int Code, ItemDto? Item)>
     {

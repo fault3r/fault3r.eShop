@@ -1,8 +1,10 @@
+
 using System;
 
-namespace CatalogManagementService.Application.UseCases.UpdateItem;
-
-public class UpdateItemValidator
+namespace CatalogManagementService.Application.UseCases.UpdateItem
 {
-
+    public class UpdateItemValidator
+    {
+        
+    }
 }

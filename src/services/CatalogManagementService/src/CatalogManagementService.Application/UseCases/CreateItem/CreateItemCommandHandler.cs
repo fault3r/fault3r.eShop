@@ -1,23 +1,24 @@
+
 using System;
 using CatalogManagementService.Application.DTOs;
-using CatalogManagementService.Application.Interfaces;
-using CatalogManagementService.Application.Mediator.Commands;
+using CatalogManagementService.Application.UseCases.CreateItem;
 using MediatR;
 
 namespace CatalogManagementService.Application.Mediator.Handlers.Commands
 {
     public class CreateItemCommandHandler : IRequestHandler<CreateItemCommand, (int Code, ItemDto? Item)>
     {
-        private readonly IItemsService _ItemsService;
+        private readonly CreateItemService _service;
 
-        public CreateItemCommandHandler(IItemsService ItemsService)
+        public CreateItemCommandHandler(CreateItemService service)
         {
-            _ItemsService = ItemsService;
+            _service = service;
         }
 
         public async Task<(int Code, ItemDto? Item)> Handle(CreateItemCommand request, CancellationToken cancellationToken)
         {
-            return await _ItemsService.CreateAsync(request.Item);
+            return await _service.ExecuteAsync(request.Item);
         }
+        
     }
 }

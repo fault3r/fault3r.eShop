@@ -1,23 +1,23 @@
+
 using System;
 using CatalogManagementService.Application.DTOs;
-using CatalogManagementService.Application.Interfaces;
-using CatalogManagementService.Application.Mediator.Queries;
 using MediatR;
 
-namespace CatalogManagementService.Application.Mediator.Handlers.Queries
+namespace CatalogManagementService.Application.UseCases.GetItem
 {
     public class GetItemQueryHandler : IRequestHandler<GetItemQuery, (int Code, ItemDto? Item)>
     {
-        private readonly IItemsService _ItemsService;
+        private readonly GetItemService _service;
 
-        public GetItemQueryHandler(IItemsService ItemsService)
+        public GetItemQueryHandler(GetItemService service)
         {
-            _ItemsService = ItemsService;
+            _service = service;
         }
 
         public async Task<(int Code, ItemDto? Item)> Handle(GetItemQuery request, CancellationToken cancellationToken)
         {
-            return await _ItemsService.GetByIdAsync(request.Id);
+            return await _service.ExecuteAsync(request.Id);
         }
+
     }
 }

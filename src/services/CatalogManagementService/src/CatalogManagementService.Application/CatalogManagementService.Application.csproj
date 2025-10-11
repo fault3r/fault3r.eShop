@@ -14,11 +14,4 @@
     <PackageReference Include="MediatR" Version="13.0.0" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Mediator/Commands/" />
-    <Folder Include="Mediator/Handlers/Commands/" />
-    <Folder Include="Mediator/Handlers/Queries/" />
-    <Folder Include="Mediator/Queries/" />
-  </ItemGroup>
-
 </Project>

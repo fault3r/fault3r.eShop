@@ -1,8 +1,10 @@
+
 using System;
 
-namespace CatalogManagementService.Application.UseCases.DeleteItem;
-
-public class DeleteItemValidator
+namespace CatalogManagementService.Application.UseCases.DeleteItem
 {
-
+    public class DeleteItemValidator
+    {
+        
+    }
 }

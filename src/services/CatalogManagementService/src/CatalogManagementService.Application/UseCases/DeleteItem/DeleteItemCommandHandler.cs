@@ -1,22 +1,23 @@
+
 using System;
-using CatalogManagementService.Application.Interfaces;
-using CatalogManagementService.Application.Mediator.Commands;
+using CatalogManagementService.Application.UseCases.DeleteItem;
 using MediatR;
 
 namespace CatalogManagementService.Application.Mediator.Handlers.Commands
 {
     public class DeleteItemCommandHandler : IRequestHandler<DeleteItemCommand, int>
     {
-        private readonly IItemsService _ItemsService;
+        private readonly DeleteItemService _service;
 
-        public DeleteItemCommandHandler(IItemsService ItemsService)
+        public DeleteItemCommandHandler(DeleteItemService service)
         {
-            _ItemsService = ItemsService;
+            _service = service;
         }
 
         public async Task<int> Handle(DeleteItemCommand request, CancellationToken cancellationToken)
         {
-            return await _ItemsService.DeleteAsync(request.Id);
+            return await _service.ExecuteAsync(request.Id);
         }
+
     }
 }

@@ -2,7 +2,7 @@ using System;
 using CatalogManagementService.Application.DTOs;
 using MediatR;
 
-namespace CatalogManagementService.Application.Mediator.Queries
+namespace CatalogManagementService.Application.UseCases.GetItem
 {
     public class GetItemQuery : IRequest<(int Code, ItemDto? Item)>
     {
