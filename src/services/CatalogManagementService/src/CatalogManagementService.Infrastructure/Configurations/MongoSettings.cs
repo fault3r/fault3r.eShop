@@ -10,5 +10,6 @@ namespace CatalogManagementService.Infrastructure.Configurations
         public required string DatabaseName { get; set; }
         
         public required string CollectionName { get; set; }
+        
     }
 }

@@ -1,20 +1,21 @@
 
 using System;
-using CatalogManagementService.Application.DTOs;
-using CatalogManagementService.Application.UseCases.CreateItem;
-using CatalogManagementService.Application.UseCases.DeleteItem;
-using CatalogManagementService.Application.UseCases.GetItem;
-using CatalogManagementService.Application.UseCases.GetItems;
-using CatalogManagementService.Application.UseCases.UpdateItem;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
+using CatalogManagementService.Application.DTOs;
+using CatalogManagementService.Application.UseCases.GetItems;
+using CatalogManagementService.Application.UseCases.GetItem;
+using CatalogManagementService.Application.UseCases.CreateItem;
+using CatalogManagementService.Application.UseCases.UpdateItem;
+using CatalogManagementService.Application.UseCases.DeleteItem;
 
 namespace CatalogManagementService.Api.Controllers
 {
     [ApiController]
     [ApiVersion("1.0")]
     [Route("api/v1/catalog")]
-    public class CatalogController(IMediator mediator) : ControllerBase
+    public class CatalogController(
+        IMediator mediator) : ControllerBase
     {
         private readonly IMediator _mediator = mediator;
 

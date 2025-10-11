@@ -30,7 +30,8 @@ namespace CatalogManagementService.Application.UseCases.UpdateItem
                     ItemUpdatedEvent.Parse(result.Items.First()));
             return (
                 Code: result.Code,
-                Item: result.Items.Select(item => ItemDTOs.ToDto(item)).FirstOrDefault());
+                Item: result.Items.Select(item => ItemDTOs.Parse(item)).FirstOrDefault());
         }
+        
     }
 }

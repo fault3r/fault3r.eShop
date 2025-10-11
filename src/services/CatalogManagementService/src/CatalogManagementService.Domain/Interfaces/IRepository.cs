@@ -16,5 +16,6 @@ namespace CatalogManagementService.Domain.Interfaces
         Task<MongoRepositoryResult> UpdateAsync(Item item);
 
         Task<MongoRepositoryResult> DeleteAsync(string id);
+        
     }
 }

@@ -10,5 +10,6 @@ namespace CatalogManagementService.Infrastructure.Configurations
         public required string Issuer { get; set; }
 
         public required string Audience { get; set; }
+        
     }
 }

@@ -1,8 +1,6 @@
 
 using System;
 using CatalogManagementService.Application.DTOs;
-using CatalogManagementService.Application.Interfaces;
-using CatalogManagementService.Application.UseCases.GetItem;
 using MediatR;
 
 namespace CatalogManagementService.Application.UseCases.GetItems

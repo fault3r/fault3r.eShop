@@ -11,5 +11,6 @@ namespace CatalogManagementService.Infrastructure.Data.Documents.BaseDocument
         [BsonRepresentation(BsonType.ObjectId)]
         [BsonElement("Id")]
         public ObjectId Id { get; set; }
+        
     }
 }

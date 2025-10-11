@@ -1,3 +1,4 @@
+
 using System;
 using CatalogManagementService.Domain.Entities;
 
@@ -8,12 +9,11 @@ namespace CatalogManagementService.Application.DTOs
         string Name,
         string Description,
         decimal Price,
-        DateTime Updated
-    );
+        DateTime Updated);
 
     public class ItemDTOs
     {
-        public static ItemDto ToDto(Item item)
+        public static ItemDto Parse(Item item)
         {
             return new ItemDto(
                 item.Id,
@@ -23,4 +23,5 @@ namespace CatalogManagementService.Application.DTOs
                 item.Updated);
         }
     }
+    
 }

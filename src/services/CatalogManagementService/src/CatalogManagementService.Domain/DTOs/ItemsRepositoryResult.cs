@@ -1,5 +1,5 @@
+
 using System;
-using System.Collections;
 using CatalogManagementService.Domain.Entities;
 
 namespace CatalogManagementService.Domain.DTOs
@@ -20,4 +20,5 @@ namespace CatalogManagementService.Domain.DTOs
         NotFound = 404,
         InternalServerError = 500,
     }
+    
 }

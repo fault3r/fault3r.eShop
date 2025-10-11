@@ -1,3 +1,4 @@
+
 using System;
 
 namespace CatalogManagementService.Application.DTOs
@@ -6,4 +7,5 @@ namespace CatalogManagementService.Application.DTOs
         string Name,
         string Description,
         decimal Price);
+        
 }

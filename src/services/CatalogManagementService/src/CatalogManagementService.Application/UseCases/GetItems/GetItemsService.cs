@@ -15,7 +15,7 @@ namespace CatalogManagementService.Application.UseCases.GetItems
             var result = await _repository.GetAllAsync();
             return (
                 Code: result.Code,
-                Items: result.Items.Select(item => ItemDTOs.ToDto(item)));
+                Items: result.Items.Select(item => ItemDTOs.Parse(item)));
         }
         
     }

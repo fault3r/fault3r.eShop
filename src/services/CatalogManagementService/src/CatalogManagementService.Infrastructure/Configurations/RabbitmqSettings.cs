@@ -1,3 +1,4 @@
+
 using System;
 
 namespace CatalogManagementService.Infrastructure.Configurations
@@ -15,5 +16,6 @@ namespace CatalogManagementService.Infrastructure.Configurations
         public required string QueueName { get; set; }
 
         public required string RoutingKey { get; set; }
+        
     }
 }

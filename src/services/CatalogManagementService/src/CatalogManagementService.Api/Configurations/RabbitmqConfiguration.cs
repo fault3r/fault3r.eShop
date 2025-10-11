@@ -1,3 +1,4 @@
+
 using System;
 using CatalogManagementService.Application.Interfaces;
 using CatalogManagementService.Infrastructure.Configurations;
@@ -31,5 +32,6 @@ namespace CatalogManagementService.Api.Configurations
             });
             return services;
         }
+        
     }
 }

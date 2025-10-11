@@ -6,4 +6,5 @@ using MediatR;
 namespace CatalogManagementService.Application.UseCases.GetItems
 {
     public class GetItemsQuery : IRequest<(int Code, IEnumerable<ItemDto> Items)> { }
+    
 }

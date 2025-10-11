@@ -1,3 +1,4 @@
+
 using System;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Versioning;
@@ -21,5 +22,6 @@ namespace CatalogManagementService.Api.Configurations
             });
             return services;
         }
+        
     }
 }

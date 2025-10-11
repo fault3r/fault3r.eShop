@@ -1,3 +1,5 @@
+
+using System;
 using System.Text;
 using CatalogManagementService.Infrastructure.Configurations;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -16,16 +18,15 @@ namespace CatalogManagementService.Api.Configurations
             services.AddAuthentication(options =>
             {
                 options.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
-
             })
                 .AddJwtBearer(options =>
                 {
                     options.TokenValidationParameters = new TokenValidationParameters
                     {
                         ValidateIssuerSigningKey = true,
-                        ValidateAudience = true,
-                        ValidateIssuer = true,
                         ValidateLifetime = true,
+                        ValidateIssuer = true,
+                        ValidateAudience = true,
                         IssuerSigningKey = new SymmetricSecurityKey(
                             Encoding.UTF8.GetBytes(settings.Key)),
                         ValidIssuer = settings.Issuer,
@@ -34,5 +35,6 @@ namespace CatalogManagementService.Api.Configurations
                 });
             return services;
         }
+
     }
 }

@@ -12,5 +12,6 @@ namespace CatalogManagementService.Infrastructure.Configurations
         public required decimal Version { get; set; }
 
         public required string Url { get; set; }
+        
     }
 }

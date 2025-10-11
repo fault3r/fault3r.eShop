@@ -10,5 +10,6 @@ namespace CatalogManagementService.Application.UseCases.UpdateItem
         public required string Id  { get; set; }
 
         public required UpdateItemDto Item { get; set; }
+        
     }
 }
