@@ -4,14 +4,14 @@ using CatalogManagementService.Domain.Entities;
 
 namespace CatalogManagementService.Domain.DTOs
 {
-    public class ItemsRepositoryResult
+    public class MongoRepositoryResult
     {
         public int Code { get; set; } = 0;
 
         public IEnumerable<Item> Items { get; set; } = [];
     }
 
-    public enum ItemsRepositoryResultCode
+    public enum MongoRepositoryResultCode
     {
         Ok = 200,
         Created = 201,

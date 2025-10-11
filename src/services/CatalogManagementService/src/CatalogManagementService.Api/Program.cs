@@ -26,7 +26,7 @@ builder.Services.AddMediatrConfiguration();
 
 builder.Services.AddMongoContextConfiguration(builder.Configuration);
 
-builder.Services.AddScoped<IItemsRepository, ItemsRepository>();
+builder.Services.AddScoped<IRepository, MongoRepository>();
 
 builder.Services.AddScoped<IItemsService, ItemsService>();
 

@@ -1,3 +1,4 @@
+
 using System;
 using CatalogManagementService.Domain.DTOs;
 using CatalogManagementService.Domain.Entities;
@@ -9,13 +10,13 @@ using MongoDB.Driver;
 
 namespace CatalogManagementService.Infrastructure.Repositories
 {
-    public class ItemsRepository : IItemsRepository
+    public class MongoRepository : IRepository
     {
         private readonly MongoContext _context;
 
         private readonly FilterDefinitionBuilder<ItemDocument> filter;
 
-        public ItemsRepository(MongoContext context)
+        public MongoRepository(MongoContext context)
         {
             _context = context;
             filter = Builders<ItemDocument>.Filter;
@@ -24,60 +25,60 @@ namespace CatalogManagementService.Infrastructure.Repositories
         private static bool IdValidation(string id) =>
             ObjectId.TryParse(id, out var result);   
 
-        public async Task<ItemsRepositoryResult> GetAllAsync()
+        public async Task<MongoRepositoryResult> GetAllAsync()
         {
             try
             {
                 var documents = await _context.Documents.Find(filter.Empty)
                     .ToListAsync();
-                return new ItemsRepositoryResult
+                return new MongoRepositoryResult
                 {
-                    Code = (int)ItemsRepositoryResultCode.Ok,
+                    Code = (int)MongoRepositoryResultCode.Ok,
                     Items = documents.Select(i => i.ToDomain()),
                 };
             }
             catch
             {
-                return new ItemsRepositoryResult
+                return new MongoRepositoryResult
                 {
-                    Code = (int)ItemsRepositoryResultCode.InternalServerError,
+                    Code = (int)MongoRepositoryResultCode.InternalServerError,
                 };
             }
         }
 
-        public async Task<ItemsRepositoryResult> GetByIdAsync(string id)
+        public async Task<MongoRepositoryResult> GetByIdAsync(string id)
         {
             try
             {
                 if(!IdValidation(id))
-                    return new ItemsRepositoryResult
+                    return new MongoRepositoryResult
                     {
-                        Code = (int)ItemsRepositoryResultCode.BadRequest,
+                        Code = (int)MongoRepositoryResultCode.BadRequest,
                     };                
                 var document = await _context.Documents
                     .Find(filter.Eq(p => p.Id, ObjectId.Parse(id)))
                     .FirstOrDefaultAsync();
                 if (document is null)
-                    return new ItemsRepositoryResult
+                    return new MongoRepositoryResult
                     {
-                        Code = (int)ItemsRepositoryResultCode.NotFound
+                        Code = (int)MongoRepositoryResultCode.NotFound
                     };
-                return new ItemsRepositoryResult
+                return new MongoRepositoryResult
                 {
-                    Code = (int)ItemsRepositoryResultCode.Ok,
+                    Code = (int)MongoRepositoryResultCode.Ok,
                     Items = [document.ToDomain()],
                 };
             }
             catch
             {
-                return new ItemsRepositoryResult
+                return new MongoRepositoryResult
                 {
-                    Code = (int)ItemsRepositoryResultCode.InternalServerError,
+                    Code = (int)MongoRepositoryResultCode.InternalServerError,
                 };
             }
         }
 
-        public async Task<ItemsRepositoryResult> CreateAsync(Item item)
+        public async Task<MongoRepositoryResult> CreateAsync(Item item)
         {
             try
             {
@@ -88,29 +89,29 @@ namespace CatalogManagementService.Infrastructure.Repositories
                     Price = item.Price,
                 };
                 await _context.Documents.InsertOneAsync(document);
-                return new ItemsRepositoryResult
+                return new MongoRepositoryResult
                 {
-                    Code = (int)ItemsRepositoryResultCode.Created,
+                    Code = (int)MongoRepositoryResultCode.Created,
                     Items = [document.ToDomain()],
                 };
             }
             catch
             {
-                return new ItemsRepositoryResult
+                return new MongoRepositoryResult
                 {
-                    Code = (int)ItemsRepositoryResultCode.InternalServerError,
+                    Code = (int)MongoRepositoryResultCode.InternalServerError,
                 };
             }
         }
 
-        public async Task<ItemsRepositoryResult> UpdateAsync(Item item)
+        public async Task<MongoRepositoryResult> UpdateAsync(Item item)
         {
             try
             {
                 if (!IdValidation(item.Id))
-                    return new ItemsRepositoryResult
+                    return new MongoRepositoryResult
                     {
-                        Code = (int)ItemsRepositoryResultCode.BadRequest,
+                        Code = (int)MongoRepositoryResultCode.BadRequest,
                     };
                 var document = new ItemDocument
                 {
@@ -123,51 +124,51 @@ namespace CatalogManagementService.Infrastructure.Repositories
                 var updated = await _context.Documents.FindOneAndReplaceAsync(
                     filter.Eq(p => p.Id, document.Id), document);
                 if (updated is null)
-                    return new ItemsRepositoryResult
+                    return new MongoRepositoryResult
                     {
-                        Code = (int)ItemsRepositoryResultCode.NotFound
+                        Code = (int)MongoRepositoryResultCode.NotFound
                     };
-                return new ItemsRepositoryResult
+                return new MongoRepositoryResult
                 {
-                    Code = (int)ItemsRepositoryResultCode.Ok,
+                    Code = (int)MongoRepositoryResultCode.Ok,
                     Items = [document.ToDomain()],
                 };
             }
             catch
             {
-                return new ItemsRepositoryResult
+                return new MongoRepositoryResult
                 {
-                    Code = (int)ItemsRepositoryResultCode.InternalServerError,
+                    Code = (int)MongoRepositoryResultCode.InternalServerError,
                 };
             }
         }
 
-        public async Task<ItemsRepositoryResult> DeleteAsync(string id)
+        public async Task<MongoRepositoryResult> DeleteAsync(string id)
         {
             try
             {
                 if (!IdValidation(id))
-                    return new ItemsRepositoryResult
+                    return new MongoRepositoryResult
                     {
-                        Code = (int)ItemsRepositoryResultCode.BadRequest,
+                        Code = (int)MongoRepositoryResultCode.BadRequest,
                     };
                 var result = await _context.Documents.DeleteOneAsync(
                     filter.Eq(p => p.Id, ObjectId.Parse(id)));
                 if (result.DeletedCount == 0)
-                    return new ItemsRepositoryResult
+                    return new MongoRepositoryResult
                     {
-                        Code = (int)ItemsRepositoryResultCode.NotFound
+                        Code = (int)MongoRepositoryResultCode.NotFound
                     };
-                return new ItemsRepositoryResult
+                return new MongoRepositoryResult
                 {
-                    Code = (int)ItemsRepositoryResultCode.NoContent,
+                    Code = (int)MongoRepositoryResultCode.NoContent,
                 };
             }
             catch
             {
-                return new ItemsRepositoryResult
+                return new MongoRepositoryResult
                 {
-                    Code = (int)ItemsRepositoryResultCode.InternalServerError,
+                    Code = (int)MongoRepositoryResultCode.InternalServerError,
                 };
             }
         }                 
