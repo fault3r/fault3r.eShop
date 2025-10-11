@@ -1,10 +1,9 @@
 
 using System;
 using CatalogManagementService.Application.DTOs;
-using CatalogManagementService.Application.UseCases.CreateItem;
 using MediatR;
 
-namespace CatalogManagementService.Application.Mediator.Handlers.Commands
+namespace CatalogManagementService.Application.UseCases.CreateItem
 {
     public class CreateItemCommandHandler : IRequestHandler<CreateItemCommand, (int Code, ItemDto? Item)>
     {

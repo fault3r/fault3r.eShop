@@ -1,11 +1,7 @@
 
 using System;
 using CatalogManagementService.Api.Configurations;
-using CatalogManagementService.Application.Interfaces;
-using CatalogManagementService.Application.Services;
-using CatalogManagementService.Domain.Interfaces;
 using CatalogManagementService.Infrastructure.Configurations;
-using CatalogManagementService.Infrastructure.Repositories;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -26,9 +22,7 @@ builder.Services.AddMediatrConfiguration();
 
 builder.Services.AddMongoContextConfiguration(builder.Configuration);
 
-builder.Services.AddScoped<IRepository, MongoRepository>();
-
-builder.Services.AddScoped<IItemsService, ItemsService>();
+builder.Services.AddApplicationConfiguration();
 
 builder.Services.AddRabbitmqConfiguration(builder.Configuration);
 

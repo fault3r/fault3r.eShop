@@ -1,6 +1,10 @@
+
 using System;
-using CatalogManagementService.Application.Mediator.Handlers.Commands;
-using CatalogManagementService.Application.Mediator.Handlers.Queries;
+using CatalogManagementService.Application.UseCases.CreateItem;
+using CatalogManagementService.Application.UseCases.DeleteItem;
+using CatalogManagementService.Application.UseCases.GetItem;
+using CatalogManagementService.Application.UseCases.GetItems;
+using CatalogManagementService.Application.UseCases.UpdateItem;
 
 namespace CatalogManagementService.Api.Configurations
 {
@@ -18,5 +22,6 @@ namespace CatalogManagementService.Api.Configurations
             });
             return services;
         }  
+        
     }
 }

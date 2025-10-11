@@ -1,9 +1,8 @@
 
 using System;
-using CatalogManagementService.Application.UseCases.DeleteItem;
 using MediatR;
 
-namespace CatalogManagementService.Application.Mediator.Handlers.Commands
+namespace CatalogManagementService.Application.UseCases.DeleteItem
 {
     public class DeleteItemCommandHandler : IRequestHandler<DeleteItemCommand, int>
     {

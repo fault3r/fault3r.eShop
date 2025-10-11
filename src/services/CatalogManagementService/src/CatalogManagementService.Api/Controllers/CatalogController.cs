@@ -1,8 +1,11 @@
 
 using System;
 using CatalogManagementService.Application.DTOs;
-using CatalogManagementService.Application.Mediator.Commands;
-using CatalogManagementService.Application.Mediator.Queries;
+using CatalogManagementService.Application.UseCases.CreateItem;
+using CatalogManagementService.Application.UseCases.DeleteItem;
+using CatalogManagementService.Application.UseCases.GetItem;
+using CatalogManagementService.Application.UseCases.GetItems;
+using CatalogManagementService.Application.UseCases.UpdateItem;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
