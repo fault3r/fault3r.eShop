@@ -17,7 +17,8 @@ namespace CatalogManagementService.Infrastructure.EventBus
 
         private readonly RabbitmqSettings settings;
 
-        public RabbitmqEventPublisher(IConnection connection, RabbitmqSettings settings)
+        public RabbitmqEventPublisher(
+            IConnection connection, RabbitmqSettings settings)
         {
             _connection = connection;
             channel = _connection.CreateModel();

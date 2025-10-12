@@ -1,7 +1,9 @@
 
 using System;
 using CatalogManagementService.Api.Configurations;
+using CatalogManagementService.Domain.Events;
 using CatalogManagementService.Infrastructure.Configurations;
+using CatalogManagementService.Infrastructure.EventBus;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -26,7 +28,14 @@ builder.Services.AddApplicationConfiguration();
 
 builder.Services.AddRabbitmqConfiguration(builder.Configuration);
 
+builder.Services.AddRabbitmqHandlerConfiguration(builder.Configuration);
+
 var app = builder.Build();
+
+var eventBus = app.Services.GetRequiredService<RabbitmqEventHandler>();
+eventBus.Subscribe<ItemCreatedEvent>();
+eventBus.Subscribe<ItemUpdatedEvent>();
+eventBus.Subscribe<ItemDeletedEvent>();
 
 if (app.Environment.IsDevelopment())
     app.UseDeveloperExceptionPage();
