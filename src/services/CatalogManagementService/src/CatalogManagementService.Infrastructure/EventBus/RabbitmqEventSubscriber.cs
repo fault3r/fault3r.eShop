@@ -22,7 +22,7 @@ namespace CatalogManagementService.Infrastructure.EventBus
         private readonly RabbitmqSettings settings;
 
         public RabbitmqEventSubscriber(
-            IConnection connection, IServiceProvider provider, RabbitmqSettings settings)
+            IConnection connection, RabbitmqSettings settings, IServiceProvider provider)
         {
             _connection = connection;
             channel = _connection.CreateModel();
@@ -42,7 +42,7 @@ namespace CatalogManagementService.Infrastructure.EventBus
         public Task Subscribe()
         {
             var consumer = new EventingBasicConsumer(channel);
-            consumer.Received += async (model, ea) =>
+            consumer.Received += async (_, ea) =>
             {
                 string eventName = ea.BasicProperties.Type;
                 var eventType = eventName switch
