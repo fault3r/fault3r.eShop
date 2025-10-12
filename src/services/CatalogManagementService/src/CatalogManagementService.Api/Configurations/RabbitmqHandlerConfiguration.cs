@@ -1,4 +1,5 @@
 using System;
+using CatalogManagementService.Api.Services;
 using CatalogManagementService.Application.EventHandlers;
 using CatalogManagementService.Application.Interfaces;
 using CatalogManagementService.Domain.Events;
@@ -14,19 +15,17 @@ namespace CatalogManagementService.Api.Configurations
             ConfigurationManager configuration)
         {
             services.AddScoped<IEventHandler<ItemCreatedEvent>, ItemCreatedEventHandler>();
-            
             var settings = configuration.GetSection(nameof(RabbitmqSettings))
                 .Get<RabbitmqSettings>() ??
                 throw new NullReferenceException();
-
-            services.AddScoped<RabbitmqEventHandler>(provider =>
+            services.AddSingleton<RabbitmqEventSubscriber>(provider =>
             {
                 var connection = provider.GetRequiredService<IConnection>();
-
-                return new RabbitmqEventHandler(connection, provider, settings.QueueName);
+                return new RabbitmqEventSubscriber(connection, provider, settings);
             });
-
+            services.AddHostedService<RabbitmqEventSubscriberHostedService>();
             return services;
         }
     }
 }
+

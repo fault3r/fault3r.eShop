@@ -1,12 +1,14 @@
 
 using System;
 using CatalogManagementService.Domain.Entities;
-using CatalogManagementService.Domain.Events.BaseEvent;
+using CatalogManagementService.Domain.Interfaces;
 
 namespace CatalogManagementService.Domain.Events
 {
-    public class ItemCreatedEvent : ItemEvent
+    public class ItemCreatedEvent : IEvent
     {
+        public required string Id { get; set; }
+        
         public required string Name { get; set; }
 
         public required string Description { get; set; }

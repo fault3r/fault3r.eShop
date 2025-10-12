@@ -1,9 +1,13 @@
 
 using System;
-using CatalogManagementService.Domain.Events.BaseEvent;
+using CatalogManagementService.Domain.Interfaces;
 
 namespace CatalogManagementService.Domain.Events
 {
-    public class ItemDeletedEvent : ItemEvent { }
+    public class ItemDeletedEvent : IEvent
+    {
+        public required string Id { get; set; }
+        
+    }
     
 }

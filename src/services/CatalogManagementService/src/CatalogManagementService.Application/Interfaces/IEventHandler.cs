@@ -1,11 +1,12 @@
 
 using System;
+using CatalogManagementService.Domain.Interfaces;
 
 namespace CatalogManagementService.Application.Interfaces
 {
-    public interface IEventHandler<ItemEvent>
+    public interface IEventHandler<in TEvent> where TEvent : IEvent
     {
-        Task Handle(ItemEvent @event);
+        Task Handle(TEvent @event);
 
     }
 }

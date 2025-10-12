@@ -3,7 +3,7 @@ using System;
 using System.Text;
 using System.Text.Json;
 using CatalogManagementService.Application.Interfaces;
-using CatalogManagementService.Domain.Events.BaseEvent;
+using CatalogManagementService.Domain.Interfaces;
 using CatalogManagementService.Infrastructure.Configurations;
 using RabbitMQ.Client;
 
@@ -43,7 +43,7 @@ namespace CatalogManagementService.Infrastructure.EventBus
         }
 
         public bool Publish<TEvent>(TEvent @event)
-            where TEvent : ItemEvent
+            where TEvent : IEvent
         {
             try
             {

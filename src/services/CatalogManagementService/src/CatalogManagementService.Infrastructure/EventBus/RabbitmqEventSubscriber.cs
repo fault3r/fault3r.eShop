@@ -1,9 +1,9 @@
 
 using System;
-using System.Reflection.Metadata;
 using System.Text;
 using System.Text.Json;
 using CatalogManagementService.Application.Interfaces;
+using CatalogManagementService.Domain.Interfaces;
 using CatalogManagementService.Infrastructure.Configurations;
 using Microsoft.Extensions.DependencyInjection;
 using RabbitMQ.Client;
@@ -11,7 +11,7 @@ using RabbitMQ.Client.Events;
 
 namespace CatalogManagementService.Infrastructure.EventBus
 {
-    public class RabbitmqEventHandler
+    public class RabbitmqEventSubscriber
     {
         private readonly IConnection _connection;
 
@@ -19,14 +19,14 @@ namespace CatalogManagementService.Infrastructure.EventBus
 
         private readonly IModel channel;
 
-        private readonly string queueName;
+        private readonly RabbitmqSettings settings;
 
-        public RabbitmqEventHandler(
-            IConnection connection, IServiceProvider provider, string queueName)
+        public RabbitmqEventSubscriber(
+            IConnection connection, IServiceProvider provider, RabbitmqSettings settings)
         {
             _connection = connection;
             channel = _connection.CreateModel();
-            this.queueName = queueName;
+            this.settings = settings;
             _provider = provider;
             InitialChannel();
         }
@@ -34,24 +34,29 @@ namespace CatalogManagementService.Infrastructure.EventBus
         private void InitialChannel()
         {
             channel.QueueDeclare(
-                queue: queueName,
+                queue: settings.QueueName,
                 durable: true,
                 exclusive: false);
         }
 
-        public void Subscribe<ItemEvent>()
+        public void Subscribe<TEvent>() where TEvent : IEvent
         {
             var consumer = new EventingBasicConsumer(channel);
             consumer.Received += async (model, ea) =>
             {
                 var body = ea.Body.ToArray();
                 var strBody = Encoding.UTF8.GetString(body);
-                var theEvent = JsonSerializer.Deserialize<ItemEvent>(strBody);
+                var @event = JsonSerializer.Deserialize<TEvent>(strBody);
 
                 using var scope = _provider.CreateScope();
-                var handler = scope.ServiceProvider.GetRequiredService<IEventHandler<ItemEvent>>();
-                await handler.Handle(theEvent);      
+                var handler = scope.ServiceProvider.GetRequiredService<IEventHandler<TEvent>>();
+                await handler.Handle(@event!);
             };
+            channel.BasicConsume(
+                queue: settings.QueueName,
+                autoAck: true,
+                consumer: consumer);
         }
+
     }
 }
