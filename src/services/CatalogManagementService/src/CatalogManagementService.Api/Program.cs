@@ -28,8 +28,6 @@ builder.Services.AddApplicationConfiguration();
 
 builder.Services.AddRabbitmqConfiguration(builder.Configuration);
 
-builder.Services.AddRabbitmqHandlerConfiguration(builder.Configuration);
-
 var app = builder.Build();
 
 if (app.Environment.IsDevelopment())

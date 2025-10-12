@@ -5,13 +5,12 @@ using CatalogManagementService.Domain.Events;
 
 namespace CatalogManagementService.Application.EventHandlers
 {
-    public class ItemCreatedEventHandler : IEventHandler<ItemCreatedEvent>
+    public class ItemDeletedEventHandler : IEventHandler<ItemDeletedEvent>
     {
-        public Task Handle(ItemCreatedEvent @event)
+        public Task Handle(ItemDeletedEvent @event)
         {
-            Console.WriteLine($"Item Created.\nId: {@event.Id}");
+            Console.WriteLine($"Item Deleted.\nId: {@event.Id}");
             return Task.CompletedTask;
         }
-
     }
 }

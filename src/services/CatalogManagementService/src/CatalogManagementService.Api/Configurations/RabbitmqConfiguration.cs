@@ -1,6 +1,9 @@
 
 using System;
+using CatalogManagementService.Api.Services;
+using CatalogManagementService.Application.EventHandlers;
 using CatalogManagementService.Application.Interfaces;
+using CatalogManagementService.Domain.Events;
 using CatalogManagementService.Infrastructure.Configurations;
 using CatalogManagementService.Infrastructure.EventBus;
 using RabbitMQ.Client;
@@ -30,6 +33,15 @@ namespace CatalogManagementService.Api.Configurations
                 var connection = provider.GetRequiredService<IConnection>();
                 return new RabbitmqEventPublisher(connection, settings);
             });
+            services.AddScoped<IEventHandler<ItemCreatedEvent>, ItemCreatedEventHandler>();
+            services.AddScoped<IEventHandler<ItemUpdatedEvent>, ItemUpdatedEventHandler>();
+            services.AddScoped<IEventHandler<ItemDeletedEvent>, ItemDeletedEventHandler>();
+            services.AddSingleton<RabbitmqEventSubscriber>(provider =>
+            {
+                var connection = provider.GetRequiredService<IConnection>();
+                return new RabbitmqEventSubscriber(connection, provider, settings);
+            });
+            services.AddHostedService<RabbitmqEventSubscriberHostedService>();
             return services;
         }
         

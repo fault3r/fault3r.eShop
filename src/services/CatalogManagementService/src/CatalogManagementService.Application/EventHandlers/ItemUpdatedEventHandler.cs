@@ -1,17 +1,15 @@
-
 using System;
 using CatalogManagementService.Application.Interfaces;
 using CatalogManagementService.Domain.Events;
 
 namespace CatalogManagementService.Application.EventHandlers
 {
-    public class ItemCreatedEventHandler : IEventHandler<ItemCreatedEvent>
+    public class ItemUpdatedEventHandler : IEventHandler<ItemUpdatedEvent>
     {
-        public Task Handle(ItemCreatedEvent @event)
+        public Task Handle(ItemUpdatedEvent @event)
         {
-            Console.WriteLine($"Item Created.\nId: {@event.Id}");
+            Console.WriteLine($"Item Updated.\nId: {@event.Id}");
             return Task.CompletedTask;
         }
-
     }
 }
