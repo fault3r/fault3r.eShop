@@ -39,11 +39,10 @@ namespace CatalogManagementService.Api.Configurations
             services.AddSingleton<RabbitmqEventSubscriber>(provider =>
             {
                 var connection = provider.GetRequiredService<IConnection>();
-                return new RabbitmqEventSubscriber(connection, provider, settings);
+                return new RabbitmqEventSubscriber(connection, settings, provider);
             });
             services.AddHostedService<RabbitmqEventSubscriberHostedService>();
             return services;
         }
-        
     }
 }
