@@ -11,6 +11,8 @@ namespace CatalogManagementService.Api.Services
 
         public async Task StartAsync(CancellationToken cancellationToken)
         {
+            //log
+            Console.WriteLine($"***{nameof(RabbitmqEventSubscriberHostedService)} is starting in the background..");            
             await _rabbitmqEventSubscriber.Subscribe();
         }
 

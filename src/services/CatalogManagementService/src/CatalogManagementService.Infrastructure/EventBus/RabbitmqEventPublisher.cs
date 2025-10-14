@@ -19,7 +19,9 @@ namespace CatalogManagementService.Infrastructure.EventBus
 
         public RabbitmqEventPublisher(
             IConnection connection, RabbitmqSettings settings)
-        {
+        {  
+            //log
+            Console.WriteLine($"***{nameof(RabbitmqEventPublisher)} is initializing.");
             _connection = connection;
             channel = _connection.CreateModel();
             this.settings = settings;
@@ -45,6 +47,8 @@ namespace CatalogManagementService.Infrastructure.EventBus
         public bool Publish<TEvent>(TEvent @event)
             where TEvent : IEvent
         {
+            //log
+            Console.WriteLine($"***{nameof(RabbitmqEventPublisher)} is trying to publish an event.");
             try
             {
                 var jsonBody = JsonSerializer.Serialize<TEvent>(@event, JsonOptions);
@@ -63,6 +67,5 @@ namespace CatalogManagementService.Infrastructure.EventBus
 
         private static JsonSerializerOptions JsonOptions =>
             new() { WriteIndented = true };
-
     }
 }

@@ -18,6 +18,8 @@ namespace CatalogManagementService.Infrastructure.Repositories
 
         public MongoRepository(MongoContext context)
         {
+            //log           
+            Console.WriteLine($"***{nameof(MongoRepository)} is initializing.");
             _context = context;
             filter = Builders<ItemDocument>.Filter;
         }
@@ -27,6 +29,8 @@ namespace CatalogManagementService.Infrastructure.Repositories
 
         public async Task<MongoRepositoryResult> GetAllAsync()
         {
+            //log           
+            Console.WriteLine($"***{nameof(MongoRepository)} is running a getall operation.");
             try
             {
                 var documents = await _context.Documents.Find(filter.Empty)
@@ -48,6 +52,8 @@ namespace CatalogManagementService.Infrastructure.Repositories
 
         public async Task<MongoRepositoryResult> GetByIdAsync(string id)
         {
+            //log           
+            Console.WriteLine($"***{nameof(MongoRepository)} is running a get operation.");
             try
             {
                 if(!IdValidation(id))
@@ -80,6 +86,8 @@ namespace CatalogManagementService.Infrastructure.Repositories
 
         public async Task<MongoRepositoryResult> CreateAsync(Item item)
         {
+            //log           
+            Console.WriteLine($"***{nameof(MongoRepository)} is running a create operation.");
             try
             {
                 var document = new ItemDocument
@@ -106,6 +114,8 @@ namespace CatalogManagementService.Infrastructure.Repositories
 
         public async Task<MongoRepositoryResult> UpdateAsync(Item item)
         {
+            //log           
+            Console.WriteLine($"***{nameof(MongoRepository)} is running an update operation.");
             try
             {
                 if (!IdValidation(item.Id))
@@ -145,6 +155,8 @@ namespace CatalogManagementService.Infrastructure.Repositories
 
         public async Task<MongoRepositoryResult> DeleteAsync(string id)
         {
+            //log           
+            Console.WriteLine($"***{nameof(MongoRepository)} is running a delete operation.");
             try
             {
                 if (!IdValidation(id))

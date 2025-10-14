@@ -24,6 +24,8 @@ namespace CatalogManagementService.Infrastructure.EventBus
         public RabbitmqEventSubscriber(
             IConnection connection, RabbitmqSettings settings, IServiceProvider provider)
         {
+            //log           
+            Console.WriteLine($"***{nameof(RabbitmqEventSubscriber)} is initializing.");
             _connection = connection;
             channel = _connection.CreateModel();
             this.settings = settings;
@@ -41,6 +43,8 @@ namespace CatalogManagementService.Infrastructure.EventBus
 
         public Task Subscribe()
         {
+            //log           
+            Console.WriteLine($"***{nameof(RabbitmqEventSubscriber)} is trying to add a consumer.");
             var consumer = new EventingBasicConsumer(channel);
             consumer.Received += async (_, ea) =>
             {

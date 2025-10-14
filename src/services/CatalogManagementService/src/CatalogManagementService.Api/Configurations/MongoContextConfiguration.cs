@@ -11,6 +11,8 @@ namespace CatalogManagementService.Api.Configurations
         public static IServiceCollection AddMongoContextConfiguration(this IServiceCollection services,
             ConfigurationManager configuration)
         {
+            //log
+            Console.WriteLine($"***{nameof(MongoContextConfiguration)} is being configured.");
             var settings = configuration.GetSection(nameof(MongoSettings))
                 .Get<MongoSettings>() ??
                 throw new NullReferenceException();
@@ -23,8 +25,6 @@ namespace CatalogManagementService.Api.Configurations
                 var client = provider.GetRequiredService<MongoClient>();
                 return new MongoContext(client, settings.DatabaseName, settings.CollectionName);
             });
-            //log
-            Console.WriteLine($"***{nameof(MongoContextConfiguration)} done.");
             return services;
         }
     }

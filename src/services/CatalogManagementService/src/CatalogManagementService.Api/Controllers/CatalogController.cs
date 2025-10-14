@@ -14,14 +14,22 @@ namespace CatalogManagementService.Api.Controllers
     [ApiController]
     [ApiVersion("1.0")]
     [Route("api/v1/catalog")]
-    public class CatalogController(
-        IMediator mediator) : ControllerBase
+    public class CatalogController : ControllerBase
     {
-        private readonly IMediator _mediator = mediator;
+        private readonly IMediator _mediator;
+
+        public CatalogController(IMediator mediator)
+        {
+            //log
+            Console.WriteLine($"***{nameof(CatalogController)} received a getall request.");
+            _mediator = mediator;
+        }
 
         [HttpGet]
         public async Task<ActionResult> GetAllAsync()
         {
+            //log
+            Console.WriteLine($"***{nameof(CatalogController)} received a getall request.");            
             var (Code, Items) = await _mediator.Send(new GetItemsQuery());
             return Code switch
             {
@@ -34,6 +42,8 @@ namespace CatalogManagementService.Api.Controllers
         [Route("{id}")]
         public async Task<ActionResult> GetByIdAsync([FromRoute] string id)
         {
+            //log
+            Console.WriteLine($"***{nameof(CatalogController)} received a get request.");      
             var (Code, Item) = await _mediator.Send(new GetItemQuery { Id = id });
             return Code switch
             {
@@ -47,6 +57,8 @@ namespace CatalogManagementService.Api.Controllers
         [HttpPost]
         public async Task<ActionResult> CreateAsync([FromBody] CreateItemDto item)
         {
+            //log
+            Console.WriteLine($"***{nameof(CatalogController)} received a create request.");  
             var (Code, Item) = await _mediator.Send(new CreateItemCommand { Item = item });
             return Code switch
             {
@@ -60,6 +72,8 @@ namespace CatalogManagementService.Api.Controllers
         [Route("{id}")]
         public async Task<ActionResult> UpdateAsync([FromRoute] string id, [FromBody] UpdateItemDto item)
         {
+            //log
+            Console.WriteLine($"***{nameof(CatalogController)} received an update request.");  
             var (Code, Item) = await _mediator.Send(new UpdateItemCommand { Id = id, Item = item });
             return Code switch
             {
@@ -74,6 +88,8 @@ namespace CatalogManagementService.Api.Controllers
         [Route("{id}")]
         public async Task<ActionResult> DeleteAsync([FromRoute] string id)
         {
+            //log
+            Console.WriteLine($"***{nameof(CatalogController)} received an delete request.");  
             int Code = await _mediator.Send(new DeleteItemCommand { Id = id });
             return Code switch
             {
@@ -83,6 +99,5 @@ namespace CatalogManagementService.Api.Controllers
                 _ => StatusCode(Code),
             };
         }
-
     }
 }

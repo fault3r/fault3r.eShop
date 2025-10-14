@@ -12,6 +12,8 @@ namespace CatalogManagementService.Api.Configurations
     {
         public static IServiceCollection AddMediatrConfiguration(this IServiceCollection services)
         {
+            //log
+            Console.WriteLine($"***{nameof(MediatrConfiguration)} is being configured.");
             services.AddMediatR(options =>
             {
                 options.RegisterServicesFromAssembly(typeof(GetItemsQueryHandler).Assembly);
@@ -20,8 +22,6 @@ namespace CatalogManagementService.Api.Configurations
                 options.RegisterServicesFromAssembly(typeof(UpdateItemCommandHandler).Assembly);
                 options.RegisterServicesFromAssembly(typeof(DeleteItemCommandHandler).Assembly);
             });
-            //log
-            Console.WriteLine($"***{nameof(MediatrConfiguration)} done.");
             return services;
         }
     }
