@@ -1,12 +1,13 @@
 
 using System;
 using CatalogManagementService.Application.DTOs;
+using CatalogManagementService.Application.Interfaces;
 using CatalogManagementService.Domain.Interfaces;
 
 namespace CatalogManagementService.Application.UseCases.GetItems
 {
     public class GetItemsService(
-        IRepository repository)
+        IRepository repository) : IGetItemsService
     {
         private readonly IRepository _repository = repository;
 

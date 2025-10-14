@@ -10,7 +10,7 @@ using CatalogManagementService.Domain.Interfaces;
 namespace CatalogManagementService.Application.UseCases.UpdateItem
 {
     public class UpdateItemService(
-        IRepository repository, IEventPublisher eventPublisher)
+        IRepository repository, IEventPublisher eventPublisher) : IUpdateItemService
     {
         private readonly IRepository _repository = repository;
         

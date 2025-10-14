@@ -1,12 +1,13 @@
 
 using System;
 using CatalogManagementService.Application.DTOs;
+using CatalogManagementService.Application.Interfaces;
 using CatalogManagementService.Domain.Interfaces;
 
 namespace CatalogManagementService.Application.UseCases.GetItem
 {
     public class GetItemService(
-        IRepository repository)    
+        IRepository repository) : IGetItemService
     {
         private readonly IRepository _repository = repository;
 
@@ -17,6 +18,6 @@ namespace CatalogManagementService.Application.UseCases.GetItem
                 Code: result.Code,
                 Item: result.Items.Select(item => ItemDTOs.Parse(item)).FirstOrDefault());
         }
-        
+
     }
 }

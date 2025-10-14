@@ -1,15 +1,16 @@
 
 using System;
 using CatalogManagementService.Application.DTOs;
+using CatalogManagementService.Application.Interfaces;
 using MediatR;
 
 namespace CatalogManagementService.Application.UseCases.GetItem
 {
     public class GetItemQueryHandler : IRequestHandler<GetItemQuery, (int Code, ItemDto? Item)>
     {
-        private readonly GetItemService _service;
+        private readonly IGetItemService _service;
 
-        public GetItemQueryHandler(GetItemService service)
+        public GetItemQueryHandler(IGetItemService service)
         {
             _service = service;
         }

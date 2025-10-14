@@ -1,15 +1,16 @@
 
 using System;
 using CatalogManagementService.Application.DTOs;
+using CatalogManagementService.Application.Interfaces;
 using MediatR;
 
 namespace CatalogManagementService.Application.UseCases.GetItems
 {
     public class GetItemsQueryHandler : IRequestHandler<GetItemsQuery, (int Code, IEnumerable<ItemDto> Items)>
     {
-        private readonly GetItemsService _service;
+        private readonly IGetItemsService _service;
 
-        public GetItemsQueryHandler(GetItemsService service)
+        public GetItemsQueryHandler(IGetItemsService service)
         {
             _service = service;
         }
@@ -18,6 +19,5 @@ namespace CatalogManagementService.Application.UseCases.GetItems
         {
             return await _service.ExecuteAsync();
         }
-        
     }
 }

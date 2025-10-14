@@ -35,6 +35,5 @@ namespace CatalogManagementService.Api.Configurations
                 });
             return services;
         }
-
     }
 }

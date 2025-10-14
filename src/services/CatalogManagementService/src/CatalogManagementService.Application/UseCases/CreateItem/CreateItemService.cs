@@ -10,7 +10,7 @@ using CatalogManagementService.Domain.Interfaces;
 namespace CatalogManagementService.Application.UseCases.CreateItem
 {
     public class CreateItemService(
-        IRepository repository, IEventPublisher eventPublisher)
+        IRepository repository, IEventPublisher eventPublisher) : ICreateItemService
     {
         private readonly IRepository _repository = repository;
         
@@ -32,6 +32,5 @@ namespace CatalogManagementService.Application.UseCases.CreateItem
                 Code: result.Code,
                 Item: result.Items.Select(item => ItemDTOs.Parse(item)).FirstOrDefault());
         }
-        
     }
 }

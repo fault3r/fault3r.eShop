@@ -1,15 +1,16 @@
 
 using System;
 using CatalogManagementService.Application.DTOs;
+using CatalogManagementService.Application.Interfaces;
 using MediatR;
 
 namespace CatalogManagementService.Application.UseCases.CreateItem
 {
     public class CreateItemCommandHandler : IRequestHandler<CreateItemCommand, (int Code, ItemDto? Item)>
     {
-        private readonly CreateItemService _service;
+        private readonly ICreateItemService _service;
 
-        public CreateItemCommandHandler(CreateItemService service)
+        public CreateItemCommandHandler(ICreateItemService service)
         {
             _service = service;
         }
@@ -18,6 +19,5 @@ namespace CatalogManagementService.Application.UseCases.CreateItem
         {
             return await _service.ExecuteAsync(request.Item);
         }
-        
     }
 }

@@ -1,9 +1,7 @@
 
 using System;
 using CatalogManagementService.Api.Configurations;
-using CatalogManagementService.Domain.Events;
 using CatalogManagementService.Infrastructure.Configurations;
-using CatalogManagementService.Infrastructure.EventBus;
 
 var builder = WebApplication.CreateBuilder(args);
 

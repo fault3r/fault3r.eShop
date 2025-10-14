@@ -1,15 +1,16 @@
 
 using System;
 using CatalogManagementService.Application.DTOs;
+using CatalogManagementService.Application.Interfaces;
 using MediatR;
 
 namespace CatalogManagementService.Application.UseCases.UpdateItem
 {
     public class UpdateItemCommandHandler : IRequestHandler<UpdateItemCommand, (int Code, ItemDto? Item)>
     {
-        private readonly UpdateItemService _service;
+        private readonly IUpdateItemService _service;
 
-        public UpdateItemCommandHandler(UpdateItemService service)
+        public UpdateItemCommandHandler(IUpdateItemService service)
         {
             _service = service;
         }

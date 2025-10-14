@@ -1,5 +1,6 @@
 
 using System;
+using CatalogManagementService.Application.Interfaces;
 using CatalogManagementService.Application.UseCases.CreateItem;
 using CatalogManagementService.Application.UseCases.DeleteItem;
 using CatalogManagementService.Application.UseCases.GetItem;
@@ -15,13 +16,14 @@ namespace CatalogManagementService.Api.Configurations
         public static IServiceCollection AddApplicationConfiguration(this IServiceCollection services)
         {
             services.AddScoped<IRepository, MongoRepository>();
-            services.AddScoped<GetItemService>();
-            services.AddScoped<GetItemsService>();
-            services.AddScoped<CreateItemService>();
-            services.AddScoped<UpdateItemService>();
-            services.AddScoped<DeleteItemService>();
+            services.AddScoped<IGetItemService, GetItemService>();
+            services.AddScoped<IGetItemsService, GetItemsService>();
+            services.AddScoped<ICreateItemService, CreateItemService>();
+            services.AddScoped<IUpdateItemService, UpdateItemService>();
+            services.AddScoped<IDeleteItemService, DeleteItemService>();
+
+            Console.WriteLine($"{nameof(ApplicationConfiguration)} configured successfully.");
             return services;
         }
-        
     }
 }

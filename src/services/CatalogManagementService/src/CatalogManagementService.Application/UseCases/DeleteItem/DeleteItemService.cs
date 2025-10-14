@@ -8,7 +8,7 @@ using CatalogManagementService.Domain.Interfaces;
 namespace CatalogManagementService.Application.UseCases.DeleteItem
 {
     public class DeleteItemService(
-        IRepository repository, IEventPublisher eventPublisher)
+        IRepository repository, IEventPublisher eventPublisher) : IDeleteItemService
     {
         private readonly IRepository _repository = repository;
         
