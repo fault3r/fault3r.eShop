@@ -42,6 +42,8 @@ namespace CatalogManagementService.Api.Configurations
                 return new RabbitmqEventSubscriber(connection, settings, provider);
             });
             services.AddHostedService<RabbitmqEventSubscriberHostedService>();
+            //log
+            Console.WriteLine($"***{nameof(RabbitmqConfiguration)} done.");            
             return services;
         }
     }

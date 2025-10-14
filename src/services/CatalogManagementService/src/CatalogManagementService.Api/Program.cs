@@ -9,6 +9,9 @@ var appSettings = builder.Configuration.GetSection(nameof(ApplicationSettings))
     .Get<ApplicationSettings>() ??
     throw new NullReferenceException();
 
+//log
+Console.WriteLine($"******{nameof(ApplicationSettings)} fetch.");
+
 builder.Services.AddVersioningConfiguration(appSettings.Version);
 
 builder.Services.AddControllers(options =>
@@ -28,6 +31,9 @@ builder.Services.AddRabbitmqConfiguration(builder.Configuration);
 
 var app = builder.Build();
 
+//log
+Console.WriteLine($"***{appSettings.Name} build.");
+
 if (app.Environment.IsDevelopment())
     app.UseDeveloperExceptionPage();
 
@@ -35,4 +41,10 @@ app.MapGet("/", () => appSettings.Name);
 
 app.MapControllers();
 
+//log
+Console.WriteLine($"***{appSettings.Name} run.");
+
 app.Run(appSettings.Url);
+
+//log
+Console.WriteLine($"***{appSettings.Name} run.");

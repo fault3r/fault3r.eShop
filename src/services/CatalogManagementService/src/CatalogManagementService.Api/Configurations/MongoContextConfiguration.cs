@@ -23,6 +23,8 @@ namespace CatalogManagementService.Api.Configurations
                 var client = provider.GetRequiredService<MongoClient>();
                 return new MongoContext(client, settings.DatabaseName, settings.CollectionName);
             });
+            //log
+            Console.WriteLine($"***{nameof(MongoContextConfiguration)} done.");
             return services;
         }
     }

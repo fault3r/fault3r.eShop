@@ -20,7 +20,9 @@ namespace CatalogManagementService.Api.Configurations
                 options.RegisterServicesFromAssembly(typeof(UpdateItemCommandHandler).Assembly);
                 options.RegisterServicesFromAssembly(typeof(DeleteItemCommandHandler).Assembly);
             });
+            //log
+            Console.WriteLine($"***{nameof(MediatrConfiguration)} done.");
             return services;
-        }  
+        }
     }
 }

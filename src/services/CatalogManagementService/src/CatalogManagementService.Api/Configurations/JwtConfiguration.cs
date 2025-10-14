@@ -33,6 +33,8 @@ namespace CatalogManagementService.Api.Configurations
                         ValidAudience = settings.Audience,
                     };
                 });
+            //log
+            Console.WriteLine($"***{nameof(JwtConfiguration)} done.");
             return services;
         }
     }

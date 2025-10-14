@@ -9,7 +9,7 @@ namespace CatalogManagementService.Application.EventHandlers
     {
         public Task Handle(ItemDeletedEvent @event)
         {
-            Console.WriteLine($"Item Deleted.\nId: {@event.Id}");
+            Console.WriteLine($"***Item Deleted.\nId: {@event.Id}");
             return Task.CompletedTask;
         }
     }

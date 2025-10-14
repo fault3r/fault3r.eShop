@@ -9,7 +9,7 @@ namespace CatalogManagementService.Application.EventHandlers
     {
         public Task Handle(ItemCreatedEvent @event)
         {
-            Console.WriteLine($"Item Created.\nId: {@event.Id}");
+            Console.WriteLine($"***Item Created.\nId: {@event.Id}");
             return Task.CompletedTask;
         }
 

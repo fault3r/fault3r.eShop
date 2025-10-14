@@ -23,8 +23,9 @@ namespace CatalogManagementService.Api.Configurations
                 options.AssumeDefaultVersionWhenUnspecified = true;
                 options.ApiVersionReader = new UrlSegmentApiVersionReader();
             });
+            //log
+            Console.WriteLine($"***{nameof(VersioningConfiguration)} done.");
             return services;
         }
-        
     }
 }

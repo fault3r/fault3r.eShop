@@ -21,8 +21,8 @@ namespace CatalogManagementService.Api.Configurations
             services.AddScoped<ICreateItemService, CreateItemService>();
             services.AddScoped<IUpdateItemService, UpdateItemService>();
             services.AddScoped<IDeleteItemService, DeleteItemService>();
-
-            Console.WriteLine($"{nameof(ApplicationConfiguration)} configured successfully.");
+            //log
+            Console.WriteLine($"***{nameof(ApplicationConfiguration)} done.");
             return services;
         }
     }
