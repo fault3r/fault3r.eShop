@@ -18,6 +18,8 @@ namespace CatalogManagementService.Application.UseCases.CreateItem
 
         public async Task<(int Code, ItemDto? Item)> ExecuteAsync(CreateItemDto item)
         {
+            //log
+            Console.WriteLine($"{nameof(CreateItemService)} is executing.");            
             var result = await _repository.CreateAsync(new Item
             {
                 Id = nameof(Item),

@@ -17,6 +17,8 @@ namespace CatalogManagementService.Application.UseCases.CreateItem
 
         public async Task<(int Code, ItemDto? Item)> Handle(CreateItemCommand request, CancellationToken cancellationToken)
         {
+            //log
+            Console.WriteLine($"{nameof(CreateItemCommandHandler)} received a request.");
             return await _service.ExecuteAsync(request.Item);
         }
     }

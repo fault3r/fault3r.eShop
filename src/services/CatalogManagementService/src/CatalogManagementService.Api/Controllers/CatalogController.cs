@@ -21,7 +21,7 @@ namespace CatalogManagementService.Api.Controllers
         public CatalogController(IMediator mediator)
         {
             //log
-            Console.WriteLine($"***{nameof(CatalogController)} received a getall request.");
+            Console.WriteLine($"***{nameof(CatalogController)} is initializing.");
             _mediator = mediator;
         }
 
