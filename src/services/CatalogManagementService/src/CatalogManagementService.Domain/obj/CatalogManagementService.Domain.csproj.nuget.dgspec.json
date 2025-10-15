@@ -1,25 +1,27 @@
 {
   "format": 1,
   "restore": {
-    "/workspaces/fault3r.eShop/src/services/CatalogManagementService/src/CatalogManagementService.Domain/CatalogManagementService.Domain.csproj": {}
+    "/home/hamed-damavandi/Documents/fault3r.eShop/src/services/CatalogManagementService/src/CatalogManagementService.Domain/CatalogManagementService.Domain.csproj": {}
   },
   "projects": {
-    "/workspaces/fault3r.eShop/src/services/CatalogManagementService/src/CatalogManagementService.Domain/CatalogManagementService.Domain.csproj": {
+    "/home/hamed-damavandi/Documents/fault3r.eShop/src/services/CatalogManagementService/src/CatalogManagementService.Domain/CatalogManagementService.Domain.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "/workspaces/fault3r.eShop/src/services/CatalogManagementService/src/CatalogManagementService.Domain/CatalogManagementService.Domain.csproj",
+        "projectUniqueName": "/home/hamed-damavandi/Documents/fault3r.eShop/src/services/CatalogManagementService/src/CatalogManagementService.Domain/CatalogManagementService.Domain.csproj",
         "projectName": "CatalogManagementService.Domain",
-        "projectPath": "/workspaces/fault3r.eShop/src/services/CatalogManagementService/src/CatalogManagementService.Domain/CatalogManagementService.Domain.csproj",
-        "packagesPath": "/home/codespace/.nuget/packages/",
-        "outputPath": "/workspaces/fault3r.eShop/src/services/CatalogManagementService/src/CatalogManagementService.Domain/obj/",
+        "projectPath": "/home/hamed-damavandi/Documents/fault3r.eShop/src/services/CatalogManagementService/src/CatalogManagementService.Domain/CatalogManagementService.Domain.csproj",
+        "packagesPath": "/home/hamed-damavandi/.nuget/packages/",
+        "outputPath": "/home/hamed-damavandi/Documents/fault3r.eShop/src/services/CatalogManagementService/src/CatalogManagementService.Domain/obj/",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "/home/codespace/.nuget/NuGet/NuGet.Config"
+          "/home/hamed-damavandi/.nuget/NuGet/NuGet.Config"
         ],
         "originalTargetFrameworks": [
           "net8.0"
         ],
         "sources": {
+          "/home/hamed-damavandi/.nuget/packages": {},
+          "/usr/lib/dotnet/library-packs": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
@@ -37,7 +39,8 @@
           "enableAudit": "true",
           "auditLevel": "low",
           "auditMode": "direct"
-        }
+        },
+        "SdkAnalysisLevel": "9.0.100"
       },
       "frameworks": {
         "net8.0": {
@@ -58,7 +61,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "/usr/share/dotnet/sdk/8.0.412/PortableRuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "/usr/lib/dotnet/sdk/9.0.110/PortableRuntimeIdentifierGraph.json"
         }
       }
     }

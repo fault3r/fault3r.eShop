@@ -7,15 +7,15 @@ namespace CatalogManagementService.Domain.Interfaces
 {
     public interface IRepository
     {
-        Task<MongoRepositoryResult> GetAllAsync();
+        Task<RepositoryResult> GetAllAsync();
 
-        Task<MongoRepositoryResult> GetByIdAsync(string id);
+        Task<RepositoryResult> GetByIdAsync(string id);
 
-        Task<MongoRepositoryResult> CreateAsync(Item item);
+        Task<RepositoryResult> CreateAsync(Item item);
 
-        Task<MongoRepositoryResult> UpdateAsync(Item item);
+        Task<RepositoryResult> UpdateAsync(Item item);
 
-        Task<MongoRepositoryResult> DeleteAsync(string id);
+        Task<RepositoryResult> DeleteAsync(string id);
         
     }
 }

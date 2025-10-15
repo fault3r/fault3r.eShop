@@ -4,14 +4,14 @@ using CatalogManagementService.Domain.Entities;
 
 namespace CatalogManagementService.Domain.DTOs
 {
-    public class MongoRepositoryResult
+    public class RepositoryResult
     {
         public int Code { get; set; } = 0;
 
         public IEnumerable<Item> Items { get; set; } = [];
     }
 
-    public enum MongoRepositoryResultCode
+    public enum RepositoryResultCode
     {
         Ok = 200,
         Created = 201,
@@ -20,5 +20,4 @@ namespace CatalogManagementService.Domain.DTOs
         NotFound = 404,
         InternalServerError = 500,
     }
-    
 }

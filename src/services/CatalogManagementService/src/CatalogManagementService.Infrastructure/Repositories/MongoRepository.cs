@@ -27,7 +27,7 @@ namespace CatalogManagementService.Infrastructure.Repositories
         private static bool IdValidation(string id) =>
             ObjectId.TryParse(id, out var result);   
 
-        public async Task<MongoRepositoryResult> GetAllAsync()
+        public async Task<RepositoryResult> GetAllAsync()
         {
             //log           
             Console.WriteLine($"***{nameof(MongoRepository)} is running a getall operation.");
@@ -35,56 +35,56 @@ namespace CatalogManagementService.Infrastructure.Repositories
             {
                 var documents = await _context.Documents.Find(filter.Empty)
                     .ToListAsync();
-                return new MongoRepositoryResult
+                return new RepositoryResult
                 {
-                    Code = (int)MongoRepositoryResultCode.Ok,
+                    Code = (int)RepositoryResultCode.Ok,
                     Items = documents.Select(i => i.ToDomain()),
                 };
             }
             catch
             {
-                return new MongoRepositoryResult
+                return new RepositoryResult
                 {
-                    Code = (int)MongoRepositoryResultCode.InternalServerError,
+                    Code = (int)RepositoryResultCode.InternalServerError,
                 };
             }
         }
 
-        public async Task<MongoRepositoryResult> GetByIdAsync(string id)
+        public async Task<RepositoryResult> GetByIdAsync(string id)
         {
             //log           
             Console.WriteLine($"***{nameof(MongoRepository)} is running a get operation.");
             try
             {
                 if(!IdValidation(id))
-                    return new MongoRepositoryResult
+                    return new RepositoryResult
                     {
-                        Code = (int)MongoRepositoryResultCode.BadRequest,
+                        Code = (int)RepositoryResultCode.BadRequest,
                     };                
                 var document = await _context.Documents
                     .Find(filter.Eq(p => p.Id, ObjectId.Parse(id)))
                     .FirstOrDefaultAsync();
                 if (document is null)
-                    return new MongoRepositoryResult
+                    return new RepositoryResult
                     {
-                        Code = (int)MongoRepositoryResultCode.NotFound
+                        Code = (int)RepositoryResultCode.NotFound
                     };
-                return new MongoRepositoryResult
+                return new RepositoryResult
                 {
-                    Code = (int)MongoRepositoryResultCode.Ok,
+                    Code = (int)RepositoryResultCode.Ok,
                     Items = [document.ToDomain()],
                 };
             }
             catch
             {
-                return new MongoRepositoryResult
+                return new RepositoryResult
                 {
-                    Code = (int)MongoRepositoryResultCode.InternalServerError,
+                    Code = (int)RepositoryResultCode.InternalServerError,
                 };
             }
         }
 
-        public async Task<MongoRepositoryResult> CreateAsync(Item item)
+        public async Task<RepositoryResult> CreateAsync(Item item)
         {
             //log           
             Console.WriteLine($"***{nameof(MongoRepository)} is running a create operation.");
@@ -97,31 +97,31 @@ namespace CatalogManagementService.Infrastructure.Repositories
                     Price = item.Price,
                 };
                 await _context.Documents.InsertOneAsync(document);
-                return new MongoRepositoryResult
+                return new RepositoryResult
                 {
-                    Code = (int)MongoRepositoryResultCode.Created,
+                    Code = (int)RepositoryResultCode.Created,
                     Items = [document.ToDomain()],
                 };
             }
             catch
             {
-                return new MongoRepositoryResult
+                return new RepositoryResult
                 {
-                    Code = (int)MongoRepositoryResultCode.InternalServerError,
+                    Code = (int)RepositoryResultCode.InternalServerError,
                 };
             }
         }
 
-        public async Task<MongoRepositoryResult> UpdateAsync(Item item)
+        public async Task<RepositoryResult> UpdateAsync(Item item)
         {
             //log           
             Console.WriteLine($"***{nameof(MongoRepository)} is running an update operation.");
             try
             {
                 if (!IdValidation(item.Id))
-                    return new MongoRepositoryResult
+                    return new RepositoryResult
                     {
-                        Code = (int)MongoRepositoryResultCode.BadRequest,
+                        Code = (int)RepositoryResultCode.BadRequest,
                     };
                 var document = new ItemDocument
                 {
@@ -134,53 +134,53 @@ namespace CatalogManagementService.Infrastructure.Repositories
                 var updated = await _context.Documents.FindOneAndReplaceAsync(
                     filter.Eq(p => p.Id, document.Id), document);
                 if (updated is null)
-                    return new MongoRepositoryResult
+                    return new RepositoryResult
                     {
-                        Code = (int)MongoRepositoryResultCode.NotFound
+                        Code = (int)RepositoryResultCode.NotFound
                     };
-                return new MongoRepositoryResult
+                return new RepositoryResult
                 {
-                    Code = (int)MongoRepositoryResultCode.Ok,
+                    Code = (int)RepositoryResultCode.Ok,
                     Items = [document.ToDomain()],
                 };
             }
             catch
             {
-                return new MongoRepositoryResult
+                return new RepositoryResult
                 {
-                    Code = (int)MongoRepositoryResultCode.InternalServerError,
+                    Code = (int)RepositoryResultCode.InternalServerError,
                 };
             }
         }
 
-        public async Task<MongoRepositoryResult> DeleteAsync(string id)
+        public async Task<RepositoryResult> DeleteAsync(string id)
         {
             //log           
             Console.WriteLine($"***{nameof(MongoRepository)} is running a delete operation.");
             try
             {
                 if (!IdValidation(id))
-                    return new MongoRepositoryResult
+                    return new RepositoryResult
                     {
-                        Code = (int)MongoRepositoryResultCode.BadRequest,
+                        Code = (int)RepositoryResultCode.BadRequest,
                     };
                 var result = await _context.Documents.DeleteOneAsync(
                     filter.Eq(p => p.Id, ObjectId.Parse(id)));
                 if (result.DeletedCount == 0)
-                    return new MongoRepositoryResult
+                    return new RepositoryResult
                     {
-                        Code = (int)MongoRepositoryResultCode.NotFound
+                        Code = (int)RepositoryResultCode.NotFound
                     };
-                return new MongoRepositoryResult
+                return new RepositoryResult
                 {
-                    Code = (int)MongoRepositoryResultCode.NoContent,
+                    Code = (int)RepositoryResultCode.NoContent,
                 };
             }
             catch
             {
-                return new MongoRepositoryResult
+                return new RepositoryResult
                 {
-                    Code = (int)MongoRepositoryResultCode.InternalServerError,
+                    Code = (int)RepositoryResultCode.InternalServerError,
                 };
             }
         }                 

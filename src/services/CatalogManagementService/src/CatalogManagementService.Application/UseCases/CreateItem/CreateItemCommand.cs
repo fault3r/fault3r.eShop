@@ -8,6 +8,5 @@ namespace CatalogManagementService.Application.UseCases.CreateItem
     public class CreateItemCommand : IRequest<(int Code, ItemDto? Item)>
     {
         public required CreateItemDto Item { get; set; }
-        
     }
 }

@@ -17,7 +17,7 @@ namespace CatalogManagementService.Application.UseCases.DeleteItem
         public async Task<int> ExecuteAsync(string id)
         {
             var result = await _repository.DeleteAsync(id);
-            if (result.Code == (int)MongoRepositoryResultCode.NoContent)
+            if (result.Code == (int)RepositoryResultCode.NoContent)
                 _eventPublisher.Publish<ItemDeletedEvent>(
                     new ItemDeletedEvent { Id = id });
             return result.Code;

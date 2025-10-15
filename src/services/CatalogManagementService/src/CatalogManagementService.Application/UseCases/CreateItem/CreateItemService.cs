@@ -27,7 +27,7 @@ namespace CatalogManagementService.Application.UseCases.CreateItem
                 Description = item.Description,
                 Price = item.Price,
             });
-            if (result.Code == (int)MongoRepositoryResultCode.Created)
+            if (result.Code == (int)RepositoryResultCode.Created)
                 _eventPublisher.Publish<ItemCreatedEvent>(
                     ItemCreatedEvent.Parse(result.Items.First()));
             return (

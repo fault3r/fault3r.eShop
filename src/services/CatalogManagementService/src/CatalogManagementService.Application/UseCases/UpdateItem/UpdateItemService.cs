@@ -25,7 +25,7 @@ namespace CatalogManagementService.Application.UseCases.UpdateItem
                 Description = item.Description,
                 Price = item.Price,
             });
-            if (result.Code == (int)MongoRepositoryResultCode.Ok)
+            if (result.Code == (int)RepositoryResultCode.Ok)
                 _eventPublisher.Publish<ItemUpdatedEvent>(
                     ItemUpdatedEvent.Parse(result.Items.First()));
             return (

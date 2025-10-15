@@ -9,8 +9,8 @@ namespace CatalogManagementService.Application.EventHandlers
         public Task Handle(ItemUpdatedEvent @event)
         {
             //log
-            Console.WriteLine($"{nameof(ItemUpdatedEventHandler)} is handling an event.");            
-            Console.WriteLine($"***Item Updated.\nId: {@event.Id}");
+            Console.WriteLine($"***{nameof(ItemUpdatedEventHandler)} is handling an event.");            
+            Console.WriteLine($"Item Updated.\nId: {@event.Id}");
             return Task.CompletedTask;
         }
     }

@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "5A0U1pRN2ZQ=",
+  "dgSpecHash": "FbFer/KyIWA=",
   "success": true,
-  "projectFilePath": "/workspaces/fault3r.eShop/src/services/CatalogManagementService/src/CatalogManagementService.Domain/CatalogManagementService.Domain.csproj",
+  "projectFilePath": "/home/hamed-damavandi/Documents/fault3r.eShop/src/services/CatalogManagementService/src/CatalogManagementService.Domain/CatalogManagementService.Domain.csproj",
   "expectedPackageFiles": [],
   "logs": []
 }

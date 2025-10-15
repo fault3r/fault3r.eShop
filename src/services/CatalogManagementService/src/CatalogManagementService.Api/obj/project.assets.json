@@ -1438,35 +1438,37 @@
     ]
   },
   "packageFolders": {
-    "/home/codespace/.nuget/packages/": {}
+    "/home/hamed-damavandi/.nuget/packages/": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "/workspaces/fault3r.eShop/src/services/CatalogManagementService/src/CatalogManagementService.Api/CatalogManagementService.Api.csproj",
+      "projectUniqueName": "/home/hamed-damavandi/Documents/fault3r.eShop/src/services/CatalogManagementService/src/CatalogManagementService.Api/CatalogManagementService.Api.csproj",
       "projectName": "CatalogManagementService.Api",
-      "projectPath": "/workspaces/fault3r.eShop/src/services/CatalogManagementService/src/CatalogManagementService.Api/CatalogManagementService.Api.csproj",
-      "packagesPath": "/home/codespace/.nuget/packages/",
-      "outputPath": "/workspaces/fault3r.eShop/src/services/CatalogManagementService/src/CatalogManagementService.Api/obj/",
+      "projectPath": "/home/hamed-damavandi/Documents/fault3r.eShop/src/services/CatalogManagementService/src/CatalogManagementService.Api/CatalogManagementService.Api.csproj",
+      "packagesPath": "/home/hamed-damavandi/.nuget/packages/",
+      "outputPath": "/home/hamed-damavandi/Documents/fault3r.eShop/src/services/CatalogManagementService/src/CatalogManagementService.Api/obj/",
       "projectStyle": "PackageReference",
       "configFilePaths": [
-        "/home/codespace/.nuget/NuGet/NuGet.Config"
+        "/home/hamed-damavandi/.nuget/NuGet/NuGet.Config"
       ],
       "originalTargetFrameworks": [
         "net8.0"
       ],
       "sources": {
+        "/home/hamed-damavandi/.nuget/packages": {},
+        "/usr/lib/dotnet/library-packs": {},
         "https://api.nuget.org/v3/index.json": {}
       },
       "frameworks": {
         "net8.0": {
           "targetAlias": "net8.0",
           "projectReferences": {
-            "/workspaces/fault3r.eShop/src/services/CatalogManagementService/src/CatalogManagementService.Application/CatalogManagementService.Application.csproj": {
-              "projectPath": "/workspaces/fault3r.eShop/src/services/CatalogManagementService/src/CatalogManagementService.Application/CatalogManagementService.Application.csproj"
+            "/home/hamed-damavandi/Documents/fault3r.eShop/src/services/CatalogManagementService/src/CatalogManagementService.Application/CatalogManagementService.Application.csproj": {
+              "projectPath": "/home/hamed-damavandi/Documents/fault3r.eShop/src/services/CatalogManagementService/src/CatalogManagementService.Application/CatalogManagementService.Application.csproj"
             },
-            "/workspaces/fault3r.eShop/src/services/CatalogManagementService/src/CatalogManagementService.Infrastructure/CatalogManagementService.Infrastructure.csproj": {
-              "projectPath": "/workspaces/fault3r.eShop/src/services/CatalogManagementService/src/CatalogManagementService.Infrastructure/CatalogManagementService.Infrastructure.csproj"
+            "/home/hamed-damavandi/Documents/fault3r.eShop/src/services/CatalogManagementService/src/CatalogManagementService.Infrastructure/CatalogManagementService.Infrastructure.csproj": {
+              "projectPath": "/home/hamed-damavandi/Documents/fault3r.eShop/src/services/CatalogManagementService/src/CatalogManagementService.Infrastructure/CatalogManagementService.Infrastructure.csproj"
             }
           }
         }
@@ -1480,7 +1482,8 @@
         "enableAudit": "true",
         "auditLevel": "low",
         "auditMode": "direct"
-      }
+      },
+      "SdkAnalysisLevel": "9.0.100"
     },
     "frameworks": {
       "net8.0": {
@@ -1518,6 +1521,12 @@
         ],
         "assetTargetFallback": true,
         "warn": true,
+        "downloadDependencies": [
+          {
+            "name": "Microsoft.NETCore.App.Host.linux-x64",
+            "version": "[8.0.20, 8.0.20]"
+          }
+        ],
         "frameworkReferences": {
           "Microsoft.AspNetCore.App": {
             "privateAssets": "none"
@@ -1526,7 +1535,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "/usr/share/dotnet/sdk/8.0.412/PortableRuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "/usr/lib/dotnet/sdk/9.0.110/PortableRuntimeIdentifierGraph.json"
       }
     }
   }
