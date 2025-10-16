@@ -1,5 +1,7 @@
 
 using System;
+using CatalogManagementService.Application.Interfaces;
+using CatalogManagementService.Infrastructure.Services;
 using Serilog;
 
 namespace CatalogManagementService.Api.Configurations
@@ -10,14 +12,15 @@ namespace CatalogManagementService.Api.Configurations
             string logFile)
         {
             Log.Logger = new LoggerConfiguration()
-               .MinimumLevel.Debug()
                .WriteTo.File(logFile)
                .CreateLogger();
             services.AddLogging(options =>
             {
-                options.ClearProviders();
                 options.AddSerilog(dispose: true);
             });
+            services.AddSingleton(
+                typeof(ILoggerService<>),
+                typeof(SerilogLoggerService<>));
             return services;
         }
     }

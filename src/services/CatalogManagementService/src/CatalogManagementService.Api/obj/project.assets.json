@@ -607,7 +607,10 @@
           "CatalogManagementService.Application": "1.0.0",
           "CatalogManagementService.Domain": "1.0.0",
           "MongoDB.Driver": "3.5.0",
-          "RabbitMQ.Client": "6.0.0"
+          "RabbitMQ.Client": "6.0.0",
+          "Serilog": "4.3.0",
+          "Serilog.Extensions.Logging": "9.0.2",
+          "Serilog.Sinks.File": "7.0.0"
         },
         "compile": {
           "bin/placeholder/CatalogManagementService.Infrastructure.dll": {}

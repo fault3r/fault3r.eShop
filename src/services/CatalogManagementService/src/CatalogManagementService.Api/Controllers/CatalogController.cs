@@ -8,6 +8,7 @@ using CatalogManagementService.Application.UseCases.GetItem;
 using CatalogManagementService.Application.UseCases.CreateItem;
 using CatalogManagementService.Application.UseCases.UpdateItem;
 using CatalogManagementService.Application.UseCases.DeleteItem;
+using CatalogManagementService.Application.Interfaces;
 
 namespace CatalogManagementService.Api.Controllers
 {
@@ -17,12 +18,15 @@ namespace CatalogManagementService.Api.Controllers
     public class CatalogController : ControllerBase
     {
         private readonly IMediator _mediator;
+        
+        private readonly ILoggerService<CatalogController> _logger;
 
-        public CatalogController(IMediator mediator)
+        public CatalogController(IMediator mediator, ILoggerService<CatalogController> logger)
         {
-            //log
-            Console.WriteLine($"***{nameof(CatalogController)} is initializing.");
             _mediator = mediator;
+            _logger = logger;
+            //log
+            _logger.LogInformation("Controller initialized successfully.");
         }
 
         [HttpGet]
