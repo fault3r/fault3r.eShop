@@ -9,6 +9,8 @@ var appSettings = builder.Configuration.GetSection(nameof(ApplicationSettings))
     .Get<ApplicationSettings>() ??
     throw new NullReferenceException();
 
+builder.Services.AddSerilogConfiguration(appSettings.Log);
+
 //log
 Console.WriteLine($"***{appSettings.Name} fetched the settings.");
 
