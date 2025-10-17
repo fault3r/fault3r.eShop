@@ -29,6 +29,5 @@ namespace CatalogManagementService.Infrastructure.Data.Documents
             Price = Price,
             Updated = Updated,
         };
-        
     }
 }

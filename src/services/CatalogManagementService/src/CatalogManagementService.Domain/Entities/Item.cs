@@ -14,6 +14,5 @@ namespace CatalogManagementService.Domain.Entities
         public decimal Price { get; set; }
 
         public DateTime Updated { get; set; }
-        
     }
 }

@@ -32,7 +32,7 @@ namespace CatalogManagementService.Infrastructure.EventBus
         {
             channel.ExchangeDeclare(
                 exchange: settings.ExchangeName,
-                type: ExchangeType.Fanout,
+                type: ExchangeType.Direct,
                 durable: true);
             channel.QueueDeclare(
                 queue: settings.QueueName,

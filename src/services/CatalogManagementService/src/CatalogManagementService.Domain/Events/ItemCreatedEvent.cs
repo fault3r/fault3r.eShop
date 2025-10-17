@@ -25,6 +25,5 @@ namespace CatalogManagementService.Domain.Events
             Price = item.Price,
             Updated = item.Updated,
         };
-
     }
 }

@@ -1,0 +1,93 @@
+2025-10-17 13:33:54.607 +03:30 [DBG] Registered model binder providers, in the following order: ["Microsoft.AspNetCore.Mvc.Versioning.ApiVersionModelBinderProvider","Microsoft.AspNetCore.Mvc.ModelBinding.Binders.BinderTypeModelBinderProvider","Microsoft.AspNetCore.Mvc.ModelBinding.Binders.ServicesModelBinderProvider","Microsoft.AspNetCore.Mvc.ModelBinding.Binders.BodyModelBinderProvider","Microsoft.AspNetCore.Mvc.ModelBinding.Binders.HeaderModelBinderProvider","Microsoft.AspNetCore.Mvc.ModelBinding.Binders.FloatingPointTypeModelBinderProvider","Microsoft.AspNetCore.Mvc.ModelBinding.Binders.EnumTypeModelBinderProvider","Microsoft.AspNetCore.Mvc.ModelBinding.Binders.DateTimeModelBinderProvider","Microsoft.AspNetCore.Mvc.ModelBinding.Binders.SimpleTypeModelBinderProvider","Microsoft.AspNetCore.Mvc.ModelBinding.Binders.TryParseModelBinderProvider","Microsoft.AspNetCore.Mvc.ModelBinding.Binders.CancellationTokenModelBinderProvider","Microsoft.AspNetCore.Mvc.ModelBinding.Binders.ByteArrayModelBinderProvider","Microsoft.AspNetCore.Mvc.ModelBinding.Binders.FormFileModelBinderProvider","Microsoft.AspNetCore.Mvc.ModelBinding.Binders.FormCollectionModelBinderProvider","Microsoft.AspNetCore.Mvc.ModelBinding.Binders.KeyValuePairModelBinderProvider","Microsoft.AspNetCore.Mvc.ModelBinding.Binders.DictionaryModelBinderProvider","Microsoft.AspNetCore.Mvc.ModelBinding.Binders.ArrayModelBinderProvider","Microsoft.AspNetCore.Mvc.ModelBinding.Binders.CollectionModelBinderProvider","Microsoft.AspNetCore.Mvc.ModelBinding.Binders.ComplexObjectModelBinderProvider"]
+2025-10-17 13:33:55.526 +03:30 [DBG] Hosting starting
+2025-10-17 13:33:55.635 +03:30 [INF] User profile is available. Using '/home/hamed-damavandi/.aspnet/DataProtection-Keys' as key repository; keys will not be encrypted at rest.
+2025-10-17 13:35:07.515 +03:30 [DBG] Registered model binder providers, in the following order: ["Microsoft.AspNetCore.Mvc.Versioning.ApiVersionModelBinderProvider","Microsoft.AspNetCore.Mvc.ModelBinding.Binders.BinderTypeModelBinderProvider","Microsoft.AspNetCore.Mvc.ModelBinding.Binders.ServicesModelBinderProvider","Microsoft.AspNetCore.Mvc.ModelBinding.Binders.BodyModelBinderProvider","Microsoft.AspNetCore.Mvc.ModelBinding.Binders.HeaderModelBinderProvider","Microsoft.AspNetCore.Mvc.ModelBinding.Binders.FloatingPointTypeModelBinderProvider","Microsoft.AspNetCore.Mvc.ModelBinding.Binders.EnumTypeModelBinderProvider","Microsoft.AspNetCore.Mvc.ModelBinding.Binders.DateTimeModelBinderProvider","Microsoft.AspNetCore.Mvc.ModelBinding.Binders.SimpleTypeModelBinderProvider","Microsoft.AspNetCore.Mvc.ModelBinding.Binders.TryParseModelBinderProvider","Microsoft.AspNetCore.Mvc.ModelBinding.Binders.CancellationTokenModelBinderProvider","Microsoft.AspNetCore.Mvc.ModelBinding.Binders.ByteArrayModelBinderProvider","Microsoft.AspNetCore.Mvc.ModelBinding.Binders.FormFileModelBinderProvider","Microsoft.AspNetCore.Mvc.ModelBinding.Binders.FormCollectionModelBinderProvider","Microsoft.AspNetCore.Mvc.ModelBinding.Binders.KeyValuePairModelBinderProvider","Microsoft.AspNetCore.Mvc.ModelBinding.Binders.DictionaryModelBinderProvider","Microsoft.AspNetCore.Mvc.ModelBinding.Binders.ArrayModelBinderProvider","Microsoft.AspNetCore.Mvc.ModelBinding.Binders.CollectionModelBinderProvider","Microsoft.AspNetCore.Mvc.ModelBinding.Binders.ComplexObjectModelBinderProvider"]
+2025-10-17 13:35:07.721 +03:30 [DBG] Hosting starting
+2025-10-17 13:35:07.746 +03:30 [INF] User profile is available. Using '/home/hamed-damavandi/.aspnet/DataProtection-Keys' as key repository; keys will not be encrypted at rest.
+2025-10-17 13:35:07.914 +03:30 [DBG] Reading data from file '/home/hamed-damavandi/.aspnet/DataProtection-Keys/key-7911b9ee-888c-4ab3-8815-82279b95dadf.xml'.
+2025-10-17 13:35:07.933 +03:30 [DBG] Reading data from file '/home/hamed-damavandi/.aspnet/DataProtection-Keys/key-a69fd33b-6f13-4176-9316-902609b160bc.xml'.
+2025-10-17 13:35:07.935 +03:30 [DBG] Reading data from file '/home/hamed-damavandi/.aspnet/DataProtection-Keys/key-da7e733c-3472-45ce-82cf-66aa0e0c72e8.xml'.
+2025-10-17 13:35:07.943 +03:30 [DBG] Found key {7911b9ee-888c-4ab3-8815-82279b95dadf}.
+2025-10-17 13:35:07.953 +03:30 [DBG] Found key {a69fd33b-6f13-4176-9316-902609b160bc}.
+2025-10-17 13:35:07.954 +03:30 [DBG] Found key {da7e733c-3472-45ce-82cf-66aa0e0c72e8}.
+2025-10-17 13:35:07.971 +03:30 [DBG] Considering key {a69fd33b-6f13-4176-9316-902609b160bc} with expiration date 2025-11-20 18:55:02Z as default key.
+2025-10-17 13:35:07.975 +03:30 [DBG] Forwarded activator type request from Microsoft.AspNetCore.DataProtection.AuthenticatedEncryption.ConfigurationModel.AuthenticatedEncryptorDescriptorDeserializer, Microsoft.AspNetCore.DataProtection, Version=8.0.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60 to Microsoft.AspNetCore.DataProtection.AuthenticatedEncryption.ConfigurationModel.AuthenticatedEncryptorDescriptorDeserializer, Microsoft.AspNetCore.DataProtection, Culture=neutral, PublicKeyToken=adb9793829ddae60
+2025-10-17 13:35:07.987 +03:30 [DBG] Using managed symmetric algorithm 'System.Security.Cryptography.Aes'.
+2025-10-17 13:35:07.987 +03:30 [DBG] Using managed keyed hash algorithm 'System.Security.Cryptography.HMACSHA256'.
+2025-10-17 13:35:08.007 +03:30 [DBG] Using key {a69fd33b-6f13-4176-9316-902609b160bc} as the default key.
+2025-10-17 13:35:08.009 +03:30 [DBG] Key ring with default key {a69fd33b-6f13-4176-9316-902609b160bc} was loaded during application startup.
+2025-10-17 13:35:08.236 +03:30 [INF] Now listening on: http://[::]:5012
+2025-10-17 13:35:08.237 +03:30 [DBG] Loaded hosting startup assembly CatalogManagementService.Api
+2025-10-17 13:35:08.244 +03:30 [INF] Application started. Press Ctrl+C to shut down.
+2025-10-17 13:35:08.246 +03:30 [INF] Hosting environment: Development
+2025-10-17 13:35:08.248 +03:30 [INF] Content root path: /home/hamed-damavandi/Documents/fault3r.eShop/src/services/CatalogManagementService/src/CatalogManagementService.Api
+2025-10-17 13:35:08.250 +03:30 [DBG] Hosting started
+2025-10-17 13:35:15.572 +03:30 [DBG] Connection id "0HNGDCILLCJ81" accepted.
+2025-10-17 13:35:15.579 +03:30 [DBG] Connection id "0HNGDCILLCJ81" started.
+2025-10-17 13:35:16.275 +03:30 [INF] Request starting HTTP/1.1 GET http://localhost:5012/ - null null
+2025-10-17 13:35:16.294 +03:30 [DBG] Wildcard detected, all requests with hosts will be allowed.
+2025-10-17 13:35:16.348 +03:30 [DBG] 1 candidate(s) found for the request path '/'
+2025-10-17 13:35:16.350 +03:30 [DBG] Request matched endpoint 'HTTP: GET /'
+2025-10-17 13:35:16.451 +03:30 [DBG] AuthenticationScheme: Bearer was not authenticated.
+2025-10-17 13:35:16.460 +03:30 [INF] Executing endpoint 'HTTP: GET /'
+2025-10-17 13:35:16.471 +03:30 [INF] Executed endpoint 'HTTP: GET /'
+2025-10-17 13:35:16.472 +03:30 [DBG] Connection id "0HNGDCILLCJ81" completed keep alive response.
+2025-10-17 13:35:16.480 +03:30 [INF] Request finished HTTP/1.1 GET http://localhost:5012/ - 200 null text/plain; charset=utf-8 211.1849ms
+2025-10-17 13:35:16.949 +03:30 [INF] Request starting HTTP/1.1 GET http://localhost:5012/favicon.ico - null null
+2025-10-17 13:35:16.951 +03:30 [DBG] No candidates found for the request path '/favicon.ico'
+2025-10-17 13:35:16.952 +03:30 [DBG] Connection id "0HNGDCILLCJ81" received FIN.
+2025-10-17 13:35:16.953 +03:30 [DBG] Request did not match any endpoints
+2025-10-17 13:35:16.964 +03:30 [DBG] AuthenticationScheme: Bearer was not authenticated.
+2025-10-17 13:35:16.969 +03:30 [DBG] Connection id "0HNGDCILLCJ81" sending FIN because: "The Socket transport's send loop completed gracefully."
+2025-10-17 13:35:16.974 +03:30 [DBG] Connection id "0HNGDCILLCJ81" disconnecting.
+2025-10-17 13:35:16.976 +03:30 [DBG] Connection id "0HNGDCILLCJ81" completed keep alive response.
+2025-10-17 13:35:16.978 +03:30 [INF] Request finished HTTP/1.1 GET http://localhost:5012/favicon.ico - 404 0 null 28.3174ms
+2025-10-17 13:35:16.984 +03:30 [INF] Request reached the end of the middleware pipeline without being handled by application code. Request path: GET http://localhost:5012/favicon.ico, Response status code: 404
+2025-10-17 13:35:16.992 +03:30 [DBG] Connection id "0HNGDCILLCJ81" stopped.
+2025-10-17 13:35:25.300 +03:30 [DBG] Connection id "0HNGDCILLCJ82" accepted.
+2025-10-17 13:35:25.300 +03:30 [DBG] Connection id "0HNGDCILLCJ82" started.
+2025-10-17 13:35:25.300 +03:30 [DBG] Connection id "0HNGDCILLCJ82" received FIN.
+2025-10-17 13:35:25.301 +03:30 [DBG] Connection id "0HNGDCILLCJ83" accepted.
+2025-10-17 13:35:25.301 +03:30 [DBG] Connection id "0HNGDCILLCJ83" started.
+2025-10-17 13:35:25.304 +03:30 [DBG] Connection id "0HNGDCILLCJ82" sending FIN because: "The Socket transport's send loop completed gracefully."
+2025-10-17 13:35:25.304 +03:30 [DBG] Connection id "0HNGDCILLCJ82" disconnecting.
+2025-10-17 13:35:25.304 +03:30 [DBG] Connection id "0HNGDCILLCJ82" stopped.
+2025-10-17 13:35:25.305 +03:30 [INF] Request starting HTTP/1.1 POST http://localhost:5012/api/v1/catalog - application/json 70
+2025-10-17 13:35:25.306 +03:30 [DBG] 1 candidate(s) found for the request path '/api/v1/catalog'
+2025-10-17 13:35:25.313 +03:30 [DBG] Endpoint 'CatalogManagementService.Api.Controllers.CatalogController.CreateAsync (CatalogManagementService.Api)' with route pattern 'api/v1/catalog' is valid for the request path '/api/v1/catalog'
+2025-10-17 13:35:25.323 +03:30 [DBG] Request matched endpoint 'CatalogManagementService.Api.Controllers.CatalogController.CreateAsync (CatalogManagementService.Api)'
+2025-10-17 13:35:25.326 +03:30 [DBG] AuthenticationScheme: Bearer was not authenticated.
+2025-10-17 13:35:25.326 +03:30 [INF] Executing endpoint 'CatalogManagementService.Api.Controllers.CatalogController.CreateAsync (CatalogManagementService.Api)'
+2025-10-17 13:35:25.382 +03:30 [INF] Route matched with {action = "CreateAsync", controller = "Catalog"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.ActionResult] CreateAsync(CatalogManagementService.Application.DTOs.CreateItemDto) on controller CatalogManagementService.Api.Controllers.CatalogController (CatalogManagementService.Api).
+2025-10-17 13:35:25.384 +03:30 [DBG] Execution plan of authorization filters (in the following order): ["None"]
+2025-10-17 13:35:25.384 +03:30 [DBG] Execution plan of resource filters (in the following order): ["None"]
+2025-10-17 13:35:25.386 +03:30 [DBG] Execution plan of action filters (in the following order): ["Microsoft.AspNetCore.Mvc.ModelBinding.UnsupportedContentTypeFilter (Order: -3000)","Microsoft.AspNetCore.Mvc.Infrastructure.ModelStateInvalidFilter (Order: -2000)","Microsoft.AspNetCore.Mvc.ReportApiVersionsAttribute (Order: 0)"]
+2025-10-17 13:35:25.386 +03:30 [DBG] Execution plan of exception filters (in the following order): ["None"]
+2025-10-17 13:35:25.386 +03:30 [DBG] Execution plan of result filters (in the following order): ["Microsoft.AspNetCore.Mvc.Infrastructure.ClientErrorResultFilter (Order: -2000)","Microsoft.AspNetCore.Mvc.ReportApiVersionsAttribute (Order: 0)"]
+2025-10-17 13:35:25.388 +03:30 [DBG] Executing controller factory for controller CatalogManagementService.Api.Controllers.CatalogController (CatalogManagementService.Api)
+2025-10-17 13:35:25.393 +03:30 [WRN] You do not have a valid license key for the Lucky Penny software MediatR. This is allowed for development and testing scenarios. If you are running in production you are required to have a licensed version. Please visit https://luckypennysoftware.com to obtain a valid license.
+2025-10-17 13:35:25.397 +03:30 [INF] ⋄[CatalogController] Controller initialized successfully. ⟶2025-10-17 13:35:25
+2025-10-17 13:35:25.399 +03:30 [DBG] Executed controller factory for controller CatalogManagementService.Api.Controllers.CatalogController (CatalogManagementService.Api)
+2025-10-17 13:35:25.407 +03:30 [DBG] Attempting to bind parameter 'item' of type 'CatalogManagementService.Application.DTOs.CreateItemDto' ...
+2025-10-17 13:35:25.411 +03:30 [DBG] Attempting to bind parameter 'item' of type 'CatalogManagementService.Application.DTOs.CreateItemDto' using the name '' in request data ...
+2025-10-17 13:35:25.413 +03:30 [DBG] Selected input formatter 'Microsoft.AspNetCore.Mvc.Formatters.SystemTextJsonInputFormatter' for content type 'application/json'.
+2025-10-17 13:35:25.449 +03:30 [DBG] Connection id "0HNGDCILLCJ83", Request id "0HNGDCILLCJ83:00000001": started reading request body.
+2025-10-17 13:35:25.450 +03:30 [DBG] Connection id "0HNGDCILLCJ83", Request id "0HNGDCILLCJ83:00000001": done reading request body.
+2025-10-17 13:35:25.467 +03:30 [DBG] JSON input formatter succeeded, deserializing to type 'CatalogManagementService.Application.DTOs.CreateItemDto'
+2025-10-17 13:35:25.468 +03:30 [DBG] Done attempting to bind parameter 'item' of type 'CatalogManagementService.Application.DTOs.CreateItemDto'.
+2025-10-17 13:35:25.468 +03:30 [DBG] Done attempting to bind parameter 'item' of type 'CatalogManagementService.Application.DTOs.CreateItemDto'.
+2025-10-17 13:35:25.469 +03:30 [DBG] Attempting to validate the bound parameter 'item' of type 'CatalogManagementService.Application.DTOs.CreateItemDto' ...
+2025-10-17 13:35:25.485 +03:30 [DBG] Done attempting to validate the bound parameter 'item' of type 'CatalogManagementService.Application.DTOs.CreateItemDto'.
+2025-10-17 13:35:26.393 +03:30 [DBG] List of registered output formatters, in the following order: ["Microsoft.AspNetCore.Mvc.Formatters.HttpNoContentOutputFormatter","Microsoft.AspNetCore.Mvc.Formatters.StringOutputFormatter","Microsoft.AspNetCore.Mvc.Formatters.StreamOutputFormatter","Microsoft.AspNetCore.Mvc.Formatters.SystemTextJsonOutputFormatter"]
+2025-10-17 13:35:26.396 +03:30 [DBG] No information found on request to perform content negotiation.
+2025-10-17 13:35:26.397 +03:30 [DBG] Attempting to select an output formatter without using a content type as no explicit content types were specified for the response.
+2025-10-17 13:35:26.397 +03:30 [DBG] Attempting to select the first formatter in the output formatters list which can write the result.
+2025-10-17 13:35:26.399 +03:30 [DBG] Selected output formatter 'Microsoft.AspNetCore.Mvc.Formatters.SystemTextJsonOutputFormatter' and content type 'application/json' to write the response.
+2025-10-17 13:35:26.400 +03:30 [INF] Executing CreatedAtActionResult, writing value of type 'CatalogManagementService.Application.DTOs.ItemDto'.
+2025-10-17 13:35:26.439 +03:30 [DBG] Found the endpoints ["CatalogManagementService.Api.Controllers.CatalogController.GetByIdAsync (CatalogManagementService.Api)"] for address (id=[68f214e5422c730d38d048eb],action=[GetByIdAsync],controller=[Catalog])
+2025-10-17 13:35:26.446 +03:30 [DBG] Successfully processed template api/v1/catalog/{id} for CatalogManagementService.Api.Controllers.CatalogController.GetByIdAsync (CatalogManagementService.Api) resulting in /api/v1/catalog/68f214e5422c730d38d048eb and 
+2025-10-17 13:35:26.447 +03:30 [DBG] Link generation succeeded for endpoints ["CatalogManagementService.Api.Controllers.CatalogController.GetByIdAsync (CatalogManagementService.Api)"] with result /api/v1/catalog/68f214e5422c730d38d048eb
+2025-10-17 13:35:26.469 +03:30 [INF] Executed action CatalogManagementService.Api.Controllers.CatalogController.CreateAsync (CatalogManagementService.Api) in 1074.5162ms
+2025-10-17 13:35:26.470 +03:30 [INF] Executed endpoint 'CatalogManagementService.Api.Controllers.CatalogController.CreateAsync (CatalogManagementService.Api)'
+2025-10-17 13:35:26.473 +03:30 [DBG] Connection id "0HNGDCILLCJ83" completed keep alive response.
+2025-10-17 13:35:26.473 +03:30 [INF] Request finished HTTP/1.1 POST http://localhost:5012/api/v1/catalog - 201 null application/json; charset=utf-8 1168.0953ms

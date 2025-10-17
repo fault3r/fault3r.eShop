@@ -9,5 +9,4 @@ namespace CatalogManagementService.Domain.Events
         public required string Id { get; set; }
         
     }
-    
 }

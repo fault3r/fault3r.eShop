@@ -16,9 +16,13 @@ namespace CatalogManagementService.Infrastructure.Services
 
         public Task<bool> LogInformation(string message)
         {
-            var log = $"⋄[{typeof(TLog).Name}] {message} ⟶{DateTime.Now:yyyy-MM-dd HH:mm:ss}";
-            _logger.Information(log);
-            return Task.FromResult(true);
+            try
+            {
+                var log = $"⋄[{typeof(TLog).Name}] {message} ⟶{DateTime.Now:yyyy-MM-dd HH:mm:ss}";
+                _logger.Information(log);
+                return Task.FromResult(true);
+            }
+            catch{ throw; }
         }
     }
 }
