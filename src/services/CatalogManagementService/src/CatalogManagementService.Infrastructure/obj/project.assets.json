@@ -495,7 +495,8 @@
         "framework": ".NETCoreApp,Version=v8.0",
         "dependencies": {
           "CatalogManagementService.Domain": "1.0.0",
-          "MediatR": "13.0.0"
+          "MediatR": "13.0.0",
+          "MongoDB.Bson": "3.5.0"
         },
         "compile": {
           "bin/placeholder/CatalogManagementService.Application.dll": {}

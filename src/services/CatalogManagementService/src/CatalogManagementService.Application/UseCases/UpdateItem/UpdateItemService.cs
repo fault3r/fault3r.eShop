@@ -18,6 +18,8 @@ namespace CatalogManagementService.Application.UseCases.UpdateItem
 
         public async Task<(int Code, ItemDto? Item)> ExecuteAsync(string id, UpdateItemDto item)
         {
+            if (!UpdateItemValidator.IsValid(id, item))
+                return ((int)RepositoryResultCode.BadRequest, null);
             var result = await _repository.UpdateAsync(new Item
             {
                 Id = id,

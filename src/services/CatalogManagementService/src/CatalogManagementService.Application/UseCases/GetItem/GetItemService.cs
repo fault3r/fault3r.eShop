@@ -2,6 +2,7 @@
 using System;
 using CatalogManagementService.Application.DTOs;
 using CatalogManagementService.Application.Interfaces;
+using CatalogManagementService.Domain.DTOs;
 using CatalogManagementService.Domain.Interfaces;
 
 namespace CatalogManagementService.Application.UseCases.GetItem
@@ -13,11 +14,12 @@ namespace CatalogManagementService.Application.UseCases.GetItem
 
         public async Task<(int Code, ItemDto? Item)> ExecuteAsync(string id)
         {
+            if (!GetItemValidator.IsValid(id))
+                return ((int)RepositoryResultCode.BadRequest, null);
             var result = await _repository.GetByIdAsync(id);
             return (
                 Code: result.Code,
                 Item: result.Items.Select(item => ItemDTOs.Parse(item)).FirstOrDefault());
         }
-
     }
 }

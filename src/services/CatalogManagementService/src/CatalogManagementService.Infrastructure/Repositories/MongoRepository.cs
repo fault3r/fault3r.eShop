@@ -24,7 +24,7 @@ namespace CatalogManagementService.Infrastructure.Repositories
             filter = Builders<ItemDocument>.Filter;
         }
 
-        private static bool IdValidation(string id) =>
+        private static bool IdValidate(string id) =>
             ObjectId.TryParse(id, out var result);   
 
         public async Task<RepositoryResult> GetAllAsync()
@@ -56,7 +56,7 @@ namespace CatalogManagementService.Infrastructure.Repositories
             Console.WriteLine($"***{nameof(MongoRepository)} is running a get operation.");
             try
             {
-                if(!IdValidation(id))
+                if(!IdValidate(id))
                     return new RepositoryResult
                     {
                         Code = (int)RepositoryResultCode.BadRequest,
@@ -118,7 +118,7 @@ namespace CatalogManagementService.Infrastructure.Repositories
             Console.WriteLine($"***{nameof(MongoRepository)} is running an update operation.");
             try
             {
-                if (!IdValidation(item.Id))
+                if (!IdValidate(item.Id))
                     return new RepositoryResult
                     {
                         Code = (int)RepositoryResultCode.BadRequest,
@@ -159,7 +159,7 @@ namespace CatalogManagementService.Infrastructure.Repositories
             Console.WriteLine($"***{nameof(MongoRepository)} is running a delete operation.");
             try
             {
-                if (!IdValidation(id))
+                if (!IdValidate(id))
                     return new RepositoryResult
                     {
                         Code = (int)RepositoryResultCode.BadRequest,

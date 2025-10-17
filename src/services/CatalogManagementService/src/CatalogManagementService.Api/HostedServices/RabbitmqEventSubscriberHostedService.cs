@@ -9,11 +9,12 @@ namespace CatalogManagementService.Api.HostedServices
     {
         private readonly RabbitmqEventSubscriber _rabbitmqEventSubscriber = rabbitmqEventSubscriber;
 
-        public async Task StartAsync(CancellationToken cancellationToken)
+        public Task StartAsync(CancellationToken cancellationToken)
         {
             //log
-            Console.WriteLine($"***{nameof(RabbitmqEventSubscriberHostedService)} is starting in the background..");            
-            await _rabbitmqEventSubscriber.StartSubscribeAsync();
+            Console.WriteLine($"***{nameof(RabbitmqEventSubscriberHostedService)} is starting in the background..");
+            _rabbitmqEventSubscriber.StartSubscribeAsync();
+            return Task.CompletedTask;
         }
 
         public Task StopAsync(CancellationToken cancellationToken)

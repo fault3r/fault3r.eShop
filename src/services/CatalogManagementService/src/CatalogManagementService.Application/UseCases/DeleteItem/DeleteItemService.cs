@@ -16,6 +16,8 @@ namespace CatalogManagementService.Application.UseCases.DeleteItem
 
         public async Task<int> ExecuteAsync(string id)
         {
+            if (!DeleteItemValidator.IsValid(id))
+                return (int)RepositoryResultCode.BadRequest;
             var result = await _repository.DeleteAsync(id);
             if (result.Code == (int)RepositoryResultCode.NoContent)
                 await _eventPublisher.PublishAsync<ItemDeletedEvent>(
