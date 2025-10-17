@@ -6,7 +6,7 @@ namespace CatalogManagementService.Application.EventHandlers
 {
     public class ItemUpdatedEventHandler : IEventHandler<ItemUpdatedEvent>
     {
-        public Task Handle(ItemUpdatedEvent @event)
+        public Task HandleAsync(ItemUpdatedEvent @event)
         {
             //log
             Console.WriteLine($"***{nameof(ItemUpdatedEventHandler)} is handling an event.");            

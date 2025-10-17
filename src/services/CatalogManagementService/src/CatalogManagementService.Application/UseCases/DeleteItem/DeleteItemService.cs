@@ -18,10 +18,9 @@ namespace CatalogManagementService.Application.UseCases.DeleteItem
         {
             var result = await _repository.DeleteAsync(id);
             if (result.Code == (int)RepositoryResultCode.NoContent)
-                _eventPublisher.Publish<ItemDeletedEvent>(
+                await _eventPublisher.PublishAsync<ItemDeletedEvent>(
                     new ItemDeletedEvent { Id = id });
             return result.Code;
         }
-
     }
 }

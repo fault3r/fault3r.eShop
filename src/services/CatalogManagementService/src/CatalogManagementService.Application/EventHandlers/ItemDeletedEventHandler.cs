@@ -7,7 +7,7 @@ namespace CatalogManagementService.Application.EventHandlers
 {
     public class ItemDeletedEventHandler : IEventHandler<ItemDeletedEvent>
     {
-        public Task Handle(ItemDeletedEvent @event)
+        public Task HandleAsync(ItemDeletedEvent @event)
         {
             //log
             Console.WriteLine($"***{nameof(ItemDeletedEventHandler)} is handling an event.");

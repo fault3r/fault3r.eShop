@@ -19,7 +19,7 @@ namespace CatalogManagementService.Infrastructure.EventBus
 
         public RabbitmqEventPublisher(
             IConnection connection, RabbitmqSettings settings)
-        {  
+        {
             //log
             Console.WriteLine($"***{nameof(RabbitmqEventPublisher)} is initializing.");
             _connection = connection;
@@ -44,8 +44,10 @@ namespace CatalogManagementService.Infrastructure.EventBus
                 routingKey: settings.RoutingKey);
         }
 
-        public bool Publish<TEvent>(TEvent @event)
-            where TEvent : IEvent
+        private static JsonSerializerOptions JsonOptions =>
+            new() { WriteIndented = true };
+            
+        public Task<bool> PublishAsync<TEvent>(TEvent @event) where TEvent : IEvent
         {
             //log
             Console.WriteLine($"***{nameof(RabbitmqEventPublisher)} is trying to publish an event.");
@@ -60,12 +62,9 @@ namespace CatalogManagementService.Infrastructure.EventBus
                     routingKey: settings.RoutingKey,
                     basicProperties: properties,
                     body: body);
-                return true;
+                return Task.FromResult(true);
             }
             catch { throw; }
         }
-
-        private static JsonSerializerOptions JsonOptions =>
-            new() { WriteIndented = true };
     }
 }

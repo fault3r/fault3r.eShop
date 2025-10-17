@@ -1,19 +1,20 @@
 
 using System;
+using Serilog;
 using CatalogManagementService.Application.Interfaces;
 using CatalogManagementService.Infrastructure.Services;
-using Serilog;
 
 namespace CatalogManagementService.Api.Configurations
 {
     public static class SerilogConfiguration
     {
         public static IServiceCollection AddSerilogConfiguration(this IServiceCollection services,
-            string logFile)
+            string filename)
         {
             Log.Logger = new LoggerConfiguration()
-               .WriteTo.File(logFile)
-               .CreateLogger();
+                .MinimumLevel.Debug()
+                .WriteTo.File(filename)
+                .CreateLogger();
             services.AddLogging(options =>
             {
                 options.AddSerilog(dispose: true);

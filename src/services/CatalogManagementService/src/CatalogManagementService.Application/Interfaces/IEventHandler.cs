@@ -6,7 +6,6 @@ namespace CatalogManagementService.Application.Interfaces
 {
     public interface IEventHandler<in TEvent> where TEvent : IEvent
     {
-        Task Handle(TEvent @event);
-
+        Task HandleAsync(TEvent @event);
     }
 }

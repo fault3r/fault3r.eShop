@@ -15,11 +15,11 @@ namespace CatalogManagementService.Infrastructure.EventBus
     {
         private readonly IConnection _connection;
 
-        private readonly IServiceProvider _provider;
-
         private readonly IModel channel;
 
         private readonly RabbitmqSettings settings;
+
+        private readonly IServiceProvider _provider;
 
         public RabbitmqEventSubscriber(
             IConnection connection, RabbitmqSettings settings, IServiceProvider provider)
@@ -41,35 +41,40 @@ namespace CatalogManagementService.Infrastructure.EventBus
                 exclusive: false);
         }
 
-        public Task Subscribe()
+        public Task StartSubscribeAsync()
         {
-            //log           
-            Console.WriteLine($"***{nameof(RabbitmqEventSubscriber)} is trying to add a consumer.");
-            var consumer = new EventingBasicConsumer(channel);
-            consumer.Received += async (_, ea) =>
+            try
             {
-                string eventName = ea.BasicProperties.Type;
-                var eventType = eventName switch
+                //log           
+                Console.WriteLine($"***{nameof(RabbitmqEventSubscriber)} is trying to add a consumer.");
+                var consumer = new EventingBasicConsumer(channel);
+                consumer.Received += async (_, ea) =>
                 {
-                    nameof(ItemCreatedEvent) => typeof(ItemCreatedEvent),
-                    nameof(ItemUpdatedEvent) => typeof(ItemUpdatedEvent),
-                    nameof(ItemDeletedEvent) => typeof(ItemDeletedEvent),
-                    _ => throw new InvalidOperationException()
+                    string eventName = ea.BasicProperties.Type;
+                    var eventType = eventName switch
+                    {
+                        nameof(ItemCreatedEvent) => typeof(ItemCreatedEvent),
+                        nameof(ItemUpdatedEvent) => typeof(ItemUpdatedEvent),
+                        nameof(ItemDeletedEvent) => typeof(ItemDeletedEvent),
+                        _ => throw new InvalidOperationException()
+                    };
+                    var handlerType = typeof(IEventHandler<>).MakeGenericType(eventType);
+                    string methodName = "HandleAsync";
+                    var handlerMethod = handlerType.GetMethod(methodName);
+                    using var scope = _provider.CreateScope();
+                    var handler = scope.ServiceProvider.GetRequiredService(handlerType);
+                    var body = ea.Body.ToArray();
+                    var strBody = Encoding.UTF8.GetString(body);
+                    var @event = JsonSerializer.Deserialize(strBody, eventType);
+                    handlerMethod?.Invoke(handler, [@event]);
                 };
-                var handlerType = typeof(IEventHandler<>).MakeGenericType(eventType);
-                using var scope = _provider.CreateScope();
-                var handler = scope.ServiceProvider.GetRequiredService(handlerType);
-                var handlerMethod = handlerType.GetMethod("Handle");
-                var body = ea.Body.ToArray();
-                var strBody = Encoding.UTF8.GetString(body);
-                var @event = JsonSerializer.Deserialize(strBody, eventType);
-                handlerMethod?.Invoke(handler, [@event]);
-            };
-            channel.BasicConsume(
-                queue: settings.QueueName,
-                autoAck: true,
-                consumer: consumer);
-            return Task.CompletedTask;
+                channel.BasicConsume(
+                    queue: settings.QueueName,
+                    autoAck: true,
+                    consumer: consumer);
+                return Task.CompletedTask;
+            }
+            catch { throw; }
         }
     }
 }

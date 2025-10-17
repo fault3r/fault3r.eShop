@@ -1,6 +1,6 @@
 
 using System;
-using CatalogManagementService.Api.Services;
+using CatalogManagementService.Api.HostedServices;
 using CatalogManagementService.Application.EventHandlers;
 using CatalogManagementService.Application.Interfaces;
 using CatalogManagementService.Domain.Events;

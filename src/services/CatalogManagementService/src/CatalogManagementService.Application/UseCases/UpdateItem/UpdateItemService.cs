@@ -26,12 +26,11 @@ namespace CatalogManagementService.Application.UseCases.UpdateItem
                 Price = item.Price,
             });
             if (result.Code == (int)RepositoryResultCode.Ok)
-                _eventPublisher.Publish<ItemUpdatedEvent>(
+                await _eventPublisher.PublishAsync<ItemUpdatedEvent>(
                     ItemUpdatedEvent.Parse(result.Items.First()));
             return (
                 Code: result.Code,
                 Item: result.Items.Select(item => ItemDTOs.Parse(item)).FirstOrDefault());
         }
-        
     }
 }

@@ -19,6 +19,5 @@ namespace CatalogManagementService.Application.UseCases.UpdateItem
         {
             return await _service.ExecuteAsync(request.Id, request.Item);
         }
-
     }
 }

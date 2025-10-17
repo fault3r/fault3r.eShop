@@ -6,7 +6,6 @@ namespace CatalogManagementService.Application.Interfaces
 {
     public interface IEventPublisher
     {
-        bool Publish<TEvent>(TEvent @event) where TEvent : IEvent;
-
+        Task<bool> PublishAsync<TEvent>(TEvent @event) where TEvent : IEvent;
     }
 }

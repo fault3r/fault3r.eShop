@@ -28,7 +28,7 @@ namespace CatalogManagementService.Application.UseCases.CreateItem
                 Price = item.Price,
             });
             if (result.Code == (int)RepositoryResultCode.Created)
-                _eventPublisher.Publish<ItemCreatedEvent>(
+                await _eventPublisher.PublishAsync<ItemCreatedEvent>(
                     ItemCreatedEvent.Parse(result.Items.First()));
             return (
                 Code: result.Code,
