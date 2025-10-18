@@ -1,13 +1,62 @@
-# Build output
+# .NET build artifacts
 bin/
+**/bin/
 obj/
-
-# NuGet artifacts
-*.nuget.*
-project.assets.json
-project.nuget.cache
-
-# User-specific files
+**/obj/
+out/
 *.user
 *.suo
-*.vs/
+*.userosscache
+*.sln.docstates
+*.csproj.FileListAbsolute.txt
+
+# ASP.NET Core secrets
+secrets.json
+
+# NuGet packages
+*.nupkg
+*.snupkg
+.nuget/
+packages/
+*.nuspec
+
+# Entity Framework
+Migrations/
+
+# Rider / VS Code / VS for Mac
+.idea/
+.vscode/
+*.code-workspace
+*.DS_Store
+
+# Logs
+*.log
+
+# Test results
+TestResults/
+*.trx
+
+# Docker artifacts
+docker-compose.override.yml
+**/Dockerfile.*
+**/docker-compose*.yml
+
+# Coverage reports
+coverage/
+*.coverage
+*.coveragexml
+*.lcov
+
+# Node.js (if using frontend)
+node_modules/
+npm-debug.log
+yarn-error.log
+
+# MongoDB artifacts (if using local dev)
+dump/
+*.lock
+
+# OS-specific
+Thumbs.db
+ehthumbs.db
+Desktop.ini
