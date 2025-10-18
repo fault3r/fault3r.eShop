@@ -1,8 +1,4 @@
-# Build results
-bin/
 obj/
+bin/
 out/
-*.log
-
-# Visual Studio Code
 .vscode/
