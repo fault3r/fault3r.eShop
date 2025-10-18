@@ -10,7 +10,7 @@ namespace CatalogManagementService.Application.UseCases.UpdateItem
         public static bool IsValid(string id, UpdateItemDto item)
         {
             if (
-                ObjectId.TryParse(id,out var bId) ||
+                !ObjectId.TryParse(id, out var bId) ||
                 string.IsNullOrEmpty(item.Name) ||
                 string.IsNullOrEmpty(item.Description) ||
                 item.Price < 1)
