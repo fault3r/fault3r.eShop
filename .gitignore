@@ -1,4 +1,13 @@
-obj/
+# Build output
 bin/
-out/
-.vscode/
+obj/
+
+# NuGet artifacts
+*.nuget.*
+project.assets.json
+project.nuget.cache
+
+# User-specific files
+*.user
+*.suo
+*.vs/
