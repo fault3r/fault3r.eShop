@@ -1,62 +1,72 @@
-# .NET build artifacts
-bin/
+# Ignore build outputs recursively
 **/bin/
-obj/
 **/obj/
-out/
-*.user
-*.suo
-*.userosscache
-*.sln.docstates
-*.csproj.FileListAbsolute.txt
+**/TestResults/
+**/publish/
+**/out/
+**/dist/
 
-# ASP.NET Core secrets
-secrets.json
-
-# NuGet packages
-*.nupkg
-*.snupkg
-.nuget/
-packages/
-*.nuspec
-
-# Entity Framework
-Migrations/
-
-# Rider / VS Code / VS for Mac
-.idea/
+# Ignore user-specific and IDE files
+**/*.user
+**/*.suo
+**/*.userosscache
+**/*.sln.docstates
+.vs/
 .vscode/
-*.code-workspace
-*.DS_Store
+.idea/
 
-# Logs
-*.log
+# Ignore NuGet packages and cache
+**/*.nupkg
+**/*.snupkg
+packages/
+.nuget/
+**/packages/
 
-# Test results
-TestResults/
-*.trx
-
-# Docker artifacts
+# Ignore Docker-related files
+Dockerfile.*
 docker-compose.override.yml
-**/Dockerfile.*
-**/docker-compose*.yml
+**/*.tar
+**/*.gz
+**/*.img
+**/*.container
 
-# Coverage reports
-coverage/
-*.coverage
-*.coveragexml
-*.lcov
+# Ignore logs and temp files
+**/*.log
+**/*.tmp
+**/*.bak
+**/*.old
+**/*.orig
 
-# Node.js (if using frontend)
-node_modules/
-npm-debug.log
-yarn-error.log
-
-# MongoDB artifacts (if using local dev)
-dump/
-*.lock
-
-# OS-specific
+# Ignore OS-specific files
 Thumbs.db
 ehthumbs.db
 Desktop.ini
+.DS_Store
+**/*.swp
+
+# Ignore test coverage and diagnostics
+**/*.trx
+**/*.coverage
+**/*.coveragexml
+
+# Ignore build artifacts and lock files
+**/*.dll
+**/*.exe
+**/*.app
+**/*.pdb
+**/*.cache
+**/*.db
+**/*.db-shm
+**/*.db-wal
+**/*.pid
+**/*.lock.json
+
+# Ignore solution-level cache
+**/*.sln.cache
+**/*.csproj.user
+
+# Optional: ignore MongoDB dumps or RabbitMQ config artifacts
+**/dump/
+**/*.bson
+**/*.json
+**/*.conf
