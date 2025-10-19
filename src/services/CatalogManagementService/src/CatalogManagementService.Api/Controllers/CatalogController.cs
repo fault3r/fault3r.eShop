@@ -25,8 +25,6 @@ namespace CatalogManagementService.Api.Controllers
         {
             _mediator = mediator;
             _logger = logger;
-            //log
-            _logger.LogInformation("Controller initialized successfully.");
         }
 
         [HttpGet]

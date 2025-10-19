@@ -1,5 +1,6 @@
 
 using System;
+using CatalogManagementService.Application.Interfaces;
 using CatalogManagementService.Infrastructure.Data.Documents;
 using MongoDB.Driver;
 
@@ -11,13 +12,16 @@ namespace CatalogManagementService.Infrastructure.Data.Contexts
 
         public readonly IMongoCollection<ItemDocument> Documents;
 
-        public MongoContext(MongoClient client, string DatabaseName, string CollectionName)
+        private readonly ILoggerService<MongoContext> _logger;
+
+        public MongoContext(MongoClient client, string DatabaseName, string CollectionName,
+            ILoggerService<MongoContext> logger)
         {
-            //log
-            Console.WriteLine($"***{nameof(MongoContext)} is being configured.");
             Database = client.GetDatabase(DatabaseName);
             Documents = Database.GetCollection<ItemDocument>(CollectionName);
+            _logger = logger;
+            _logger.LogInformation("Database initialized successfully. " +
+                $"DatabaseName: {DatabaseName}, Collection: {CollectionName}");
         }
-        
     }
 }

@@ -1,5 +1,6 @@
 
 using System;
+using CatalogManagementService.Application.Interfaces;
 using CatalogManagementService.Infrastructure.Configurations;
 using CatalogManagementService.Infrastructure.Data.Contexts;
 using MongoDB.Driver;
@@ -23,7 +24,8 @@ namespace CatalogManagementService.Api.Configurations
             services.AddScoped<MongoContext>(provider =>
             {
                 var client = provider.GetRequiredService<MongoClient>();
-                return new MongoContext(client, settings.DatabaseName, settings.CollectionName);
+                var logger = provider.GetRequiredService<ILoggerService<MongoContext>>();
+                return new MongoContext(client, settings.DatabaseName, settings.CollectionName, logger);
             });
             return services;
         }

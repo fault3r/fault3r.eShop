@@ -1,4 +1,4 @@
-# Ignore build outputs recursively
+# outputs
 **/bin/
 **/obj/
 **/TestResults/
@@ -6,7 +6,11 @@
 **/out/
 **/dist/
 
-# Ignore user-specific and IDE files
+# solution-level cache
+**/*.sln.cache
+**/*.csproj.user
+
+# user-specific and IDE files
 **/*.user
 **/*.suo
 **/*.userosscache
@@ -15,14 +19,14 @@
 .vscode/
 .idea/
 
-# Ignore NuGet packages and cache
+# NuGet packages and cache
 **/*.nupkg
 **/*.snupkg
 packages/
 .nuget/
 **/packages/
 
-# Ignore Docker-related files
+# Docker-related files
 Dockerfile.*
 docker-compose.override.yml
 **/*.tar
@@ -30,26 +34,26 @@ docker-compose.override.yml
 **/*.img
 **/*.container
 
-# Ignore logs and temp files
+# logs and temp files
 **/*.log
 **/*.tmp
 **/*.bak
 **/*.old
 **/*.orig
 
-# Ignore OS-specific files
+# OS-specific files
 Thumbs.db
 ehthumbs.db
 Desktop.ini
 .DS_Store
 **/*.swp
 
-# Ignore test coverage and diagnostics
+# test coverage and diagnostics
 **/*.trx
 **/*.coverage
 **/*.coveragexml
 
-# Ignore build artifacts and lock files
+# build artifacts and lock files
 **/*.dll
 **/*.exe
 **/*.app
@@ -60,7 +64,3 @@ Desktop.ini
 **/*.db-wal
 **/*.pid
 **/*.lock.json
-
-# Ignore solution-level cache
-**/*.sln.cache
-**/*.csproj.user

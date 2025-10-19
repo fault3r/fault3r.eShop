@@ -2,6 +2,7 @@
 using System;
 using Serilog;
 using CatalogManagementService.Application.Interfaces;
+using CatalogManagementService.Infrastructure.Exceptions;
 
 namespace CatalogManagementService.Infrastructure.Services
 {
@@ -14,15 +15,27 @@ namespace CatalogManagementService.Infrastructure.Services
             _logger = Log.ForContext<TLog>();
         }
 
+        private static string ToLogString(string message) =>
+         $"⋄[{typeof(TLog).Name}] {message} ⟶{DateTime.Now:yyyy-MM-dd HH:mm:ss}";
+
         public Task<bool> LogInformation(string message)
         {
             try
             {
-                var log = $"⋄[{typeof(TLog).Name}] {message} ⟶{DateTime.Now:yyyy-MM-dd HH:mm:ss}";
-                _logger.Information(log);
+                _logger.Information(ToLogString(message));
                 return Task.FromResult(true);
             }
-            catch{ throw; }
+            catch { throw new LoggerInternalException(); }
+        }
+
+        public Task<bool> LogError(string message)
+        {            
+            try
+            {
+                _logger.Error(ToLogString(message));
+                return Task.FromResult(true);
+            }
+            catch { throw new LoggerInternalException(); }
         }
     }
 }

@@ -1,5 +1,6 @@
 
 using System;
+using CatalogManagementService.Application.Interfaces;
 using CatalogManagementService.Domain.DTOs;
 using CatalogManagementService.Domain.Entities;
 using CatalogManagementService.Domain.Interfaces;
@@ -16,12 +17,15 @@ namespace CatalogManagementService.Infrastructure.Repositories
 
         private readonly FilterDefinitionBuilder<ItemDocument> filter;
 
-        public MongoRepository(MongoContext context)
+        private readonly ILoggerService<MongoRepository> _logger;
+
+        public MongoRepository(MongoContext context,
+            ILoggerService<MongoRepository> logger)
         {
-            //log           
-            Console.WriteLine($"***{nameof(MongoRepository)} is initializing.");
             _context = context;
             filter = Builders<ItemDocument>.Filter;
+            _logger = logger;
+            _logger.LogInformation("Repository initialized successfully.");
         }
 
         private static bool IdValidate(string id) =>
@@ -29,12 +33,12 @@ namespace CatalogManagementService.Infrastructure.Repositories
 
         public async Task<RepositoryResult> GetAllAsync()
         {
-            //log           
-            Console.WriteLine($"***{nameof(MongoRepository)} is running a getall operation.");
+            await _logger.LogInformation("Fetching all items..");
             try
             {
                 var documents = await _context.Documents.Find(filter.Empty)
                     .ToListAsync();
+                await _logger.LogInformation($"Successfully retrieved {documents.Count} items.");
                 return new RepositoryResult
                 {
                     Code = (int)RepositoryResultCode.Ok,
@@ -43,6 +47,7 @@ namespace CatalogManagementService.Infrastructure.Repositories
             }
             catch
             {
+                await _logger.LogInformation("Failed to retrieve items!");
                 return new RepositoryResult
                 {
                     Code = (int)RepositoryResultCode.InternalServerError,
@@ -52,15 +57,17 @@ namespace CatalogManagementService.Infrastructure.Repositories
 
         public async Task<RepositoryResult> GetByIdAsync(string id)
         {
-            //log           
-            Console.WriteLine($"***{nameof(MongoRepository)} is running a get operation.");
+            await _logger.LogInformation($"Fetching item with id: {id}");
             try
             {
-                if(!IdValidate(id))
+                if (!IdValidate(id))
+                {
+                    await _logger.LogInformation($"Invalid: {id}");
                     return new RepositoryResult
                     {
                         Code = (int)RepositoryResultCode.BadRequest,
-                    };                
+                    };
+                }
                 var document = await _context.Documents
                     .Find(filter.Eq(p => p.Id, ObjectId.Parse(id)))
                     .FirstOrDefaultAsync();
@@ -86,8 +93,7 @@ namespace CatalogManagementService.Infrastructure.Repositories
 
         public async Task<RepositoryResult> CreateAsync(Item item)
         {
-            //log           
-            Console.WriteLine($"***{nameof(MongoRepository)} is running a create operation.");
+            await _logger.LogInformation($"Creating new item with name: {item.Name}");
             try
             {
                 var document = new ItemDocument
@@ -97,6 +103,7 @@ namespace CatalogManagementService.Infrastructure.Repositories
                     Price = item.Price,
                 };
                 await _context.Documents.InsertOneAsync(document);
+                await _logger.LogInformation($"Created successfully with id: {document.ToDomain().Id}");
                 return new RepositoryResult
                 {
                     Code = (int)RepositoryResultCode.Created,
@@ -105,6 +112,7 @@ namespace CatalogManagementService.Infrastructure.Repositories
             }
             catch
             {
+                await _logger.LogInformation($"Failed to create item with name: {item.Name}");
                 return new RepositoryResult
                 {
                     Code = (int)RepositoryResultCode.InternalServerError,
