@@ -64,9 +64,3 @@ Desktop.ini
 # Ignore solution-level cache
 **/*.sln.cache
 **/*.csproj.user
-
-# Optional: ignore MongoDB dumps or RabbitMQ config artifacts
-**/dump/
-**/*.bson
-**/*.json
-**/*.conf
