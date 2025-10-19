@@ -1,5 +1,6 @@
 
 using System;
+using CatalogManagementService.Application.Interfaces;
 using CatalogManagementService.Application.UseCases.CreateItem;
 using CatalogManagementService.Application.UseCases.DeleteItem;
 using CatalogManagementService.Application.UseCases.GetItem;
@@ -12,6 +13,9 @@ namespace CatalogManagementService.Api.Configurations
     {
         public static IServiceCollection AddMediatrConfiguration(this IServiceCollection services)
         {
+            var _logger = services.BuildServiceProvider()
+                .GetRequiredService<ILoggerService<Program>>();
+            _logger.LogInformation("Configuring MediatR..");
             services.AddMediatR(options =>
             {
                 options.RegisterServicesFromAssembly(typeof(GetItemsQueryHandler).Assembly);
@@ -20,6 +24,7 @@ namespace CatalogManagementService.Api.Configurations
                 options.RegisterServicesFromAssembly(typeof(UpdateItemCommandHandler).Assembly);
                 options.RegisterServicesFromAssembly(typeof(DeleteItemCommandHandler).Assembly);
             });
+            _logger.LogInformation("MediatR configured successfully.");
             return services;
         }
     }

@@ -25,6 +25,9 @@ namespace CatalogManagementService.Api.Configurations
             services.AddSingleton(
                 typeof(ILoggerService<>),
                 typeof(SerilogLoggerService<>));
+             var _logger = services.BuildServiceProvider()
+                .GetRequiredService<ILoggerService<Program>>();
+            _logger.LogInformation("Serilog configured successfully.");
             return services;
         }
     }

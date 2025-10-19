@@ -15,6 +15,9 @@ namespace CatalogManagementService.Api.Configurations
         public static IServiceCollection AddRabbitmqConfiguration(this IServiceCollection services,
             ConfigurationManager configuration)
         {
+            var _logger = services.BuildServiceProvider()
+                .GetRequiredService<ILoggerService<Program>>();
+            _logger.LogInformation("Configuring RabbitMQ..");
             var settings = configuration.GetSection(nameof(RabbitmqSettings))
                 .Get<RabbitmqSettings>() ??
                 throw new NullReferenceException();
@@ -26,6 +29,7 @@ namespace CatalogManagementService.Api.Configurations
                     UserName = settings.UserName,
                     Password = settings.Password,
                 };
+                _logger.LogInformation("RabbitMQ connection created successfully.");
                 return factory.CreateConnection();
             });
             services.AddScoped<IEventPublisher>(provider =>
@@ -42,6 +46,7 @@ namespace CatalogManagementService.Api.Configurations
                 return new RabbitmqEventSubscriber(connection, settings, provider);
             });
             services.AddHostedService<RabbitmqEventSubscriberHostedService>();
+            _logger.LogInformation("RabbitMQ configured successfully.");
             return services;
         }
     }

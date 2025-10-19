@@ -1,6 +1,7 @@
 
 using System;
 using System.Text;
+using CatalogManagementService.Application.Interfaces;
 using CatalogManagementService.Infrastructure.Configurations;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
@@ -12,6 +13,9 @@ namespace CatalogManagementService.Api.Configurations
         public static IServiceCollection AddJwtConfiguration(this IServiceCollection services,
             ConfigurationManager configuration)
         {
+            var _logger = services.BuildServiceProvider()
+                .GetRequiredService<ILoggerService<Program>>();
+            _logger.LogInformation("Configuring JsonWebToken..");
             var settings = configuration.GetSection(nameof(JwtSettings))
                 .Get<JwtSettings>() ??
                 throw new NullReferenceException();
@@ -33,6 +37,7 @@ namespace CatalogManagementService.Api.Configurations
                         ValidAudience = settings.Audience,
                     };
                 });
+            _logger.LogInformation("JsonWebToken configured successfully.");
             return services;
         }
     }

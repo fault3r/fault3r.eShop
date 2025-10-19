@@ -20,8 +20,7 @@ namespace CatalogManagementService.Infrastructure.Data.Contexts
             Database = client.GetDatabase(DatabaseName);
             Documents = Database.GetCollection<ItemDocument>(CollectionName);
             _logger = logger;
-            _logger.LogInformation("Context initialized successfully. " +
-                $"DatabaseName: {DatabaseName}, Collection: {CollectionName}");
+            _logger.LogInformation("Database context initialized successfully.");
         }
     }
 }
