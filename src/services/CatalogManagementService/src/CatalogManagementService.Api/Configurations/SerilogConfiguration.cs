@@ -3,6 +3,7 @@ using System;
 using Serilog;
 using CatalogManagementService.Application.Interfaces;
 using CatalogManagementService.Infrastructure.Services;
+using Serilog.Events;
 
 namespace CatalogManagementService.Api.Configurations
 {
@@ -12,6 +13,8 @@ namespace CatalogManagementService.Api.Configurations
             string filename)
         {
             Log.Logger = new LoggerConfiguration()
+                .MinimumLevel.Override("Microsoft", LogEventLevel.Fatal)
+                .MinimumLevel.Override("System", LogEventLevel.Fatal)
                 .MinimumLevel.Debug()
                 .WriteTo.File(filename)
                 .CreateLogger();

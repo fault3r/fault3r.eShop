@@ -28,9 +28,6 @@ namespace CatalogManagementService.Infrastructure.Repositories
             _logger.LogInformation("Repository initialized successfully.");
         }
 
-        private static bool IdValidate(string id) =>
-            ObjectId.TryParse(id, out var result);   
-
         public async Task<RepositoryResult> GetAllAsync()
         {
             await _logger.LogInformation("Fetching all items..");
@@ -38,7 +35,7 @@ namespace CatalogManagementService.Infrastructure.Repositories
             {
                 var documents = await _context.Documents.Find(filter.Empty)
                     .ToListAsync();
-                await _logger.LogInformation($"Successfully retrieved {documents.Count} items.");
+                await _logger.LogInformation($"Successfully retrieved {documents.Count} item(s).");
                 return new RepositoryResult
                 {
                     Code = (int)RepositoryResultCode.Ok,
@@ -60,22 +57,18 @@ namespace CatalogManagementService.Infrastructure.Repositories
             await _logger.LogInformation($"Fetching item with id: {id}");
             try
             {
-                if (!IdValidate(id))
-                {
-                    await _logger.LogInformation($"Invalid: {id}");
-                    return new RepositoryResult
-                    {
-                        Code = (int)RepositoryResultCode.BadRequest,
-                    };
-                }
                 var document = await _context.Documents
                     .Find(filter.Eq(p => p.Id, ObjectId.Parse(id)))
                     .FirstOrDefaultAsync();
                 if (document is null)
+                {
+                    await _logger.LogInformation($"No item found with id: {id}");
                     return new RepositoryResult
                     {
                         Code = (int)RepositoryResultCode.NotFound
                     };
+                }
+                await _logger.LogInformation($"Successfully retrieved item with id: {id}");
                 return new RepositoryResult
                 {
                     Code = (int)RepositoryResultCode.Ok,
@@ -84,6 +77,7 @@ namespace CatalogManagementService.Infrastructure.Repositories
             }
             catch
             {
+                await _logger.LogInformation("Failed to retrieve item!");
                 return new RepositoryResult
                 {
                     Code = (int)RepositoryResultCode.InternalServerError,
@@ -103,7 +97,7 @@ namespace CatalogManagementService.Infrastructure.Repositories
                     Price = item.Price,
                 };
                 await _context.Documents.InsertOneAsync(document);
-                await _logger.LogInformation($"Created successfully with id: {document.ToDomain().Id}");
+                await _logger.LogInformation($"Item created successfully with id: {document.ToDomain().Id}");
                 return new RepositoryResult
                 {
                     Code = (int)RepositoryResultCode.Created,
@@ -112,7 +106,7 @@ namespace CatalogManagementService.Infrastructure.Repositories
             }
             catch
             {
-                await _logger.LogInformation($"Failed to create item with name: {item.Name}");
+                await _logger.LogInformation($"Failed to create item!");
                 return new RepositoryResult
                 {
                     Code = (int)RepositoryResultCode.InternalServerError,
@@ -122,15 +116,9 @@ namespace CatalogManagementService.Infrastructure.Repositories
 
         public async Task<RepositoryResult> UpdateAsync(Item item)
         {
-            //log           
-            Console.WriteLine($"***{nameof(MongoRepository)} is running an update operation.");
+            await _logger.LogInformation($"Updating item with id: {item.Id}");
             try
             {
-                if (!IdValidate(item.Id))
-                    return new RepositoryResult
-                    {
-                        Code = (int)RepositoryResultCode.BadRequest,
-                    };
                 var document = new ItemDocument
                 {
                     Id = ObjectId.Parse(item.Id),
@@ -142,10 +130,14 @@ namespace CatalogManagementService.Infrastructure.Repositories
                 var updated = await _context.Documents.FindOneAndReplaceAsync(
                     filter.Eq(p => p.Id, document.Id), document);
                 if (updated is null)
+                {
+                    await _logger.LogInformation($"No item found to update with id: {item.Id}");
                     return new RepositoryResult
                     {
                         Code = (int)RepositoryResultCode.NotFound
                     };
+                }
+                await _logger.LogInformation($"Item updated successfully with id: {item.Id}");
                 return new RepositoryResult
                 {
                     Code = (int)RepositoryResultCode.Ok,
@@ -154,6 +146,7 @@ namespace CatalogManagementService.Infrastructure.Repositories
             }
             catch
             {
+                await _logger.LogInformation($"Failed to update item!");
                 return new RepositoryResult
                 {
                     Code = (int)RepositoryResultCode.InternalServerError,
@@ -163,22 +156,20 @@ namespace CatalogManagementService.Infrastructure.Repositories
 
         public async Task<RepositoryResult> DeleteAsync(string id)
         {
-            //log           
-            Console.WriteLine($"***{nameof(MongoRepository)} is running a delete operation.");
+            await _logger.LogInformation($"Deleting item with id: {id}");
             try
             {
-                if (!IdValidate(id))
-                    return new RepositoryResult
-                    {
-                        Code = (int)RepositoryResultCode.BadRequest,
-                    };
                 var result = await _context.Documents.DeleteOneAsync(
                     filter.Eq(p => p.Id, ObjectId.Parse(id)));
                 if (result.DeletedCount == 0)
+                {
+                    await _logger.LogInformation($"No item found to delete with id: {id}");
                     return new RepositoryResult
                     {
                         Code = (int)RepositoryResultCode.NotFound
                     };
+                }
+                await _logger.LogInformation($"Item deleted successfully with id: {id}");
                 return new RepositoryResult
                 {
                     Code = (int)RepositoryResultCode.NoContent,
@@ -186,12 +177,12 @@ namespace CatalogManagementService.Infrastructure.Repositories
             }
             catch
             {
+                await _logger.LogInformation($"Failed to delete item!");
                 return new RepositoryResult
                 {
                     Code = (int)RepositoryResultCode.InternalServerError,
                 };
             }
         }                 
-        
     }
 }
