@@ -12,8 +12,6 @@ namespace CatalogManagementService.Api.Configurations
         public static IServiceCollection AddMongoContextConfiguration(this IServiceCollection services,
             ConfigurationManager configuration)
         {
-            //log
-            Console.WriteLine($"***{nameof(MongoContextConfiguration)} is being configured.");
             var settings = configuration.GetSection(nameof(MongoSettings))
                 .Get<MongoSettings>() ??
                 throw new NullReferenceException();

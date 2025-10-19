@@ -15,8 +15,6 @@ namespace CatalogManagementService.Api.Configurations
     {
         public static IServiceCollection AddApplicationConfiguration(this IServiceCollection services)
         {
-            //log
-            Console.WriteLine($"***{nameof(ApplicationConfiguration)} is being configured.");
             services.AddScoped<IRepository, MongoRepository>();
             services.AddScoped<IGetItemService, GetItemService>();
             services.AddScoped<IGetItemsService, GetItemsService>();

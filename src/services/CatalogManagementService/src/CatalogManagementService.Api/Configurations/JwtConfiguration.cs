@@ -12,8 +12,6 @@ namespace CatalogManagementService.Api.Configurations
         public static IServiceCollection AddJwtConfiguration(this IServiceCollection services,
             ConfigurationManager configuration)
         {
-            //log
-            Console.WriteLine($"***{nameof(JwtConfiguration)} is being configured.");
             var settings = configuration.GetSection(nameof(JwtSettings))
                 .Get<JwtSettings>() ??
                 throw new NullReferenceException();

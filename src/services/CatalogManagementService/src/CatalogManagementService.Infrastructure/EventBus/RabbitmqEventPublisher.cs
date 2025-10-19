@@ -20,8 +20,6 @@ namespace CatalogManagementService.Infrastructure.EventBus
         public RabbitmqEventPublisher(
             IConnection connection, RabbitmqSettings settings)
         {
-            //log
-            Console.WriteLine($"***{nameof(RabbitmqEventPublisher)} is initializing.");
             _connection = connection;
             channel = _connection.CreateModel();
             this.settings = settings;

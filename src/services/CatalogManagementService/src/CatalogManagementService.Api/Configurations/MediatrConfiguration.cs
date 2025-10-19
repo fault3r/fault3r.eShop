@@ -12,8 +12,6 @@ namespace CatalogManagementService.Api.Configurations
     {
         public static IServiceCollection AddMediatrConfiguration(this IServiceCollection services)
         {
-            //log
-            Console.WriteLine($"***{nameof(MediatrConfiguration)} is being configured.");
             services.AddMediatR(options =>
             {
                 options.RegisterServicesFromAssembly(typeof(GetItemsQueryHandler).Assembly);

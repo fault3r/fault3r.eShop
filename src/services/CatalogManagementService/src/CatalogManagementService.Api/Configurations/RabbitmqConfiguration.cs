@@ -15,8 +15,6 @@ namespace CatalogManagementService.Api.Configurations
         public static IServiceCollection AddRabbitmqConfiguration(this IServiceCollection services,
             ConfigurationManager configuration)
         {
-            //log
-            Console.WriteLine($"***{nameof(RabbitmqConfiguration)} is being configured.");            
             var settings = configuration.GetSection(nameof(RabbitmqSettings))
                 .Get<RabbitmqSettings>() ??
                 throw new NullReferenceException();

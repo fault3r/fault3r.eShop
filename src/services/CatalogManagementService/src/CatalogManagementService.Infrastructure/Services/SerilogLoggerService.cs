@@ -2,7 +2,6 @@
 using System;
 using Serilog;
 using CatalogManagementService.Application.Interfaces;
-using CatalogManagementService.Infrastructure.Exceptions;
 
 namespace CatalogManagementService.Infrastructure.Services
 {
@@ -25,7 +24,7 @@ namespace CatalogManagementService.Infrastructure.Services
                 _logger.Information(ToLogString(message));
                 return Task.FromResult(true);
             }
-            catch { throw new LoggerInternalException(); }
+            catch { throw; }
         }
 
         public Task<bool> LogError(string message)
@@ -35,7 +34,7 @@ namespace CatalogManagementService.Infrastructure.Services
                 _logger.Error(ToLogString(message));
                 return Task.FromResult(true);
             }
-            catch { throw new LoggerInternalException(); }
+            catch { throw; }
         }
     }
 }

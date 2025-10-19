@@ -10,10 +10,7 @@ namespace CatalogManagementService.Api.Configurations
         public static IServiceCollection AddVersioningConfiguration(this IServiceCollection services,
             decimal defaultVersion)
         {
-            //log
-            Console.WriteLine($"***{nameof(VersioningConfiguration)} is being configured.");
-            string[] version = defaultVersion.ToString()
-                .Split('.');
+            string[] version = defaultVersion.ToString().Split('.');
             int major = Convert.ToInt16(version[0]);
             int minor = Convert.ToInt16(version[1]);
             if (major < 1)
