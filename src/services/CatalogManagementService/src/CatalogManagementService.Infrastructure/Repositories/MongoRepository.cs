@@ -25,7 +25,7 @@ namespace CatalogManagementService.Infrastructure.Repositories
             _context = context;
             filter = Builders<ItemDocument>.Filter;
             _logger = logger;
-            _logger.LogInformation("MongoDB repository instance created.");
+            _logger.LogInformation("instance created.");
         }
 
         public async Task<RepositoryResult> GetAllAsync()

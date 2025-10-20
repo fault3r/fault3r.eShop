@@ -25,7 +25,10 @@ namespace CatalogManagementService.Application.UseCases.GetItem
         {
             await _logger.LogInformation("executing request..");
             if (!GetItemValidator.IsValid(id))
+            {
+                await _logger.LogInformation($"bad request!");
                 return ((int)RepositoryResultCode.BadRequest, null);
+            }
             var result = await _repository.GetByIdAsync(id);
             await _logger.LogInformation("retrieved response.");
             return (

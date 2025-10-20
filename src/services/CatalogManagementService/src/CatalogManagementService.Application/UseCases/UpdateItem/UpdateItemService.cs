@@ -30,7 +30,10 @@ namespace CatalogManagementService.Application.UseCases.UpdateItem
         {
             await _logger.LogInformation("executing request..");
             if (!UpdateItemValidator.IsValid(id, item))
+            {
+                await _logger.LogInformation($"bad request!");
                 return ((int)RepositoryResultCode.BadRequest, null);
+            }
             var result = await _repository.UpdateAsync(new Item
             {
                 Id = id,

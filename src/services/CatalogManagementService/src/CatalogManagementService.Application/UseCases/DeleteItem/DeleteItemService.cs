@@ -28,7 +28,10 @@ namespace CatalogManagementService.Application.UseCases.DeleteItem
         {
             await _logger.LogInformation("executing request..");
             if (!DeleteItemValidator.IsValid(id))
+            {
+                await _logger.LogInformation($"bad request!");
                 return (int)RepositoryResultCode.BadRequest;
+            }
             var result = await _repository.DeleteAsync(id);
             if (result.Code == (int)RepositoryResultCode.NoContent)
                 await _eventPublisher.PublishAsync<ItemDeletedEvent>(

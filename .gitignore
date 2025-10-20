@@ -35,7 +35,7 @@ docker-compose.override.yml
 **/*.container
 
 # logs and temp files
-**/*.log
+# **/*.log
 **/*.tmp
 **/*.bak
 **/*.old

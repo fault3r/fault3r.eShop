@@ -31,7 +31,10 @@ namespace CatalogManagementService.Application.UseCases.CreateItem
         {
             await _logger.LogInformation("executing request..");
             if (!CreateItemValidator.IsValid(item))
-                return ((int)RepositoryResultCode.BadRequest, null);    
+            {
+                await _logger.LogInformation($"bad request!");
+                return ((int)RepositoryResultCode.BadRequest, null);
+            }  
             var result = await _repository.CreateAsync(new Item
             {
                 Id = nameof(Item),
