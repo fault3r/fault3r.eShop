@@ -14,10 +14,10 @@ namespace CatalogManagementService.Api.Configurations
         {
             var _logger = services.BuildServiceProvider()
                 .GetRequiredService<ILoggerService<Program>>();
-            _logger.LogInformation("Configuring MongoDB context..");
+            _logger.LogInformation("configuring MongoContext..");
             var settings = configuration.GetSection(nameof(MongoSettings))
                 .Get<MongoSettings>() ??
-                throw new NullReferenceException();
+                throw new NullReferenceException(nameof(MongoSettings));
             services.AddSingleton<MongoClient>(provider =>
             {
                 return new MongoClient(settings.ConnectionString);
@@ -28,7 +28,7 @@ namespace CatalogManagementService.Api.Configurations
                 var logger = provider.GetRequiredService<ILoggerService<MongoContext>>();
                 return new MongoContext(client, settings.DatabaseName, settings.CollectionName, logger);
             });
-            _logger.LogInformation("MongoDB context configured successfully.");
+            _logger.LogInformation("MongoContext configured successfully.");
             return services;
         }
     }

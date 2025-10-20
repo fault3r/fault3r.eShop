@@ -8,7 +8,7 @@ var builder = WebApplication.CreateBuilder(args);
 
 var appSettings = builder.Configuration.GetSection(nameof(ApplicationSettings))
     .Get<ApplicationSettings>() ??
-    throw new NullReferenceException();
+    throw new NullReferenceException(nameof(ApplicationSettings));
 
 builder.Services.AddSerilogConfiguration(appSettings.Log);
 
@@ -41,7 +41,7 @@ app.MapGet("/", () =>
 using (var scope = app.Services.CreateScope())
 {
     var logger = scope.ServiceProvider.GetRequiredService<ILoggerService<Program>>();
-    await logger.LogInformation($"{appSettings.Name} is running..");
+    await logger.LogInformation($"✅ {appSettings.Name} is running..");
 }
 
 app.MapControllers();

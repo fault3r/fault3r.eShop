@@ -17,7 +17,7 @@ namespace CatalogManagementService.Api.Configurations
         {
             var _logger = services.BuildServiceProvider()
                 .GetRequiredService<ILoggerService<Program>>();
-            _logger.LogInformation("Configuring Application..");
+            _logger.LogInformation("configuring Application..");
             services.AddScoped<IRepository, MongoRepository>();
             services.AddScoped<IGetItemService, GetItemService>();
             services.AddScoped<IGetItemsService, GetItemsService>();

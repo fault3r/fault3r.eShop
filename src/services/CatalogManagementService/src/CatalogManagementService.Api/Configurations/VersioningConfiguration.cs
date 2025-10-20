@@ -13,7 +13,7 @@ namespace CatalogManagementService.Api.Configurations
         {
             var _logger = services.BuildServiceProvider()
                 .GetRequiredService<ILoggerService<Program>>();
-            _logger.LogInformation("Configuring API versioning..");
+            _logger.LogInformation("configuring Versioning..");
             string[] version = defaultVersion.ToString().Split('.');
             int major = Convert.ToInt16(version[0]);
             int minor = Convert.ToInt16(version[1]);
@@ -24,7 +24,7 @@ namespace CatalogManagementService.Api.Configurations
                 options.AssumeDefaultVersionWhenUnspecified = true;
                 options.ApiVersionReader = new UrlSegmentApiVersionReader();
             });
-            _logger.LogInformation("API versioning configured successfully.");
+            _logger.LogInformation("Versioning configured successfully.");
             return services;
         }
     }

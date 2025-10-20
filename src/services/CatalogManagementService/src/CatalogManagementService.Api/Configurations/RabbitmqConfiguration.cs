@@ -17,20 +17,22 @@ namespace CatalogManagementService.Api.Configurations
         {
             var _logger = services.BuildServiceProvider()
                 .GetRequiredService<ILoggerService<Program>>();
-            _logger.LogInformation("Configuring RabbitMQ..");
+            _logger.LogInformation("configuring RabbitMQ..");
             var settings = configuration.GetSection(nameof(RabbitmqSettings))
                 .Get<RabbitmqSettings>() ??
-                throw new NullReferenceException();
+                throw new NullReferenceException(nameof(RabbitmqSettings));
             services.AddSingleton<IConnection>(provider =>
             {
+                _logger.LogInformation("creating RabbitMQ connection..");
                 var factory = new ConnectionFactory
                 {
                     HostName = settings.HostName,
                     UserName = settings.UserName,
                     Password = settings.Password,
                 };
+                var connection = factory.CreateConnection();
                 _logger.LogInformation("RabbitMQ connection created successfully.");
-                return factory.CreateConnection();
+                return connection;
             });
             services.AddScoped<IEventPublisher>(provider =>
             {

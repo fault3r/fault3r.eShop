@@ -15,7 +15,7 @@ namespace CatalogManagementService.Api.Configurations
         {
             var _logger = services.BuildServiceProvider()
                 .GetRequiredService<ILoggerService<Program>>();
-            _logger.LogInformation("Configuring MediatR..");
+            _logger.LogInformation("configuring MediatR..");
             services.AddMediatR(options =>
             {
                 options.RegisterServicesFromAssembly(typeof(GetItemsQueryHandler).Assembly);

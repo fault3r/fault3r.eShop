@@ -15,10 +15,10 @@ namespace CatalogManagementService.Api.Configurations
         {
             var _logger = services.BuildServiceProvider()
                 .GetRequiredService<ILoggerService<Program>>();
-            _logger.LogInformation("Configuring JsonWebToken..");
+            _logger.LogInformation("configuring JsonWebToken..");
             var settings = configuration.GetSection(nameof(JwtSettings))
                 .Get<JwtSettings>() ??
-                throw new NullReferenceException();
+                throw new NullReferenceException(nameof(JwtSettings));
             services.AddAuthentication(options =>
             {
                 options.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
