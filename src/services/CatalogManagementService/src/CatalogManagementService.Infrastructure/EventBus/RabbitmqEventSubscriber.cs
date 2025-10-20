@@ -81,7 +81,7 @@ namespace CatalogManagementService.Infrastructure.EventBus
             }
             catch
             {
-                _logger.LogInformation("an unexpected error has occurred.");
+                _logger.LogError("an unexpected error has occurred.");
                 throw new InvalidOperationException(nameof(RabbitmqEventSubscriber));
             }
         }

@@ -44,7 +44,7 @@ namespace CatalogManagementService.Infrastructure.Repositories
             }
             catch
             {
-                await _logger.LogInformation("failed to retrieve items!");
+                await _logger.LogError("failed to retrieve items!");
                 return new RepositoryResult
                 {
                     Code = (int)RepositoryResultCode.InternalServerError,
@@ -77,7 +77,7 @@ namespace CatalogManagementService.Infrastructure.Repositories
             }
             catch
             {
-                await _logger.LogInformation("failed to retrieve item!");
+                await _logger.LogError("failed to retrieve item!");
                 return new RepositoryResult
                 {
                     Code = (int)RepositoryResultCode.InternalServerError,
@@ -106,7 +106,7 @@ namespace CatalogManagementService.Infrastructure.Repositories
             }
             catch
             {
-                await _logger.LogInformation($"failed to create item!");
+                await _logger.LogError($"failed to create item!");
                 return new RepositoryResult
                 {
                     Code = (int)RepositoryResultCode.InternalServerError,
@@ -146,7 +146,7 @@ namespace CatalogManagementService.Infrastructure.Repositories
             }
             catch
             {
-                await _logger.LogInformation($"failed to update item!");
+                await _logger.LogError($"failed to update item!");
                 return new RepositoryResult
                 {
                     Code = (int)RepositoryResultCode.InternalServerError,
@@ -177,7 +177,7 @@ namespace CatalogManagementService.Infrastructure.Repositories
             }
             catch
             {
-                await _logger.LogInformation($"failed to delete item!");
+                await _logger.LogError($"failed to delete item!");
                 return new RepositoryResult
                 {
                     Code = (int)RepositoryResultCode.InternalServerError,

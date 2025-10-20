@@ -16,6 +16,7 @@ namespace CatalogManagementService.Api.HostedServices
         {
             _rabbitmqEventSubscriber = rabbitmqEventSubscriber;
             _logger = logger;
+            _logger.LogInformation("RabbitMQ hosted service instance created.");
         }
         
         public Task StartAsync(CancellationToken cancellationToken)
