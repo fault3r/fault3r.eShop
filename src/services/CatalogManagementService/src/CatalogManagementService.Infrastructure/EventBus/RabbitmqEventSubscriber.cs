@@ -21,16 +21,19 @@ namespace CatalogManagementService.Infrastructure.EventBus
 
         private readonly IServiceProvider _provider;
 
+        private readonly ILoggerService<RabbitmqEventSubscriber> _logger;
+
         public RabbitmqEventSubscriber(
-            IConnection connection, RabbitmqSettings settings, IServiceProvider provider)
+            IConnection connection, RabbitmqSettings settings, IServiceProvider provider,
+            ILoggerService<RabbitmqEventSubscriber> logger)
         {
-            //log           
-            Console.WriteLine($"***{nameof(RabbitmqEventSubscriber)} is initializing.");
             _connection = connection;
             channel = _connection.CreateModel();
             this.settings = settings;
             _provider = provider;
             InitialChannel();
+            _logger = logger;
+            _logger.LogInformation("RabbitMQ event subscriber instance created.");
         }
 
         private void InitialChannel()
@@ -45,11 +48,11 @@ namespace CatalogManagementService.Infrastructure.EventBus
         {
             try
             {
-                //log           
-                Console.WriteLine($"***{nameof(RabbitmqEventSubscriber)} is trying to add a consumer.");
+                _logger.LogInformation("creating RabbitMQ consumer..");
                 var consumer = new EventingBasicConsumer(channel);
                 consumer.Received += async (_, ea) =>
                 {
+                    await _logger.LogInformation($"RabbitMQ consumer received an {ea.BasicProperties.Type} event.");
                     string eventName = ea.BasicProperties.Type;
                     var eventType = eventName switch
                     {
@@ -67,14 +70,20 @@ namespace CatalogManagementService.Infrastructure.EventBus
                     var strBody = Encoding.UTF8.GetString(body);
                     var @event = JsonSerializer.Deserialize(strBody, eventType);
                     handlerMethod?.Invoke(handler, [@event]);
+                    await _logger.LogInformation($"handle {ea.BasicProperties.Type} event successfully.");
                 };
                 channel.BasicConsume(
                     queue: settings.QueueName,
                     autoAck: true,
                     consumer: consumer);
+                _logger.LogInformation("RabbitMQ consumer added successfully.");
                 return Task.CompletedTask;
             }
-            catch { throw; }
+            catch
+            {
+                _logger.LogInformation("an unexpected error has occurred.");
+                throw new InvalidOperationException(nameof(RabbitmqEventSubscriber));
+            }
         }
     }
 }

@@ -17,11 +17,10 @@ namespace CatalogManagementService.Infrastructure.Data.Contexts
         public MongoContext(MongoClient client, string DatabaseName, string CollectionName,
             ILoggerService<MongoContext> logger)
         {
-            _logger = logger;
-            _logger.LogInformation("initializing MongoDB context..");
             Database = client.GetDatabase(DatabaseName);
             Documents = Database.GetCollection<ItemDocument>(CollectionName);
-            _logger.LogInformation("MongoDB context initialized successfully.");
+            _logger = logger;
+            _logger.LogInformation("MongoDB context instance created.");
         }
     }
 }

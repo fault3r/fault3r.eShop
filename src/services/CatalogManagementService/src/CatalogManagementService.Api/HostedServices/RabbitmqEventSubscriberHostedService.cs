@@ -20,9 +20,9 @@ namespace CatalogManagementService.Api.HostedServices
         
         public Task StartAsync(CancellationToken cancellationToken)
         {
-            _logger.LogInformation("Running RabbitMQ hosted service..");
+            _logger.LogInformation("starting RabbitMQ hosted service..");
             _rabbitmqEventSubscriber.StartSubscribeAsync();
-            _logger.LogInformation("RabbitMQ hosted service runned successfully.");
+            _logger.LogInformation("RabbitMQ hosted service started successfully.");
             return Task.CompletedTask;
         }
 

@@ -46,7 +46,8 @@ namespace CatalogManagementService.Api.Configurations
             services.AddSingleton<RabbitmqEventSubscriber>(provider =>
             {
                 var connection = provider.GetRequiredService<IConnection>();
-                return new RabbitmqEventSubscriber(connection, settings, provider);
+                var logger = provider.GetRequiredService<ILoggerService<RabbitmqEventSubscriber>>();
+                return new RabbitmqEventSubscriber(connection, settings, provider, logger);
             });
             services.AddHostedService<RabbitmqEventSubscriberHostedService>();
             _logger.LogInformation("RabbitMQ configured successfully.");

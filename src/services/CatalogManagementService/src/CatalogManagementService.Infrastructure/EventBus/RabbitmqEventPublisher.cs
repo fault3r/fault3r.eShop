@@ -17,19 +17,18 @@ namespace CatalogManagementService.Infrastructure.EventBus
 
         private readonly RabbitmqSettings settings;
 
-         private readonly ILoggerService<RabbitmqEventPublisher> _logger;
+        private readonly ILoggerService<RabbitmqEventPublisher> _logger;
 
         public RabbitmqEventPublisher(
             IConnection connection, RabbitmqSettings settings,
             ILoggerService<RabbitmqEventPublisher> logger)
         {
-            _logger = logger;
-            _logger.LogInformation("Initializing RabbitMQ publisher..");
             _connection = connection;
             channel = _connection.CreateModel();
             this.settings = settings;
             InitialChannel();
-            _logger.LogInformation("RabbitMQ publisher initialized successfully.");
+            _logger = logger;
+            _logger.LogInformation("RabbitMQ event publisher instance created.");
         }
 
         private void InitialChannel()
@@ -50,12 +49,12 @@ namespace CatalogManagementService.Infrastructure.EventBus
 
         private static JsonSerializerOptions JsonOptions =>
             new() { WriteIndented = true };
-            
+
         public Task<bool> PublishAsync<TEvent>(TEvent @event) where TEvent : IEvent
         {
             try
             {
-                _logger.LogInformation($"Publishing an event.. Event: {typeof(TEvent).Name}");
+                _logger.LogInformation($"publishing {typeof(TEvent).Name} event for id '{@event.Id}'..");
                 var jsonBody = JsonSerializer.Serialize<TEvent>(@event, JsonOptions);
                 var body = Encoding.UTF8.GetBytes(jsonBody);
                 var properties = channel.CreateBasicProperties();
@@ -65,10 +64,14 @@ namespace CatalogManagementService.Infrastructure.EventBus
                     routingKey: settings.RoutingKey,
                     basicProperties: properties,
                     body: body);
-                _logger.LogInformation($"Successfully publish event: {typeof(TEvent).Name}");
+                _logger.LogInformation($"{typeof(TEvent).Name} event published for id '{@event.Id}'.");
                 return Task.FromResult(true);
             }
-            catch { throw; }
+            catch
+            {
+                _logger.LogInformation("an unexpected error has occurred.");
+                throw new InvalidOperationException(nameof(RabbitmqEventPublisher));
+            }
         }
     }
 }
