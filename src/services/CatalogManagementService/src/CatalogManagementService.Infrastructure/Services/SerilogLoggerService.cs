@@ -17,24 +17,16 @@ namespace CatalogManagementService.Infrastructure.Services
         private static string ToLogString(string message) =>
          $"⋄[{typeof(TLog).Name}] {message} ⟶{DateTime.Now:yyyy-MM-dd HH:mm:ss}";
 
-        public Task<bool> LogInformation(string message)
+        public Task LogInformation(string message)
         {
-            try
-            {
-                _logger.Information(ToLogString(message));
-                return Task.FromResult(true);
-            }
-            catch { throw; }
+            _logger.Information(ToLogString(message));
+            return Task.CompletedTask;
         }
 
-        public Task<bool> LogError(string message)
-        {            
-            try
-            {
-                _logger.Error(ToLogString(message));
-                return Task.FromResult(true);
-            }
-            catch { throw; }
+        public Task LogError(string message)
+        {
+            _logger.Error(ToLogString(message));
+            return Task.CompletedTask;
         }
     }
 }

@@ -35,7 +35,8 @@ namespace CatalogManagementService.Api.Configurations
             services.AddScoped<IEventPublisher>(provider =>
             {
                 var connection = provider.GetRequiredService<IConnection>();
-                return new RabbitmqEventPublisher(connection, settings);
+                var logger = provider.GetRequiredService<ILoggerService<RabbitmqEventPublisher>>();
+                return new RabbitmqEventPublisher(connection, settings, logger);
             });
             services.AddScoped<IEventHandler<ItemCreatedEvent>, ItemCreatedEventHandler>();
             services.AddScoped<IEventHandler<ItemUpdatedEvent>, ItemUpdatedEventHandler>();

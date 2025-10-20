@@ -5,8 +5,8 @@ namespace CatalogManagementService.Application.Interfaces
 {
     public interface ILoggerService<in TLog>
     {
-        Task<bool> LogInformation(string message);
+        Task LogInformation(string message);
 
-        Task<bool> LogError(string message);
+        Task LogError(string message);
     }
 }

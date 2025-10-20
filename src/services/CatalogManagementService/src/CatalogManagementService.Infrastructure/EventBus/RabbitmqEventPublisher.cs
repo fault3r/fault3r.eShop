@@ -17,13 +17,19 @@ namespace CatalogManagementService.Infrastructure.EventBus
 
         private readonly RabbitmqSettings settings;
 
+         private readonly ILoggerService<RabbitmqEventPublisher> _logger;
+
         public RabbitmqEventPublisher(
-            IConnection connection, RabbitmqSettings settings)
+            IConnection connection, RabbitmqSettings settings,
+            ILoggerService<RabbitmqEventPublisher> logger)
         {
+            _logger = logger;
+            _logger.LogInformation("Initializing RabbitMQ publisher..");
             _connection = connection;
             channel = _connection.CreateModel();
             this.settings = settings;
             InitialChannel();
+            _logger.LogInformation("RabbitMQ publisher initialized successfully.");
         }
 
         private void InitialChannel()
@@ -47,10 +53,9 @@ namespace CatalogManagementService.Infrastructure.EventBus
             
         public Task<bool> PublishAsync<TEvent>(TEvent @event) where TEvent : IEvent
         {
-            //log
-            Console.WriteLine($"***{nameof(RabbitmqEventPublisher)} is trying to publish an event.");
             try
             {
+                _logger.LogInformation($"Publishing an event.. Event: {typeof(TEvent).Name}");
                 var jsonBody = JsonSerializer.Serialize<TEvent>(@event, JsonOptions);
                 var body = Encoding.UTF8.GetBytes(jsonBody);
                 var properties = channel.CreateBasicProperties();
@@ -60,6 +65,7 @@ namespace CatalogManagementService.Infrastructure.EventBus
                     routingKey: settings.RoutingKey,
                     basicProperties: properties,
                     body: body);
+                _logger.LogInformation($"Successfully publish event: {typeof(TEvent).Name}");
                 return Task.FromResult(true);
             }
             catch { throw; }

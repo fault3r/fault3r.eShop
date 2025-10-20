@@ -9,10 +9,10 @@ namespace CatalogManagementService.Api.HostedServices
     {
         private readonly RabbitmqEventSubscriber _rabbitmqEventSubscriber;
 
-        private readonly ILoggerService<IHostedService> _logger;
+        private readonly ILoggerService<RabbitmqEventSubscriberHostedService> _logger;
 
         public RabbitmqEventSubscriberHostedService(RabbitmqEventSubscriber rabbitmqEventSubscriber,
-            ILoggerService<IHostedService> logger)
+            ILoggerService<RabbitmqEventSubscriberHostedService> logger)
         {
             _rabbitmqEventSubscriber = rabbitmqEventSubscriber;
             _logger = logger;
