@@ -16,7 +16,7 @@ namespace CatalogManagementService.Application.EventHandlers
 
         public Task HandleAsync(ItemDeletedEvent @event)
         {
-            _logger.LogInformation($"item with id {@event.Id} deleted.");
+            _logger.LogInformation($"delete item with id '{@event.Id}'");
 
             //implement event handler
             return Task.CompletedTask;

@@ -28,7 +28,7 @@ namespace CatalogManagementService.Infrastructure.EventBus
             this.settings = settings;
             InitialChannel();
             _logger = logger;
-            _logger.LogInformation("RabbitMQ event publisher instance created.");
+            _logger.LogInformation("instance created.");
         }
 
         private void InitialChannel()
@@ -54,7 +54,7 @@ namespace CatalogManagementService.Infrastructure.EventBus
         {
             try
             {
-                _logger.LogInformation($"publishing {typeof(TEvent).Name} event for id '{@event.Id}'..");
+                _logger.LogInformation($"publishing {typeof(TEvent).Name} for id '{@event.Id}'..");
                 var jsonBody = JsonSerializer.Serialize<TEvent>(@event, JsonOptions);
                 var body = Encoding.UTF8.GetBytes(jsonBody);
                 var properties = channel.CreateBasicProperties();
@@ -64,7 +64,7 @@ namespace CatalogManagementService.Infrastructure.EventBus
                     routingKey: settings.RoutingKey,
                     basicProperties: properties,
                     body: body);
-                _logger.LogInformation($"{typeof(TEvent).Name} event published for id '{@event.Id}'.");
+                _logger.LogInformation($"{typeof(TEvent).Name} published for id '{@event.Id}'.");
                 return Task.FromResult(true);
             }
             catch

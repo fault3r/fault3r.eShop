@@ -16,14 +16,14 @@ namespace CatalogManagementService.Api.HostedServices
         {
             _rabbitmqEventSubscriber = rabbitmqEventSubscriber;
             _logger = logger;
-            _logger.LogInformation("RabbitMQ hosted service instance created.");
+            _logger.LogInformation("instance created.");
         }
         
         public Task StartAsync(CancellationToken cancellationToken)
         {
-            _logger.LogInformation("starting RabbitMQ hosted service..");
+            _logger.LogInformation("starting subscriber..");
             _rabbitmqEventSubscriber.StartSubscribeAsync();
-            _logger.LogInformation("RabbitMQ hosted service started successfully.");
+            _logger.LogInformation("started successfully.");
             return Task.CompletedTask;
         }
 

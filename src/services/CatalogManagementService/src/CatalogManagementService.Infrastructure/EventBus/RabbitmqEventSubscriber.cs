@@ -33,7 +33,7 @@ namespace CatalogManagementService.Infrastructure.EventBus
             _provider = provider;
             InitialChannel();
             _logger = logger;
-            _logger.LogInformation("RabbitMQ event subscriber instance created.");
+            _logger.LogInformation("instance created.");
         }
 
         private void InitialChannel()
@@ -48,11 +48,11 @@ namespace CatalogManagementService.Infrastructure.EventBus
         {
             try
             {
-                _logger.LogInformation("creating RabbitMQ consumer..");
+                _logger.LogInformation("creating consumer..");
                 var consumer = new EventingBasicConsumer(channel);
                 consumer.Received += async (_, ea) =>
                 {
-                    await _logger.LogInformation($"RabbitMQ consumer received an {ea.BasicProperties.Type} event.");
+                    await _logger.LogInformation($"received {ea.BasicProperties.Type}.");
                     string eventName = ea.BasicProperties.Type;
                     var eventType = eventName switch
                     {
@@ -70,13 +70,13 @@ namespace CatalogManagementService.Infrastructure.EventBus
                     var strBody = Encoding.UTF8.GetString(body);
                     var @event = JsonSerializer.Deserialize(strBody, eventType);
                     handlerMethod?.Invoke(handler, [@event]);
-                    await _logger.LogInformation($"handle {ea.BasicProperties.Type} event successfully.");
+                    await _logger.LogInformation($"handled {ea.BasicProperties.Type}.");
                 };
                 channel.BasicConsume(
                     queue: settings.QueueName,
                     autoAck: true,
                     consumer: consumer);
-                _logger.LogInformation("RabbitMQ consumer added successfully.");
+                _logger.LogInformation("consumer created successfully.");
                 return Task.CompletedTask;
             }
             catch

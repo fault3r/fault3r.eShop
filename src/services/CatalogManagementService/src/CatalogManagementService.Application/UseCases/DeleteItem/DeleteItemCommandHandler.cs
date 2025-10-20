@@ -9,15 +9,22 @@ namespace CatalogManagementService.Application.UseCases.DeleteItem
     {
         private readonly IDeleteItemService _service;
 
-        public DeleteItemCommandHandler(IDeleteItemService service)
+        private readonly ILoggerService<DeleteItemCommandHandler> _logger;
+
+        public DeleteItemCommandHandler(IDeleteItemService service,
+            ILoggerService<DeleteItemCommandHandler> logger)
         {
             _service = service;
+            _logger = logger;
+            _logger.LogInformation("instance created.");
         }
 
         public async Task<int> Handle(DeleteItemCommand request, CancellationToken cancellationToken)
         {
-            return await _service.ExecuteAsync(request.Id);
+            await _logger.LogInformation("forward request to service.");
+            var result =  await _service.ExecuteAsync(request.Id);
+            await _logger.LogInformation("retrieved response from service.");
+            return result;
         }
-
     }
 }

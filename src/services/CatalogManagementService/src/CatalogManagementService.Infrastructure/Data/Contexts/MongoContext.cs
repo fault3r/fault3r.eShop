@@ -20,7 +20,7 @@ namespace CatalogManagementService.Infrastructure.Data.Contexts
             Database = client.GetDatabase(DatabaseName);
             Documents = Database.GetCollection<ItemDocument>(CollectionName);
             _logger = logger;
-            _logger.LogInformation("MongoDB context instance created.");
+            _logger.LogInformation("instance created.");
         }
     }
 }

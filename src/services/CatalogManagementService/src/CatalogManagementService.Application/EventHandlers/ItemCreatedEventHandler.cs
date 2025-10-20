@@ -16,7 +16,7 @@ namespace CatalogManagementService.Application.EventHandlers
 
         public Task HandleAsync(ItemCreatedEvent @event)
         {
-            _logger.LogInformation($"item with id {@event.Id} created.");
+            _logger.LogInformation($"create new item with id '{@event.Id}'");
 
             //implement event handler
             return Task.CompletedTask;

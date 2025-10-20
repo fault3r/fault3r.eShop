@@ -10,15 +10,22 @@ namespace CatalogManagementService.Application.UseCases.GetItem
     {
         private readonly IGetItemService _service;
 
-        public GetItemQueryHandler(IGetItemService service)
+        private readonly ILoggerService<GetItemQueryHandler> _logger;
+
+        public GetItemQueryHandler(IGetItemService service,
+            ILoggerService<GetItemQueryHandler> logger)
         {
             _service = service;
+            _logger = logger;
+            _logger.LogInformation("instance created.");
         }
 
         public async Task<(int Code, ItemDto? Item)> Handle(GetItemQuery request, CancellationToken cancellationToken)
         {
-            return await _service.ExecuteAsync(request.Id);
+            await _logger.LogInformation("forward request to service.");
+            var (Code, Item) = await _service.ExecuteAsync(request.Id);
+            await _logger.LogInformation("retrieved response from service.");
+            return (Code, Item);
         }
-
     }
 }

@@ -26,15 +26,15 @@ namespace CatalogManagementService.Api.Controllers
         {
             _mediator = mediator;
             _logger = logger;
-            _logger.LogInformation("controller instance created.");
+            _logger.LogInformation("instance created.");
         }
 
         [HttpGet]
         public async Task<ActionResult> GetAllAsync()
         {
-            await _logger.LogInformation("forwarding get all items query to mediator..");
+            await _logger.LogInformation("forwarding GetItemsQuery to mediator..");
             var (Code, Items) = await _mediator.Send(new GetItemsQuery());
-            await _logger.LogInformation("received response of get all items query from mediator.");
+            await _logger.LogInformation("retrieved GetItemsQuery response from mediator.");
             return Code switch
             {
                 StatusCodes.Status200OK => Ok(Items),
@@ -46,9 +46,9 @@ namespace CatalogManagementService.Api.Controllers
         [Route("{id}")]
         public async Task<ActionResult> GetByIdAsync([FromRoute] string id)
         {
-            await _logger.LogInformation($"forwarding get item query for id '{id}' to mediator..");
+            await _logger.LogInformation("forwarding GetItemQuery to mediator..");
             var (Code, Item) = await _mediator.Send(new GetItemQuery { Id = id });
-            await _logger.LogInformation($"received response of get item query for id '{id}' from mediator.");
+            await _logger.LogInformation("retrieved GetItemQuery response from mediator.");
             return Code switch
             {
                 StatusCodes.Status200OK => Ok(Item),
@@ -61,9 +61,9 @@ namespace CatalogManagementService.Api.Controllers
         [HttpPost]
         public async Task<ActionResult> CreateAsync([FromBody] CreateItemDto item)
         {
-            await _logger.LogInformation($"forwarding create item command for name '{item.Name}' to mediator..");
+            await _logger.LogInformation("forwarding CreateItemCommand to mediator..");
             var (Code, Item) = await _mediator.Send(new CreateItemCommand { Item = item });
-            await _logger.LogInformation($"received response of create item command for id '{Item.Id}' from mediator.");
+            await _logger.LogInformation("retrieved CreateItemCommand response from mediator.");
             return Code switch
             {
                 StatusCodes.Status201Created =>
@@ -76,9 +76,9 @@ namespace CatalogManagementService.Api.Controllers
         [Route("{id}")]
         public async Task<ActionResult> UpdateAsync([FromRoute] string id, [FromBody] UpdateItemDto item)
         {
-            await _logger.LogInformation($"forwarding update item command for id '{id}' to mediator..");
+            await _logger.LogInformation("forwarding UpdateItemCommand to mediator..");
             var (Code, Item) = await _mediator.Send(new UpdateItemCommand { Id = id, Item = item });
-            await _logger.LogInformation($"received response of update item command for id '{id}' from mediator.");
+            await _logger.LogInformation("retrieved UpdateItemCommand response from mediator.");
             return Code switch
             {
                 StatusCodes.Status200OK => Ok(Item),
@@ -92,9 +92,9 @@ namespace CatalogManagementService.Api.Controllers
         [Route("{id}")]
         public async Task<ActionResult> DeleteAsync([FromRoute] string id)
         {
-            await _logger.LogInformation($"forwarding delete item command for id '{id}' to mediator..");
+            await _logger.LogInformation("forwarding DeleteItemCommand to mediator..");
             int Code = await _mediator.Send(new DeleteItemCommand { Id = id });
-            await _logger.LogInformation($"received response of delete item command for id '{id}' from mediator.");
+            await _logger.LogInformation("retrieved DeleteItemCommand response from mediator.");
             return Code switch
             {
                 StatusCodes.Status204NoContent => NoContent(),

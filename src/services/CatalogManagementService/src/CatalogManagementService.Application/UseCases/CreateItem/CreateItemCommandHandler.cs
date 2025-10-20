@@ -10,16 +10,22 @@ namespace CatalogManagementService.Application.UseCases.CreateItem
     {
         private readonly ICreateItemService _service;
 
-        public CreateItemCommandHandler(ICreateItemService service)
+        private readonly  ILoggerService<CreateItemCommandHandler> _logger;
+
+        public CreateItemCommandHandler(ICreateItemService service,
+            ILoggerService<CreateItemCommandHandler> logger)
         {
             _service = service;
+            _logger = logger;
+            _logger.LogInformation("instance created.");
         }
 
         public async Task<(int Code, ItemDto? Item)> Handle(CreateItemCommand request, CancellationToken cancellationToken)
         {
-            //log
-            Console.WriteLine($"{nameof(CreateItemCommandHandler)} received a request.");
-            return await _service.ExecuteAsync(request.Item);
+            await _logger.LogInformation("forward request to service.");
+            var (Code, Item) = await _service.ExecuteAsync(request.Item);
+            await _logger.LogInformation("retrieved response from service.");
+            return (Code, Item);
         }
     }
 }
