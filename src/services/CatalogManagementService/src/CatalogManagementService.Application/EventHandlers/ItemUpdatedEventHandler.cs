@@ -6,11 +6,18 @@ namespace CatalogManagementService.Application.EventHandlers
 {
     public class ItemUpdatedEventHandler : IEventHandler<ItemUpdatedEvent>
     {
+        private readonly ILoggerService<ItemUpdatedEventHandler> _logger;
+
+        public ItemUpdatedEventHandler(ILoggerService<ItemUpdatedEventHandler> logger)
+        {
+            _logger = logger;
+        }
+
         public Task HandleAsync(ItemUpdatedEvent @event)
         {
-            //log
-            Console.WriteLine($"***{nameof(ItemUpdatedEventHandler)} is handling an event.");            
-            Console.WriteLine($"Item Updated.\nId: {@event.Id}");
+            _logger.LogInformation($"item with id {@event.Id} updated.");
+
+            //implement event handler
             return Task.CompletedTask;
         }
     }
