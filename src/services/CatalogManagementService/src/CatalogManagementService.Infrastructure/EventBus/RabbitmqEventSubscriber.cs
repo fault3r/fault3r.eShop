@@ -49,7 +49,7 @@ namespace CatalogManagementService.Infrastructure.EventBus
             try
             {
                 _logger.LogInformation("creating consumer..");
-                var consumer = new EventingBasicConsumer(channel);
+                var consumer = new AsyncEventingBasicConsumer(channel);
                 consumer.Received += async (_, ea) =>
                 {
                     await _logger.LogInformation($"received {ea.BasicProperties.Type}.");
@@ -59,7 +59,7 @@ namespace CatalogManagementService.Infrastructure.EventBus
                         nameof(ItemCreatedEvent) => typeof(ItemCreatedEvent),
                         nameof(ItemUpdatedEvent) => typeof(ItemUpdatedEvent),
                         nameof(ItemDeletedEvent) => typeof(ItemDeletedEvent),
-                        _ => throw new InvalidOperationException()
+                        _ => throw new Exception()
                     };
                     var handlerType = typeof(IEventHandler<>).MakeGenericType(eventType);
                     string methodName = "HandleAsync";

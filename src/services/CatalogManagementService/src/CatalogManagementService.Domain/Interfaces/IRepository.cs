@@ -16,6 +16,5 @@ namespace CatalogManagementService.Domain.Interfaces
         Task<RepositoryResult> UpdateAsync(Item item);
 
         Task<RepositoryResult> DeleteAsync(string id);
-        
     }
 }
