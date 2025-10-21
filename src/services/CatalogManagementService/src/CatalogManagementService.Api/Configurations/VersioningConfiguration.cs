@@ -13,19 +13,27 @@ namespace CatalogManagementService.Api.Configurations
         {
             var _logger = services.BuildServiceProvider()
                 .GetRequiredService<ILoggerService<Program>>();
-            _logger.LogInformation("configuring Versioning..");
-            string[] version = defaultVersion.ToString().Split('.');
-            int major = Convert.ToInt16(version[0]);
-            int minor = Convert.ToInt16(version[1]);
-            services.AddApiVersioning(options =>
+            try
             {
-                options.DefaultApiVersion = new ApiVersion(major, minor);
-                options.ReportApiVersions = true;
-                options.AssumeDefaultVersionWhenUnspecified = true;
-                options.ApiVersionReader = new UrlSegmentApiVersionReader();
-            });
-            _logger.LogInformation("Versioning configured successfully.");
-            return services;
+                _logger.LogInformation("configuring Versioning..");
+                string[] version = defaultVersion.ToString().Split('.');
+                int major = Convert.ToInt16(version[0]);
+                int minor = Convert.ToInt16(version[1]);
+                services.AddApiVersioning(options =>
+                {
+                    options.DefaultApiVersion = new ApiVersion(major, minor);
+                    options.ReportApiVersions = true;
+                    options.AssumeDefaultVersionWhenUnspecified = true;
+                    options.ApiVersionReader = new UrlSegmentApiVersionReader();
+                });
+                _logger.LogInformation("Versioning configured successfully.");
+                return services;
+            }
+            catch
+            {
+                 _logger.LogError("failed to configure Versioning settings!");
+                throw new InvalidOperationException(nameof(Program));  
+            }
         }
     }
 }

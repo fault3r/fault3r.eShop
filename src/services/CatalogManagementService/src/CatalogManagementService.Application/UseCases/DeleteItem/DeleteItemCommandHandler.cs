@@ -21,7 +21,7 @@ namespace CatalogManagementService.Application.UseCases.DeleteItem
 
         public async Task<int> Handle(DeleteItemCommand request, CancellationToken cancellationToken)
         {
-            await _logger.LogInformation("forward request to service.");
+            await _logger.LogInformation("forwarding request to service..");
             var result =  await _service.ExecuteAsync(request.Id);
             await _logger.LogInformation("retrieved response from service.");
             return result;

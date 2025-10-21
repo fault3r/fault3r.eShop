@@ -7,6 +7,7 @@ using CatalogManagementService.Application.UseCases.GetItem;
 using CatalogManagementService.Application.UseCases.GetItems;
 using CatalogManagementService.Application.UseCases.UpdateItem;
 using CatalogManagementService.Domain.Interfaces;
+using CatalogManagementService.Infrastructure.Configurations;
 using CatalogManagementService.Infrastructure.Repositories;
 
 namespace CatalogManagementService.Api.Configurations
@@ -17,15 +18,23 @@ namespace CatalogManagementService.Api.Configurations
         {
             var _logger = services.BuildServiceProvider()
                 .GetRequiredService<ILoggerService<Program>>();
-            _logger.LogInformation("configuring Application..");
-            services.AddScoped<IRepository, MongoRepository>();
-            services.AddScoped<IGetItemService, GetItemService>();
-            services.AddScoped<IGetItemsService, GetItemsService>();
-            services.AddScoped<ICreateItemService, CreateItemService>();
-            services.AddScoped<IUpdateItemService, UpdateItemService>();
-            services.AddScoped<IDeleteItemService, DeleteItemService>();
-            _logger.LogInformation("Application configured successfully.");
-            return services;
+            try
+            {
+                _logger.LogInformation("configuring Application..");
+                services.AddScoped<IRepository, MongoRepository>();
+                services.AddScoped<IGetItemService, GetItemService>();
+                services.AddScoped<IGetItemsService, GetItemsService>();
+                services.AddScoped<ICreateItemService, CreateItemService>();
+                services.AddScoped<IUpdateItemService, UpdateItemService>();
+                services.AddScoped<IDeleteItemService, DeleteItemService>();
+                _logger.LogInformation("Application configured successfully.");
+                return services;
+            }
+            catch
+            {
+                _logger.LogError("failed to configure Application settings!");
+                throw new InvalidOperationException(nameof(Program));                
+            }
         }
     }
 }

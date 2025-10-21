@@ -14,22 +14,30 @@ namespace CatalogManagementService.Api.Configurations
         {
             var _logger = services.BuildServiceProvider()
                 .GetRequiredService<ILoggerService<Program>>();
-            _logger.LogInformation("configuring MongoContext..");
-            var settings = configuration.GetSection(nameof(MongoSettings))
-                .Get<MongoSettings>() ??
-                throw new NullReferenceException(nameof(MongoSettings));
-            services.AddSingleton<MongoClient>(provider =>
+            try
             {
-                return new MongoClient(settings.ConnectionString);
-            });
-            services.AddScoped<MongoContext>(provider =>
+                _logger.LogInformation("configuring MongoContext..");
+                var settings = configuration.GetSection(nameof(MongoSettings))
+                    .Get<MongoSettings>() ??
+                    throw new Exception();
+                services.AddSingleton<MongoClient>(provider =>
+                {
+                    return new MongoClient(settings.ConnectionString);
+                });
+                services.AddScoped<MongoContext>(provider =>
+                {
+                    var client = provider.GetRequiredService<MongoClient>();
+                    var logger = provider.GetRequiredService<ILoggerService<MongoContext>>();
+                    return new MongoContext(client, settings.DatabaseName, settings.CollectionName, logger);
+                });
+                _logger.LogInformation("MongoContext configured successfully.");
+                return services;
+            }
+            catch
             {
-                var client = provider.GetRequiredService<MongoClient>();
-                var logger = provider.GetRequiredService<ILoggerService<MongoContext>>();
-                return new MongoContext(client, settings.DatabaseName, settings.CollectionName, logger);
-            });
-            _logger.LogInformation("MongoContext configured successfully.");
-            return services;
+                _logger.LogError("failed to configure MongoContext settings!");
+                throw new InvalidOperationException(nameof(Program));   
+            }
         }
     }
 }

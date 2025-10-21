@@ -15,17 +15,25 @@ namespace CatalogManagementService.Api.Configurations
         {
             var _logger = services.BuildServiceProvider()
                 .GetRequiredService<ILoggerService<Program>>();
-            _logger.LogInformation("configuring MediatR..");
-            services.AddMediatR(options =>
+            try
             {
-                options.RegisterServicesFromAssembly(typeof(GetItemsQueryHandler).Assembly);
-                options.RegisterServicesFromAssembly(typeof(GetItemQueryHandler).Assembly);
-                options.RegisterServicesFromAssembly(typeof(CreateItemCommandHandler).Assembly);
-                options.RegisterServicesFromAssembly(typeof(UpdateItemCommandHandler).Assembly);
-                options.RegisterServicesFromAssembly(typeof(DeleteItemCommandHandler).Assembly);
-            });
-            _logger.LogInformation("MediatR configured successfully.");
-            return services;
+                _logger.LogInformation("configuring MediatR..");
+                services.AddMediatR(options =>
+                {
+                    options.RegisterServicesFromAssembly(typeof(GetItemsQueryHandler).Assembly);
+                    options.RegisterServicesFromAssembly(typeof(GetItemQueryHandler).Assembly);
+                    options.RegisterServicesFromAssembly(typeof(CreateItemCommandHandler).Assembly);
+                    options.RegisterServicesFromAssembly(typeof(UpdateItemCommandHandler).Assembly);
+                    options.RegisterServicesFromAssembly(typeof(DeleteItemCommandHandler).Assembly);
+                });
+                _logger.LogInformation("MediatR configured successfully.");
+                return services;
+            }
+            catch
+            {
+                _logger.LogError("failed to configure MediatR settings!");
+                throw new InvalidOperationException(nameof(Program));   
+            }
         }
     }
 }

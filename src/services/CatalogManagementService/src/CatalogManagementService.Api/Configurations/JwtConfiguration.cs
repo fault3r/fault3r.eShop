@@ -15,30 +15,38 @@ namespace CatalogManagementService.Api.Configurations
         {
             var _logger = services.BuildServiceProvider()
                 .GetRequiredService<ILoggerService<Program>>();
-            _logger.LogInformation("configuring JsonWebToken..");
-            var settings = configuration.GetSection(nameof(JwtSettings))
-                .Get<JwtSettings>() ??
-                throw new NullReferenceException(nameof(JwtSettings));
-            services.AddAuthentication(options =>
+            try
             {
-                options.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
-            })
-                .AddJwtBearer(options =>
+                _logger.LogInformation("configuring JsonWebToken..");
+                var settings = configuration.GetSection(nameof(JwtSettings))
+                    .Get<JwtSettings>() ??
+                    throw new Exception();
+                services.AddAuthentication(options =>
                 {
-                    options.TokenValidationParameters = new TokenValidationParameters
+                    options.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
+                })
+                    .AddJwtBearer(options =>
                     {
-                        ValidateIssuerSigningKey = true,
-                        ValidateLifetime = true,
-                        ValidateIssuer = true,
-                        ValidateAudience = true,
-                        IssuerSigningKey = new SymmetricSecurityKey(
-                            Encoding.UTF8.GetBytes(settings.Key)),
-                        ValidIssuer = settings.Issuer,
-                        ValidAudience = settings.Audience,
-                    };
-                });
-            _logger.LogInformation("JsonWebToken configured successfully.");
-            return services;
+                        options.TokenValidationParameters = new TokenValidationParameters
+                        {
+                            ValidateIssuerSigningKey = true,
+                            ValidateLifetime = true,
+                            ValidateIssuer = true,
+                            ValidateAudience = true,
+                            IssuerSigningKey = new SymmetricSecurityKey(
+                                Encoding.UTF8.GetBytes(settings.Key)),
+                            ValidIssuer = settings.Issuer,
+                            ValidAudience = settings.Audience,
+                        };
+                    });
+                _logger.LogInformation("JsonWebToken configured successfully.");
+                return services;
+            }
+            catch
+            {
+                _logger.LogError("failed to configure JsonWebToken settings!");
+                throw new InvalidOperationException(nameof(Program));     
+            }
         }
     }
 }

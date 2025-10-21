@@ -22,7 +22,7 @@ namespace CatalogManagementService.Application.UseCases.GetItems
 
         public async Task<(int Code, IEnumerable<ItemDto> Items)> Handle(GetItemsQuery request, CancellationToken cancellationToken)
         {
-            await _logger.LogInformation("forward request to service.");
+            await _logger.LogInformation("forwarding request to service..");
             var (Code, Items) = await _service.ExecuteAsync();
             await _logger.LogInformation("retrieved response from service.");
             return (Code, Items);
