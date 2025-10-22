@@ -56,7 +56,7 @@ namespace CatalogService.Api.Configurations
                             connection = factory.CreateConnection();
                         });
                         _logger.LogInformation("RabbitMQ connection created successfully.");
-                        return connection ?? throw new Exception();
+                        return connection!;
                     }
                     catch
                     {

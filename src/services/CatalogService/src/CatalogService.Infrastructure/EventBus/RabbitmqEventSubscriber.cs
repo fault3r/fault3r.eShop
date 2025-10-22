@@ -69,7 +69,7 @@ namespace CatalogService.Infrastructure.EventBus
                     var body = ea.Body.ToArray();
                     var strBody = Encoding.UTF8.GetString(body);
                     var @event = JsonSerializer.Deserialize(strBody, eventType);
-                    handlerMethod?.Invoke(handler, [@event]);
+                    await (Task)handlerMethod?.Invoke(handler, [@event])!;
                     await _logger.LogInformation($"handled {ea.BasicProperties.Type}.");
                 };
                 channel.BasicConsume(

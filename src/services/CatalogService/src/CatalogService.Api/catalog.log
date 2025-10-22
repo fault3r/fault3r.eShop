@@ -70,3 +70,45 @@
 2025-10-22 21:51:47.844 +03:30 [INF] ⋄[GetItemsService] retrieved response. ⟶2025-10-22 21:51:47
 2025-10-22 21:51:47.846 +03:30 [INF] ⋄[GetItemsQueryHandler] retrieved response from service. ⟶2025-10-22 21:51:47
 2025-10-22 21:51:47.847 +03:30 [INF] ⋄[CatalogController] retrieved GetItemsQuery response from mediator. ⟶2025-10-22 21:51:47
+2025-10-22 22:39:29.184 +03:30 [INF] ⋄[Program] Serilog configured successfully. ⟶2025-10-22 22:39:29
+2025-10-22 22:39:29.222 +03:30 [INF] ⋄[Program] configuring Versioning.. ⟶2025-10-22 22:39:29
+2025-10-22 22:39:29.236 +03:30 [INF] ⋄[Program] Versioning configured successfully. ⟶2025-10-22 22:39:29
+2025-10-22 22:39:29.271 +03:30 [INF] ⋄[Program] configuring JsonWebToken.. ⟶2025-10-22 22:39:29
+2025-10-22 22:39:29.286 +03:30 [INF] ⋄[Program] JsonWebToken configured successfully. ⟶2025-10-22 22:39:29
+2025-10-22 22:39:29.290 +03:30 [INF] ⋄[Program] configuring MediatR.. ⟶2025-10-22 22:39:29
+2025-10-22 22:39:29.342 +03:30 [INF] ⋄[Program] MediatR configured successfully. ⟶2025-10-22 22:39:29
+2025-10-22 22:39:29.350 +03:30 [INF] ⋄[Program] configuring MongoContext.. ⟶2025-10-22 22:39:29
+2025-10-22 22:39:29.359 +03:30 [INF] ⋄[Program] MongoContext configured successfully. ⟶2025-10-22 22:39:29
+2025-10-22 22:39:29.362 +03:30 [INF] ⋄[Program] configuring Application.. ⟶2025-10-22 22:39:29
+2025-10-22 22:39:29.363 +03:30 [INF] ⋄[Program] Application configured successfully. ⟶2025-10-22 22:39:29
+2025-10-22 22:39:29.377 +03:30 [INF] ⋄[Program] configuring RabbitMQ.. ⟶2025-10-22 22:39:29
+2025-10-22 22:39:29.380 +03:30 [INF] ⋄[Program] RabbitMQ configured successfully. ⟶2025-10-22 22:39:29
+2025-10-22 22:39:29.754 +03:30 [INF] ⋄[Program] ✅ CatalogService is running.. ⟶2025-10-22 22:39:29
+2025-10-22 22:39:30.020 +03:30 [INF] ⋄[Program] creating RabbitMQ connection.. ⟶2025-10-22 22:39:30
+2025-10-22 22:39:30.156 +03:30 [INF] ⋄[Program] RabbitMQ connection created successfully. ⟶2025-10-22 22:39:30
+2025-10-22 22:39:30.182 +03:30 [INF] ⋄[RabbitmqEventSubscriber] instance created. ⟶2025-10-22 22:39:30
+2025-10-22 22:39:30.185 +03:30 [INF] ⋄[RabbitmqEventSubscriberHostedService] instance created. ⟶2025-10-22 22:39:30
+2025-10-22 22:39:30.290 +03:30 [INF] ⋄[RabbitmqEventSubscriberHostedService] starting subscriber.. ⟶2025-10-22 22:39:30
+2025-10-22 22:39:30.292 +03:30 [INF] ⋄[RabbitmqEventSubscriber] creating consumer.. ⟶2025-10-22 22:39:30
+2025-10-22 22:39:30.315 +03:30 [INF] ⋄[RabbitmqEventSubscriber] consumer created successfully. ⟶2025-10-22 22:39:30
+2025-10-22 22:39:30.317 +03:30 [INF] ⋄[RabbitmqEventSubscriberHostedService] started successfully. ⟶2025-10-22 22:39:30
+2025-10-22 22:39:46.578 +03:30 [WRN] You do not have a valid license key for the Lucky Penny software MediatR. This is allowed for development and testing scenarios. If you are running in production you are required to have a licensed version. Please visit https://luckypennysoftware.com to obtain a valid license.
+2025-10-22 22:39:46.587 +03:30 [INF] ⋄[CatalogController] instance created. ⟶2025-10-22 22:39:46
+2025-10-22 22:39:46.671 +03:30 [INF] ⋄[CatalogController] forwarding CreateItemCommand to mediator.. ⟶2025-10-22 22:39:46
+2025-10-22 22:39:47.124 +03:30 [INF] ⋄[MongoContext] instance created. ⟶2025-10-22 22:39:47
+2025-10-22 22:39:47.131 +03:30 [INF] ⋄[MongoRepository] instance created. ⟶2025-10-22 22:39:47
+2025-10-22 22:39:47.160 +03:30 [INF] ⋄[RabbitmqEventPublisher] instance created. ⟶2025-10-22 22:39:47
+2025-10-22 22:39:47.161 +03:30 [INF] ⋄[CreateItemService] instance created. ⟶2025-10-22 22:39:47
+2025-10-22 22:39:47.161 +03:30 [INF] ⋄[CreateItemCommandHandler] instance created. ⟶2025-10-22 22:39:47
+2025-10-22 22:39:47.164 +03:30 [INF] ⋄[CreateItemCommandHandler] forwarding request to service.. ⟶2025-10-22 22:39:47
+2025-10-22 22:39:47.167 +03:30 [INF] ⋄[CreateItemService] executing request.. ⟶2025-10-22 22:39:47
+2025-10-22 22:39:47.170 +03:30 [INF] ⋄[MongoRepository] creating new item with name 'lkklk'.. ⟶2025-10-22 22:39:47
+2025-10-22 22:39:47.443 +03:30 [INF] ⋄[MongoRepository] item created successfully with id '68f92bfbe233856a25d2559a'. ⟶2025-10-22 22:39:47
+2025-10-22 22:39:47.448 +03:30 [INF] ⋄[RabbitmqEventPublisher] publishing ItemCreatedEvent for id '68f92bfbe233856a25d2559a'.. ⟶2025-10-22 22:39:47
+2025-10-22 22:39:47.469 +03:30 [INF] ⋄[RabbitmqEventPublisher] ItemCreatedEvent published for id '68f92bfbe233856a25d2559a'. ⟶2025-10-22 22:39:47
+2025-10-22 22:39:47.470 +03:30 [INF] ⋄[CreateItemService] retrieved response. ⟶2025-10-22 22:39:47
+2025-10-22 22:39:47.472 +03:30 [INF] ⋄[CreateItemCommandHandler] retrieved response from service. ⟶2025-10-22 22:39:47
+2025-10-22 22:39:47.472 +03:30 [INF] ⋄[CatalogController] retrieved CreateItemCommand response from mediator. ⟶2025-10-22 22:39:47
+2025-10-22 22:39:47.481 +03:30 [INF] ⋄[RabbitmqEventSubscriber] received ItemCreatedEvent. ⟶2025-10-22 22:39:47
+2025-10-22 22:39:47.488 +03:30 [INF] ⋄[ItemCreatedEventHandler] create new item with id '68f92bfbe233856a25d2559a' ⟶2025-10-22 22:39:47
+2025-10-22 22:39:47.488 +03:30 [INF] ⋄[RabbitmqEventSubscriber] handled ItemCreatedEvent. ⟶2025-10-22 22:39:47

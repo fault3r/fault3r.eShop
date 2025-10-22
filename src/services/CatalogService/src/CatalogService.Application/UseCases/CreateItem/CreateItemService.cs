@@ -6,7 +6,6 @@ using CatalogService.Domain.DTOs;
 using CatalogService.Domain.Entities;
 using CatalogService.Domain.Events;
 using CatalogService.Domain.Interfaces;
-using Microsoft.Extensions.Logging;
 
 namespace CatalogService.Application.UseCases.CreateItem
 {
