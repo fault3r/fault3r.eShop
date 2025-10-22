@@ -44,7 +44,7 @@ namespace CatalogService.Infrastructure.EventBus
                 exclusive: false);
         }
 
-        public Task StartSubscribeAsync()
+        public Task StartSubscriberAsync()
         {
             try
             {

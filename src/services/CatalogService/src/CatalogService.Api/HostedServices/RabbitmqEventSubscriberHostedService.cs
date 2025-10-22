@@ -22,7 +22,7 @@ namespace CatalogService.Api.HostedServices
         public Task StartAsync(CancellationToken cancellationToken)
         {
             _logger.LogInformation("starting subscriber..");
-            _rabbitmqEventSubscriber.StartSubscribeAsync();
+            _rabbitmqEventSubscriber.StartSubscriberAsync();
             _logger.LogInformation("started successfully.");
             return Task.CompletedTask;
         }
