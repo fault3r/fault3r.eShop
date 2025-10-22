@@ -33,7 +33,7 @@ namespace CatalogService.Application.UseCases.GetItem
             await _logger.LogInformation("retrieved response.");
             return (
                 Code: result.Code,
-                Item: result.Items.Select(item => ItemDTOs.Parse(item)).FirstOrDefault());
+                Item: result.Items.Select(item => ItemDTOs.ToItemDto(item)).FirstOrDefault());
         }
     }
 }

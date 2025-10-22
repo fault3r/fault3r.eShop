@@ -28,7 +28,7 @@ namespace CatalogService.Application.UseCases.GetItems
             await _logger.LogInformation("retrieved response.");
             return (
                 Code: result.Code,
-                Items: result.Items.Select(item => ItemDTOs.Parse(item)));
+                Items: result.Items.Select(item => ItemDTOs.ToItemDto(item)));
         }
     }
 }
