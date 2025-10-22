@@ -24,7 +24,7 @@ esac
 
 solutions=(
   # "ItemsService/ItemsService.sln"
-  "CatalogManagementService/CatalogManagementService.sln"
+  "CatalogService/CatalogService.sln"
 )
 
 for sln in "${solutions[@]}"; do

@@ -12,10 +12,10 @@ services:
     networks:
       - eshop
 
-  catalogmanagementservice:
-    container_name: catalogmanagementservice
+  CatalogService:
+    container_name: CatalogService
     build:
-      context: ./CatalogManagementService
+      context: ./CatalogService
       dockerfile: Dockerfile
     depends_on:
       - mongo
