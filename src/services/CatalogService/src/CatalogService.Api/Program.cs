@@ -29,6 +29,8 @@ builder.Services.AddApplicationConfiguration();
 
 builder.Services.AddRabbitmqConfiguration(builder.Configuration);
 
+builder.WebHost.UseUrls(appSettings.Url);
+
 var app = builder.Build();
 
 if (app.Environment.IsDevelopment())
@@ -46,4 +48,4 @@ using (var scope = app.Services.CreateScope())
 
 app.MapControllers();
 
-app.Run(appSettings.Url);
+app.Run();
