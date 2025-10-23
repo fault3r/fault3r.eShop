@@ -37,7 +37,8 @@ if (app.Environment.IsDevelopment())
     app.UseDeveloperExceptionPage();
 
 app.MapGet("/", () =>
-    $"Service Name: {appSettings.Name}\n" +
+    $"Name: {appSettings.Name}\n" +
+    $"Description: {appSettings.Description}\n" +
     $"Version: {appSettings.Version}");
 
 using (var scope = app.Services.CreateScope())
