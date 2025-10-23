@@ -5,9 +5,9 @@ using Microsoft.EntityFrameworkCore;
 
 namespace AccountService.Infrastructure.Data.Contexts
 {
-    public class PostgreSqlDbContext : DbContext
+    public class PostgresDbContext : DbContext
     {
-        public PostgreSqlDbContext(DbContextOptions<PostgreSqlDbContext> dbContext)
+        public PostgresDbContext(DbContextOptions<PostgresDbContext> dbContext)
             : base(dbContext) { }
 
         public DbSet<Account> Accounts => Set<Account>();
@@ -24,9 +24,15 @@ namespace AccountService.Infrastructure.Data.Contexts
                 .WithOne(x => x.Role)
                 .HasForeignKey(x => x.RoleId)
                 .OnDelete(DeleteBehavior.Restrict);
-            
 
-        }
-        
+            builder.Entity<Account>().HasKey(x => x.Id);
+            builder.Entity<Account>().HasIndex(x => x.Email)
+                .IsUnique();
+            builder.Entity<Account>()
+                .HasOne(x => x.Role)
+                .WithMany(x => x.Accounts)
+                .HasForeignKey(x => x.RoleId)
+                .OnDelete(DeleteBehavior.Cascade);
+        }    
     }
 }
