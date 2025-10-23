@@ -12,6 +12,7 @@ namespace CatalogService.Application.EventHandlers
         public ItemCreatedEventHandler(ILoggerService<ItemCreatedEventHandler> logger)
         {
             _logger = logger;
+            _logger.LogInformation("instance created.");
         }
 
         public Task HandleAsync(ItemCreatedEvent @event)

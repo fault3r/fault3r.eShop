@@ -12,6 +12,7 @@ namespace CatalogService.Application.EventHandlers
         public ItemDeletedEventHandler(ILoggerService<ItemDeletedEventHandler> logger)
         {
             _logger = logger;
+            _logger.LogInformation("instance created.");
         }
 
         public Task HandleAsync(ItemDeletedEvent @event)
