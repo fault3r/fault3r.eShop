@@ -15,7 +15,7 @@ namespace AccountService.Infrastructure.Data.Contexts
         public DbSet<Role> Roles => Set<Role>();
 
         protected override void OnModelCreating(ModelBuilder builder)
-        {
+        {            
             builder.Entity<Role>().HasKey(x => x.Id);
             builder.Entity<Role>().HasData(
                 new Role { Name = nameof(Account) });

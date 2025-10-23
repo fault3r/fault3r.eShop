@@ -1,0 +1,12 @@
+2025-10-23 12:13:56.654 +03:30 [INF] ⋄[Program] Serilog configured successfully. ⟶2025-10-23 12:13:56
+2025-10-23 12:13:56.704 +03:30 [INF] ⋄[Program] configuring PostgreSQL.. ⟶2025-10-23 12:13:56
+2025-10-23 12:13:56.711 +03:30 [INF] ⋄[Program] PostgreSQL configured successfully. ⟶2025-10-23 12:13:56
+2025-10-23 12:13:56.983 +03:30 [INF] ⋄[Program] ✅ AccountService is running.. ⟶2025-10-23 12:13:56
+2025-10-23 12:14:35.511 +03:30 [INF] ⋄[Program] Serilog configured successfully. ⟶2025-10-23 12:14:35
+2025-10-23 12:14:35.545 +03:30 [INF] ⋄[Program] configuring PostgreSQL.. ⟶2025-10-23 12:14:35
+2025-10-23 12:14:35.549 +03:30 [INF] ⋄[Program] PostgreSQL configured successfully. ⟶2025-10-23 12:14:35
+2025-10-23 12:14:35.731 +03:30 [INF] ⋄[Program] ✅ AccountService is running.. ⟶2025-10-23 12:14:35
+2025-10-23 12:17:24.381 +03:30 [INF] ⋄[Program] Serilog configured successfully. ⟶2025-10-23 12:17:24
+2025-10-23 12:17:24.422 +03:30 [INF] ⋄[Program] configuring PostgreSQL.. ⟶2025-10-23 12:17:24
+2025-10-23 12:17:24.428 +03:30 [INF] ⋄[Program] PostgreSQL configured successfully. ⟶2025-10-23 12:17:24
+2025-10-23 12:17:24.650 +03:30 [INF] ⋄[Program] ✅ AccountService is running.. ⟶2025-10-23 12:17:24
