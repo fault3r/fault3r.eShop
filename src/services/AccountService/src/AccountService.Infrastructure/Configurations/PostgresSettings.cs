@@ -5,10 +5,14 @@ namespace AccountService.Infrastructure.Configurations
 {
     public class PostgresSettings
     {
-        public required string ConnectionString { get; set; }
+        public required string Host{ get; set; }
 
-        public required string DatabaseName { get; set; }
-        
-        public required string TableName { get; set; }
+        public required int Port { get; set; }
+
+        public required string Username { get; set; }
+
+        public required string Password { get; set; }
+
+        public required string Database { get; set; }
     }
 }

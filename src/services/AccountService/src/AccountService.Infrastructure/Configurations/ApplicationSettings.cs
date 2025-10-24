@@ -14,5 +14,7 @@ namespace AccountService.Infrastructure.Configurations
         public required string Url { get; set; }
 
         public required string Log { get; set; }
+
+        public required string DefaultRole { get; set; }
     }
 }

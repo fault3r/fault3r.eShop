@@ -9,20 +9,26 @@ namespace AccountService.Api.Configurations
 {
     public static class PostgresContextConfiguration
     {
-        public static IServiceCollection AddPostgreSqlContextConfiguration(this IServiceCollection services,
+        public static IServiceCollection AddPostgresContextConfiguration(this IServiceCollection services,
             ConfigurationManager configuration)
         {
-            var _logger = services.BuildServiceProvider()
-                .GetRequiredService<ILoggerService<Program>>();
+            using var provider = services.BuildServiceProvider();
+            var _logger = provider.GetRequiredService<ILoggerService<Program>>();
             try
             {
                 _logger.LogInformation("configuring PostgreSQL..");
                 var settings = configuration.GetSection(nameof(PostgresSettings))
                     .Get<PostgresSettings>() ??
                     throw new Exception();
+                string connectionString =
+                    $"Host={settings.Host};" +
+                    $"Port={settings.Port};" +
+                    $"Username={settings.Username};" +
+                    $"Password={settings.Password};" +
+                    $"Database={settings.Database};";
                 services.AddDbContext<PostgresDbContext>(config =>
                 {
-                    config.UseNpgsql(settings.ConnectionString);
+                    config.UseNpgsql(connectionString);
                 });
                 _logger.LogInformation("PostgreSQL configured successfully.");
                 return services;

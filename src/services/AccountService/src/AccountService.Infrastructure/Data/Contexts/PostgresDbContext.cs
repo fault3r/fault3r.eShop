@@ -1,5 +1,6 @@
 
 using System;
+using AccountService.Application.Interfaces.Services;
 using AccountService.Domain.Entities;
 using Microsoft.EntityFrameworkCore;
 
@@ -7,12 +8,18 @@ namespace AccountService.Infrastructure.Data.Contexts
 {
     public class PostgresDbContext : DbContext
     {
-        public PostgresDbContext(DbContextOptions<PostgresDbContext> dbContext)
-            : base(dbContext) { }
+        private readonly ILoggerService<PostgresDbContext> _logger;
 
-        public DbSet<Account> Accounts => Set<Account>();
+        public PostgresDbContext(DbContextOptions<PostgresDbContext> dbContext,
+            ILoggerService<PostgresDbContext> logger) : base(dbContext)
+        {
+            _logger = logger;
+            _logger.LogInformation("instance created.");
+        }
 
         public DbSet<Role> Roles => Set<Role>();
+
+        public DbSet<Account> Accounts => Set<Account>();
 
         protected override void OnModelCreating(ModelBuilder builder)
         {            

@@ -18,16 +18,18 @@ namespace AccountService.Api.Configurations
                 .MinimumLevel.Debug()
                 .WriteTo.File(filename)
                 .CreateLogger();
-            services.AddLogging(options =>
+            services.AddLogging(config =>
             {
-                options.AddSerilog(dispose: true);
+                config.AddSerilog(dispose: true);
             });
             services.AddSingleton(
                 typeof(ILoggerService<>),
                 typeof(SerilogLoggerService<>));
-             var _logger = services.BuildServiceProvider()
-                .GetRequiredService<ILoggerService<Program>>();
-            _logger.LogInformation("Serilog configured successfully.");
+            using (var provider = services.BuildServiceProvider())
+            {
+                var _logger = provider.GetRequiredService<ILoggerService<Program>>();
+                _logger.LogInformation("Serilog configured successfully.");
+            }
             return services;
         }
     }

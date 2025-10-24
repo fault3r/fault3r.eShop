@@ -17,7 +17,11 @@ builder.Services.AddControllers(config =>
     config.SuppressAsyncSuffixInActionNames = true;
 });
 
-builder.Services.AddPostgreSqlContextConfiguration(builder.Configuration);
+builder.Services.AddVersioningConfiguration(appSettings.Version);
+
+builder.Services.AddPostgresContextConfiguration(builder.Configuration);
+
+builder.Services.AddApplicationConfiguration();
 
 var app = builder.Build();
 
