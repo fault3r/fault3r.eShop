@@ -1,5 +1,6 @@
 
 using System;
+using AccountService.Api.Exceptions;
 using AccountService.Application.Interfaces.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Versioning;
@@ -32,7 +33,7 @@ namespace AccountService.Api.Configurations
             catch
             {
                  _logger.LogError("failed to configure Versioning settings!");
-                throw new InvalidOperationException(nameof(Program));  
+                throw new InvalidConfigurationException();  
             }
         }
     }

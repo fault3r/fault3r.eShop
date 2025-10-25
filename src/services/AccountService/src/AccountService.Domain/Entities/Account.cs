@@ -3,23 +3,24 @@ using System;
 
 namespace AccountService.Domain.Entities
 {
-    public class Account
+    public class Account : BaseEntity
     {
-        public Guid Id { get; set; }
+        public string Email { get; set; }
 
-        public required string Email { get; set; }
-
-        public required string Password { get; set; }
+        public string Password { get; set; }
 
         public string Name { get; set; }
 
         public Guid RoleId { get; set; }
-        public virtual required Role Role { get; set; }
+        public virtual Role Role { get; set; }
 
-        public Account()
+        public Account(string email, string password, Role role)
         {
             Id = Guid.NewGuid();
-            Name = "";
+            Email = email;
+            Password = password;
+            Name = Email.Split('@')[0];
+            Role = role;
         }
     }
 }

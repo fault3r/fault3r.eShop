@@ -1,5 +1,6 @@
 
 using System;
+using AccountService.Api.Exceptions;
 using AccountService.Application.Interfaces.Repositories;
 using AccountService.Application.Interfaces.Services;
 using AccountService.Infrastructure.Repositories;
@@ -15,14 +16,14 @@ namespace AccountService.Api.Configurations
             try
             {
                 _logger.LogInformation("configuring Application..");
-                services.AddScoped<IRepository, PostgresRepository>();
+                services.AddScoped(typeof(IRepository<>), typeof(PostgresRepository<>));
                 _logger.LogInformation("Application configured successfully.");
                 return services;
             }
             catch
             {
                 _logger.LogError("failed to configure Application settings!");
-                throw new InvalidOperationException(nameof(Program));
+                throw new InvalidConfigurationException();
             }
         }
     }

@@ -25,7 +25,7 @@ namespace AccountService.Infrastructure.Data.Contexts
         {            
             builder.Entity<Role>().HasKey(x => x.Id);
             builder.Entity<Role>().HasData(
-                new Role { Name = nameof(Account) });
+                new Role(nameof(Account)));
             builder.Entity<Role>()
                 .HasMany(x => x.Accounts)
                 .WithOne(x => x.Role)

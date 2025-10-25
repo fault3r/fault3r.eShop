@@ -2,8 +2,7 @@
 using System;
 using Serilog;
 using Serilog.Events;
-using AccountService.Infrastructure.Services;
-using AccountService.Application.Interfaces.Services;
+using AccountService.Api.Exceptions;
 
 namespace AccountService.Api.Configurations
 {
@@ -12,25 +11,25 @@ namespace AccountService.Api.Configurations
         public static IServiceCollection AddSerilogConfiguration(this IServiceCollection services,
             string filename)
         {
-            Log.Logger = new LoggerConfiguration()
-                .MinimumLevel.Override("Microsoft", LogEventLevel.Fatal)
-                .MinimumLevel.Override("System", LogEventLevel.Fatal)
-                .MinimumLevel.Debug()
-                .WriteTo.File(filename)
-                .CreateLogger();
-            services.AddLogging(config =>
+            try
             {
-                config.AddSerilog(dispose: true);
-            });
-            services.AddSingleton(
-                typeof(ILoggerService<>),
-                typeof(SerilogLoggerService<>));
-            using (var provider = services.BuildServiceProvider())
-            {
-                var _logger = provider.GetRequiredService<ILoggerService<Program>>();
-                _logger.LogInformation("Serilog configured successfully.");
+                Log.Logger = new LoggerConfiguration()
+                    .MinimumLevel.Override("Microsoft", LogEventLevel.Error)
+                    .MinimumLevel.Override("System", LogEventLevel.Error)
+                    .MinimumLevel.Debug()
+                    .WriteTo.File(filename)
+                    .CreateLogger();
+                services.AddLogging(config =>
+                {
+                    config.AddSerilog(dispose: true);
+                });
+                Log.Information("tttttttttttttttttttttttttttttttttttttt");
+                return services;
             }
-            return services;
+            catch
+            {
+                throw new InvalidConfigurationException();
+            }
         }
     }
 }

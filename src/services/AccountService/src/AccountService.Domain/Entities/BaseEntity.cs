@@ -1,0 +1,10 @@
+
+using System;
+
+namespace AccountService.Domain.Entities
+{
+    public abstract class BaseEntity
+    {
+        public Guid Id { get; set; }
+    }
+}

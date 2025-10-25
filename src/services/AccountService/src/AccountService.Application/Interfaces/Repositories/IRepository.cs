@@ -1,22 +1,15 @@
 
 using System;
+using System.Linq.Expressions;
 using AccountService.Domain.Entities;
 
 namespace AccountService.Application.Interfaces.Repositories
 {
-    public interface IRepository
+    public interface IRepository<TEntity>
+        where TEntity : BaseEntity
     {
+        Task<(int Code, IEnumerable<TEntity>?)> GetAllAsync();
 
-        Task<(RepositoryResult Code, IEnumerable<Account> Accounts)> GetAllAsync();
-
-        public enum RepositoryResult
-        {
-            Ok = 200,
-            Created = 201,
-            NoContent = 204,
-            BadRequest = 400,
-            NotFound = 404,
-            InternalServerError = 500,
-        }
+        Task<(int Code, TEntity?)> FindOneAsync(Expression<Func<TEntity, bool>> condition);
     }
 }

@@ -1,42 +1,63 @@
 
 using System;
+using System.Linq.Expressions;
 using AccountService.Application.Interfaces.Repositories;
 using AccountService.Application.Interfaces.Services;
 using AccountService.Domain.Entities;
 using AccountService.Infrastructure.Data.Contexts;
 using Microsoft.EntityFrameworkCore;
-using static AccountService.Application.Interfaces.Repositories.IRepository;
 
 namespace AccountService.Infrastructure.Repositories
 {
-    public class PostgresRepository : IRepository
+    public class PostgresRepository<TEntity> : IRepository<TEntity>
+        where TEntity : BaseEntity
     {
         private readonly PostgresDbContext _context;
 
-        private readonly ILoggerService<PostgresRepository> _logger;
+        private readonly ILoggerService<PostgresRepository<TEntity>> _logger;
 
         public PostgresRepository(PostgresDbContext context,
-            ILoggerService<PostgresRepository> logger)
+            ILoggerService<PostgresRepository<TEntity>> logger)
         {
             _context = context;
             _logger = logger;
-            _logger.LogInformation("instance created.");
+            _logger.LogInformation("");
         }
 
-        public async Task<(RepositoryResult Code, IEnumerable<Account> Accounts)> GetAllAsync()
+        public async Task<(int Code, IEnumerable<TEntity>?)> GetAllAsync()
         {
             try
             {
-                await _logger.LogInformation("fetching all accounts..");
-                var accounts = (await _context.Accounts.ToListAsync())
-                    .AsEnumerable();
-                await _logger.LogInformation($"successfully retrieved {accounts.Count()} account(s).");
-                return (RepositoryResult.Ok, accounts);
+                await _logger.LogInformation("fetching all items..");
+                var items = await _context.Set<TEntity>().ToListAsync();
+                await _logger.LogInformation($"successfully retrieved {items.Count} item(s).");
+                return (200, items);
             }
             catch
             {
-                await _logger.LogError("failed to retrieve accounts!");
-                return (RepositoryResult.InternalServerError, null!);
+                await _logger.LogError("failed to retrieve items!");
+                return (500, null);
+            }
+        }
+
+        public async Task<(int Code, TEntity?)> FindOneAsync(Expression<Func<TEntity, bool>> condition)
+        {
+            try
+            {
+                await _logger.LogInformation($"fetching item..");
+                var item = await _context.Set<TEntity>().FirstOrDefaultAsync(condition);
+                if (item is null)
+                {
+                    await _logger.LogInformation($"no item found!");
+                    return (404, null);
+                }
+                await _logger.LogInformation($"successfully retrieved item.");
+                return (200, item);
+            }
+            catch
+            {
+                await _logger.LogError("failed to retrieve item!");
+                return (500, null);
             }
         }
     }

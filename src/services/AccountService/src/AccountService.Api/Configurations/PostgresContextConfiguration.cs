@@ -1,5 +1,6 @@
 
 using System;
+using AccountService.Api.Exceptions;
 using AccountService.Application.Interfaces.Services;
 using AccountService.Infrastructure.Configurations;
 using AccountService.Infrastructure.Data.Contexts;
@@ -36,7 +37,7 @@ namespace AccountService.Api.Configurations
             catch
             {
                 _logger.LogError("failed to configure PostgreSQL settings!");
-                throw new InvalidOperationException(nameof(Program));
+                throw new InvalidConfigurationException();
             }
         }
     }

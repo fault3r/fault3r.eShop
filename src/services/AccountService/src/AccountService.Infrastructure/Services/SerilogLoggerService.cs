@@ -5,13 +5,13 @@ using AccountService.Application.Interfaces.Services;
 
 namespace AccountService.Infrastructure.Services
 {
-    public class SerilogLoggerService<TLog> : ILoggerService<TLog>
+    public class SerilogLoggerService : ILoggerService
     {
         private readonly Serilog.ILogger _logger;
 
         public SerilogLoggerService()
         {
-            _logger = Log.ForContext<TLog>();
+            _logger = Log.Logger;
         }
 
         private static string ToLogString(string message) =>

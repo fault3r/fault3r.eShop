@@ -19,6 +19,8 @@ builder.Services.AddControllers(config =>
 
 builder.Services.AddVersioningConfiguration(appSettings.Version);
 
+builder.Services.AddJwtConfiguration(builder.Configuration);
+
 builder.Services.AddPostgresContextConfiguration(builder.Configuration);
 
 builder.Services.AddApplicationConfiguration();
