@@ -14,11 +14,11 @@ namespace AccountService.Api.Controllers
     {
         private readonly IRepository<Account> _repo;
 
-        private readonly ILoggerService _logger;
+        private readonly ILoggerService<AccountController> _logger;
 
 
         public AccountController(IRepository<Account> repo,
-            ILoggerService logger)
+            ILoggerService<AccountController> logger)
         {
             _repo = repo;
             _logger = logger;

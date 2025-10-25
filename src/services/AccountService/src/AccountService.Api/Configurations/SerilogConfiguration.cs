@@ -3,6 +3,8 @@ using System;
 using Serilog;
 using Serilog.Events;
 using AccountService.Api.Exceptions;
+using AccountService.Application.Interfaces.Services;
+using AccountService.Infrastructure.Services;
 
 namespace AccountService.Api.Configurations
 {
@@ -23,7 +25,7 @@ namespace AccountService.Api.Configurations
                 {
                     config.AddSerilog(dispose: true);
                 });
-                Log.Information("tttttttttttttttttttttttttttttttttttttt");
+                services.AddScoped(typeof(ILoggerService<>), typeof(SerilogLoggerService<>));
                 return services;
             }
             catch

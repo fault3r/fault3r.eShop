@@ -20,8 +20,8 @@ namespace AccountService.Infrastructure.Repositories
             ILoggerService<PostgresRepository<TEntity>> logger)
         {
             _context = context;
-            _logger = logger;
-            _logger.LogInformation("");
+            _logger = logger;            
+            _logger.LogInformation("instance created.");
         }
 
         public async Task<(int Code, IEnumerable<TEntity>?)> GetAllAsync()

@@ -3,7 +3,7 @@ using System;
 
 namespace AccountService.Application.Interfaces.Services
 {
-    public interface ILoggerService<>
+    public interface ILoggerService<in TContext>
     {
         Task LogInformation(string message);
 

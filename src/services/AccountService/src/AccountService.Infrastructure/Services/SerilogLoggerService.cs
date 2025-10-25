@@ -5,17 +5,17 @@ using AccountService.Application.Interfaces.Services;
 
 namespace AccountService.Infrastructure.Services
 {
-    public class SerilogLoggerService : ILoggerService
+    public class SerilogLoggerService<TContext> : ILoggerService<TContext>
     {
         private readonly Serilog.ILogger _logger;
 
         public SerilogLoggerService()
         {
-            _logger = Log.Logger;
+            _logger = Log.ForContext<TContext>();
         }
 
         private static string ToLogString(string message) =>
-            $"⋄[{typeof(TLog).Name}] {message} ⟶{DateTime.Now:yyyy-MM-dd HH:mm:ss}";
+            $"⋄[{typeof(TContext).Name}] {message} ⟶{DateTime.Now:yyyy-MM-dd HH:mm:ss}";
 
         public Task LogInformation(string message)
         {

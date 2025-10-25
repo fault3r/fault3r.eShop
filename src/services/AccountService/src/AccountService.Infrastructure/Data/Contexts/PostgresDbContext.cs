@@ -10,8 +10,8 @@ namespace AccountService.Infrastructure.Data.Contexts
     {
         private readonly ILoggerService<PostgresDbContext> _logger;
 
-        public PostgresDbContext(DbContextOptions<PostgresDbContext> dbContext,
-            ILoggerService<PostgresDbContext> logger) : base(dbContext)
+        public PostgresDbContext(DbContextOptions<PostgresDbContext> options,
+            ILoggerService<PostgresDbContext> logger) : base(options)
         {
             _logger = logger;
             _logger.LogInformation("instance created.");
@@ -24,8 +24,6 @@ namespace AccountService.Infrastructure.Data.Contexts
         protected override void OnModelCreating(ModelBuilder builder)
         {            
             builder.Entity<Role>().HasKey(x => x.Id);
-            builder.Entity<Role>().HasData(
-                new Role(nameof(Account)));
             builder.Entity<Role>()
                 .HasMany(x => x.Accounts)
                 .WithOne(x => x.Role)
