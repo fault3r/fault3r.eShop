@@ -11,7 +11,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace AccountService.Infrastructure.Data.Migrations
 {
     [DbContext(typeof(PostgresDbContext))]
-    [Migration("20251026181709_initial-database")]
+    [Migration("20251026185429_initial-database")]
     partial class initialdatabase
     {
         /// <inheritdoc />
@@ -78,6 +78,11 @@ namespace AccountService.Infrastructure.Data.Migrations
                         {
                             Id = 1,
                             Name = "account"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Name = "admin"
                         });
                 });
 

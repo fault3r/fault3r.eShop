@@ -75,6 +75,11 @@ namespace AccountService.Infrastructure.Data.Migrations
                         {
                             Id = 1,
                             Name = "account"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Name = "admin"
                         });
                 });
 

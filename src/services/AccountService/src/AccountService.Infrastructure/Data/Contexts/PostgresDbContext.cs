@@ -29,14 +29,12 @@ namespace AccountService.Infrastructure.Data.Contexts
                 .WithOne(x => x.Role)
                 .HasForeignKey(x => x.RoleId)
                 .OnDelete(DeleteBehavior.Restrict);
-            builder.Entity<Role>().HasData(new Role
-            {
-                Id=1,
-                Name = nameof(Account).ToLower(),
-            });
-                       
+            builder.Entity<Role>().HasData(
+                new Role { Id = 1, Name = "account" },
+                new Role { Id = 2, Name = "admin" });
             builder.Entity<Account>().HasKey(x => x.Id);
-            builder.Entity<Account>().HasIndex(x => x.Email)
+            builder.Entity<Account>()
+                .HasIndex(x => x.Email)
                 .IsUnique();
             builder.Entity<Account>()
                 .HasOne(x => x.Role)

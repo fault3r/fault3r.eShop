@@ -1,11 +1,8 @@
 
 using System;
-using AccountService.Application.Interfaces.Repositories;
 using AccountService.Application.Interfaces.Services;
-using AccountService.Domain.Entities;
 using AccountService.Infrastructure.Data.Contexts;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 
 namespace AccountService.Api.Controllers
 {
@@ -18,7 +15,6 @@ namespace AccountService.Api.Controllers
 
         private readonly ILoggerService<AccountController> _logger;
 
-
         public AccountController(PostgresDbContext context,
             ILoggerService<AccountController> logger)
         {
@@ -26,15 +22,5 @@ namespace AccountService.Api.Controllers
             _logger = logger;
             _logger.LogInformation("instance created.");
         }
-
-        [HttpGet]
-        public async Task<IActionResult> Get()
-        {
-
-            var res = await _context.Roles.Include(e => e.Accounts)
-                .FirstOrDefaultAsync(x => x.Id == 1);
-            return Ok(res.Accounts.ToList());
-        }
-  
     }
 }

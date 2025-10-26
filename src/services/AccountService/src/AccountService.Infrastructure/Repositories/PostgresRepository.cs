@@ -24,7 +24,7 @@ namespace AccountService.Infrastructure.Repositories
             _logger.LogInformation("instance created.");
         }
 
-        public async Task<(int Code, IEnumerable<TEntity>?)> GetAllAsync()
+        public async Task<(int Code, IEnumerable<TEntity>? Items)> GetAllAsync()
         {
             try
             {
@@ -40,7 +40,7 @@ namespace AccountService.Infrastructure.Repositories
             }
         }
 
-        public async Task<(int Code, TEntity?)> FindOneAsync(Expression<Func<TEntity, bool>> condition)
+        public async Task<(int Code, TEntity? Item)> FindOneAsync(Expression<Func<TEntity, bool>> condition)
         {
             try
             {

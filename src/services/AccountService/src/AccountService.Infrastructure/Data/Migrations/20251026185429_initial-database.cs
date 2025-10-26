@@ -3,6 +3,8 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 #nullable disable
 
+#pragma warning disable CA1814 // Prefer jagged arrays over multidimensional
+
 namespace AccountService.Infrastructure.Data.Migrations
 {
     /// <inheritdoc />
@@ -49,7 +51,11 @@ namespace AccountService.Infrastructure.Data.Migrations
             migrationBuilder.InsertData(
                 table: "Roles",
                 columns: new[] { "Id", "Name" },
-                values: new object[] { 1, "account" });
+                values: new object[,]
+                {
+                    { 1, "account" },
+                    { 2, "admin" }
+                });
 
             migrationBuilder.CreateIndex(
                 name: "IX_Accounts_Email",
