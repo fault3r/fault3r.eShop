@@ -3,7 +3,9 @@ using System;
 using AccountService.Application.Interfaces.Repositories;
 using AccountService.Application.Interfaces.Services;
 using AccountService.Domain.Entities;
+using AccountService.Infrastructure.Data.Contexts;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace AccountService.Api.Controllers
 {
@@ -12,15 +14,15 @@ namespace AccountService.Api.Controllers
     [Route("api/v1/account")]
     public class AccountController : ControllerBase
     {
-        private readonly IRepository<Account> _repo;
+        private readonly PostgresDbContext _context;
 
         private readonly ILoggerService<AccountController> _logger;
 
 
-        public AccountController(IRepository<Account> repo,
+        public AccountController(PostgresDbContext context,
             ILoggerService<AccountController> logger)
         {
-            _repo = repo;
+            _context = context;
             _logger = logger;
             _logger.LogInformation("instance created.");
         }
@@ -28,8 +30,10 @@ namespace AccountService.Api.Controllers
         [HttpGet]
         public async Task<IActionResult> Get()
         {
-            var res = await _repo.FindOneAsync(p => p.Name == "asdasd");
-            return Ok(res.Item2);
+
+            var res = await _context.Roles.Include(e => e.Accounts)
+                .FirstOrDefaultAsync(x => x.Id == 1);
+            return Ok(res.Accounts.ToList());
         }
   
     }

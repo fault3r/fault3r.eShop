@@ -1,5 +1,6 @@
 
 using System;
+using AccountService.Domain.Entities.Base;
 
 namespace AccountService.Domain.Entities
 {
@@ -7,6 +8,6 @@ namespace AccountService.Domain.Entities
     {
         public required string Name { get; set; }
 
-        public virtual required ICollection<Account> Accounts { get; set; }
+        public virtual ICollection<Account>? Accounts { get; set; }
     }
 }

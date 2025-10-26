@@ -1,7 +1,7 @@
 
 using System;
 using System.Linq.Expressions;
-using AccountService.Domain.Entities;
+using AccountService.Domain.Entities.Base;
 
 namespace AccountService.Application.Interfaces.Repositories
 {

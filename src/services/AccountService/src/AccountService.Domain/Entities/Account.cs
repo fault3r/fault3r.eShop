@@ -1,5 +1,6 @@
 
 using System;
+using AccountService.Domain.Entities.Base;
 
 namespace AccountService.Domain.Entities
 {
@@ -11,7 +12,7 @@ namespace AccountService.Domain.Entities
 
         public required string Name { get; set; }
 
-        public Guid RoleId { get; set; }
-        public virtual required Role Role { get; set; }
+        public int RoleId { get; set; }
+        public virtual Role? Role { get; set; }
     }
 }

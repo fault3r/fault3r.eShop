@@ -3,7 +3,7 @@ using System;
 using System.Linq.Expressions;
 using AccountService.Application.Interfaces.Repositories;
 using AccountService.Application.Interfaces.Services;
-using AccountService.Domain.Entities;
+using AccountService.Domain.Entities.Base;
 using AccountService.Infrastructure.Data.Contexts;
 using Microsoft.EntityFrameworkCore;
 

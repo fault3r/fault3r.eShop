@@ -22,14 +22,19 @@ namespace AccountService.Infrastructure.Data.Contexts
         public DbSet<Account> Accounts => Set<Account>();
 
         protected override void OnModelCreating(ModelBuilder builder)
-        {            
+        {
             builder.Entity<Role>().HasKey(x => x.Id);
             builder.Entity<Role>()
                 .HasMany(x => x.Accounts)
                 .WithOne(x => x.Role)
                 .HasForeignKey(x => x.RoleId)
                 .OnDelete(DeleteBehavior.Restrict);
-
+            builder.Entity<Role>().HasData(new Role
+            {
+                Id=1,
+                Name = nameof(Account).ToLower(),
+            });
+                       
             builder.Entity<Account>().HasKey(x => x.Id);
             builder.Entity<Account>().HasIndex(x => x.Email)
                 .IsUnique();
@@ -38,6 +43,6 @@ namespace AccountService.Infrastructure.Data.Contexts
                 .WithMany(x => x.Accounts)
                 .HasForeignKey(x => x.RoleId)
                 .OnDelete(DeleteBehavior.Cascade);
-        }    
+        }
     }
 }
