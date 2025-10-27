@@ -11,5 +11,9 @@ namespace AccountService.Application.Interfaces.Repositories
         Task<(int Code, IEnumerable<TEntity>? Items)> GetAllAsync();
 
         Task<(int Code, TEntity? Item)> FindOneAsync(Expression<Func<TEntity, bool>> condition);
+
+        Task<(int Code, TEntity? Item)> CreateAsync(TEntity entity);
+
+        Task<(int Code, TEntity? Item)> UpdateAsync(TEntity entity);
     }
 }
