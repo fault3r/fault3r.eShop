@@ -15,5 +15,7 @@ namespace AccountService.Application.Interfaces.Repositories
         Task<(int Code, TEntity? Item)> CreateAsync(TEntity entity);
 
         Task<(int Code, TEntity? Item)> UpdateAsync(TEntity entity);
+
+        Task<int> DeleteAsync(int id);
     }
 }

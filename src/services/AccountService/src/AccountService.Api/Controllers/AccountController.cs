@@ -3,7 +3,6 @@ using System;
 using AccountService.Application.Interfaces.Repositories;
 using AccountService.Application.Interfaces.Services;
 using AccountService.Domain.Entities;
-using AccountService.Infrastructure.Data.Contexts;
 using Microsoft.AspNetCore.Mvc;
 
 namespace AccountService.Api.Controllers
@@ -28,22 +27,8 @@ namespace AccountService.Api.Controllers
         [HttpGet]
         public async Task<IActionResult> Get()
         {
-            // var (code, item) = await _repo.CreateAsync(new Account
-            // {
-            //     Name = "hamedt",
-            //     Email = "hamed@ex.com",
-            //     Password = "pswd",
-            //     RoleId = 1,
-            // });
-            var (code, item) = await _repo.UpdateAsync(new Account
-            {
-                Id = 3,
-                Name = "hamed-updated",
-                Email = "email-updated",
-                Password = "password-updated",
-                RoleId = 2,
-            });
-            return Ok(item);
+            int code = await _repo.DeleteAsync(3);
+            return Ok(code);
         }
     }
 }

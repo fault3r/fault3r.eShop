@@ -69,10 +69,10 @@ namespace AccountService.Infrastructure.Repositories
             try
             {
                 await _logger.LogInformation($"creating item..");
-                var item = await context.AddAsync(entity);
+                var created = context.Add(entity);
                 await _context.SaveChangesAsync();
                 await _logger.LogInformation($"item created.");
-                return (200, item.Entity);
+                return (200, created.Entity);
             }
             catch
             {
@@ -80,22 +80,51 @@ namespace AccountService.Infrastructure.Repositories
                 return (500, null);
             }
         }
-        
+
         public async Task<(int Code, TEntity? Item)> UpdateAsync(TEntity entity)
         {
             try
             {
                 await _logger.LogInformation($"updating item..");
-                var item = context.Update(entity);
+                var item = await context.FirstOrDefaultAsync(x => x.Id == entity.Id);
+                if (item is null)
+                {
+                    await _logger.LogInformation($"item not found!");
+                    return (404, null);
+                }
+                context.Entry(item).CurrentValues.SetValues(entity);
                 await _context.SaveChangesAsync();
                 await _logger.LogInformation($"item updated.");
-                return (200, item.Entity);
+                return (200, item);
             }
             catch
             {
                 await _logger.LogError("failed to update item!");
                 return (500, null);
             }
+        }
+
+        public async Task<int> DeleteAsync(int id)
+        {
+            try
+            {
+                await _logger.LogInformation($"deleting item..");
+                var item = await context.FirstOrDefaultAsync(x => x.Id == id);
+                if (item is null)
+                {
+                    await _logger.LogInformation($"item not found!");
+                    return (404);
+                }
+                context.Remove(item);
+                await _context.SaveChangesAsync();
+                await _logger.LogInformation($"item deleted.");
+                return (204);
+            }
+            catch
+            {
+                await _logger.LogError("failed to delete item!");
+                return (500);
+            }            
         }
     }
 }
