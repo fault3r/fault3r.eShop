@@ -29,7 +29,13 @@ namespace AccountService.Api.Configurations
                     $"Database={settings.Database};";
                 services.AddDbContext<PostgresDbContext>(config =>
                 {
-                    config.UseNpgsql(connectionString);
+                    config.UseNpgsql(connectionString, options =>
+                    {
+                        options.EnableRetryOnFailure(
+                            maxRetryCount: 2,
+                            maxRetryDelay: TimeSpan.FromSeconds(2),
+                            errorCodesToAdd: null);
+                    });
                 });
                 _logger.LogInformation("PostgreSQL configured successfully.");
                 return services;
