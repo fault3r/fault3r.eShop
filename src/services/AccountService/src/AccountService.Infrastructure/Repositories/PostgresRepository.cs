@@ -61,7 +61,7 @@ namespace AccountService.Infrastructure.Repositories
             }
             catch
             {
-                await _logger.LogError($"failed to retrieve {typeof(TEntity).Name} entity for {predicate.Body}..");
+                await _logger.LogError($"failed to retrieve {typeof(TEntity).Name} entity for {predicate.Body}!");
                 return (ResultCode.InternalServerError, null);
             }
         }
@@ -70,15 +70,15 @@ namespace AccountService.Infrastructure.Repositories
         {
             try
             {
-                await _logger.LogInformation($"creating item..");
+                await _logger.LogInformation($"creating a new {typeof(TEntity).Name} entity..");
                 var created = context.Add(entity);
                 await _context.SaveChangesAsync();
-                await _logger.LogInformation($"item created.");
+                await _logger.LogInformation($"successfully created {typeof(TEntity).Name} entity with id {created.Entity.Id}.");
                 return (ResultCode.Created, created.Entity);
             }
             catch
             {
-                await _logger.LogError("failed to create item!");
+                await _logger.LogError($"failed to create {typeof(TEntity).Name} entity!");
                 return (ResultCode.InternalServerError, null);
             }
         }
@@ -87,21 +87,21 @@ namespace AccountService.Infrastructure.Repositories
         {
             try
             {
-                await _logger.LogInformation($"updating item..");
+                await _logger.LogInformation($"updating {typeof(TEntity).Name} entity with id {entity.Id}..");
                 var updated = await context.FirstOrDefaultAsync(p => p.Id == entity.Id);
                 if (updated is null)
                 {
-                    await _logger.LogInformation($"item not found!");
+                    await _logger.LogInformation($"no {typeof(TEntity).Name} entity found for id {entity.Id}!");
                     return (ResultCode.NotFound, null);
                 }
                 context.Entry(updated).CurrentValues.SetValues(entity);
                 await _context.SaveChangesAsync();
-                await _logger.LogInformation($"item updated.");
+                await _logger.LogInformation($"successfully updated {typeof(TEntity).Name} entity with id {entity.Id}.");
                 return (ResultCode.Ok, updated);
             }
             catch
             {
-                await _logger.LogError("failed to update item!");
+                await _logger.LogError($"failed to update {typeof(TEntity).Name} entity with id {entity.Id}!");
                 return (ResultCode.InternalServerError, null);
             }
         }
@@ -110,21 +110,21 @@ namespace AccountService.Infrastructure.Repositories
         {
             try
             {
-                await _logger.LogInformation($"deleting item..");
+                await _logger.LogInformation($"deleting {typeof(TEntity).Name} entity with id {id}..");
                 var entity = await context.FirstOrDefaultAsync(p => p.Id == id);
                 if (entity is null)
                 {
-                    await _logger.LogInformation($"item not found!");
+                    await _logger.LogInformation($"no {typeof(TEntity).Name} entity found for id {id}!");
                     return ResultCode.NotFound;
                 }
                 context.Remove(entity);
                 await _context.SaveChangesAsync();
-                await _logger.LogInformation($"item deleted.");
+                await _logger.LogInformation($"successfully deleted {typeof(TEntity).Name} entity with id {id}.");
                 return ResultCode.NoContent;
             }
             catch
             {
-                await _logger.LogError("failed to delete item!");
+                await _logger.LogError($"failed to delete {typeof(TEntity).Name} entity with id {id}!");
                 return ResultCode.InternalServerError;
             }
         }
