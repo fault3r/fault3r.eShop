@@ -1,151 +1,16 @@
-2025-10-28 17:42:05.215 +03:30 [INF] ⋄[Program] configuring Versioning.. ⟶2025-10-28 17:42:05
-2025-10-28 17:42:05.276 +03:30 [INF] ⋄[Program] Versioning configured successfully. ⟶2025-10-28 17:42:05
-2025-10-28 17:42:05.285 +03:30 [INF] ⋄[Program] configuring JsonWebToken.. ⟶2025-10-28 17:42:05
-2025-10-28 17:42:05.306 +03:30 [INF] ⋄[Program] JsonWebToken configured successfully. ⟶2025-10-28 17:42:05
-2025-10-28 17:42:05.323 +03:30 [INF] ⋄[Program] configuring PostgreSQL.. ⟶2025-10-28 17:42:05
-2025-10-28 17:42:05.338 +03:30 [INF] ⋄[Program] PostgreSQL configured successfully. ⟶2025-10-28 17:42:05
-2025-10-28 17:42:05.346 +03:30 [INF] ⋄[Program] configuring Application.. ⟶2025-10-28 17:42:05
-2025-10-28 17:42:05.347 +03:30 [INF] ⋄[Program] Application configured successfully. ⟶2025-10-28 17:42:05
-2025-10-28 17:42:05.953 +03:30 [DBG] Registered model binder providers, in the following order: ["Microsoft.AspNetCore.Mvc.Versioning.ApiVersionModelBinderProvider","Microsoft.AspNetCore.Mvc.ModelBinding.Binders.BinderTypeModelBinderProvider","Microsoft.AspNetCore.Mvc.ModelBinding.Binders.ServicesModelBinderProvider","Microsoft.AspNetCore.Mvc.ModelBinding.Binders.BodyModelBinderProvider","Microsoft.AspNetCore.Mvc.ModelBinding.Binders.HeaderModelBinderProvider","Microsoft.AspNetCore.Mvc.ModelBinding.Binders.FloatingPointTypeModelBinderProvider","Microsoft.AspNetCore.Mvc.ModelBinding.Binders.EnumTypeModelBinderProvider","Microsoft.AspNetCore.Mvc.ModelBinding.Binders.DateTimeModelBinderProvider","Microsoft.AspNetCore.Mvc.ModelBinding.Binders.SimpleTypeModelBinderProvider","Microsoft.AspNetCore.Mvc.ModelBinding.Binders.TryParseModelBinderProvider","Microsoft.AspNetCore.Mvc.ModelBinding.Binders.CancellationTokenModelBinderProvider","Microsoft.AspNetCore.Mvc.ModelBinding.Binders.ByteArrayModelBinderProvider","Microsoft.AspNetCore.Mvc.ModelBinding.Binders.FormFileModelBinderProvider","Microsoft.AspNetCore.Mvc.ModelBinding.Binders.FormCollectionModelBinderProvider","Microsoft.AspNetCore.Mvc.ModelBinding.Binders.KeyValuePairModelBinderProvider","Microsoft.AspNetCore.Mvc.ModelBinding.Binders.DictionaryModelBinderProvider","Microsoft.AspNetCore.Mvc.ModelBinding.Binders.ArrayModelBinderProvider","Microsoft.AspNetCore.Mvc.ModelBinding.Binders.CollectionModelBinderProvider","Microsoft.AspNetCore.Mvc.ModelBinding.Binders.ComplexObjectModelBinderProvider"]
-2025-10-28 17:42:06.278 +03:30 [INF] ⋄[Program] ✅ AccountService is running.. ⟶2025-10-28 17:42:06
-2025-10-28 17:42:06.290 +03:30 [DBG] Hosting starting
-2025-10-28 17:42:06.383 +03:30 [INF] User profile is available. Using '/home/hamed-damavandi/.aspnet/DataProtection-Keys' as key repository; keys will not be encrypted at rest.
-2025-10-28 17:42:06.433 +03:30 [DBG] Reading data from file '/home/hamed-damavandi/.aspnet/DataProtection-Keys/key-7911b9ee-888c-4ab3-8815-82279b95dadf.xml'.
-2025-10-28 17:42:06.464 +03:30 [DBG] Reading data from file '/home/hamed-damavandi/.aspnet/DataProtection-Keys/key-a69fd33b-6f13-4176-9316-902609b160bc.xml'.
-2025-10-28 17:42:06.469 +03:30 [DBG] Reading data from file '/home/hamed-damavandi/.aspnet/DataProtection-Keys/key-da7e733c-3472-45ce-82cf-66aa0e0c72e8.xml'.
-2025-10-28 17:42:06.481 +03:30 [DBG] Found key {7911b9ee-888c-4ab3-8815-82279b95dadf}.
-2025-10-28 17:42:06.497 +03:30 [DBG] Found key {a69fd33b-6f13-4176-9316-902609b160bc}.
-2025-10-28 17:42:06.501 +03:30 [DBG] Found key {da7e733c-3472-45ce-82cf-66aa0e0c72e8}.
-2025-10-28 17:42:06.528 +03:30 [DBG] Considering key {a69fd33b-6f13-4176-9316-902609b160bc} with expiration date 2025-11-20 18:55:02Z as default key.
-2025-10-28 17:42:06.544 +03:30 [DBG] Forwarded activator type request from Microsoft.AspNetCore.DataProtection.AuthenticatedEncryption.ConfigurationModel.AuthenticatedEncryptorDescriptorDeserializer, Microsoft.AspNetCore.DataProtection, Version=8.0.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60 to Microsoft.AspNetCore.DataProtection.AuthenticatedEncryption.ConfigurationModel.AuthenticatedEncryptorDescriptorDeserializer, Microsoft.AspNetCore.DataProtection, Culture=neutral, PublicKeyToken=adb9793829ddae60
-2025-10-28 17:42:06.555 +03:30 [DBG] Using managed symmetric algorithm 'System.Security.Cryptography.Aes'.
-2025-10-28 17:42:06.556 +03:30 [DBG] Using managed keyed hash algorithm 'System.Security.Cryptography.HMACSHA256'.
-2025-10-28 17:42:06.607 +03:30 [DBG] Using key {a69fd33b-6f13-4176-9316-902609b160bc} as the default key.
-2025-10-28 17:42:06.609 +03:30 [DBG] Key ring with default key {a69fd33b-6f13-4176-9316-902609b160bc} was loaded during application startup.
-2025-10-28 17:42:06.795 +03:30 [INF] Now listening on: http://localhost:5013
-2025-10-28 17:42:06.795 +03:30 [DBG] Loaded hosting startup assembly AccountService.Api
-2025-10-28 17:42:06.799 +03:30 [INF] Application started. Press Ctrl+C to shut down.
-2025-10-28 17:42:06.800 +03:30 [INF] Hosting environment: Development
-2025-10-28 17:42:06.800 +03:30 [INF] Content root path: /home/hamed-damavandi/Documents/fault3r.eShop/src/services/AccountService/src/AccountService.Api
-2025-10-28 17:42:06.800 +03:30 [DBG] Hosting started
-2025-10-28 17:42:11.965 +03:30 [DBG] Connection id "0HNGM5FUI8OBO" accepted.
-2025-10-28 17:42:11.966 +03:30 [DBG] Connection id "0HNGM5FUI8OBO" started.
-2025-10-28 17:42:12.384 +03:30 [INF] Request starting HTTP/1.1 GET http://localhost:5013/ - null null
-2025-10-28 17:42:12.396 +03:30 [DBG] Wildcard detected, all requests with hosts will be allowed.
-2025-10-28 17:42:12.439 +03:30 [DBG] 1 candidate(s) found for the request path '/'
-2025-10-28 17:42:12.441 +03:30 [DBG] Request matched endpoint 'HTTP: GET /'
-2025-10-28 17:42:12.492 +03:30 [DBG] AuthenticationScheme: Bearer was not authenticated.
-2025-10-28 17:42:12.496 +03:30 [INF] Executing endpoint 'HTTP: GET /'
-2025-10-28 17:42:12.503 +03:30 [INF] Executed endpoint 'HTTP: GET /'
-2025-10-28 17:42:12.504 +03:30 [DBG] Connection id "0HNGM5FUI8OBO" completed keep alive response.
-2025-10-28 17:42:12.507 +03:30 [INF] Request finished HTTP/1.1 GET http://localhost:5013/ - 200 null text/plain; charset=utf-8 125.4181ms
-2025-10-28 17:44:03.766 +03:30 [INF] ⋄[Program] configuring Versioning.. ⟶2025-10-28 17:44:03
-2025-10-28 17:44:03.797 +03:30 [INF] ⋄[Program] Versioning configured successfully. ⟶2025-10-28 17:44:03
-2025-10-28 17:44:03.802 +03:30 [INF] ⋄[Program] configuring JsonWebToken.. ⟶2025-10-28 17:44:03
-2025-10-28 17:44:03.811 +03:30 [INF] ⋄[Program] JsonWebToken configured successfully. ⟶2025-10-28 17:44:03
-2025-10-28 17:44:03.816 +03:30 [INF] ⋄[Program] configuring PostgreSQL.. ⟶2025-10-28 17:44:03
-2025-10-28 17:44:03.825 +03:30 [INF] ⋄[Program] PostgreSQL configured successfully. ⟶2025-10-28 17:44:03
-2025-10-28 17:44:03.828 +03:30 [INF] ⋄[Program] configuring Application.. ⟶2025-10-28 17:44:03
-2025-10-28 17:44:03.828 +03:30 [INF] ⋄[Program] Application configured successfully. ⟶2025-10-28 17:44:03
-2025-10-28 17:44:04.170 +03:30 [DBG] Registered model binder providers, in the following order: ["Microsoft.AspNetCore.Mvc.Versioning.ApiVersionModelBinderProvider","Microsoft.AspNetCore.Mvc.ModelBinding.Binders.BinderTypeModelBinderProvider","Microsoft.AspNetCore.Mvc.ModelBinding.Binders.ServicesModelBinderProvider","Microsoft.AspNetCore.Mvc.ModelBinding.Binders.BodyModelBinderProvider","Microsoft.AspNetCore.Mvc.ModelBinding.Binders.HeaderModelBinderProvider","Microsoft.AspNetCore.Mvc.ModelBinding.Binders.FloatingPointTypeModelBinderProvider","Microsoft.AspNetCore.Mvc.ModelBinding.Binders.EnumTypeModelBinderProvider","Microsoft.AspNetCore.Mvc.ModelBinding.Binders.DateTimeModelBinderProvider","Microsoft.AspNetCore.Mvc.ModelBinding.Binders.SimpleTypeModelBinderProvider","Microsoft.AspNetCore.Mvc.ModelBinding.Binders.TryParseModelBinderProvider","Microsoft.AspNetCore.Mvc.ModelBinding.Binders.CancellationTokenModelBinderProvider","Microsoft.AspNetCore.Mvc.ModelBinding.Binders.ByteArrayModelBinderProvider","Microsoft.AspNetCore.Mvc.ModelBinding.Binders.FormFileModelBinderProvider","Microsoft.AspNetCore.Mvc.ModelBinding.Binders.FormCollectionModelBinderProvider","Microsoft.AspNetCore.Mvc.ModelBinding.Binders.KeyValuePairModelBinderProvider","Microsoft.AspNetCore.Mvc.ModelBinding.Binders.DictionaryModelBinderProvider","Microsoft.AspNetCore.Mvc.ModelBinding.Binders.ArrayModelBinderProvider","Microsoft.AspNetCore.Mvc.ModelBinding.Binders.CollectionModelBinderProvider","Microsoft.AspNetCore.Mvc.ModelBinding.Binders.ComplexObjectModelBinderProvider"]
-2025-10-28 17:44:04.259 +03:30 [INF] ⋄[Program] ✅ AccountService is running.. ⟶2025-10-28 17:44:04
-2025-10-28 17:44:04.267 +03:30 [DBG] Hosting starting
-2025-10-28 17:44:04.285 +03:30 [INF] User profile is available. Using '/home/hamed-damavandi/.aspnet/DataProtection-Keys' as key repository; keys will not be encrypted at rest.
-2025-10-28 17:44:04.302 +03:30 [DBG] Reading data from file '/home/hamed-damavandi/.aspnet/DataProtection-Keys/key-7911b9ee-888c-4ab3-8815-82279b95dadf.xml'.
-2025-10-28 17:44:04.312 +03:30 [DBG] Reading data from file '/home/hamed-damavandi/.aspnet/DataProtection-Keys/key-a69fd33b-6f13-4176-9316-902609b160bc.xml'.
-2025-10-28 17:44:04.313 +03:30 [DBG] Reading data from file '/home/hamed-damavandi/.aspnet/DataProtection-Keys/key-da7e733c-3472-45ce-82cf-66aa0e0c72e8.xml'.
-2025-10-28 17:44:04.321 +03:30 [DBG] Found key {7911b9ee-888c-4ab3-8815-82279b95dadf}.
-2025-10-28 17:44:04.327 +03:30 [DBG] Found key {a69fd33b-6f13-4176-9316-902609b160bc}.
-2025-10-28 17:44:04.328 +03:30 [DBG] Found key {da7e733c-3472-45ce-82cf-66aa0e0c72e8}.
-2025-10-28 17:44:04.340 +03:30 [DBG] Considering key {a69fd33b-6f13-4176-9316-902609b160bc} with expiration date 2025-11-20 18:55:02Z as default key.
-2025-10-28 17:44:04.344 +03:30 [DBG] Forwarded activator type request from Microsoft.AspNetCore.DataProtection.AuthenticatedEncryption.ConfigurationModel.AuthenticatedEncryptorDescriptorDeserializer, Microsoft.AspNetCore.DataProtection, Version=8.0.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60 to Microsoft.AspNetCore.DataProtection.AuthenticatedEncryption.ConfigurationModel.AuthenticatedEncryptorDescriptorDeserializer, Microsoft.AspNetCore.DataProtection, Culture=neutral, PublicKeyToken=adb9793829ddae60
-2025-10-28 17:44:04.347 +03:30 [DBG] Using managed symmetric algorithm 'System.Security.Cryptography.Aes'.
-2025-10-28 17:44:04.347 +03:30 [DBG] Using managed keyed hash algorithm 'System.Security.Cryptography.HMACSHA256'.
-2025-10-28 17:44:04.357 +03:30 [DBG] Using key {a69fd33b-6f13-4176-9316-902609b160bc} as the default key.
-2025-10-28 17:44:04.359 +03:30 [DBG] Key ring with default key {a69fd33b-6f13-4176-9316-902609b160bc} was loaded during application startup.
-2025-10-28 17:44:04.454 +03:30 [INF] Now listening on: http://localhost:5013
-2025-10-28 17:44:04.455 +03:30 [DBG] Loaded hosting startup assembly AccountService.Api
-2025-10-28 17:44:04.459 +03:30 [INF] Application started. Press Ctrl+C to shut down.
-2025-10-28 17:44:04.461 +03:30 [INF] Hosting environment: Development
-2025-10-28 17:44:04.461 +03:30 [INF] Content root path: /home/hamed-damavandi/Documents/fault3r.eShop/src/services/AccountService/src/AccountService.Api
-2025-10-28 17:44:04.461 +03:30 [DBG] Hosting started
-2025-10-28 17:44:05.992 +03:30 [DBG] Connection id "0HNGM5H0HJAOJ" accepted.
-2025-10-28 17:44:05.994 +03:30 [DBG] Connection id "0HNGM5H0HJAOJ" started.
-2025-10-28 17:44:06.075 +03:30 [INF] Request starting HTTP/1.1 GET http://localhost:5013/ - null null
-2025-10-28 17:44:06.088 +03:30 [DBG] Wildcard detected, all requests with hosts will be allowed.
-2025-10-28 17:44:06.134 +03:30 [DBG] 1 candidate(s) found for the request path '/'
-2025-10-28 17:44:06.136 +03:30 [DBG] Request matched endpoint 'HTTP: GET /'
-2025-10-28 17:44:06.184 +03:30 [DBG] AuthenticationScheme: Bearer was not authenticated.
-2025-10-28 17:44:06.188 +03:30 [INF] Executing endpoint 'HTTP: GET /'
-2025-10-28 17:44:06.195 +03:30 [INF] Executed endpoint 'HTTP: GET /'
-2025-10-28 17:44:06.195 +03:30 [DBG] Connection id "0HNGM5H0HJAOJ" completed keep alive response.
-2025-10-28 17:44:06.198 +03:30 [INF] Request finished HTTP/1.1 GET http://localhost:5013/ - 200 null text/plain; charset=utf-8 129.9703ms
-2025-10-28 17:44:13.205 +03:30 [INF] Request starting HTTP/1.1 GET http://localhost:5013/api/v1/account - null null
-2025-10-28 17:44:13.211 +03:30 [DBG] 1 candidate(s) found for the request path '/api/v1/account'
-2025-10-28 17:44:13.241 +03:30 [DBG] Endpoint 'AccountService.Api.Controllers.AccountController.Get (AccountService.Api)' with route pattern 'api/v1/account' is valid for the request path '/api/v1/account'
-2025-10-28 17:44:13.274 +03:30 [DBG] Request matched endpoint 'AccountService.Api.Controllers.AccountController.Get (AccountService.Api)'
-2025-10-28 17:44:13.282 +03:30 [DBG] AuthenticationScheme: Bearer was not authenticated.
-2025-10-28 17:44:13.284 +03:30 [INF] Executing endpoint 'AccountService.Api.Controllers.AccountController.Get (AccountService.Api)'
-2025-10-28 17:44:13.422 +03:30 [INF] Route matched with {action = "Get", controller = "Account"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] Get() on controller AccountService.Api.Controllers.AccountController (AccountService.Api).
-2025-10-28 17:44:13.444 +03:30 [DBG] Execution plan of authorization filters (in the following order): ["None"]
-2025-10-28 17:44:13.445 +03:30 [DBG] Execution plan of resource filters (in the following order): ["None"]
-2025-10-28 17:44:13.449 +03:30 [DBG] Execution plan of action filters (in the following order): ["Microsoft.AspNetCore.Mvc.ModelBinding.UnsupportedContentTypeFilter (Order: -3000)","Microsoft.AspNetCore.Mvc.Infrastructure.ModelStateInvalidFilter (Order: -2000)","Microsoft.AspNetCore.Mvc.ReportApiVersionsAttribute (Order: 0)"]
-2025-10-28 17:44:13.449 +03:30 [DBG] Execution plan of exception filters (in the following order): ["None"]
-2025-10-28 17:44:13.450 +03:30 [DBG] Execution plan of result filters (in the following order): ["Microsoft.AspNetCore.Mvc.Infrastructure.ClientErrorResultFilter (Order: -2000)","Microsoft.AspNetCore.Mvc.ReportApiVersionsAttribute (Order: 0)"]
-2025-10-28 17:44:13.457 +03:30 [DBG] Executing controller factory for controller AccountService.Api.Controllers.AccountController (AccountService.Api)
-2025-10-28 17:44:13.664 +03:30 [DBG] An 'IServiceProvider' was created for internal use by Entity Framework.
-2025-10-28 17:44:13.678 +03:30 [INF] ⋄[PostgresDbContext] instance created. ⟶2025-10-28 17:44:13
-2025-10-28 17:44:14.640 +03:30 [DBG] Entity Framework Core 8.0.0 initialized 'PostgresDbContext' using provider 'Npgsql.EntityFrameworkCore.PostgreSQL:8.0.0+2539d1f4bd0d429cbae20336d531d14938a54297' with options: None
-2025-10-28 17:44:14.645 +03:30 [INF] ⋄[IRepository`1] instance created. ⟶2025-10-28 17:44:14
-2025-10-28 17:44:14.646 +03:30 [INF] ⋄[AccountController] instance created. ⟶2025-10-28 17:44:14
-2025-10-28 17:44:14.646 +03:30 [DBG] Executed controller factory for controller AccountService.Api.Controllers.AccountController (AccountService.Api)
-2025-10-28 17:44:14.652 +03:30 [INF] ⋄[IRepository`1] fetching all items.. ⟶2025-10-28 17:44:14
-2025-10-28 17:44:14.680 +03:30 [DBG] Compiling query expression: 
-'DbSet<Account>()'
-2025-10-28 17:44:14.897 +03:30 [DBG] Generated query execution expression: 
-'queryContext => new SingleQueryingEnumerable<Account>(
-    (RelationalQueryContext)queryContext, 
-    RelationalCommandCache.QueryExpression(
-        Projection Mapping:
-            EmptyProjectionMember -> Dictionary<IProperty, int> { [Property: Account.Id (int) Required PK AfterSave:Throw ValueGenerated.OnAdd, 0], [Property: Account.Email (string) Required Index, 1], [Property: Account.Name (string) Required, 2], [Property: Account.Password (string) Required, 3], [Property: Account.RoleId (int) Required FK Index, 4] }
-        SELECT a.Id, a.Email, a.Name, a.Password, a.RoleId
-        FROM Accounts AS a), 
-    ReaderColumn[] { ReaderColumn<int>, ReaderColumn<object>, ReaderColumn<object>, ReaderColumn<object>, ReaderColumn<int> }, 
-    Func<QueryContext, DbDataReader, ResultContext, SingleQueryResultCoordinator, Account>, 
-    AccountService.Infrastructure.Data.Contexts.PostgresDbContext, 
-    False, 
-    False, 
-    True
-)'
-2025-10-28 17:44:14.943 +03:30 [DBG] Creating DbConnection.
-2025-10-28 17:44:14.984 +03:30 [DBG] Created DbConnection. (37ms).
-2025-10-28 17:44:14.988 +03:30 [DBG] Opening connection to database 'AccountsDatabase' on server 'tcp://localhost:5432'.
-2025-10-28 17:44:15.171 +03:30 [DBG] Opened connection to database 'AccountsDatabase' on server 'tcp://localhost:5432'.
-2025-10-28 17:44:15.176 +03:30 [DBG] Creating DbCommand for 'ExecuteReader'.
-2025-10-28 17:44:15.186 +03:30 [DBG] Created DbCommand for 'ExecuteReader' (4ms).
-2025-10-28 17:44:15.188 +03:30 [DBG] Initialized DbCommand for 'ExecuteReader' (12ms).
-2025-10-28 17:44:15.199 +03:30 [DBG] Executing DbCommand [Parameters=[], CommandType='"Text"', CommandTimeout='30']
-SELECT a."Id", a."Email", a."Name", a."Password", a."RoleId"
-FROM "Accounts" AS a
-2025-10-28 17:44:15.249 +03:30 [INF] Executed DbCommand (45ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
-SELECT a."Id", a."Email", a."Name", a."Password", a."RoleId"
-FROM "Accounts" AS a
-2025-10-28 17:44:15.375 +03:30 [DBG] Context 'PostgresDbContext' started tracking 'Account' entity. Consider using 'DbContextOptionsBuilder.EnableSensitiveDataLogging' to see key values.
-2025-10-28 17:44:15.412 +03:30 [DBG] Closing data reader to 'AccountsDatabase' on server 'tcp://localhost:5432'.
-2025-10-28 17:44:15.419 +03:30 [DBG] A data reader for 'AccountsDatabase' on server 'tcp://localhost:5432' is being disposed after spending 78ms reading results.
-2025-10-28 17:44:15.424 +03:30 [DBG] Closing connection to database 'AccountsDatabase' on server 'tcp://localhost:5432'.
-2025-10-28 17:44:15.430 +03:30 [DBG] Closed connection to database 'AccountsDatabase' on server 'tcp://localhost:5432' (6ms).
-2025-10-28 17:44:15.430 +03:30 [INF] ⋄[IRepository`1] successfully retrieved 1 item(s). ⟶2025-10-28 17:44:15
-2025-10-28 17:44:15.438 +03:30 [DBG] List of registered output formatters, in the following order: ["Microsoft.AspNetCore.Mvc.Formatters.HttpNoContentOutputFormatter","Microsoft.AspNetCore.Mvc.Formatters.StringOutputFormatter","Microsoft.AspNetCore.Mvc.Formatters.StreamOutputFormatter","Microsoft.AspNetCore.Mvc.Formatters.SystemTextJsonOutputFormatter"]
-2025-10-28 17:44:15.452 +03:30 [DBG] No information found on request to perform content negotiation.
-2025-10-28 17:44:15.452 +03:30 [DBG] Attempting to select an output formatter without using a content type as no explicit content types were specified for the response.
-2025-10-28 17:44:15.452 +03:30 [DBG] Attempting to select the first formatter in the output formatters list which can write the result.
-2025-10-28 17:44:15.453 +03:30 [DBG] Selected output formatter 'Microsoft.AspNetCore.Mvc.Formatters.SystemTextJsonOutputFormatter' and content type 'application/json' to write the response.
-2025-10-28 17:44:15.454 +03:30 [INF] Executing OkObjectResult, writing value of type 'System.Int32'.
-2025-10-28 17:44:15.481 +03:30 [INF] Executed action AccountService.Api.Controllers.AccountController.Get (AccountService.Api) in 2025.9892ms
-2025-10-28 17:44:15.482 +03:30 [INF] Executed endpoint 'AccountService.Api.Controllers.AccountController.Get (AccountService.Api)'
-2025-10-28 17:44:15.484 +03:30 [DBG] Connection id "0HNGM5H0HJAOJ" completed keep alive response.
-2025-10-28 17:44:15.487 +03:30 [DBG] 'PostgresDbContext' disposed.
-2025-10-28 17:44:15.493 +03:30 [DBG] Disposing connection to database 'AccountsDatabase' on server 'tcp://localhost:5432'.
-2025-10-28 17:44:15.495 +03:30 [DBG] Disposed connection to database 'AccountsDatabase' on server 'tcp://localhost:5432' (2ms).
-2025-10-28 17:44:15.496 +03:30 [INF] Request finished HTTP/1.1 GET http://localhost:5013/api/v1/account - 200 null application/json; charset=utf-8 2291.8078ms
+2025-10-28 19:03:21.765 +03:30 [INF] ⋄[Program] configuring Versioning.. ⟶2025-10-28 19:03:21
+2025-10-28 19:03:21.793 +03:30 [INF] ⋄[Program] Versioning configured successfully. ⟶2025-10-28 19:03:21
+2025-10-28 19:03:21.797 +03:30 [INF] ⋄[Program] configuring JsonWebToken.. ⟶2025-10-28 19:03:21
+2025-10-28 19:03:21.804 +03:30 [INF] ⋄[Program] JsonWebToken configured successfully. ⟶2025-10-28 19:03:21
+2025-10-28 19:03:21.809 +03:30 [INF] ⋄[Program] configuring PostgreSQL.. ⟶2025-10-28 19:03:21
+2025-10-28 19:03:21.816 +03:30 [INF] ⋄[Program] PostgreSQL configured successfully. ⟶2025-10-28 19:03:21
+2025-10-28 19:03:21.818 +03:30 [INF] ⋄[Program] configuring Application.. ⟶2025-10-28 19:03:21
+2025-10-28 19:03:21.818 +03:30 [INF] ⋄[Program] Application configured successfully. ⟶2025-10-28 19:03:21
+2025-10-28 19:03:22.301 +03:30 [INF] ⋄[Program] ✅ AccountService is running.. ⟶2025-10-28 19:03:22
+2025-10-28 19:03:27.297 +03:30 [INF] ⋄[PostgresDbContext] instance created. ⟶2025-10-28 19:03:27
+2025-10-28 19:03:28.019 +03:30 [INF] ⋄[PostgresRepository`1] initialized a repository for the Account entity. ⟶2025-10-28 19:03:28
+2025-10-28 19:03:28.020 +03:30 [INF] ⋄[AccountController] instance created. ⟶2025-10-28 19:03:28
+2025-10-28 19:03:28.026 +03:30 [INF] ⋄[PostgresRepository`1] fetching all Account entities.. ⟶2025-10-28 19:03:28
+2025-10-28 19:03:28.490 +03:30 [INF] ⋄[PostgresRepository`1] successfully retrieved 1 Account entity. ⟶2025-10-28 19:03:28
+2025-10-28 19:03:28.494 +03:30 [INF] ⋄[PostgresRepository`1] fetching Account entity for (p.Name == "Hamed").. ⟶2025-10-28 19:03:28
+2025-10-28 19:03:28.592 +03:30 [INF] ⋄[PostgresRepository`1] successfully retrieved Account entity with id 5. ⟶2025-10-28 19:03:28

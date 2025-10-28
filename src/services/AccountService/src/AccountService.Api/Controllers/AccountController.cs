@@ -1,8 +1,8 @@
 
 using System;
-using AccountService.Application.Interfaces.Repositories;
 using AccountService.Application.Interfaces.Services;
 using AccountService.Domain.Entities;
+using AccountService.Domain.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 
 namespace AccountService.Api.Controllers
@@ -27,8 +27,9 @@ namespace AccountService.Api.Controllers
         [HttpGet]
         public async Task<IActionResult> Get()
         {
-            var (code, items) = await _repo.GetAllAsync();
-            return Ok(code);
+            var (codee, items) = await _repo.GetAllAsync();
+            var (code, item) = await _repo.GetAsync(p => p.Name == "Hamed");
+            return Ok(item);
         }
     }
 }

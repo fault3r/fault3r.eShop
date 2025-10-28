@@ -1,12 +1,12 @@
 
 using System;
-using System.Linq.Expressions;
-using AccountService.Application.Interfaces.Services;
 using AccountService.Domain.Entities.Base;
 using AccountService.Domain.Enums;
 using AccountService.Domain.Interfaces;
 using AccountService.Infrastructure.Data.Contexts;
+using AccountService.Application.Interfaces.Services;
 using Microsoft.EntityFrameworkCore;
+using System.Linq.Expressions;
 
 namespace AccountService.Infrastructure.Repositories
 {
@@ -25,21 +25,22 @@ namespace AccountService.Infrastructure.Repositories
             _context = context;
             this.context = _context.Set<TEntity>();
             _logger = logger;
-            _logger.LogInformation("instance created.");
+            _logger.LogInformation($"initialized a repository for the {typeof(TEntity).Name} entity.");
         }
 
         public async Task<(ResultCode Code, IEnumerable<TEntity>? Entities)> GetAllAsync()
         {
             try
             {
-                await _logger.LogInformation("fetching all items..");
+                await _logger.LogInformation($"fetching all {typeof(TEntity).Name} entities..");
                 var entities = await context.ToListAsync();
-                await _logger.LogInformation($"successfully retrieved {entities.Count} item(s).");
+                await _logger.LogInformation($"successfully retrieved {entities.Count} {typeof(TEntity).Name}" +
+                    $" entit{(entities.Count > 1 ? "ies" : "y")}.");                    
                 return (ResultCode.Ok, entities);
             }
             catch
             {
-                await _logger.LogError("failed to retrieve items!");
+                await _logger.LogError($"failed to retrieve {typeof(TEntity).Name} entites!");
                 return (ResultCode.InternalServerError, null);
             }
         }
@@ -48,19 +49,19 @@ namespace AccountService.Infrastructure.Repositories
         {
             try
             {
-                await _logger.LogInformation($"fetching item..");
+                await _logger.LogInformation($"fetching {typeof(TEntity).Name} entity for {predicate.Body}..");
                 var entity = await context.FirstOrDefaultAsync(predicate);
                 if (entity is null)
                 {
-                    await _logger.LogInformation($"no item found!");
+                    await _logger.LogInformation($"no {typeof(TEntity).Name} entity found for {predicate.Body}!");
                     return (ResultCode.NotFound, null);
                 }
-                await _logger.LogInformation($"successfully retrieved item.");
+                await _logger.LogInformation($"successfully retrieved {typeof(TEntity).Name} entity with id {entity.Id}.");
                 return (ResultCode.Ok, entity);
             }
             catch
             {
-                await _logger.LogError("failed to retrieve item!");
+                await _logger.LogError($"failed to retrieve {typeof(TEntity).Name} entity for {predicate.Body}..");
                 return (ResultCode.InternalServerError, null);
             }
         }

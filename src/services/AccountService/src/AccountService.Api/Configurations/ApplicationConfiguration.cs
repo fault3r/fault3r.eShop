@@ -1,8 +1,8 @@
 
 using System;
 using AccountService.Api.Exceptions;
-using AccountService.Application.Interfaces.Repositories;
 using AccountService.Application.Interfaces.Services;
+using AccountService.Domain.Interfaces;
 using AccountService.Infrastructure.Repositories;
 
 namespace AccountService.Api.Configurations
