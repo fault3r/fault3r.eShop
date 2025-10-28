@@ -27,7 +27,7 @@ namespace AccountService.Api.Controllers
         [HttpGet]
         public async Task<IActionResult> Get()
         {
-            int code = await _repo.DeleteAsync(3);
+            var (code, items) = await _repo.GetAllAsync();
             return Ok(code);
         }
     }

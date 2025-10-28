@@ -1,9 +1,10 @@
 
 using System;
 using System.Linq.Expressions;
-using AccountService.Application.Interfaces.Repositories;
 using AccountService.Application.Interfaces.Services;
 using AccountService.Domain.Entities.Base;
+using AccountService.Domain.Enums;
+using AccountService.Domain.Interfaces;
 using AccountService.Infrastructure.Data.Contexts;
 using Microsoft.EntityFrameworkCore;
 
@@ -27,44 +28,44 @@ namespace AccountService.Infrastructure.Repositories
             _logger.LogInformation("instance created.");
         }
 
-        public async Task<(int Code, IEnumerable<TEntity>? Items)> GetAllAsync()
+        public async Task<(ResultCode Code, IEnumerable<TEntity>? Entities)> GetAllAsync()
         {
             try
             {
                 await _logger.LogInformation("fetching all items..");
-                var items = await context.ToListAsync();
-                await _logger.LogInformation($"successfully retrieved {items.Count} item(s).");
-                return (200, items);
+                var entities = await context.ToListAsync();
+                await _logger.LogInformation($"successfully retrieved {entities.Count} item(s).");
+                return (ResultCode.Ok, entities);
             }
             catch
             {
                 await _logger.LogError("failed to retrieve items!");
-                return (500, null);
+                return (ResultCode.InternalServerError, null);
             }
         }
 
-        public async Task<(int Code, TEntity? Item)> FindOneAsync(Expression<Func<TEntity, bool>> condition)
+        public async Task<(ResultCode Code, TEntity? Entity)> GetAsync(Expression<Func<TEntity, bool>> predicate)
         {
             try
             {
                 await _logger.LogInformation($"fetching item..");
-                var item = await context.FirstOrDefaultAsync(condition);
-                if (item is null)
+                var entity = await context.FirstOrDefaultAsync(predicate);
+                if (entity is null)
                 {
                     await _logger.LogInformation($"no item found!");
-                    return (404, null);
+                    return (ResultCode.NotFound, null);
                 }
                 await _logger.LogInformation($"successfully retrieved item.");
-                return (200, item);
+                return (ResultCode.Ok, entity);
             }
             catch
             {
                 await _logger.LogError("failed to retrieve item!");
-                return (500, null);
+                return (ResultCode.InternalServerError, null);
             }
         }
 
-        public async Task<(int Code, TEntity? Item)> CreateAsync(TEntity entity)
+        public async Task<(ResultCode Code, TEntity? Entity)> CreateAsync(TEntity entity)
         {
             try
             {
@@ -72,59 +73,59 @@ namespace AccountService.Infrastructure.Repositories
                 var created = context.Add(entity);
                 await _context.SaveChangesAsync();
                 await _logger.LogInformation($"item created.");
-                return (200, created.Entity);
+                return (ResultCode.Created, created.Entity);
             }
             catch
             {
                 await _logger.LogError("failed to create item!");
-                return (500, null);
+                return (ResultCode.InternalServerError, null);
             }
         }
 
-        public async Task<(int Code, TEntity? Item)> UpdateAsync(TEntity entity)
+        public async Task<(ResultCode Code, TEntity? Entity)> UpdateAsync(TEntity entity)
         {
             try
             {
                 await _logger.LogInformation($"updating item..");
-                var item = await context.FirstOrDefaultAsync(x => x.Id == entity.Id);
-                if (item is null)
+                var updated = await context.FirstOrDefaultAsync(p => p.Id == entity.Id);
+                if (updated is null)
                 {
                     await _logger.LogInformation($"item not found!");
-                    return (404, null);
+                    return (ResultCode.NotFound, null);
                 }
-                context.Entry(item).CurrentValues.SetValues(entity);
+                context.Entry(updated).CurrentValues.SetValues(entity);
                 await _context.SaveChangesAsync();
                 await _logger.LogInformation($"item updated.");
-                return (200, item);
+                return (ResultCode.Ok, updated);
             }
             catch
             {
                 await _logger.LogError("failed to update item!");
-                return (500, null);
+                return (ResultCode.InternalServerError, null);
             }
         }
 
-        public async Task<int> DeleteAsync(int id)
+        public async Task<ResultCode> DeleteAsync(int id)
         {
             try
             {
                 await _logger.LogInformation($"deleting item..");
-                var item = await context.FirstOrDefaultAsync(x => x.Id == id);
-                if (item is null)
+                var entity = await context.FirstOrDefaultAsync(p => p.Id == id);
+                if (entity is null)
                 {
                     await _logger.LogInformation($"item not found!");
-                    return (404);
+                    return ResultCode.NotFound;
                 }
-                context.Remove(item);
+                context.Remove(entity);
                 await _context.SaveChangesAsync();
                 await _logger.LogInformation($"item deleted.");
-                return (204);
+                return ResultCode.NoContent;
             }
             catch
             {
                 await _logger.LogError("failed to delete item!");
-                return (500);
-            }            
+                return ResultCode.InternalServerError;
+            }
         }
     }
 }

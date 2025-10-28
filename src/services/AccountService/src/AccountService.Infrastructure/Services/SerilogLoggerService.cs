@@ -15,7 +15,8 @@ namespace AccountService.Infrastructure.Services
         }
 
         private static string ToLogString(string message) =>
-            $"⋄[{typeof(TContext).Name}] {message} ⟶{DateTime.Now:yyyy-MM-dd HH:mm:ss}";
+            $"⋄[{typeof(TContext).Name}] {message} " +
+            $"⟶{DateTime.Now:yyyy-MM-dd HH:mm:ss}";
 
         public Task LogInformation(string message)
         {
