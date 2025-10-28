@@ -1,16 +1,22 @@
-2025-10-28 19:03:21.765 +03:30 [INF] ⋄[Program] configuring Versioning.. ⟶2025-10-28 19:03:21
-2025-10-28 19:03:21.793 +03:30 [INF] ⋄[Program] Versioning configured successfully. ⟶2025-10-28 19:03:21
-2025-10-28 19:03:21.797 +03:30 [INF] ⋄[Program] configuring JsonWebToken.. ⟶2025-10-28 19:03:21
-2025-10-28 19:03:21.804 +03:30 [INF] ⋄[Program] JsonWebToken configured successfully. ⟶2025-10-28 19:03:21
-2025-10-28 19:03:21.809 +03:30 [INF] ⋄[Program] configuring PostgreSQL.. ⟶2025-10-28 19:03:21
-2025-10-28 19:03:21.816 +03:30 [INF] ⋄[Program] PostgreSQL configured successfully. ⟶2025-10-28 19:03:21
-2025-10-28 19:03:21.818 +03:30 [INF] ⋄[Program] configuring Application.. ⟶2025-10-28 19:03:21
-2025-10-28 19:03:21.818 +03:30 [INF] ⋄[Program] Application configured successfully. ⟶2025-10-28 19:03:21
-2025-10-28 19:03:22.301 +03:30 [INF] ⋄[Program] ✅ AccountService is running.. ⟶2025-10-28 19:03:22
-2025-10-28 19:03:27.297 +03:30 [INF] ⋄[PostgresDbContext] instance created. ⟶2025-10-28 19:03:27
-2025-10-28 19:03:28.019 +03:30 [INF] ⋄[PostgresRepository`1] initialized a repository for the Account entity. ⟶2025-10-28 19:03:28
-2025-10-28 19:03:28.020 +03:30 [INF] ⋄[AccountController] instance created. ⟶2025-10-28 19:03:28
-2025-10-28 19:03:28.026 +03:30 [INF] ⋄[PostgresRepository`1] fetching all Account entities.. ⟶2025-10-28 19:03:28
-2025-10-28 19:03:28.490 +03:30 [INF] ⋄[PostgresRepository`1] successfully retrieved 1 Account entity. ⟶2025-10-28 19:03:28
-2025-10-28 19:03:28.494 +03:30 [INF] ⋄[PostgresRepository`1] fetching Account entity for (p.Name == "Hamed").. ⟶2025-10-28 19:03:28
-2025-10-28 19:03:28.592 +03:30 [INF] ⋄[PostgresRepository`1] successfully retrieved Account entity with id 5. ⟶2025-10-28 19:03:28
+2025-10-28 19:38:51.071 +03:30 [INF] ⋄[Program] configuring Versioning.. ⟶2025-10-28 19:38:50
+2025-10-28 19:38:51.118 +03:30 [INF] ⋄[Program] Versioning configured successfully. ⟶2025-10-28 19:38:51
+2025-10-28 19:38:51.123 +03:30 [INF] ⋄[Program] configuring JsonWebToken.. ⟶2025-10-28 19:38:51
+2025-10-28 19:38:51.135 +03:30 [INF] ⋄[Program] JsonWebToken configured successfully. ⟶2025-10-28 19:38:51
+2025-10-28 19:38:51.141 +03:30 [INF] ⋄[Program] configuring PostgreSQL.. ⟶2025-10-28 19:38:51
+2025-10-28 19:38:51.153 +03:30 [INF] ⋄[Program] PostgreSQL configured successfully. ⟶2025-10-28 19:38:51
+2025-10-28 19:38:51.156 +03:30 [INF] ⋄[Program] configuring Application.. ⟶2025-10-28 19:38:51
+2025-10-28 19:38:51.157 +03:30 [INF] ⋄[Program] Application configured successfully. ⟶2025-10-28 19:38:51
+2025-10-28 19:38:51.956 +03:30 [INF] ⋄[Program] ✅ AccountService is running.. ⟶2025-10-28 19:38:51
+2025-10-28 19:38:59.749 +03:30 [INF] ⋄[PostgresDbContext] instance created. ⟶2025-10-28 19:38:59
+2025-10-28 19:39:00.701 +03:30 [INF] ⋄[PostgresRepository] initialized a repository for the Account entity. ⟶2025-10-28 19:39:00
+2025-10-28 19:39:00.702 +03:30 [INF] ⋄[AccountController] instance created. ⟶2025-10-28 19:39:00
+2025-10-28 19:39:00.708 +03:30 [INF] ⋄[PostgresRepository] creating a new Account entity.. ⟶2025-10-28 19:39:00
+2025-10-28 19:39:01.362 +03:30 [INF] ⋄[PostgresRepository] successfully created Account entity with id 8. ⟶2025-10-28 19:39:01
+2025-10-28 19:39:01.373 +03:30 [INF] ⋄[PostgresRepository] updating Account entity with id 7.. ⟶2025-10-28 19:39:01
+2025-10-28 19:39:01.873 +03:30 [INF] ⋄[PostgresRepository] successfully updated Account entity with id 7. ⟶2025-10-28 19:39:01
+2025-10-28 19:39:01.878 +03:30 [INF] ⋄[PostgresRepository] fetching all Account entities.. ⟶2025-10-28 19:39:01
+2025-10-28 19:39:01.897 +03:30 [INF] ⋄[PostgresRepository] successfully retrieved 2 Account entities. ⟶2025-10-28 19:39:01
+2025-10-28 19:39:01.901 +03:30 [INF] ⋄[PostgresRepository] fetching Account entity for (p.Name == "hamed").. ⟶2025-10-28 19:39:01
+2025-10-28 19:39:01.912 +03:30 [INF] ⋄[PostgresRepository] successfully retrieved Account entity with id 7. ⟶2025-10-28 19:39:01
+2025-10-28 19:39:01.916 +03:30 [INF] ⋄[PostgresRepository] deleting Account entity with id 7.. ⟶2025-10-28 19:39:01
+2025-10-28 19:39:01.941 +03:30 [INF] ⋄[PostgresRepository] successfully deleted Account entity with id 7. ⟶2025-10-28 19:39:01
