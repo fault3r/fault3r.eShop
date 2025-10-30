@@ -10,6 +10,7 @@ var appSettings = builder.Configuration.GetSection(nameof(ApplicationSettings))
     .Get<ApplicationSettings>() ??
     throw new NullReferenceException(nameof(ApplicationSettings));
 
+
 builder.Services.AddSerilogConfiguration(appSettings.Log);
 
 builder.Services.AddControllers(config =>
@@ -24,6 +25,8 @@ builder.Services.AddJwtConfiguration(builder.Configuration);
 builder.Services.AddPostgresContextConfiguration(builder.Configuration);
 
 builder.Services.AddApplicationConfiguration();
+
+builder.WebHost.UseUrls(appSettings.Url);
 
 var app = builder.Build();
 

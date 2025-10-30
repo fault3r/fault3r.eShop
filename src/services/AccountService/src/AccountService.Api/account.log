@@ -1,22 +1,18 @@
-2025-10-28 19:38:51.071 +03:30 [INF] ⋄[Program] configuring Versioning.. ⟶2025-10-28 19:38:50
-2025-10-28 19:38:51.118 +03:30 [INF] ⋄[Program] Versioning configured successfully. ⟶2025-10-28 19:38:51
-2025-10-28 19:38:51.123 +03:30 [INF] ⋄[Program] configuring JsonWebToken.. ⟶2025-10-28 19:38:51
-2025-10-28 19:38:51.135 +03:30 [INF] ⋄[Program] JsonWebToken configured successfully. ⟶2025-10-28 19:38:51
-2025-10-28 19:38:51.141 +03:30 [INF] ⋄[Program] configuring PostgreSQL.. ⟶2025-10-28 19:38:51
-2025-10-28 19:38:51.153 +03:30 [INF] ⋄[Program] PostgreSQL configured successfully. ⟶2025-10-28 19:38:51
-2025-10-28 19:38:51.156 +03:30 [INF] ⋄[Program] configuring Application.. ⟶2025-10-28 19:38:51
-2025-10-28 19:38:51.157 +03:30 [INF] ⋄[Program] Application configured successfully. ⟶2025-10-28 19:38:51
-2025-10-28 19:38:51.956 +03:30 [INF] ⋄[Program] ✅ AccountService is running.. ⟶2025-10-28 19:38:51
-2025-10-28 19:38:59.749 +03:30 [INF] ⋄[PostgresDbContext] instance created. ⟶2025-10-28 19:38:59
-2025-10-28 19:39:00.701 +03:30 [INF] ⋄[PostgresRepository] initialized a repository for the Account entity. ⟶2025-10-28 19:39:00
-2025-10-28 19:39:00.702 +03:30 [INF] ⋄[AccountController] instance created. ⟶2025-10-28 19:39:00
-2025-10-28 19:39:00.708 +03:30 [INF] ⋄[PostgresRepository] creating a new Account entity.. ⟶2025-10-28 19:39:00
-2025-10-28 19:39:01.362 +03:30 [INF] ⋄[PostgresRepository] successfully created Account entity with id 8. ⟶2025-10-28 19:39:01
-2025-10-28 19:39:01.373 +03:30 [INF] ⋄[PostgresRepository] updating Account entity with id 7.. ⟶2025-10-28 19:39:01
-2025-10-28 19:39:01.873 +03:30 [INF] ⋄[PostgresRepository] successfully updated Account entity with id 7. ⟶2025-10-28 19:39:01
-2025-10-28 19:39:01.878 +03:30 [INF] ⋄[PostgresRepository] fetching all Account entities.. ⟶2025-10-28 19:39:01
-2025-10-28 19:39:01.897 +03:30 [INF] ⋄[PostgresRepository] successfully retrieved 2 Account entities. ⟶2025-10-28 19:39:01
-2025-10-28 19:39:01.901 +03:30 [INF] ⋄[PostgresRepository] fetching Account entity for (p.Name == "hamed").. ⟶2025-10-28 19:39:01
-2025-10-28 19:39:01.912 +03:30 [INF] ⋄[PostgresRepository] successfully retrieved Account entity with id 7. ⟶2025-10-28 19:39:01
-2025-10-28 19:39:01.916 +03:30 [INF] ⋄[PostgresRepository] deleting Account entity with id 7.. ⟶2025-10-28 19:39:01
-2025-10-28 19:39:01.941 +03:30 [INF] ⋄[PostgresRepository] successfully deleted Account entity with id 7. ⟶2025-10-28 19:39:01
+2025-10-30 19:28:17.191 +03:30 [INF] ⋄[Program] configuring Versioning.. ⟶2025-10-30 19:28:17
+2025-10-30 19:28:17.225 +03:30 [INF] ⋄[Program] Versioning configured successfully. ⟶2025-10-30 19:28:17
+2025-10-30 19:28:17.230 +03:30 [INF] ⋄[Program] configuring JsonWebToken.. ⟶2025-10-30 19:28:17
+2025-10-30 19:28:17.242 +03:30 [INF] ⋄[Program] JsonWebToken configured successfully. ⟶2025-10-30 19:28:17
+2025-10-30 19:28:17.244 +03:30 [INF] ⋄[Program] configuring PostgreSQL.. ⟶2025-10-30 19:28:17
+2025-10-30 19:28:17.251 +03:30 [INF] ⋄[Program] PostgreSQL configured successfully. ⟶2025-10-30 19:28:17
+2025-10-30 19:28:17.252 +03:30 [INF] ⋄[Program] configuring Application.. ⟶2025-10-30 19:28:17
+2025-10-30 19:28:17.252 +03:30 [INF] ⋄[Program] Application configured successfully. ⟶2025-10-30 19:28:17
+2025-10-30 19:28:17.592 +03:30 [INF] ⋄[PostgresDbContext] instance created. ⟶2025-10-30 19:28:17
+2025-10-30 19:29:47.804 +03:30 [INF] ⋄[Program] configuring Versioning.. ⟶2025-10-30 19:29:47
+2025-10-30 19:29:47.842 +03:30 [INF] ⋄[Program] Versioning configured successfully. ⟶2025-10-30 19:29:47
+2025-10-30 19:29:47.847 +03:30 [INF] ⋄[Program] configuring JsonWebToken.. ⟶2025-10-30 19:29:47
+2025-10-30 19:29:47.855 +03:30 [INF] ⋄[Program] JsonWebToken configured successfully. ⟶2025-10-30 19:29:47
+2025-10-30 19:29:47.857 +03:30 [INF] ⋄[Program] configuring PostgreSQL.. ⟶2025-10-30 19:29:47
+2025-10-30 19:29:47.864 +03:30 [INF] ⋄[Program] PostgreSQL configured successfully. ⟶2025-10-30 19:29:47
+2025-10-30 19:29:47.865 +03:30 [INF] ⋄[Program] configuring Application.. ⟶2025-10-30 19:29:47
+2025-10-30 19:29:47.866 +03:30 [INF] ⋄[Program] Application configured successfully. ⟶2025-10-30 19:29:47
+2025-10-30 19:29:48.203 +03:30 [INF] ⋄[PostgresDbContext] instance created. ⟶2025-10-30 19:29:48

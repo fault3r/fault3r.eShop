@@ -16,8 +16,8 @@ namespace AccountService.Api.Configurations
             try
             {
                 Log.Logger = new LoggerConfiguration()
-                    .MinimumLevel.Override("Microsoft", LogEventLevel.Fatal)
-                    .MinimumLevel.Override("System", LogEventLevel.Fatal)
+                    .MinimumLevel.Override(nameof(System), LogEventLevel.Fatal)
+                    .MinimumLevel.Override(nameof(Microsoft), LogEventLevel.Fatal)
                     .MinimumLevel.Debug()
                     .WriteTo.File(filename)
                     .CreateLogger();

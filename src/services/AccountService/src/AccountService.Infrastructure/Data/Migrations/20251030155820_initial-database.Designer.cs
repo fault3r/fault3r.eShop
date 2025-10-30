@@ -11,7 +11,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace AccountService.Infrastructure.Data.Migrations
 {
     [DbContext(typeof(PostgresDbContext))]
-    [Migration("20251026185429_initial-database")]
+    [Migration("20251030155820_initial-database")]
     partial class initialdatabase
     {
         /// <inheritdoc />
@@ -35,6 +35,9 @@ namespace AccountService.Infrastructure.Data.Migrations
                     b.Property<string>("Email")
                         .IsRequired()
                         .HasColumnType("text");
+
+                    b.Property<bool>("IsConfirmed")
+                        .HasColumnType("boolean");
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -64,6 +67,7 @@ namespace AccountService.Infrastructure.Data.Migrations
                         .HasColumnType("integer");
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+                    NpgsqlPropertyBuilderExtensions.HasIdentityOptions(b.Property<int>("Id"), 5000L, null, null, null, null, null);
 
                     b.Property<string>("Name")
                         .IsRequired()

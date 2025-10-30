@@ -23,7 +23,9 @@ namespace AccountService.Infrastructure.Data.Contexts
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
-            builder.Entity<Role>().HasKey(x => x.Id);
+            builder.Entity<Role>().HasKey(p => p.Id);
+            builder.Entity<Role>().Property(p => p.Id)
+                .HasIdentityOptions(startValue: 5000);
             builder.Entity<Role>()
                 .HasMany(x => x.Accounts)
                 .WithOne(x => x.Role)

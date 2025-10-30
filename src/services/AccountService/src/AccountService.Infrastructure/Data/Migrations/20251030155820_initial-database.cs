@@ -18,6 +18,7 @@ namespace AccountService.Infrastructure.Data.Migrations
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "integer", nullable: false)
+                        .Annotation("Npgsql:IdentitySequenceOptions", "'5000', '1', '', '', 'False', '1'")
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
                     Name = table.Column<string>(type: "text", nullable: false)
                 },
@@ -35,7 +36,8 @@ namespace AccountService.Infrastructure.Data.Migrations
                     Email = table.Column<string>(type: "text", nullable: false),
                     Password = table.Column<string>(type: "text", nullable: false),
                     Name = table.Column<string>(type: "text", nullable: false),
-                    RoleId = table.Column<int>(type: "integer", nullable: false)
+                    RoleId = table.Column<int>(type: "integer", nullable: false),
+                    IsConfirmed = table.Column<bool>(type: "boolean", nullable: false)
                 },
                 constraints: table =>
                 {

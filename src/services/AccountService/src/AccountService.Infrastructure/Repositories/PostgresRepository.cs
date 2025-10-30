@@ -15,7 +15,7 @@ namespace AccountService.Infrastructure.Repositories
     {
         private readonly PostgresDbContext _context;
 
-        private readonly DbSet<TEntity> context;
+        private readonly DbSet<TEntity> _dbSet;
 
         private readonly string entity;
 
@@ -25,7 +25,7 @@ namespace AccountService.Infrastructure.Repositories
             ILoggerService<PostgresRepository<TEntity>> logger)
         {
             _context = context;
-            this.context = _context.Set<TEntity>();
+            _dbSet = _context.Set<TEntity>();
             entity = typeof(TEntity).Name;
             _logger = logger;
             _logger.LogInformation($"initialized a repository for the {this.entity} entity.");
@@ -36,7 +36,7 @@ namespace AccountService.Infrastructure.Repositories
             try
             {
                 await _logger.LogInformation($"fetching all {this.entity} entities..");
-                var entities = await context.ToListAsync();
+                var entities = await _dbSet.ToListAsync();
                 await _logger.LogInformation($"successfully retrieved {entities.Count} {this.entity} entit{(entities.Count > 1 ? "ies" : "y")}.");                    
                 return (ResultCode.Ok, entities);
             }
@@ -52,7 +52,7 @@ namespace AccountService.Infrastructure.Repositories
             try
             {
                 await _logger.LogInformation($"fetching {this.entity} entity for {predicate.Body}..");
-                var entity = await context.FirstOrDefaultAsync(predicate);
+                var entity = await _dbSet.FirstOrDefaultAsync(predicate);
                 if (entity is null)
                 {
                     await _logger.LogInformation($"no {this.entity} entity found for {predicate.Body}!");
@@ -73,7 +73,7 @@ namespace AccountService.Infrastructure.Repositories
             try
             {
                 await _logger.LogInformation($"creating a new {this.entity} entity..");
-                var created = context.Add(entity);
+                var created = _dbSet.Add(entity);
                 await _context.SaveChangesAsync();
                 await _logger.LogInformation($"successfully created {this.entity} entity with id {created.Entity.Id}.");
                 return (ResultCode.Created, created.Entity);
@@ -90,13 +90,13 @@ namespace AccountService.Infrastructure.Repositories
             try
             {
                 await _logger.LogInformation($"updating {this.entity} entity with id {entity.Id}..");
-                var existing = await context.FirstOrDefaultAsync(p => p.Id == entity.Id);
+                var existing = await _dbSet.FirstOrDefaultAsync(p => p.Id == entity.Id);
                 if (existing is null)
                 {
                     await _logger.LogInformation($"no {this.entity} entity found for id {entity.Id}!");
                     return (ResultCode.NotFound, null);
                 }
-                context.Entry(existing).CurrentValues.SetValues(entity);
+                _dbSet.Entry(existing).CurrentValues.SetValues(entity);
                 await _context.SaveChangesAsync();
                 await _logger.LogInformation($"successfully updated {this.entity} entity with id {entity.Id}.");
                 return (ResultCode.Ok, existing);
@@ -113,13 +113,13 @@ namespace AccountService.Infrastructure.Repositories
             try
             {
                 await _logger.LogInformation($"deleting {this.entity} entity with id {id}..");
-                var entity = await context.FirstOrDefaultAsync(p => p.Id == id);
+                var entity = await _dbSet.FirstOrDefaultAsync(p => p.Id == id);
                 if (entity is null)
                 {
                     await _logger.LogInformation($"no {this.entity} entity found for id {id}!");
                     return ResultCode.NotFound;
                 }
-                context.Remove(entity);
+                _dbSet.Remove(entity);
                 await _context.SaveChangesAsync();
                 await _logger.LogInformation($"successfully deleted {this.entity} entity with id {id}.");
                 return ResultCode.NoContent;
