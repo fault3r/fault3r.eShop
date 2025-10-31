@@ -1,5 +1,6 @@
 
 using System;
+using System.Security.Cryptography;
 using AccountService.Application.DTOs;
 using AccountService.Application.Extensions;
 using AccountService.Application.Interfaces.Services;
@@ -33,7 +34,14 @@ namespace AccountService.Application.UseCases.SignUpAccount
         {
             var validate = await _validator.ValidateAsync(account);
             if (!validate.IsValid)
-                return new SignUpAccountResult { Message = validate.ToErrorString() };        
+                return new SignUpAccountResult { Message = validate.ToErrorString() };      
+
+            var created = await _repository.CreateAsync(new Account
+            {
+                Email = account.Email,
+            
+
+            })  
             
         }
     }
