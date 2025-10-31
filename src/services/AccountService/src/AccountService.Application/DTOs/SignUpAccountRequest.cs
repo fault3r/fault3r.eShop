@@ -3,7 +3,7 @@ using System;
 
 namespace AccountService.Application.DTOs
 {
-    public class SignUpAccountDto
+    public class SignUpAccountRequest
     {
         public required string Email { get; set; }
 

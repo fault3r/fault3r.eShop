@@ -1,9 +1,12 @@
 
 using System;
 using AccountService.Api.Exceptions;
+using AccountService.Application.DTOs;
 using AccountService.Application.Interfaces.Services;
+using AccountService.Application.UseCases.SignUpAccount;
 using AccountService.Domain.Interfaces;
 using AccountService.Infrastructure.Repositories;
+using FluentValidation;
 
 namespace AccountService.Api.Configurations
 {
@@ -17,6 +20,7 @@ namespace AccountService.Api.Configurations
             {
                 _logger.LogInformation("configuring Application..");
                 services.AddScoped(typeof(IRepository<>), typeof(PostgresRepository<>));
+                services.AddScoped<IValidator<SignUpAccountRequest>, SignUpAccountValidator>();
                 _logger.LogInformation("Application configured successfully.");
                 return services;
             }

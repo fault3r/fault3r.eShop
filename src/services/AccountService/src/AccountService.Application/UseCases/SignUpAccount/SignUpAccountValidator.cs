@@ -5,7 +5,7 @@ using FluentValidation;
 
 namespace AccountService.Application.UseCases.SignUpAccount
 {
-    public class SignUpAccountValidator : AbstractValidator<SignUpAccountDto>
+    public class SignUpAccountValidator : AbstractValidator<SignUpAccountRequest>
     {
         public SignUpAccountValidator()
         {
