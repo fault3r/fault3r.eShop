@@ -12,8 +12,6 @@ namespace AccountService.Domain.Entities
 
         public required string Name { get; set; }
 
-        public int RoleId { get; set; }
-        public virtual Role? Role { get; set; }
 
         public bool IsConfirmed { get; set; }
     }
