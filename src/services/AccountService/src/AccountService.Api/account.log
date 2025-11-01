@@ -34,3 +34,30 @@
 2025-11-01 21:36:09.848 +03:30 [INF] ⋄[Program] configuring Application.. ⟶2025-11-01 21:36:09
 2025-11-01 21:36:09.849 +03:30 [INF] ⋄[Program] Application configured successfully. ⟶2025-11-01 21:36:09
 2025-11-01 21:36:10.076 +03:30 [INF] ⋄[PostgresDbContext] instance created. ⟶2025-11-01 21:36:10
+2025-11-01 21:46:37.501 +03:30 [INF] ⋄[Program] configuring Versioning.. ⟶2025-11-01 21:46:37
+2025-11-01 21:46:37.520 +03:30 [INF] ⋄[Program] Versioning configured successfully. ⟶2025-11-01 21:46:37
+2025-11-01 21:46:37.522 +03:30 [INF] ⋄[Program] configuring JsonWebToken.. ⟶2025-11-01 21:46:37
+2025-11-01 21:46:37.526 +03:30 [INF] ⋄[Program] JsonWebToken configured successfully. ⟶2025-11-01 21:46:37
+2025-11-01 21:46:37.527 +03:30 [INF] ⋄[Program] configuring PostgreSQL.. ⟶2025-11-01 21:46:37
+2025-11-01 21:46:37.530 +03:30 [INF] ⋄[Program] PostgreSQL configured successfully. ⟶2025-11-01 21:46:37
+2025-11-01 21:46:37.532 +03:30 [INF] ⋄[Program] configuring Application.. ⟶2025-11-01 21:46:37
+2025-11-01 21:46:37.532 +03:30 [INF] ⋄[Program] Application configured successfully. ⟶2025-11-01 21:46:37
+2025-11-01 21:46:37.690 +03:30 [INF] ⋄[PostgresDbContext] instance created. ⟶2025-11-01 21:46:37
+2025-11-01 21:46:49.920 +03:30 [INF] ⋄[Program] configuring Versioning.. ⟶2025-11-01 21:46:49
+2025-11-01 21:46:49.934 +03:30 [INF] ⋄[Program] Versioning configured successfully. ⟶2025-11-01 21:46:49
+2025-11-01 21:46:49.936 +03:30 [INF] ⋄[Program] configuring JsonWebToken.. ⟶2025-11-01 21:46:49
+2025-11-01 21:46:49.940 +03:30 [INF] ⋄[Program] JsonWebToken configured successfully. ⟶2025-11-01 21:46:49
+2025-11-01 21:46:49.941 +03:30 [INF] ⋄[Program] configuring PostgreSQL.. ⟶2025-11-01 21:46:49
+2025-11-01 21:46:49.944 +03:30 [INF] ⋄[Program] PostgreSQL configured successfully. ⟶2025-11-01 21:46:49
+2025-11-01 21:46:49.945 +03:30 [INF] ⋄[Program] configuring Application.. ⟶2025-11-01 21:46:49
+2025-11-01 21:46:49.945 +03:30 [INF] ⋄[Program] Application configured successfully. ⟶2025-11-01 21:46:49
+2025-11-01 21:46:50.091 +03:30 [INF] ⋄[PostgresDbContext] instance created. ⟶2025-11-01 21:46:50
+2025-11-01 21:47:03.259 +03:30 [INF] ⋄[Program] configuring Versioning.. ⟶2025-11-01 21:47:03
+2025-11-01 21:47:03.280 +03:30 [INF] ⋄[Program] Versioning configured successfully. ⟶2025-11-01 21:47:03
+2025-11-01 21:47:03.283 +03:30 [INF] ⋄[Program] configuring JsonWebToken.. ⟶2025-11-01 21:47:03
+2025-11-01 21:47:03.287 +03:30 [INF] ⋄[Program] JsonWebToken configured successfully. ⟶2025-11-01 21:47:03
+2025-11-01 21:47:03.288 +03:30 [INF] ⋄[Program] configuring PostgreSQL.. ⟶2025-11-01 21:47:03
+2025-11-01 21:47:03.292 +03:30 [INF] ⋄[Program] PostgreSQL configured successfully. ⟶2025-11-01 21:47:03
+2025-11-01 21:47:03.293 +03:30 [INF] ⋄[Program] configuring Application.. ⟶2025-11-01 21:47:03
+2025-11-01 21:47:03.294 +03:30 [INF] ⋄[Program] Application configured successfully. ⟶2025-11-01 21:47:03
+2025-11-01 21:47:03.466 +03:30 [INF] ⋄[PostgresDbContext] instance created. ⟶2025-11-01 21:47:03

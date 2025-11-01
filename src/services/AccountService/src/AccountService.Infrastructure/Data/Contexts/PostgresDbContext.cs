@@ -2,6 +2,7 @@
 using System;
 using AccountService.Application.Interfaces.Services;
 using AccountService.Domain.Entities;
+using AccountService.Domain.ValueObjects;
 using Microsoft.EntityFrameworkCore;
 
 namespace AccountService.Infrastructure.Data.Contexts
@@ -24,13 +25,13 @@ namespace AccountService.Infrastructure.Data.Contexts
             builder.Entity<Account>(builder =>
             {
                 builder.HasKey(p => p.Id);
-            })
-            builder.Entity<Account>()
-                .HasIndex(p => p.Email)
-                .IsUnique();
-            builder.Entity<Account>().OwnsOne(p => p.Role, builder =>
-            {
-                builder.Property(p => p.)
+                builder.HasIndex(p => p.Email)
+                    .IsUnique();
+                builder.OwnsOne(p => p.Role, roleBuilder =>
+                {
+                    roleBuilder.Property(p => p.Name)
+                        .HasColumnName(nameof(Role));
+                });
             });
         }
     }

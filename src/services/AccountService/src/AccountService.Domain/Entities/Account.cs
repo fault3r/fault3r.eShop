@@ -15,6 +15,6 @@ namespace AccountService.Domain.Entities
 
         public required Role Role { get; set; }
 
-        public bool IsConfirmed { get; set; }
+        public bool IsConfirmed { get; set; } = false;
     }
 }
