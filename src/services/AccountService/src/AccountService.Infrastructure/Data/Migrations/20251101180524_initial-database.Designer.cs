@@ -11,7 +11,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace AccountService.Infrastructure.Data.Migrations
 {
     [DbContext(typeof(PostgresDbContext))]
-    [Migration("20251030155820_initial-database")]
+    [Migration("20251101180524_initial-database")]
     partial class initialdatabase
     {
         /// <inheritdoc />
@@ -47,63 +47,31 @@ namespace AccountService.Infrastructure.Data.Migrations
                         .IsRequired()
                         .HasColumnType("text");
 
-                    b.Property<int>("RoleId")
-                        .HasColumnType("integer");
-
                     b.HasKey("Id");
 
                     b.HasIndex("Email")
                         .IsUnique();
 
-                    b.HasIndex("RoleId");
-
                     b.ToTable("Accounts");
-                });
-
-            modelBuilder.Entity("AccountService.Domain.Entities.Role", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("integer");
-
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
-                    NpgsqlPropertyBuilderExtensions.HasIdentityOptions(b.Property<int>("Id"), 5000L, null, null, null, null, null);
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Roles");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            Name = "account"
-                        },
-                        new
-                        {
-                            Id = 2,
-                            Name = "admin"
-                        });
                 });
 
             modelBuilder.Entity("AccountService.Domain.Entities.Account", b =>
                 {
-                    b.HasOne("AccountService.Domain.Entities.Role", "Role")
-                        .WithMany("Accounts")
-                        .HasForeignKey("RoleId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                    b.OwnsOne("AccountService.Domain.ValueObjects.Role", "Role", b1 =>
+                        {
+                            b1.Property<int>("AccountId")
+                                .HasColumnType("integer");
+
+                            b1.HasKey("AccountId");
+
+                            b1.ToTable("Accounts");
+
+                            b1.WithOwner()
+                                .HasForeignKey("AccountId");
+                        });
+
+                    b.Navigation("Role")
                         .IsRequired();
-
-                    b.Navigation("Role");
-                });
-
-            modelBuilder.Entity("AccountService.Domain.Entities.Role", b =>
-                {
-                    b.Navigation("Accounts");
                 });
 #pragma warning restore 612, 618
         }

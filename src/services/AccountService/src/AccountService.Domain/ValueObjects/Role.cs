@@ -24,5 +24,10 @@ namespace AccountService.Domain.ValueObjects
             Equals(obj as Role);
         public override int GetHashCode() =>
             Name.GetHashCode(StringComparison.OrdinalIgnoreCase);
+
+        public static bool operator ==(Role left, Role right) =>
+            Equals(left, right);
+        public static bool operator !=(Role left, Role right) =>
+            !Equals(left, right);
     }
 }

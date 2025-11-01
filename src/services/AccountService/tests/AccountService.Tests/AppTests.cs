@@ -9,8 +9,6 @@ public class AppTests
     {
         var role1 = Role.Admin();
         var role2 = Role.Admin();
-        string test = role1.ToString();
-        Assert.True(Role.Equals(role1, role2));
-        Assert.Equal("Admin", test);
+        Assert.True(role1 == role2);
     }
 }

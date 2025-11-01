@@ -1,6 +1,7 @@
 
 using System;
 using AccountService.Domain.Entities.Base;
+using AccountService.Domain.ValueObjects;
 
 namespace AccountService.Domain.Entities
 {
@@ -12,6 +13,7 @@ namespace AccountService.Domain.Entities
 
         public required string Name { get; set; }
 
+        public required Role Role { get; set; }
 
         public bool IsConfirmed { get; set; }
     }

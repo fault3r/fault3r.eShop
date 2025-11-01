@@ -17,32 +17,21 @@ namespace AccountService.Infrastructure.Data.Contexts
             _logger.LogInformation("instance created.");
         }
 
-        public DbSet<Role> Roles => Set<Role>();
-
         public DbSet<Account> Accounts => Set<Account>();
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
-            builder.Entity<Role>().HasKey(p => p.Id);
-            builder.Entity<Role>().Property(p => p.Id)
-                .HasIdentityOptions(startValue: 5000);
-            builder.Entity<Role>()
-                .HasMany(x => x.Accounts)
-                .WithOne(x => x.Role)
-                .HasForeignKey(x => x.RoleId)
-                .OnDelete(DeleteBehavior.Restrict);
-            builder.Entity<Role>().HasData(
-                new Role { Id = 1, Name = "account" },
-                new Role { Id = 2, Name = "admin" });
-            builder.Entity<Account>().HasKey(x => x.Id);
+            builder.Entity<Account>(builder =>
+            {
+                builder.HasKey(p => p.Id);
+            })
             builder.Entity<Account>()
-                .HasIndex(x => x.Email)
+                .HasIndex(p => p.Email)
                 .IsUnique();
-            builder.Entity<Account>()
-                .HasOne(x => x.Role)
-                .WithMany(x => x.Accounts)
-                .HasForeignKey(x => x.RoleId)
-                .OnDelete(DeleteBehavior.Cascade);
+            builder.Entity<Account>().OwnsOne(p => p.Role, builder =>
+            {
+                builder.Property(p => p.)
+            });
         }
     }
 }
