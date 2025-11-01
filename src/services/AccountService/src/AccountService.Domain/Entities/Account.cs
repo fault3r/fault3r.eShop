@@ -13,7 +13,7 @@ namespace AccountService.Domain.Entities
 
         public required string Name { get; set; }
 
-        public required Role Role { get; set; }
+        public Role Role { get; set; } = Role.User();
 
         public bool IsConfirmed { get; set; } = false;
     }

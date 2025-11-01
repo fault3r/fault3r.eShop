@@ -23,7 +23,7 @@ namespace AccountService.Application.UseCases.SignUpAccount
 
             RuleFor(p => p)
                 .Must(p => p.Password == p.ConfirmPassword)
-                    .WithMessage("Password and ConfirmPassword do not match!");
+                    .WithMessage("Password and confirm do not match!");
 
             RuleFor(p => p.Name)
                 .NotEmpty()

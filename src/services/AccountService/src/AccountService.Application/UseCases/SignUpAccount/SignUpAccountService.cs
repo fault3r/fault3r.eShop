@@ -1,6 +1,5 @@
 
 using System;
-using System.Security.Cryptography;
 using AccountService.Application.DTOs;
 using AccountService.Application.Extensions;
 using AccountService.Application.Interfaces.Common;
@@ -8,7 +7,6 @@ using AccountService.Application.Interfaces.Services;
 using AccountService.Application.Interfaces.UseCases;
 using AccountService.Domain.Entities;
 using AccountService.Domain.Interfaces;
-using AccountService.Domain.ValueObjects;
 using FluentValidation;
 
 namespace AccountService.Application.UseCases.SignUpAccount
@@ -35,20 +33,19 @@ namespace AccountService.Application.UseCases.SignUpAccount
             _logger = logger;
         }
 
-        // public async Task<SignUpAccountResult> ExecuteAsync(SignUpAccountRequest account)
-        // {
-        //     var validate = await _validator.ValidateAsync(account);
-        //     if (!validate.IsValid)
-        //         return new SignUpAccountResult { Message = validate.ToErrorString() };
+        public async Task<SignUpAccountResult> ExecuteAsync(SignUpAccountRequest account)
+        {
+            var validate = await _validator.ValidateAsync(account);
+            if (!validate.IsValid)
+                return new SignUpAccountResult { Message = validate.ToErrorString() };
 
-        //     var (code, entity) = await _repository.CreateAsync(new Account
-        //     {
-        //         Email = account.Email,
-        //         Password = _passwordHasher.Hash(account.Password),
-        //         Name = account.Name,
-        //         Role = Role.User(),
-        //         IsConfirmed = false,
-        //     });
-        // }
+            var (code, entity) = await _repository.CreateAsync(new Account
+            {
+                Email = account.Email,
+                Password = _passwordHasher.Hash(account.Password),
+                Name = account.Name,
+            });
+            return new SignUpAccountResult { Success = true, Message = "success." };
+        }
     }
 }
