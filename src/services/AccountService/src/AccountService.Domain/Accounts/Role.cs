@@ -27,6 +27,9 @@ public sealed class Role : IEquatable<Role>
     public static Role From(string name)
         => new(name);
 
+    public override string ToString()
+        => Name;
+        
     public bool Equals(Role? other)
         => other is not null && other.Name == Name;
 
