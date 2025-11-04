@@ -1,5 +1,6 @@
 
 using System;
+using System.Net.Mail;
 using AccountService.Domain.Exceptions;
 
 namespace AccountService.Domain.Accounts;
@@ -27,7 +28,7 @@ public sealed class Email : IEquatable<Email>
     {
         try
         {
-            var addr = new System.Net.Mail.MailAddress(email);
+            var addr = new MailAddress(email);
             return addr.Address == email;
         }
         catch { return false; }
