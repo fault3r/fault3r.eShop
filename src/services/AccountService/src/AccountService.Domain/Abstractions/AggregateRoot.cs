@@ -16,3 +16,10 @@ public abstract class AggregateRoot : Entity
     public void ClearEvents()
         => _events.Clear();
 }
+// public override int GetHashCode()
+// {
+//     var hash = new HashCode();
+//     foreach (var obj in GetEqualityComponents())
+//         hash.Add(obj);
+//     return hash.ToHashCode();
+// }
