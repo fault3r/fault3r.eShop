@@ -49,17 +49,6 @@ public sealed class Role : IEquatable<Role>
     public static bool operator !=(Role? left, Role? right)
         => !(left == right);
 
-    public static bool operator <(Role? left, Role? right)
-    {
-        if (left is null || right is null) return false;
-        if (left == right) return false;
-        if (left.Equals(Admin)) return false;
-        else return true;
-    }
-
-    public static bool operator >(Role? left, Role? right)
-        => !(left < right);
-
     public static explicit operator Role(string name)
         => new(name);
 
