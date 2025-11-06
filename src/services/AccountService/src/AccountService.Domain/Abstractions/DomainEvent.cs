@@ -2,7 +2,7 @@
 using System;
 using AccountService.Domain.Common;
 
-namespace AccountService.Domain.Base;
+namespace AccountService.Domain.Abstractions;
 
 public abstract class DomainEvent
 {

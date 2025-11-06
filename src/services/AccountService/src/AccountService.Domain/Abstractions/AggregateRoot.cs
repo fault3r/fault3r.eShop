@@ -1,25 +1,24 @@
 
 using System;
+using System.Collections.ObjectModel;
+using AccountService.Domain.Common;
 
 namespace AccountService.Domain.Abstractions;
 
 public abstract class AggregateRoot : Entity
 {
-    private readonly List<IDomainEvent> _events = [];
+    private readonly IList<DomainEvent> events = [];
 
-    public IReadOnlyCollection<IDomainEvent> Events
-        => _events.AsReadOnly();
+    public ReadOnlyCollection<DomainEvent> Events
+        => events.AsReadOnly();
 
-    protected void RaiseEvent(IDomainEvent @event)
-        => _events.Add(@event); 
-      
+    protected AggregateRoot() : base() { }
+
+    protected AggregateRoot(Identity id) : base(id) { }
+
+    protected void AddDomainEvent(DomainEvent @event)
+        => events.Add(@event);
+
     public void ClearEvents()
-        => _events.Clear();
+        => events.Clear();
 }
-// public override int GetHashCode()
-// {
-//     var hash = new HashCode();
-//     foreach (var obj in GetEqualityComponents())
-//         hash.Add(obj);
-//     return hash.ToHashCode();
-// }
