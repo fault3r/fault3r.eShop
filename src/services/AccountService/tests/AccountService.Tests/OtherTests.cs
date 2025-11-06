@@ -10,12 +10,9 @@ public class OtherTests
     [Fact]
     public void TestName()
     {
-        var res = Result.Ok();
-        Assert.True(res.IsSuccess);
-
-        res = Result.Fail("failed");
-        Assert.False(res.IsSuccess);
-        Assert.Equal("failed", res.Message);       
-
+        var id = Identity.New();
+        string idstr = "";
+        var id2 = Identity.From(idstr);
+        Assert.Equal(id, id2);
     }
 }
