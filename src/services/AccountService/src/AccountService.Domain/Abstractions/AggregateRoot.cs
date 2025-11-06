@@ -16,7 +16,7 @@ public abstract class AggregateRoot : Entity
 
     protected AggregateRoot(Identity id) : base(id) { }
 
-    protected void AddDomainEvent(DomainEvent @event)
+    protected void RaiseEvent(DomainEvent @event)
         => events.Add(@event);
 
     public void ClearEvents()

@@ -17,7 +17,7 @@ public sealed record Identity(Guid Value)
         }
         catch
         {
-            throw new DomainException($"Invalid guid: {guid}");
+            throw new DomainException($"invalid Guid: {guid}");
         }
     }
 
