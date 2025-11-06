@@ -13,9 +13,9 @@ public sealed class Email : ValueObject
     public Email(string address)
     {
         if (string.IsNullOrEmpty(address))
-            throw new DomainException("Email address is required");
+            throw new MissingEmailException();
         if (!IsValidEmail(address))
-            throw new DomainException($"invalid Email address: {address}");
+            throw new InvalidEmailException(address);
         Address = address.Trim().ToLowerInvariant();
     }
 

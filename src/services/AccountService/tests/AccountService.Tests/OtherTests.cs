@@ -1,8 +1,6 @@
 
 using System;
-using System.Reflection.Metadata;
-using AccountService.Domain.Base;
-using AccountService.Domain.Common;
+using AccountService.Domain.Factories;
 
 namespace AccountService.Tests;
 
@@ -11,8 +9,7 @@ public class OtherTests
     [Fact]
     public void TestName()
     {
-        var agg = new AggregateRoot();
-        string jj = agg.Id.ToString();
+        var acc = AccountFactory.Create("hamed damavandi", "hamed@email.com", "asdadhkjh535hk3534");
         Assert.True(true);
     }
 }

@@ -18,16 +18,15 @@ public class Account : AggregateRoot
     protected Account() : base() { } // EF core
 
     private Account(Identity id, string fullName, Email email, string passwordHash, Role role)
-        : base(id)
     {
         if (string.IsNullOrEmpty(fullName))
-            throw new DomainException("FullName is required");
+            throw new MissingFullNameException();
         if (email is null)
-            throw new DomainException("Email is required");
+            throw new MissingEmailException();
         if (string.IsNullOrWhiteSpace(passwordHash))
-            throw new DomainException("PasswordHash is required");
+            throw new MissingPasswordHashException();
         if (role is null)
-            throw new DomainException("Role is required");
+            throw new MissingRoleException();
         FullName = fullName;
         Email = email;
         PasswordHash = passwordHash;
@@ -35,9 +34,8 @@ public class Account : AggregateRoot
         RaiseEvent(new AccountSignedUpDomainEvent(id, email));
     }
 
-    public static Account SignUp(string fullName, Email email, string password, Role role)
+    internal static Account CreateNew(Identity id, string fullName, Email email, string passwordHash, Role role)
     {
-        var passwordHash = password;
-        return new Account(Identity.New(), fullName, email, passwordHash, role);
+        return new Account(id, fullName, email, passwordHash, role);
     }
 }

@@ -15,13 +15,13 @@ public sealed class Role : ValueObject
     private Role(string name)
     {
         if (string.IsNullOrWhiteSpace(name))
-            throw new DomainException("Role is required");
+            throw new MissingRoleException();
         var normalized = name.Trim();
         Name = normalized switch
         {
             "admin" or "Admin" or "ADMIN" => "Admin",
             "user" or "User" or "USER" => "User",
-            _ => throw new DomainException($"Invalid role: {normalized}")
+            _ => throw new UnsupportedRoleException(normalized)
         };
     }
 
