@@ -4,9 +4,15 @@ using AccountService.Domain.Common;
 
 namespace AccountService.Domain.Base;
 
-public abstract class Entity(Identity id)
+public abstract class Entity
 {
-    public Identity Id { get; protected set; } = id;
+    public Identity Id { get; protected set; }
+
+    protected Entity()
+        => Id = Identity.New();
+
+    protected Entity(Identity id)
+        => Id = id;
 
     public override bool Equals(object? obj)
     {
