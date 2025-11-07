@@ -9,9 +9,6 @@ public sealed class Role : ValueObject
 {
     public string Name { get; private set; }
 
-    public static readonly Role Admin = new("Admin");
-    public static readonly Role User = new("User");
-
     private Role(string name)
     {
         if (string.IsNullOrWhiteSpace(name))
@@ -24,6 +21,9 @@ public sealed class Role : ValueObject
             _ => throw new UnsupportedRoleException(normalized)
         };
     }
+
+    public static readonly Role Admin = new(nameof(Admin));
+    public static readonly Role User = new(nameof(User));
 
     public static Role From(string name)
         => new(name);

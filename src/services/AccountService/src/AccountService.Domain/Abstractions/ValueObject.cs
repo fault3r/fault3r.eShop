@@ -18,8 +18,14 @@ public abstract class ValueObject
     public override int GetHashCode()
     {
         var hash = new HashCode();
-        foreach(var obj in GetEqualityComponents())
+        foreach (var obj in GetEqualityComponents())
             hash.Add(obj.GetHashCode());
         return hash.ToHashCode();
     }
+
+    public static bool operator ==(ValueObject? left, ValueObject? right)
+        => left?.Equals(right) ?? false;
+
+    public static bool operator !=(ValueObject? left, ValueObject? right)
+        => !(left == right);
 }

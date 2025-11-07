@@ -15,7 +15,7 @@ public class MissingFullNameException()
 { }
 
 public class MissingEmailException()
-    : DomainException($"Email is required")
+    : DomainException($"Email address is required")
 { }
 
 public class MissingPasswordHashException()
@@ -39,3 +39,10 @@ public class UnsupportedRoleException(string name)
     : DomainException($"unsupported Role: {name}")
 { }
 
+public class MissingStatusException()
+    : DomainException($"Status value is required")
+{ }
+
+public class UnsupportedStatusException(string value)
+    : DomainException($"unsupported Status value: {value}")
+{ }
