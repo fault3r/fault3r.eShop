@@ -8,13 +8,14 @@ namespace AccountService.Domain.Factories;
 
 public static class AccountFactory
 {
-    public static Account Create(string fullName, string email, string passwordHash, string role = "User")
+    public static Account Register(string fullName, string email, string passwordHash)
     {
-        return Account.CreateNew(
+        return Account.Register(
             id: Identity.New(),
             fullName: fullName,
             email: new Email(email),
             passwordHash: passwordHash,
-            role: Role.From(role));
+            role: Role.User,
+            status: Status.Pending);
     }
 }

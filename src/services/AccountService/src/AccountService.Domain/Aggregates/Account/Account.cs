@@ -14,10 +14,17 @@ public class Account : AggregateRoot
     public Email Email { get; private set; }
     public string PasswordHash { get; private set; }
     public Role Role { get; private set; }
+    public Status Status { get; private set; }
 
     protected Account() : base() { } // EF core
 
-    private Account(Identity id, string fullName, Email email, string passwordHash, Role role)
+    private Account(
+        Identity id,
+        string fullName,
+        Email email,
+        string passwordHash,
+        Role role,
+        Status status)
     {
         if (string.IsNullOrEmpty(fullName))
             throw new MissingFullNameException();
@@ -27,15 +34,16 @@ public class Account : AggregateRoot
             throw new MissingPasswordHashException();
         if (role is null)
             throw new MissingRoleException();
+        if (status is null)
+            throw new MissingStatusException();
         FullName = fullName;
         Email = email;
         PasswordHash = passwordHash;
         Role = role;
+        Status = status;
         RaiseEvent(new AccountSignedUpDomainEvent(id, email));
     }
 
-    internal static Account CreateNew(Identity id, string fullName, Email email, string passwordHash, Role role)
-    {
-        return new Account(id, fullName, email, passwordHash, role);
-    }
+    internal static Account Register(Identity id, string fullName, Email email, string passwordHash, Role role, Status status)
+        => new(id, fullName, email, passwordHash, role, status);
 }

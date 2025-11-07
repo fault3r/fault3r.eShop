@@ -1,0 +1,81 @@
+src/
+ ├── AccountService.Domain/
+ │    ├── Abstractions/
+ │    │    ├── AggregateRoot.cs
+ │    │    ├── DomainEvent.cs
+ │    │    ├── Entity.cs
+ │    │    └── ValueObject.cs
+ │    ├── Aggregates/
+ │    │    └── Account/
+ │    │         ├── Account.cs
+ │    │         └── Events/
+ │    │              └── AccountSignedUpDomainEvent.cs
+ │    ├── Common/
+ │    │    ├── Identity.cs
+ │    │    └── Result.cs
+ │    ├── Exceptions/
+ │    │    └── DomainException.cs
+ │    ├── Factories/
+ │    │    └── AccountFactory.cs
+ │    ├── Repositories/
+ │    │    └── IAccountRepository.cs
+ │    │    └── IUnitOfWork.cs
+ │    ├── Services/
+ │    │    └── AccountDomainService.cs
+ │    │    └── IOutboxMessageService.cs
+ │    └── ValueObjects/
+ │         ├── Email.cs
+ │         ├── Role.cs
+ │         └── Status.cs
+ │    └── AccountService.Domain.csproj
+
+ ├── AccountService.Application/
+ │    ├── Abstractions/
+ │    │    ├── ICommand.cs
+ │    │    ├── IQuery.cs
+ │    │    └── IHandler.cs
+ │    ├── Commands/
+ │    │    ├── SignUpAccountCommand.cs
+ │    │    └── Handlers/
+ │    │         └── SignUpAccountCommandHandler.cs
+ │    ├── Queries/
+ │    │    ├── GetAccountByIdQuery.cs
+ │    │    └── Handlers/
+ │    │         └── GetAccountByIdQueryHandler.cs
+ │    ├── DTOs/
+ │    │    └── AccountDto.cs
+ │    ├── Services/
+ │    │    └── AccountApplicationService.cs
+ │    └── AccountService.Application.csproj
+
+ ├── AccountService.Infrastructure/
+ │    ├── Persistence/
+ │    │    ├── AccountDbContext.cs
+ │    │    ├── Configurations/
+ │    │    │    └── AccountConfiguration.cs
+ │    │    └── Migrations/
+ │    ├── Repositories/
+ │    │    └── AccountRepository.cs
+ │    ├── Messaging/
+ │    │    ├── Outbox/
+ │    │    │    └── OutboxMessage.cs
+ │    │    └── RabbitMqPublisher.cs
+ │    ├── Logging/
+ │    │    └── SerilogAdapter.cs
+ │    ├── Security/
+ │    │    └── JwtTokenProvider.cs
+ │    └── AccountService.Infrastructure.csproj
+
+ ├── AccountService.Presentation/
+ │    ├── API/
+ │    │    ├── Controllers/
+ │    │    │    └── AccountController.cs
+ │    │    ├── Filters/
+ │    │    │    └── ExceptionFilter.cs
+ │    │    └── Models/
+ │    │         └── SignUpAccountRequest.cs
+ │    ├── Views/   (if MVC, otherwise skip)
+ │    └── AccountService.Presentation.csproj
+
+ └── AccountService.sln
+
