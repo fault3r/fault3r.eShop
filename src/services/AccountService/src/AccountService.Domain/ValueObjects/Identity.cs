@@ -25,7 +25,7 @@ public sealed class Identity : ValueObject
             throw new MissingGuidException();
 
         var normalized = id.Trim();
-        if (!IsValidId(normalized))
+        if (!IsValid(normalized))
             throw new InvalidGuidException(normalized);
 
         Id = Guid.Parse(normalized);
@@ -37,7 +37,7 @@ public sealed class Identity : ValueObject
     public static Identity From(string input)
         => new(input);
 
-    public static bool IsValidId(string input)
+    private static bool IsValid(string input)
         => Guid.TryParse(input, out var result)
         && result != Guid.Empty;
 
