@@ -1,12 +1,16 @@
 
 using System;
-using AccountService.Domain.Exceptions;
+using AccountService.Domain.Abstractions;
+using AccountService.Domain.Exceptions.Identity;
 
-namespace AccountService.Domain.Common;
+namespace AccountService.Domain.ValueObjects;
 
-public sealed record Identity
+public sealed class Identity : ValueObject
 {
     public Guid Value { get; }
+
+    public Identity()    
+        => Value = Guid.NewGuid();    
 
     public Identity(Guid value)
     {
@@ -14,8 +18,6 @@ public sealed record Identity
             throw new EmptyGuidException();
         Value = value;
     }
-
-    public Identity() : this(Guid.NewGuid()) { }
 
     public static Identity New() => new();
 
@@ -25,14 +27,19 @@ public sealed record Identity
             throw new MissingGuidException();
 
         var normalized = input.Trim();
-        if (!IsValid(normalized))
+        if (!Guid.TryParse(normalized, out var @out))
             throw new InvalidGuidException(normalized);
 
-        return new Identity(Guid.Parse(normalized));
+        return new(Guid.Parse(normalized));
     }
 
     public static bool IsValid(string input)
         => Guid.TryParse(input, out var result) && result != Guid.Empty;
 
     public override string ToString() => Value.ToString();
+
+    protected override IEnumerable<object> GetEqualityComponents()
+    {
+        yield return Value;
+    }
 }

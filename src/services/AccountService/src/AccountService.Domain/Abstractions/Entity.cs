@@ -1,6 +1,6 @@
 
 using System;
-using AccountService.Domain.Common;
+using AccountService.Domain.ValueObjects;
 
 namespace AccountService.Domain.Abstractions;
 
