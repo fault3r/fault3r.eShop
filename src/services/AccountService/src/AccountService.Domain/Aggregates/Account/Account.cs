@@ -18,13 +18,7 @@ public class Account : AggregateRoot
 
     protected Account() : base() { } // EF core
 
-    private Account(
-        Identity id,
-        string fullName,
-        Email email,
-        string passwordHash,
-        Role role,
-        Status status)
+    private Account(Identity id, string fullName, Email email, string passwordHash, Role role, Status status)
     {
         if (string.IsNullOrEmpty(fullName))
             throw new MissingFullNameException();
@@ -41,9 +35,27 @@ public class Account : AggregateRoot
         PasswordHash = passwordHash;
         Role = role;
         Status = status;
-        RaiseEvent(new AccountSignedUpDomainEvent(id, email));
     }
 
-    internal static Account Register(Identity id, string fullName, Email email, string passwordHash, Role role, Status status)
-        => new(id, fullName, email, passwordHash, role, status);
+    public static Account RegisterNew(Identity id, string fullName, Email email, string passwordHash, Role role, Status status)
+    {
+        var account = new Account(id, fullName, email, passwordHash, role, status);
+        account.RaiseEvent(new AccountSignedUpDomainEvent(id, email));
+        return account;
+    }
+
+    public void PromoteToAdmin()
+    {
+        if (Role == Role.Admin) return;
+        Role = Role.Admin;
+        //RaiseEvent();
+    }
+
+    public void DemoteToUser()
+    {
+        if (Role == Role.User) return;
+        Role = Role.User;
+        //RaiseEvent();
+    }
+
 }

@@ -26,9 +26,16 @@ public class MissingRoleException()
     : DomainException($"Role is required")
 { }
 
+public class MissingGuidException()
+    : DomainException($"Guid is required")
+{ }
 
 public class InvalidGuidException(string guid)
     : DomainException($"invalid Guid: {guid}")
+{ }
+
+public class EmptyGuidException()
+    : DomainException($"Cannot create Identity with Guid.Empty")
 { }
 
 public class InvalidEmailException(string address)
