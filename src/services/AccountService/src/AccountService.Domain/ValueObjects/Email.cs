@@ -16,14 +16,17 @@ public sealed class Email : ValueObject
             throw new MissingEmailException();
         
         var normalized = address.Trim().ToLowerInvariant();
-        if (!IsValidAddress(normalized))
+        if (!IsValid(normalized))
             throw new InvalidEmailException(normalized);
 
         Address = normalized;
     }
 
-    public static bool IsValidAddress(string address)
-       => MailAddress.TryCreate(address, out MailAddress? @out);
+    private static bool IsValid(string input)
+       => MailAddress.TryCreate(input, out MailAddress? @out);
+
+    public static Email From(string input)
+        => new(input);  
 
     public override string ToString()
         => Address;

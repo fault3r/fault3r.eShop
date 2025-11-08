@@ -7,28 +7,28 @@ namespace AccountService.Domain.ValueObjects;
 
 public sealed class Identity : ValueObject
 {
-    public Guid Value { get; }
+    public Guid Id { get; }
 
     public Identity()
-        => Value = Guid.NewGuid();
+        => Id = Guid.NewGuid();
 
-    public Identity(Guid value)
+    public Identity(Guid id)
     {
-        if (value == Guid.Empty)
+        if (id == Guid.Empty)
             throw new EmptyGuidException();
-        Value = value;
+        Id = id;
     }
 
-    public Identity(string guid)
+    public Identity(string id)
     {
-        if (string.IsNullOrWhiteSpace(guid))
+        if (string.IsNullOrWhiteSpace(id))
             throw new MissingGuidException();
 
-        var normalized = guid.Trim();
-        if (!IsValid(normalized))
+        var normalized = id.Trim();
+        if (!IsValidId(normalized))
             throw new InvalidGuidException(normalized);
 
-        Value = Guid.Parse(normalized);
+        Id = Guid.Parse(normalized);
     }
 
     public static Identity New()
@@ -37,15 +37,15 @@ public sealed class Identity : ValueObject
     public static Identity From(string input)
         => new(input);
 
-    public static bool IsValid(string input)
+    public static bool IsValidId(string input)
         => Guid.TryParse(input, out var result)
         && result != Guid.Empty;
 
     public override string ToString()
-        => Value.ToString();
+        => Id.ToString();
 
     protected override IEnumerable<object> GetEqualityComponents()
     {
-        yield return Value;
+        yield return Id;
     }
 }

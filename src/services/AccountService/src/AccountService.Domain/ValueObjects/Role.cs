@@ -7,7 +7,7 @@ namespace AccountService.Domain.ValueObjects;
 
 public sealed class Role : ValueObject
 {
-    public RoleType Value { get; }
+    public RoleType Name { get; }
 
     public enum RoleType
     {
@@ -15,8 +15,8 @@ public sealed class Role : ValueObject
         Admin,
     }
 
-    public Role(RoleType value)
-        => Value = value;
+    public Role(RoleType name)
+        => Name = name;
 
     public Role(string name)
     {
@@ -24,31 +24,31 @@ public sealed class Role : ValueObject
             throw new MissingRoleException();
             
         var normalized = name.Trim().ToLowerInvariant();
-        Value = normalized switch
+        Name = normalized switch
         {
             "user" => RoleType.User,
             "admin" => RoleType.Admin,
-            _ => throw new UnsupportedRoleException(normalized)
+            _ => throw new UnsupportedRoleException(normalized),
         };
     }
 
-    public static readonly Role User = new(RoleType.User);
+    public static readonly Role User  = new(RoleType.User);
     public static readonly Role Admin = new(RoleType.Admin);
 
     public static Role From(string input)
         => new(input);
 
     public bool IsUser
-        => Value == RoleType.User;
+        => Name == RoleType.User;
 
     public bool IsAdmin
-        => Value == RoleType.Admin;
+        => Name == RoleType.Admin;
 
     public override string ToString()
-        => Value.ToString();
+        => Name.ToString();
         
     protected override IEnumerable<object> GetEqualityComponents()
     {
-        yield return Value;
+        yield return Name;
     }
 }

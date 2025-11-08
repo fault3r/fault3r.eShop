@@ -10,11 +10,12 @@ namespace AccountService.Tests;
 public class OtherTests
 {
     [Fact]
-    public void TestName()
+    public void OtherTest()
     {
-        var roleA = new Role("aDmIn");
-        var roleB = Role.User;
-        Assert.True(roleA != roleB);
-
+        var sts = new Status(StatusType.Pending);
+        var sts1 = Status.From("active");
+        var sts3 = new Status("pending");
+        Assert.True(sts == sts3);
+        Assert.True(sts1.Value == StatusType.Active);
     }
 }

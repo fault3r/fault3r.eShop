@@ -1,13 +1,13 @@
 
 using System;
 using AccountService.Domain.Abstractions;
-using AccountService.Domain.Exceptions;
+using AccountService.Domain.Exceptions.Status;
 
 namespace AccountService.Domain.ValueObjects;
 
 public sealed class Status : ValueObject
 {
-    public StatusType Value { get; private set; }
+    public StatusType Value { get; }
 
     public enum StatusType
     {
@@ -16,32 +16,30 @@ public sealed class Status : ValueObject
         Locked
     }
 
-    private Status(StatusType value)
+    public Status(StatusType value)
         => Value = value;
 
-    public static Status Pending => new(StatusType.Pending);
-    public static Status Active => new(StatusType.Active);
-    public static Status Locked => new(StatusType.Locked);
-
-    public static IReadOnlyCollection<string> AllowedStatuses { get; }
-        = [nameof(Pending), nameof(Active), nameof(Locked)];
-
-    public static IEnumerable<string> GetAllowedStatuses()
-        => AllowedStatuses;
-
-    public static Status From(string value)
+    public Status(string value)
     {
-        if (string.IsNullOrEmpty(value))
+        if (string.IsNullOrWhiteSpace(value))
             throw new MissingStatusException();
-        var normalized = value.Trim();
-        return normalized switch
-        {
-            nameof(Pending) => new(StatusType.Pending),
-            nameof(Active) => new(StatusType.Active),
-            nameof(Locked) => new(StatusType.Locked),
-            _ => throw new UnsupportedStatusException(normalized)
-        };
+
+        var normalized = value.Trim().ToLowerInvariant();
+        if (!IsValid(normalized, out StatusType status))
+            throw new UnsupportedStatusException(normalized);
+
+        Value = status;
     }
+
+    public static readonly Status Pending = new(StatusType.Pending);
+    public static readonly Status Active = new(StatusType.Active);
+    public static readonly Status Locked = new(StatusType.Locked);
+
+    private static bool IsValid(string input, out StatusType result)
+        => Enum.TryParse(input, ignoreCase: true, out result);
+
+    public static Status From(string input)
+        => new(input);
 
     public override string ToString()
         => Value.ToString();

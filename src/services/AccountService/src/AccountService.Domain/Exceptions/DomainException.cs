@@ -23,10 +23,3 @@ public class MissingPasswordHashException()
 
 
 
-public class MissingStatusException()
-    : DomainException($"Status value is required")
-{ }
-
-public class UnsupportedStatusException(string value)
-    : DomainException($"unsupported Status value: {value}")
-{ }
