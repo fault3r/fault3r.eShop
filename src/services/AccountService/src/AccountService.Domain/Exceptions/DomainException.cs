@@ -8,18 +8,7 @@ public class DomainException : Exception
     public DomainException() : base() { }
 
     public DomainException(string message) : base(message) { }
+
+    public DomainException(string message, Exception innerException) : base(message, innerException) { }
 }
-
-public class MissingFullNameException()
-    : DomainException($"FullName is required")
-{ }
-
-
-public class MissingPasswordHashException()
-    : DomainException($"PasswordHash is required")
-{ }
-
-
-
-
 

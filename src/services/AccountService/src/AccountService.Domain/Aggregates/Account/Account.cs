@@ -2,9 +2,10 @@
 using System;
 using AccountService.Domain.Abstractions;
 using AccountService.Domain.Aggregates.Account.Events;
-using AccountService.Domain.Common;
-using AccountService.Domain.Exceptions;
 using AccountService.Domain.Exceptions.Email;
+using AccountService.Domain.Exceptions.FullName;
+using AccountService.Domain.Exceptions.Identity;
+using AccountService.Domain.Exceptions.PasswordHash;
 using AccountService.Domain.Exceptions.Role;
 using AccountService.Domain.Exceptions.Status;
 using AccountService.Domain.ValueObjects;
@@ -19,11 +20,11 @@ public class Account : AggregateRoot
     public Role Role { get; private set; }
     public Status Status { get; private set; }
 
-    protected Account() : base() { } // EF core
-
     private Account(Identity id, string fullName, Email email, string passwordHash, Role role, Status status)
     {
-        if (string.IsNullOrEmpty(fullName))
+        if (id is null)
+            throw new MissingIdentityException();
+        if (string.IsNullOrWhiteSpace(fullName))
             throw new MissingFullNameException();
         if (email is null)
             throw new MissingEmailException();
@@ -33,6 +34,7 @@ public class Account : AggregateRoot
             throw new MissingRoleException();
         if (status is null)
             throw new MissingStatusException();
+        Id = id;
         FullName = fullName;
         Email = email;
         PasswordHash = passwordHash;
@@ -40,25 +42,10 @@ public class Account : AggregateRoot
         Status = status;
     }
 
-    public static Account RegisterNew(Identity id, string fullName, Email email, string passwordHash, Role role, Status status)
+    internal static Account Create(Identity id, string fullName, Email email, string passwordHash, Role role, Status status)
     {
         var account = new Account(id, fullName, email, passwordHash, role, status);
-        account.RaiseEvent(new AccountSignedUpDomainEvent(id, email));
+        account.RaiseEvent(new AccountCreatedDomainEvent(account.Id, account.Email));
         return account;
     }
-
-    public void PromoteToAdmin()
-    {
-        if (Role == Role.Admin) return;
-        Role = Role.Admin;
-        //RaiseEvent();
-    }
-
-    public void DemoteToUser()
-    {
-        if (Role == Role.User) return;
-        Role = Role.User;
-        //RaiseEvent();
-    }
-
 }

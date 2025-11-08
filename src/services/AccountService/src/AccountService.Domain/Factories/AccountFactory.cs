@@ -1,18 +1,17 @@
 
 using System;
 using AccountService.Domain.Aggregates.Account;
-using AccountService.Domain.Common;
 using AccountService.Domain.ValueObjects;
 
 namespace AccountService.Domain.Factories;
 
-public static class AccountFactory
+public sealed class AccountFactory
 {
-    public static Account Register(string fullName, string email, string passwordHash)
-        => Account.RegisterNew(
+    public static Account CreateNew(string fullName, string email, string passwordHash)
+        => Account.Create(
             id: Identity.New(),
             fullName: fullName,
-            email: new Email(email),
+            email: Email.From(email),
             passwordHash: passwordHash,
             role: Role.User,
             status: Status.Pending);

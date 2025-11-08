@@ -6,7 +6,7 @@ namespace AccountService.Domain.Abstractions;
 
 public abstract class Entity
 {
-    public Identity Id { get; protected set; }
+    protected Identity Id { get; set; }
 
     protected Entity()
         => Id = Identity.New();
