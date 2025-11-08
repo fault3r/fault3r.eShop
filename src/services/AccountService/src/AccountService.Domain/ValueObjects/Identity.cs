@@ -9,8 +9,8 @@ public sealed class Identity : ValueObject
 {
     public Guid Value { get; }
 
-    public Identity()    
-        => Value = Guid.NewGuid();    
+    public Identity()
+        => Value = Guid.NewGuid();
 
     public Identity(Guid value)
     {
@@ -19,24 +19,30 @@ public sealed class Identity : ValueObject
         Value = value;
     }
 
-    public static Identity New() => new();
-
-    public static Identity From(string input)
+    public Identity(string guid)
     {
-        if (string.IsNullOrWhiteSpace(input))
+        if (string.IsNullOrWhiteSpace(guid))
             throw new MissingGuidException();
 
-        var normalized = input.Trim();
-        if (!Guid.TryParse(normalized, out var @out))
+        var normalized = guid.Trim();
+        if (!IsValid(normalized))
             throw new InvalidGuidException(normalized);
 
-        return new(Guid.Parse(normalized));
+        Value = Guid.Parse(normalized);
     }
 
-    public static bool IsValid(string input)
-        => Guid.TryParse(input, out var result) && result != Guid.Empty;
+    public static Identity New()
+        => new();
 
-    public override string ToString() => Value.ToString();
+    public static Identity From(string input)
+        => new(input);
+
+    public static bool IsValid(string input)
+        => Guid.TryParse(input, out var result)
+        && result != Guid.Empty;
+
+    public override string ToString()
+        => Value.ToString();
 
     protected override IEnumerable<object> GetEqualityComponents()
     {

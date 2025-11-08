@@ -1,32 +1,29 @@
 
 using System;
-using System.Text.RegularExpressions;
+using System.Net.Mail;
 using AccountService.Domain.Abstractions;
-using AccountService.Domain.Exceptions;
+using AccountService.Domain.Exceptions.Email;
 
 namespace AccountService.Domain.ValueObjects;
 
 public sealed class Email : ValueObject
 {
-    public string Address { get; private set; }
+    public string Address { get; }
 
     public Email(string address)
     {
-        if (string.IsNullOrEmpty(address))
+        if (string.IsNullOrWhiteSpace(address))
             throw new MissingEmailException();
-        if (!IsValidEmail(address))
-            throw new InvalidEmailException(address);
-        Address = address.Trim().ToLowerInvariant();
+        
+        var normalized = address.Trim().ToLowerInvariant();
+        if (!IsValidAddress(normalized))
+            throw new InvalidEmailException(normalized);
+
+        Address = normalized;
     }
 
-    public static bool IsValidEmail(string email)
-    {
-        var pattern = @"^[^@\s]+@[^@\s]+\.[^@\s]+$";
-        return Regex.IsMatch(
-            input: email,
-            pattern: pattern,
-            options: RegexOptions.Compiled | RegexOptions.IgnoreCase);
-    }
+    public static bool IsValidAddress(string address)
+       => MailAddress.TryCreate(address, out MailAddress? @out);
 
     public override string ToString()
         => Address;

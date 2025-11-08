@@ -1,38 +1,54 @@
 
 using System;
 using AccountService.Domain.Abstractions;
-using AccountService.Domain.Exceptions;
+using AccountService.Domain.Exceptions.Role;
 
 namespace AccountService.Domain.ValueObjects;
 
 public sealed class Role : ValueObject
 {
-    public string Name { get; private set; }
+    public RoleType Value { get; }
 
-    private Role(string name)
+    public enum RoleType
+    {
+        User,
+        Admin,
+    }
+
+    public Role(RoleType value)
+        => Value = value;
+
+    public Role(string name)
     {
         if (string.IsNullOrWhiteSpace(name))
             throw new MissingRoleException();
-        var normalized = name.Trim();
-        Name = normalized switch
+            
+        var normalized = name.Trim().ToLowerInvariant();
+        Value = normalized switch
         {
-            "admin" or "Admin" or "ADMIN" => "Admin",
-            "user" or "User" or "USER" => "User",
+            "user" => RoleType.User,
+            "admin" => RoleType.Admin,
             _ => throw new UnsupportedRoleException(normalized)
         };
     }
 
-    public static readonly Role Admin = new(nameof(Admin));
-    public static readonly Role User = new(nameof(User));
+    public static readonly Role User = new(RoleType.User);
+    public static readonly Role Admin = new(RoleType.Admin);
 
-    public static Role From(string name)
-        => new(name);
+    public static Role From(string input)
+        => new(input);
+
+    public bool IsUser
+        => Value == RoleType.User;
+
+    public bool IsAdmin
+        => Value == RoleType.Admin;
 
     public override string ToString()
-        => Name;
+        => Value.ToString();
         
     protected override IEnumerable<object> GetEqualityComponents()
     {
-        yield return Name;
+        yield return Value;
     }
 }

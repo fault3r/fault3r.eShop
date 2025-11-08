@@ -4,6 +4,7 @@ using AccountService.Domain.Abstractions;
 using AccountService.Domain.Aggregates.Account.Events;
 using AccountService.Domain.Common;
 using AccountService.Domain.Exceptions;
+using AccountService.Domain.Exceptions.Role;
 using AccountService.Domain.ValueObjects;
 
 namespace AccountService.Domain.Aggregates.Account;
