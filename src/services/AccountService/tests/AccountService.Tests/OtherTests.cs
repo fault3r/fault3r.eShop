@@ -13,9 +13,7 @@ public class OtherTests
     [Fact]
     public void OtherTest()
     {
-        var uu = Status.Pending;
-        uu.Value = null;
-        
-        var acc = new Identity()
+        var uu = AccountFactory.CreateNew(
+            "Hamed Damavandi", "hamed@email.com", "password");
     }
 }

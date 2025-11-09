@@ -12,11 +12,9 @@ public abstract class AggregateRoot : Entity
     public ReadOnlyCollection<DomainEvent> Events
         => events.AsReadOnly();
 
-    protected AggregateRoot() : base() { }
-
     protected AggregateRoot(Identity id) : base(id) { }
 
-    protected void RaiseEvent(DomainEvent @event)
+    public void RaiseEvent(DomainEvent @event)
         => events.Add(@event);
 
     public void ClearEvents()

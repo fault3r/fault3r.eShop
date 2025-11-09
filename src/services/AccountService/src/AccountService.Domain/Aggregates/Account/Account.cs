@@ -5,7 +5,6 @@ using AccountService.Domain.ValueObjects;
 using AccountService.Domain.Aggregates.Account.Events;
 using AccountService.Domain.Exceptions.Email;
 using AccountService.Domain.Exceptions.FullName;
-using AccountService.Domain.Exceptions.Identity;
 using AccountService.Domain.Exceptions.PasswordHash;
 using AccountService.Domain.Exceptions.Role;
 using AccountService.Domain.Exceptions.Status;
@@ -21,9 +20,8 @@ public sealed class Account : AggregateRoot
     public Status Status { get; private set; }
 
     private Account(Identity id, string fullName, Email email, string passwordHash, Role role, Status status)
+        : base(id)
     {
-        if (id is null)
-            throw new MissingIdentityException();
         if (string.IsNullOrWhiteSpace(fullName))
             throw new MissingFullNameException();
         if (email is null)
@@ -34,7 +32,6 @@ public sealed class Account : AggregateRoot
             throw new MissingRoleException();
         if (status is null)
             throw new MissingStatusException();
-        Id = id;
         FullName = fullName;
         Email = email;
         PasswordHash = passwordHash;
@@ -44,7 +41,7 @@ public sealed class Account : AggregateRoot
 
     internal static Account Create(Identity id, string fullName, Email email, string passwordHash, Role role, Status status)
     {
-        var account = new Account(null, fullName, email, passwordHash, role, status);
+        var account = new Account(id, fullName, email, passwordHash, role, status);
         account.RaiseEvent(new AccountCreatedDomainEvent(account.Id, account.Email));
         return account;
     }
