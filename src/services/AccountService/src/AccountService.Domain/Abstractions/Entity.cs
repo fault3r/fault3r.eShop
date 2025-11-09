@@ -1,18 +1,20 @@
 
 using System;
+using AccountService.Domain.Exceptions.Identity;
 using AccountService.Domain.ValueObjects;
 
 namespace AccountService.Domain.Abstractions;
 
 public abstract class Entity
 {
-    protected Identity Id { get; set; }
+    public Identity Id { get; protected set; }
 
     protected Entity()
         => Id = Identity.New();
 
     protected Entity(Identity id)
-        => Id = id;
+        => Id = id
+        ?? throw new MissingIdentityException();
 
     public override bool Equals(object? obj)
     {

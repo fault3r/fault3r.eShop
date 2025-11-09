@@ -7,12 +7,12 @@ namespace AccountService.Domain.Aggregates.Account.Events;
 
 public sealed class AccountCreatedDomainEvent : DomainEvent
 {
-    public Identity AccountId { get; }
+    public Identity Id { get; }
     public Email Email { get; }
 
-    public AccountCreatedDomainEvent(Identity accountId, Email email)
+    public AccountCreatedDomainEvent(Identity id, Email email)
     {
-        AccountId = accountId;
+        Id = id;
         Email = email;
     }
 }
