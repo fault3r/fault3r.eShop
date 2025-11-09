@@ -13,6 +13,6 @@ public sealed class AccountCreatedDomainEvent : DomainEvent
     public AccountCreatedDomainEvent(Identity id, Email email)
     {
         Id = id;
-        Email = email;
+        Email = email;        
     }
 }

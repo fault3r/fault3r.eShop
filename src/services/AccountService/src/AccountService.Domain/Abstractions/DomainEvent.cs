@@ -5,6 +5,6 @@ namespace AccountService.Domain.Abstractions;
 
 public abstract class DomainEvent
 {
-    protected DateTime OccurredOn { get; }
+    public DateTime OccurredOn { get; protected set; }
         = DateTime.UtcNow;
 }

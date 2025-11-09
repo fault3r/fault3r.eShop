@@ -74,7 +74,6 @@ src/
  │    │    │    └── ExceptionFilter.cs
  │    │    └── Models/
  │    │         └── SignUpAccountRequest.cs
- │    ├── Views/   (if MVC, otherwise skip)
  │    └── AccountService.Presentation.csproj
 
  └── AccountService.sln

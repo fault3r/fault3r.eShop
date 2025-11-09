@@ -10,8 +10,8 @@ public abstract class Entity
     public Identity Id { get; protected set; }
 
     protected Entity(Identity id)
-        => Id = id 
-        ?? throw new MissingIdentityException();
+        => Id = id
+            ?? throw new MissingIdentityException();
 
     public override bool Equals(object? obj)
     {
