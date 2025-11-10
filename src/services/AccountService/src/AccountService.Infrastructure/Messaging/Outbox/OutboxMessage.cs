@@ -1,22 +1,23 @@
 
 using System;
-using AccountService.Domain.Abstractions;
+using System.Text.Json;
+using AccountService.Domain.Interfaces;
 
 namespace AccountService.Infrastructure.Messaging.Outbox;
 
 public sealed class OutboxMessage
 {
-    public int Id { get; init; }
     public DateTime EnqueuedOn { get; init; }
     public string Type { get; init; } = default!;
     public string Payload { get; init; } = default!;
 
-    private OutboxMessage(DomainEvent @event)
-    {
-        Id = @event.
-
-    }
-
-    public static OutboxMessage FromDomainEvent(DomainEvent @event)
+    public static OutboxMessage FromDomainEvent(IDomainEvent domainEvent)
         => new()
+        {
+            EnqueuedOn = domainEvent.OccurredOn,
+            Type = domainEvent.GetType().Name,
+            Payload = JsonSerializer.Serialize(domainEvent, domainEvent.GetType()),
+        };
+
+    private OutboxMessage() { }
 }

@@ -1,4 +1,3 @@
-
 using System;
 using AccountService.Domain.Abstractions;
 using AccountService.Domain.Exceptions.Email;
@@ -8,12 +7,12 @@ using AccountService.Domain.ValueObjects;
 
 namespace AccountService.Domain.Aggregates.Account.Events;
 
-public sealed class AccountCreatedDomainEvent : DomainEvent, IDomainEvent
+public sealed class AccountConfirmedDomainEvent : DomainEvent, IDomainEvent
 {
     public Identity AccountId { get; }
     public Email Email { get; }
 
-    public AccountCreatedDomainEvent(Identity accountId, Email email)
+    public AccountConfirmedDomainEvent(Identity accountId, Email email)
     {
         AccountId = accountId
             ?? throw new MissingIdentityException();

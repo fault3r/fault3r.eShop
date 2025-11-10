@@ -32,6 +32,7 @@ public sealed class Account : AggregateRoot
             throw new MissingRoleException();
         if (status is null)
             throw new MissingStatusException();
+
         FullName = fullName;
         Email = email;
         PasswordHash = passwordHash;
@@ -42,7 +43,33 @@ public sealed class Account : AggregateRoot
     internal static Account Create(Identity id, string fullName, Email email, string passwordHash, Role role, Status status)
     {
         var account = new Account(id, fullName, email, passwordHash, role, status);
-        account.RaiseEvent(new AccountCreatedDomainEvent(account.Id, account.Email));
+        account.RaiseEvent(new AccountCreatedDomainEvent(
+            accountId: account.Id,
+            email: account.Email));
         return account;
+    }
+
+    private Account(Identity id) : base(id) { }
+
+    public void ChangeFullName(string newFullName)
+    {
+        if (string.IsNullOrWhiteSpace(newFullName))
+            throw new MissingFullNameException();
+
+        FullName = newFullName;
+        RaiseEvent(new AccountFullNameChangedDomainEvent(
+            accountId: Id,
+            email: Email,
+            fullName: FullName));
+    }
+
+    public void ConfirmEmail()
+    {
+        if (Status == Status.Active)
+            return;
+        Status = Status.Active;
+        RaiseEvent(new AccountConfirmedDomainEvent(
+            accountId: Id,
+            email: Email));
     }
 }

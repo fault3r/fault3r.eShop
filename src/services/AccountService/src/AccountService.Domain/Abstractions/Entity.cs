@@ -22,4 +22,7 @@ public abstract class Entity
 
     public override int GetHashCode()
         => Id.GetHashCode();
+
+    public override string ToString()
+        => Id.ToString();
 }

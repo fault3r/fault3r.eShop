@@ -15,5 +15,7 @@ public class OtherTests
     {
         var uu = AccountFactory.CreateNew(
             "Hamed Damavandi", "hamed@email.com", "password");
+        uu.ChangeFullName("fault3r");
+        Assert.True(true);
     }
 }
