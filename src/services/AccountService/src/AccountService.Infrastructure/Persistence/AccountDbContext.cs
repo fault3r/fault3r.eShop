@@ -1,5 +1,6 @@
 
 using System;
+using AccountService.Domain.Abstractions;
 using AccountService.Domain.Aggregates.Account;
 using AccountService.Infrastructure.Messaging.Outbox;
 using AccountService.Infrastructure.Persistence.Configurations;
@@ -21,14 +22,23 @@ public class AccountDbContext : DbContext
         builder.ApplyConfiguration(new AccountConfiguration());
     }
 
-    public override Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
+    public override async Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
     {
-        return base.SaveChangesAsync(cancellationToken);
+        var domainEvents = ChangeTracker
+            .Entries<Account>()
+            .SelectMany(e => e.Entity.DomainEvents)
+            .ToList();
 
+        var outboxMessages = domainEvents
+            .Select(OutboxMessage.FromDomainEvent)
+            .ToList();
 
-        // Extract domain events from aggregates.
-        // Convert them to OutboxMessage entities.
-        // Persist them in the same transaction.
+        Set<OutboxMessage>().AddRange(outboxMessages);
+
+        foreach (var entry in ChangeTracker.Entries<AggregateRoot>())
+            entry.Entity.ClearEvents();
+                        
+        return await base.SaveChangesAsync(cancellationToken);
     }
 }
 

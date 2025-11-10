@@ -7,7 +7,7 @@ using AccountService.Domain.ValueObjects;
 
 namespace AccountService.Domain.Abstractions;
 
-public abstract class AggregateRoot : Entity
+public abstract class AggregateRoot : Entity, IAggregateRoot
 {
     private readonly IList<IDomainEvent> events = [];
 
