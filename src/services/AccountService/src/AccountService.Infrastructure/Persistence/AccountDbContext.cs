@@ -10,9 +10,11 @@ namespace AccountService.Infrastructure.Persistence;
 
 public class AccountDbContext : DbContext
 {
-    public DbSet<Account> Accounts => Set<Account>();
+    public DbSet<Account> Accounts
+        => Set<Account>();
 
-    public DbSet<OutboxMessage> OutboxMessages => Set<OutboxMessage>();
+    public DbSet<OutboxMessage> OutboxMessages
+        => Set<OutboxMessage>();
 
     public AccountDbContext(DbContextOptions<AccountDbContext> options)
         : base(options) { }
