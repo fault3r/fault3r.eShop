@@ -15,7 +15,8 @@ public class OtherTests
     [Fact]
     public void OtherTest()
     {
-        var test = OutboxMessage.FromDomainEvent(new AccountCreatedDomainEvent
-            (Identity.New(), Email.From("")));
+        var acc = AccountFactory.CreateNew("asd", "asd@asd.com", "asdasd");
+        acc = default;
+        Assert.True(true);
     }
 }

@@ -5,5 +5,5 @@ namespace AccountService.Domain.Repositories;
 
 public interface IUnitOfWork
 {
-    Task CommitAsync(CancellationToken cancellationToken= default);
+    Task<int> CommitAsync(CancellationToken cancellationToken = default);
 }

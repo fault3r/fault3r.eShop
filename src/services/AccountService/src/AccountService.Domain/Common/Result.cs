@@ -1,44 +1,39 @@
 
 using System;
 
-namespace AccountService.Domain.Common;
-
-public readonly struct Result
+namespace AccountService.Domain.Common
 {
-    public bool IsSuccess { get; }
-    public bool IsFailure => !IsSuccess;
-    public string? Message { get; }
-
-    private Result(bool isSuccess, string? message)
+    public class Result
     {
-        IsSuccess = isSuccess;
-        Message = message;
+        public bool IsSuccess { get; }
+        public bool IsFailure => !IsSuccess;
+        public string? Error { get; }
+
+        protected Result(bool isSuccess, string? error)
+        {
+            IsSuccess = isSuccess;
+            Error = error;
+        }
+
+        public static Result Success()
+            => new(true, null);
+
+        public static Result Failure(string error)
+            => new(false, error);
     }
 
-    public static Result Success(string? message)
-        => new(true, message);
-
-    public static Result Failure(string? error)
-        => new(false, error);
-}
-
-public readonly struct Result<T>
-{
-    public bool IsSuccess { get; }
-    public bool IsFailure => !IsSuccess;
-    public string? Message { get; }
-    public T? Value { get; }
-    
-    private Result(bool isSuccess, string? message, T? value)
+    public class Result<T> : Result
     {
-        IsSuccess = isSuccess;
-        Message = message;
-        Value = value;
+        public T? Value { get; }
+
+        private Result(bool isSuccess, string? error, T? value)
+            : base(isSuccess, error)
+                => Value = value;
+
+        public static Result<T> Success(T value)
+            => new(true, null, value);
+
+        public new static Result<T> Failure(string error)
+        => new(false, error, default);
     }
-
-    public static Result<T> Success(string? message, T? value)
-        => new(true, message, value);
-
-    public static Result<T> Failure(string? error, T? value)
-        => new(false, error, value);
 }

@@ -9,7 +9,7 @@ src/
  │    │    └── Account/
  │    │         ├── Account.cs
  │    │         └── Events/
- │    │              └── AccountSignedUpDomainEvent.cs
+ │    │              └── AccountCreatedDomainEvent.cs
  │    ├── Common/
  │    │    ├── Identity.cs
  │    │    └── Result.cs

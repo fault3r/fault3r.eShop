@@ -13,5 +13,7 @@ public interface IAccountRepository
 
     Task AddAsync(Account account, CancellationToken cancellationToken = default);
 
-    void Remove(Account account);
+    Task UpdateAsync(Account account, CancellationToken cancellationToken = default);
+
+    Task DeleteAsync(Account account, CancellationToken cancellationToken = default);
 }
