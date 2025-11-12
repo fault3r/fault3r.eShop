@@ -4,6 +4,7 @@ using AccountService.Domain.Aggregates.Account;
 using AccountService.Domain.Common;
 using AccountService.Domain.Exceptions;
 using AccountService.Domain.Exceptions.Persistence;
+using AccountService.Domain.Factories;
 using AccountService.Domain.Repositories;
 using AccountService.Domain.ValueObjects;
 
@@ -30,9 +31,21 @@ public class AccountDomainService
         string fullName, string emailAddress, string passwordHash, CancellationToken cancellationToken = default)
     {
         var email = Email.From(emailAddress);
+        var existing = await _repository.GetByEmailAsync(email, cancellationToken);
+        if (existing is not null)
+            return Result<Account>.Failure("email address already in use");
 
-        var existing = await _repository.GetByEmailAsync(email);
-        if (existing is null)
-            return Result<Account>.Failure("Email already in use");
+        var createResult = AccountFactory.CreateNew(fullName, emailAddress, passwordHash);
+        if (createResult.IsFailure)
+            return createResult;
+
+        var account = createResult.Value!;
+        await _repository.AddAsync(account, cancellationToken);
+        int result = await _uow.CommitAsync(cancellationToken);
+
+        if (result <= 0)
+            return Result<Account>.Failure("failed to persist account");
+
+        return Result<Account>.Success(account);
     }
 }

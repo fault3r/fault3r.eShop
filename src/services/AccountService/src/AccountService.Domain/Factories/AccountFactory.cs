@@ -1,13 +1,14 @@
 
 using System;
 using AccountService.Domain.Aggregates.Account;
+using AccountService.Domain.Common;
 using AccountService.Domain.ValueObjects;
 
 namespace AccountService.Domain.Factories;
 
 public sealed class AccountFactory
 {
-    public static Account CreateNew(
+    public static Result<Account> CreateNew(
         string fullName,
         string email,
         string passwordHash,
