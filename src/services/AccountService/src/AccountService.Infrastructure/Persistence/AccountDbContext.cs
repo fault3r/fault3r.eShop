@@ -35,10 +35,13 @@ public class AccountDbContext : DbContext
 
         Set<OutboxMessage>().AddRange(outboxMessages);
 
+        var result = await base.SaveChangesAsync(cancellationToken);
+
+        if (result <= 0) throw new InvalidOperationException();
+
         foreach (var entry in ChangeTracker.Entries<AggregateRoot>())
             entry.Entity.ClearEvents();
-                        
-        return await base.SaveChangesAsync(cancellationToken);
+        return result;
     }
 }
 

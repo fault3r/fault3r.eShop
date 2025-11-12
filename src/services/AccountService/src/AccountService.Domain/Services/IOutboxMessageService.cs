@@ -7,4 +7,6 @@ namespace AccountService.Domain.Services;
 public interface IOutboxMessageService
 {
     Task EnqueueAsync(DomainEvent domainEvent, CancellationToken cancellationToken = default);
+
+    Task EnqueueRangeAsync(IEnumerable<DomainEvent> domainEvents, CancellationToken cancellationToken = default);
 }
