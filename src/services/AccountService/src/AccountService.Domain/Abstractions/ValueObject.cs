@@ -1,5 +1,6 @@
 
 using System;
+using AccountService.Domain.Interfaces;
 
 namespace AccountService.Domain.Abstractions;
 
@@ -22,6 +23,7 @@ public abstract class ValueObject
             hash.Add(obj.GetHashCode());
         return hash.ToHashCode();
     }
+
 
     public static bool operator ==(ValueObject? left, ValueObject? right)
         => left?.Equals(right) ?? false;
