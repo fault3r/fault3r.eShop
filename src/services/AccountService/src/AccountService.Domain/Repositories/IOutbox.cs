@@ -2,9 +2,9 @@
 using System;
 using AccountService.Domain.Abstractions;
 
-namespace AccountService.Domain.Services;
+namespace AccountService.Domain.Repositories;
 
-public interface IOutboxMessageService
+public interface IOutbox
 {
     Task EnqueueAsync(DomainEvent domainEvent, CancellationToken cancellationToken = default);
 

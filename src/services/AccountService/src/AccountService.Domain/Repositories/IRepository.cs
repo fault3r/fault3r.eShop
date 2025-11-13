@@ -5,13 +5,12 @@ using AccountService.Domain.ValueObjects;
 
 namespace AccountService.Domain.Repositories;
 
-public interface IAccountRepository
+public interface IRepository
 {
+    Task CreateAsync(Account account, CancellationToken cancellationToken = default);
+
     Task<Account?> GetByIdAsync(Identity id, CancellationToken cancellationToken = default);
-
     Task<Account?> GetByEmailAsync(Email email, CancellationToken cancellationToken = default);
-
-    Task AddAsync(Account account, CancellationToken cancellationToken = default);
 
     Task UpdateAsync(Account account, CancellationToken cancellationToken = default);
 

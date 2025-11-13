@@ -1,6 +1,5 @@
 
 using System;
-using AccountService.Domain.Abstractions;
 using AccountService.Domain.Aggregates.Account;
 using AccountService.Infrastructure.Messaging.Outbox;
 using AccountService.Infrastructure.Persistence.Configurations;
@@ -20,28 +19,7 @@ public class AccountDbContext : DbContext
     protected override void OnModelCreating(ModelBuilder builder)
     {
         builder.ApplyConfiguration(new AccountConfiguration());
-    }
-
-    public override async Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
-    {
-        var domainEvents = ChangeTracker
-            .Entries<Account>()
-            .SelectMany(e => e.Entity.DomainEvents)
-            .ToList();
-
-        var outboxMessages = domainEvents
-            .Select(OutboxMessage.FromDomainEvent)
-            .ToList();
-
-        Set<OutboxMessage>().AddRange(outboxMessages);
-
-        var result = await base.SaveChangesAsync(cancellationToken);
-
-        if (result <= 0) throw new InvalidOperationException();
-
-        foreach (var entry in ChangeTracker.Entries<AggregateRoot>())
-            entry.Entity.ClearEvents();
-        return result;
+        base.OnModelCreating(builder);
     }
 }
 

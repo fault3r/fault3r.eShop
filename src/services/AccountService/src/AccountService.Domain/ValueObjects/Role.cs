@@ -22,7 +22,7 @@ public sealed class Role : ValueObject
     {
         if (string.IsNullOrWhiteSpace(name))
             throw new MissingRoleException();
-            
+
         var normalized = name.Trim().ToLowerInvariant();
         Name = normalized switch
         {
@@ -32,7 +32,7 @@ public sealed class Role : ValueObject
         };
     }
 
-    public static readonly Role User  = new(RoleType.User);
+    public static readonly Role User = new(RoleType.User);
     public static readonly Role Admin = new(RoleType.Admin);
 
     public static Role From(string input)
@@ -46,7 +46,7 @@ public sealed class Role : ValueObject
 
     public override string ToString()
         => Name.ToString();
-        
+
     protected override IEnumerable<object> GetEqualityComponents()
     {
         yield return Name;

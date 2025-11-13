@@ -3,7 +3,6 @@ using System;
 using AccountService.Domain.Aggregates.Account;
 using AccountService.Domain.Common;
 using AccountService.Domain.Exceptions;
-using AccountService.Domain.Exceptions.Persistence;
 using AccountService.Domain.Factories;
 using AccountService.Domain.Repositories;
 using AccountService.Domain.ValueObjects;
@@ -12,19 +11,19 @@ namespace AccountService.Domain.Services;
 
 public class AccountDomainService
 {
-    private readonly IAccountRepository _repository;
+    private readonly IRepository _repository;
     private readonly IUnitOfWork _uow;
-    private readonly IOutboxMessageService _outbox;
+    private readonly IOutbox _outbox;
 
     public AccountDomainService(
-        IAccountRepository repository, IUnitOfWork uow, IOutboxMessageService outbox)
+        IRepository repository, IUnitOfWork uow, IOutbox outbox)
     {
         _repository = repository
-            ?? throw new MissingRepositoryException();
+            ?? throw new DomainException("Repository is required");
         _uow = uow
-            ?? throw new MissingUnitOfWorkException();
+            ?? throw new DomainException("UnitOfWork is required");
         _outbox = outbox
-            ?? throw new MissingOutBoxException();
+            ?? throw new DomainException("Outbox is required");
     }
 
     public async Task<Result<Account>> SignUpAsync(
@@ -40,10 +39,10 @@ public class AccountDomainService
             return createResult;
 
         var account = createResult.Value!;
-        await _repository.AddAsync(account, cancellationToken);
-        int result = await _uow.CommitAsync(cancellationToken);
+        await _repository.CreateAsync(account, cancellationToken);
+        bool result = await _uow.CommitAsync(cancellationToken);
 
-        if (result <= 0)
+        if (!result)
             return Result<Account>.Failure("failed to persist account");
 
         return Result<Account>.Success(account);
