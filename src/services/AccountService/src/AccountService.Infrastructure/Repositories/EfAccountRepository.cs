@@ -9,7 +9,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace AccountService.Infrastructure.Repositories;
 
-public class EfAccountRepository : IAccountRepository
+public class EfAccountRepository : IRepository
 {
     private readonly AccountDbContext _db;
 

@@ -40,9 +40,10 @@ public class AccountDomainService
 
         var account = createResult.Value!;
         await _repository.CreateAsync(account, cancellationToken);
-        bool result = await _uow.CommitAsync(cancellationToken);
+        await _outbox.EnqueueAsync(account.DomainEvents, cancellationToken);
+        int result = await _uow.CommitAsync(cancellationToken);
 
-        if (!result)
+        if (result <= 0)
             return Result<Account>.Failure("failed to persist account");
 
         return Result<Account>.Success(account);

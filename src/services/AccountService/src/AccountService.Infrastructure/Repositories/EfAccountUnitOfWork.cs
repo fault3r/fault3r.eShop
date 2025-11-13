@@ -19,30 +19,21 @@ public class EfUnitOfWork : IUnitOfWork
 
     public async Task<int> CommitAsync(CancellationToken cancellationToken = default)
     {
-        var domainEvents = _db.ChangeTracker
-            .Entries<AggregateRoot>()
-            .SelectMany(e => e.Entity.DomainEvents)
-            .ToList();
-
-        if (!domainEvents.Any())
-            return await _db.SaveChangesAsync(cancellationToken);
-
-        var outboxMessages = domainEvents
-            .Select(OutboxMessage.FromDomainEvent)
-            .ToList();
+        if (!_db.ChangeTracker.HasChanges())
+            return await _db.SaveChangesAsync();
 
         int result = 0;
         await ExecuteTransactionalAsync(async () =>
         {
-            await _db.Set<OutboxMessage>().AddRangeAsync(outboxMessages, cancellationToken);
             result = await _db.SaveChangesAsync(cancellationToken);
+
+            foreach (var entry in _db.ChangeTracker.Entries<AggregateRoot>())
+                entry.Entity.ClearEvents();
+
         }, cancellationToken);
 
         if (result <= 0)
-            throw new UnitOfWorkException("failed to persist changes");
-
-        foreach (var entry in _db.ChangeTracker.Entries<AggregateRoot>())
-            entry.Entity.ClearEvents();
+            throw new UnitOfWorkException("Failed to persist changes");
 
         return result;
     }
