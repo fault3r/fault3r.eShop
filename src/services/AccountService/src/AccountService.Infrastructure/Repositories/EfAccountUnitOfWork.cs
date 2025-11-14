@@ -42,7 +42,6 @@ public class EfUnitOfWork : IUnitOfWork
     {
         await using var process
             = await _db.Database.BeginTransactionAsync(cancellationToken);
-
         try
         {
             await transaction();
