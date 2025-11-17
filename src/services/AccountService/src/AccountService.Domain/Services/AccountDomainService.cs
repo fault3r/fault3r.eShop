@@ -5,7 +5,6 @@ using AccountService.Domain.Common;
 using AccountService.Domain.Exceptions;
 using AccountService.Domain.Factories;
 using AccountService.Domain.Repositories;
-using AccountService.Domain.ValueObjects;
 
 namespace AccountService.Domain.Services;
 
@@ -29,18 +28,16 @@ public class AccountDomainService
     public async Task<Result<Account>> SignUpAsync(
         string fullName, string emailAddress, string passwordHash, CancellationToken cancellationToken = default)
     {
-        var createResult = AccountFactory.CreateNew(fullName, emailAddress, passwordHash);        
-        if (createResult.IsFailure)
-            return createResult;
+        try
+        {
+            Account created = AccountFactory
+                .CreateNew(fullName, emailAddress, passwordHash);
 
-        var account = createResult.Value!;
-        await _repository.CreateAsync(account, cancellationToken);
-        await _outbox.EnqueueAsync(account.DomainEvents, cancellationToken);
-        int result = await _uow.CommitAsync(cancellationToken);
+            await _repository.CreateAsync(created, cancellationToken);
+            await _outbox.DispatchAsync(created.DomainEvents, cancellationToken);
 
-        if (result <= 0)
-            return Result<Account>.Failure("failed to persist account");
+            int result = await _uow.CommitAsync(cancellationToken);
+        
 
-        return Result<Account>.Success(account);
     }
 }

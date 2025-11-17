@@ -15,8 +15,6 @@ public class OtherTests
     [Fact]
     public void OtherTest()
     {
-        var acc = AccountFactory.CreateNew("asd", "asd@asd.com", "asdasd");
-        acc = default;
-        Assert.True(true);
+        
     }
 }

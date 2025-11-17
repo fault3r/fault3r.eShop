@@ -9,6 +9,7 @@ using AccountService.Domain.Exceptions.PasswordHash;
 using AccountService.Domain.Exceptions.Role;
 using AccountService.Domain.Exceptions.Status;
 using AccountService.Domain.Common;
+using System.Reflection.Metadata.Ecma335;
 
 namespace AccountService.Domain.Aggregates.Account;
 
@@ -41,13 +42,13 @@ public sealed class Account : AggregateRoot
         Status = status;
     }
 
-    internal static Result<Account> Create(Identity id, string fullName, Email email, string passwordHash, Role role, Status status)
+    internal static Account Create(Identity id, string fullName, Email email, string passwordHash, Role role, Status status)
     {
         var account = new Account(id, fullName, email, passwordHash, role, status);
         account.RaiseEvent(new AccountCreatedDomainEvent(
             accountId: account.Id,
             email: account.Email));
-        return Result<Account>.Success(account);
+        return account;
     }
 
     public void ChangeFullName(string newFullName)
@@ -62,5 +63,5 @@ public sealed class Account : AggregateRoot
             fullName: FullName));
     }
 
-     public Account(Identity id ) : base(id){ } //
+    //  public Account(Identity id ) : base(id){ } //
 }

@@ -1,9 +1,8 @@
 
 using System;
 using System.Collections.ObjectModel;
-using AccountService.Domain.Abstractions;
 using AccountService.Domain.Interfaces;
-using AccountService.Domain.Repositories;
+using AccountService.Domain.Services;
 using AccountService.Infrastructure.Exceptions.Persistence;
 using AccountService.Infrastructure.Messaging.Outbox;
 using AccountService.Infrastructure.Persistence;
@@ -20,7 +19,7 @@ public class EfOutbox : IOutbox
             ?? throw new DbContextException("DbContext is required");
     }
 
-    public async Task EnqueueAsync(ReadOnlyCollection<IDomainEvent> domainEvents, CancellationToken cancellationToken = default)
+    public async Task DispatchAsync(ReadOnlyCollection<IDomainEvent> domainEvents, CancellationToken cancellationToken = default)
     {
         if (!domainEvents.Any())
             return;

@@ -8,7 +8,7 @@ namespace AccountService.Domain.Factories;
 
 public sealed class AccountFactory
 {
-    public static Result<Account> CreateNew(
+    public static Account CreateNew(
         string fullName,
         string email,
         string passwordHash,
