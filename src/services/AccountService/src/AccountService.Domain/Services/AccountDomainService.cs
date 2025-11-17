@@ -29,12 +29,7 @@ public class AccountDomainService
     public async Task<Result<Account>> SignUpAsync(
         string fullName, string emailAddress, string passwordHash, CancellationToken cancellationToken = default)
     {
-        var email = Email.From(emailAddress);
-        var existing = await _repository.GetByEmailAsync(email, cancellationToken);
-        if (existing is not null)
-            return Result<Account>.Failure("email address already in use");
-
-        var createResult = AccountFactory.CreateNew(fullName, emailAddress, passwordHash);
+        var createResult = AccountFactory.CreateNew(fullName, emailAddress, passwordHash);        
         if (createResult.IsFailure)
             return createResult;
 

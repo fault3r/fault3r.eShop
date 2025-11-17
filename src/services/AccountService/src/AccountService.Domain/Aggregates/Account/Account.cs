@@ -50,8 +50,6 @@ public sealed class Account : AggregateRoot
         return Result<Account>.Success(account);
     }
 
-    private Account(Identity id) : base(id) { }
-
     public void ChangeFullName(string newFullName)
     {
         if (string.IsNullOrWhiteSpace(newFullName))
@@ -64,13 +62,5 @@ public sealed class Account : AggregateRoot
             fullName: FullName));
     }
 
-    public void ConfirmEmail()
-    {
-        if (Status == Status.Active)
-            return;
-        Status = Status.Active;
-        RaiseEvent(new AccountConfirmedDomainEvent(
-            accountId: Id,
-            email: Email));
-    }
+     public Account(Identity id ) : base(id){ } //
 }

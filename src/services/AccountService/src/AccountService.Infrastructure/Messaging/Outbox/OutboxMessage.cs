@@ -24,5 +24,5 @@ public sealed class OutboxMessage
     public static OutboxMessage FromDomainEvent(IDomainEvent domainEvent)
         => new(domainEvent);
 
-    private OutboxMessage() { }
+    private OutboxMessage() { } //for EF Core
 }
