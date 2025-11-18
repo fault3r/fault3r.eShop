@@ -37,7 +37,16 @@ public class AccountDomainService
             await _outbox.DispatchAsync(created.DomainEvents, cancellationToken);
 
             int result = await _uow.CommitAsync(cancellationToken);
-        
+
+            if (result > 0)
+                return Result<Account>.Success(created);
+
+            return Result.Failure("Commit failed, no changes persisted");
+        }
+        catch (Exception ex)
+        {
+            return Result.Failure<Account>(ex.Message);
+        }
 
     }
 }
