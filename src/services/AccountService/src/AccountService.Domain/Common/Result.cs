@@ -1,39 +1,30 @@
 
 using System;
 
-namespace AccountService.Domain.Common
+namespace AccountService.Domain.Common;
+
+public readonly struct Result
 {
-    public class Result
+    public bool IsSuccess { get; }
+    public string? Error { get; }
+
+    public bool IsFailure
+        => !IsSuccess;
+
+    private Result(bool isSuccess, string? error)
     {
-        public bool IsSuccess { get; }
-        public bool IsFailure => !IsSuccess;
-        public string? Error { get; }
-
-        protected Result(bool isSuccess, string? error)
-        {
-            IsSuccess = isSuccess;
-            Error = error;
-        }
-
-        public static Result Success()
-            => new(true, null);
-
-        public static Result Failure(string error)
-            => new(false, error);
+        IsSuccess = isSuccess;
+        Error = error;
     }
 
-    public class Result<T> : Result
+    public static Result Success()
+        => new(true, null);
+
+    public static Result Failure(string error)
     {
-        public T? Value { get; }
+        if (string.IsNullOrWhiteSpace(error))
+            throw new Domain.Exceptions.DomainException("Failure result must have an error message.");
 
-        private Result(bool isSuccess, string? error, T? value)
-            : base(isSuccess, error)
-                => Value = value;
-
-        public static Result<T> Success(T value)
-            => new(true, null, value);
-
-        public new static Result<T> Failure(string error)
-        => new(false, error, default);
+        return new(false, error);
     }
 }

@@ -41,11 +41,12 @@ public class AccountDomainService
             if (result > 0)
                 return Result<Account>.Success(created);
 
-            return Result.Failure("Commit failed, no changes persisted");
+            return Result.Failure(
+                "commit failed, no changes persisted");
         }
         catch (Exception ex)
         {
-            return Result.Failure<Account>(ex.Message);
+            return Result.Failure(ex.Message);
         }
 
     }
