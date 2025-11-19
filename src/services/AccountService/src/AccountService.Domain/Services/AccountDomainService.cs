@@ -34,20 +34,21 @@ public class AccountDomainService
                 .CreateNew(fullName, emailAddress, passwordHash);
 
             await _repository.CreateAsync(created, cancellationToken);
-            await _outbox.DispatchAsync(created.DomainEvents, cancellationToken);
+            await _outbox.EnqueueAsync(created.DomainEvents, cancellationToken);
 
-            int result = await _uow.CommitAsync(cancellationToken);
+            bool result = await _uow.CommitAsync(cancellationToken);
 
-            if (result > 0)
-                return Result<Account>.Success(created);
+            if (!result)
+                return Result<Account>.Failure(
+                    "sign-up failed!");
+            
+            return Result<Account>.Success(created);
 
-            return Result.Failure(
-                "commit failed, no changes persisted");
         }
         catch (Exception ex)
         {
-            return Result.Failure(ex.Message);
+            return Result<Account>.Failure(
+                $"sign-up failed due to an exception! {ex.Message}");
         }
-
     }
 }
