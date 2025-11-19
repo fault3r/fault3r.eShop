@@ -35,15 +35,13 @@ public class AccountDomainService
 
             await _repository.CreateAsync(created, cancellationToken);
             await _outbox.EnqueueAsync(created.DomainEvents, cancellationToken);
+            created.ClearEvents();
 
             bool result = await _uow.CommitAsync(cancellationToken);
 
-            if (!result)
-                return Result<Account>.Failure(
-                    "sign-up failed!");
-            
-            return Result<Account>.Success(created);
-
+            return result
+                ? Result<Account>.Success(created)
+                : Result<Account>.Failure("Account sign-up could not be completed.");
         }
         catch (Exception ex)
         {

@@ -45,7 +45,7 @@ public readonly struct Result<T>
         Value = value;
         Error = error;
     }
-    
+
     public static Result<T> Success(T value)
     {
         if (value is null)

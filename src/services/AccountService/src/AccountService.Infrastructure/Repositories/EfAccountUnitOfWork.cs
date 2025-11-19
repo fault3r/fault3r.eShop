@@ -17,19 +17,15 @@ public class EfUnitOfWork : IUnitOfWork
             ?? throw new DbContextException("DbContext is required");
     }
 
-    public async Task<int> CommitAsync(CancellationToken cancellationToken = default)
+    public async Task<bool> CommitAsync(CancellationToken cancellationToken = default)
     {
         if (!_db.ChangeTracker.HasChanges())
-            return await _db.SaveChangesAsync();
+            return await _db.SaveChangesAsync(cancellationToken);
 
         int result = 0;
         await ExecuteTransactionalAsync(async () =>
         {
             result = await _db.SaveChangesAsync(cancellationToken);
-
-            foreach (var entry in _db.ChangeTracker.Entries<AggregateRoot>())
-                entry.Entity.ClearEvents();
-
         }, cancellationToken);
 
         if (result <= 0)
