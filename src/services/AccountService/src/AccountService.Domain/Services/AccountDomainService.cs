@@ -35,8 +35,6 @@ public class AccountDomainService
 
             await _repository.CreateAsync(created, cancellationToken);
             await _outbox.EnqueueAsync(created.DomainEvents, cancellationToken);
-            created.ClearEvents();
-
             bool result = await _uow.CommitAsync(cancellationToken);
 
             return result
