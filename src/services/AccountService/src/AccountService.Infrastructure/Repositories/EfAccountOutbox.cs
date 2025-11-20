@@ -19,7 +19,7 @@ public class EfOutbox : IOutbox
             ?? throw new DbContextException("DbContext is required");
     }
 
-    public async Task DispatchAsync(ReadOnlyCollection<IDomainEvent> domainEvents, CancellationToken cancellationToken = default)
+    public async Task EnqueueAsync(IEnumerable<IDomainEvent> domainEvents, CancellationToken cancellationToken = default)
     {
         if (!domainEvents.Any())
             return;
@@ -28,6 +28,7 @@ public class EfOutbox : IOutbox
             .Select(OutboxMessage.FromDomainEvent)
             .ToList();
 
-        await _db.Set<OutboxMessage>().AddRangeAsync(outboxMessages, cancellationToken);
+        await _db.Set<OutboxMessage>()
+            .AddRangeAsync(outboxMessages, cancellationToken);
     }
 }

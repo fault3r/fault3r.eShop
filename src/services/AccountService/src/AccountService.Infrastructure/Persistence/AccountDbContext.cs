@@ -19,7 +19,6 @@ public class AccountDbContext : DbContext
     protected override void OnModelCreating(ModelBuilder builder)
     {
         builder.ApplyConfiguration(new AccountConfiguration());
-        base.OnModelCreating(builder);
     }
 }
 

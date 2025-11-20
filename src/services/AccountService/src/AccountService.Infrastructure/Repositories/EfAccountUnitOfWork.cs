@@ -1,8 +1,6 @@
 using System;
-using AccountService.Domain.Abstractions;
 using AccountService.Domain.Repositories;
 using AccountService.Infrastructure.Exceptions.Persistence;
-using AccountService.Infrastructure.Messaging.Outbox;
 using AccountService.Infrastructure.Persistence;
 
 namespace AccountService.Infrastructure.Repositories;
@@ -20,33 +18,28 @@ public class EfUnitOfWork : IUnitOfWork
     public async Task<bool> CommitAsync(CancellationToken cancellationToken = default)
     {
         if (!_db.ChangeTracker.HasChanges())
-            return await _db.SaveChangesAsync(cancellationToken);
+            return true;
 
-        int result = 0;
-        await ExecuteTransactionalAsync(async () =>
-        {
-            result = await _db.SaveChangesAsync(cancellationToken);
-        }, cancellationToken);
+        int result = await SaveChangesTransactionalAsync(cancellationToken);
 
-        if (result <= 0)
-            throw new UnitOfWorkException("Failed to persist changes");
-
-        return result;
+        return result > 0;
     }
 
-    private async Task ExecuteTransactionalAsync(Func<Task> transaction, CancellationToken cancellationToken = default)
+    private async Task<int> SaveChangesTransactionalAsync(CancellationToken cancellationToken = default)
     {
-        await using var process
-            = await _db.Database.BeginTransactionAsync(cancellationToken);
+        await using var process = await _db.Database
+            .BeginTransactionAsync(cancellationToken);
         try
         {
-            await transaction();
+            int changes = await _db.SaveChangesAsync(cancellationToken);
+            
             await process.CommitAsync(cancellationToken);
+            return changes;
         }
-        catch (Exception e)
+        catch 
         {
             await process.RollbackAsync(cancellationToken);
-            throw new UnitOfWorkException($"transaction failed: {e.Message}");
+            return 0;
         }
     }
 }

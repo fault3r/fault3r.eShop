@@ -16,6 +16,7 @@ public sealed class OutboxMessage
     {
         if (domainEvent is null)
             throw new MissingDomainEventException();
+            
         EnqueuedOn = domainEvent.OccurredOn;
         Type = domainEvent.GetType().Name;
         Payload = JsonSerializer.Serialize(domainEvent, domainEvent.GetType());

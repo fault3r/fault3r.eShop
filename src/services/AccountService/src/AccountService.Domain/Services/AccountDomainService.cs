@@ -19,8 +19,10 @@ public class AccountDomainService
     {
         _repository = repository
             ?? throw new DomainException("Repository is required");
+
         _uow = uow
             ?? throw new DomainException("UnitOfWork is required");
+
         _outbox = outbox
             ?? throw new DomainException("Outbox is required");
     }
@@ -35,11 +37,14 @@ public class AccountDomainService
 
             await _repository.CreateAsync(created, cancellationToken);
             await _outbox.EnqueueAsync(created.DomainEvents, cancellationToken);
-            bool result = await _uow.CommitAsync(cancellationToken);
 
-            return result
-                ? Result<Account>.Success(created)
-                : Result<Account>.Failure("Account sign-up could not be completed.");
+            bool committed = await _uow.CommitAsync(cancellationToken);
+
+            if (!committed)
+                return Result<Account>.Failure("Account sign-up could not be completed.");
+                
+            created.ClearEvents();
+            return Result<Account>.Success(created);
         }
         catch (Exception ex)
         {

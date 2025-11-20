@@ -7,5 +7,5 @@ namespace AccountService.Domain.Services;
 
 public interface IOutbox
 {
-    Task EnqueueAsync(ReadOnlyCollection<IDomainEvent> domainEvents, CancellationToken cancellationToken = default);
+    Task EnqueueAsync(IEnumerable<IDomainEvent> domainEvents, CancellationToken cancellationToken = default);
 }
