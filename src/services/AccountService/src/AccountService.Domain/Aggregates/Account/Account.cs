@@ -8,8 +8,6 @@ using AccountService.Domain.Exceptions.FullName;
 using AccountService.Domain.Exceptions.PasswordHash;
 using AccountService.Domain.Exceptions.Role;
 using AccountService.Domain.Exceptions.Status;
-using AccountService.Domain.Common;
-using System.Reflection.Metadata.Ecma335;
 
 namespace AccountService.Domain.Aggregates.Account;
 
@@ -63,5 +61,5 @@ public sealed class Account : AggregateRoot
             fullName: FullName));
     }
 
-    //  public Account(Identity id ) : base(id){ } //
+    private Account() : base(default!) { } //for EF Core
 }

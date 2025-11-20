@@ -8,48 +8,48 @@ namespace AccountService.Infrastructure.Persistence.Configurations;
 
 public sealed class AccountConfiguration : IEntityTypeConfiguration<Account>
 {
-    public void Configure(EntityTypeBuilder<Account> account)
+    public void Configure(EntityTypeBuilder<Account> builder)
     {
-        account.ToTable("Accounts");
+        builder.ToTable("Accounts");
 
-        account.HasKey(p => p.Id);
-        account.Property(p => p.Id)
+        builder.HasKey(p => p.Id);
+        builder.Property(p => p.Id)
             .HasConversion(
                 id => id.Value,
                 value => new Identity(value))
             .ValueGeneratedNever();
 
-        account.Property(p => p.FullName)
+        builder.Property(p => p.FullName)
             .IsRequired()
             .HasMaxLength(128);
 
-        account.Property(p => p.Email)
+        builder.Property(p => p.Email)
             .HasConversion(
                 email => email.Address,
                 value => new Email(value))
             .IsRequired()
             .HasMaxLength(256);
-        account.HasIndex(p => p.Email)
+        builder.HasIndex(p => p.Email)
             .IsUnique();
 
-        account.Property(p => p.PasswordHash)
+        builder.Property(p => p.PasswordHash)
             .IsRequired()
             .HasMaxLength(1024);
 
-        account.Property(p => p.Role)
+        builder.Property(p => p.Role)
             .HasConversion(
-                role => role.Name,
+                role => role.ToString(),
                 name => new Role(name))
             .IsRequired()
             .HasMaxLength(16);
 
-        account.Property(a => a.Status)
+        builder.Property(a => a.Status)
             .HasConversion(
-                status => status.Value,
+                status => status.ToString(),
                 value => new Status(value))
             .IsRequired()
             .HasMaxLength(32);
 
-        account.Ignore(p => p.DomainEvents);
+        builder.Ignore(p => p.DomainEvents);
     }
 }

@@ -8,6 +8,7 @@ namespace AccountService.Infrastructure.Messaging.Outbox;
 
 public sealed class OutboxMessage
 {
+    public int Id { get; set; }
     public DateTime EnqueuedOn { get; init; }
     public string Type { get; init; } = default!;
     public string Payload { get; init; } = default!;
