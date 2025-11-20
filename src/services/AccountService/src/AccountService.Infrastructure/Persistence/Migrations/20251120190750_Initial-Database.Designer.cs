@@ -9,10 +9,10 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 #nullable disable
 
-namespace AccountService.Infrastructure.Migrations
+namespace AccountService.Infrastructure.Persistence.Migrations
 {
     [DbContext(typeof(AccountDbContext))]
-    [Migration("20251120185606_Initial-Database")]
+    [Migration("20251120190750_Initial-Database")]
     partial class InitialDatabase
     {
         /// <inheritdoc />
@@ -38,12 +38,14 @@ namespace AccountService.Infrastructure.Migrations
                     b.Property<string>("FullName")
                         .IsRequired()
                         .HasMaxLength(128)
-                        .HasColumnType("character varying(128)");
+                        .HasColumnType("character varying(128)")
+                        .HasColumnName("Name");
 
                     b.Property<string>("PasswordHash")
                         .IsRequired()
                         .HasMaxLength(1024)
-                        .HasColumnType("character varying(1024)");
+                        .HasColumnType("character varying(1024)")
+                        .HasColumnName("Password");
 
                     b.Property<string>("Role")
                         .IsRequired()

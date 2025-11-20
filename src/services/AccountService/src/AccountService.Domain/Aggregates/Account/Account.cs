@@ -61,5 +61,5 @@ public sealed class Account : AggregateRoot
             fullName: FullName));
     }
 
-    private Account() : base(default!) { } //for EF Core
+    private Account() : base(default!) { } // for EF Core
 }

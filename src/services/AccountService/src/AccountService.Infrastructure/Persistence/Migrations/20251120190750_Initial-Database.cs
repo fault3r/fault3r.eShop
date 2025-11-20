@@ -4,7 +4,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 #nullable disable
 
-namespace AccountService.Infrastructure.Migrations
+namespace AccountService.Infrastructure.Persistence.Migrations
 {
     /// <inheritdoc />
     public partial class InitialDatabase : Migration
@@ -17,9 +17,9 @@ namespace AccountService.Infrastructure.Migrations
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uuid", nullable: false),
-                    FullName = table.Column<string>(type: "character varying(128)", maxLength: 128, nullable: false),
+                    Name = table.Column<string>(type: "character varying(128)", maxLength: 128, nullable: false),
                     Email = table.Column<string>(type: "character varying(256)", maxLength: 256, nullable: false),
-                    PasswordHash = table.Column<string>(type: "character varying(1024)", maxLength: 1024, nullable: false),
+                    Password = table.Column<string>(type: "character varying(1024)", maxLength: 1024, nullable: false),
                     Role = table.Column<string>(type: "character varying(16)", maxLength: 16, nullable: false),
                     Status = table.Column<string>(type: "character varying(32)", maxLength: 32, nullable: false)
                 },

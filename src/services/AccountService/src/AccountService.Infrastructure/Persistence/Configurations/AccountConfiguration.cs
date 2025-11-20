@@ -21,7 +21,8 @@ public sealed class AccountConfiguration : IEntityTypeConfiguration<Account>
 
         builder.Property(p => p.FullName)
             .IsRequired()
-            .HasMaxLength(128);
+            .HasMaxLength(128)
+            .HasColumnName("Name");
 
         builder.Property(p => p.Email)
             .HasConversion(
@@ -34,7 +35,8 @@ public sealed class AccountConfiguration : IEntityTypeConfiguration<Account>
 
         builder.Property(p => p.PasswordHash)
             .IsRequired()
-            .HasMaxLength(1024);
+            .HasMaxLength(1024)
+            .HasColumnName("Password");
 
         builder.Property(p => p.Role)
             .HasConversion(
