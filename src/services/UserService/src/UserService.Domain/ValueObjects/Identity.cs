@@ -15,7 +15,7 @@ public sealed class Identity : ValueObject
     public Identity(Guid value)
     {
         if (value == Guid.Empty)
-            throw new EmptyIdentityGuidException();
+            throw new EmptyIdentityValueException();
 
         Value = value;
     }
@@ -23,7 +23,7 @@ public sealed class Identity : ValueObject
     public Identity(string value)
     {
         if (string.IsNullOrWhiteSpace(value))
-            throw new EmptyIdentityGuidException();
+            throw new EmptyIdentityValueException();
 
         var normalized = value.Trim();
         if (!IsValid(normalized))
@@ -33,7 +33,7 @@ public sealed class Identity : ValueObject
     }
 
     private static bool IsValid(string input)
-        => Guid.TryParse(input, out var result) && result != Guid.Empty;
+        => Guid.TryParse(input, out var guid) && guid != Guid.Empty;
 
     public static Identity New() => new();
     public static Identity From(Guid guid) => new(guid);
