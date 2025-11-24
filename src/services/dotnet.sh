@@ -23,7 +23,7 @@ case "$operation" in
 esac
 
 solutions=(
-  "AccountService/AccountService.sln"
+  "AccountService/UserService.sln"
   "CatalogService/CatalogService.sln"
 )
 
