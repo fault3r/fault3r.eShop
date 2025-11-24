@@ -17,13 +17,12 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{A5F10AFC
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UserService.Tests", "tests\UserService.Tests\UserService.Tests.csproj", "{7557037A-3035-4CC9-AB6F-2593D27D1114}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "docs", "docs", "{208BA388-4CEE-2CBF-559C-5607C099C1F8}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Release|Any CPU = Release|Any CPU
-	EndGlobalSection
-	GlobalSection(SolutionProperties) = preSolution
-		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 		{644580FA-C78E-4682-83B9-73EEA9168379}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
@@ -46,6 +45,9 @@ Global
 		{7557037A-3035-4CC9-AB6F-2593D27D1114}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7557037A-3035-4CC9-AB6F-2593D27D1114}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7557037A-3035-4CC9-AB6F-2593D27D1114}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{644580FA-C78E-4682-83B9-73EEA9168379} = {3C05F590-2139-437E-81CB-4C654DEE1868}
