@@ -12,20 +12,20 @@ public sealed class Identity : ValueObject<Identity>
     public Identity()
         => Value = Guid.NewGuid();
 
-    public Identity(Guid value)
+    public Identity(Guid guid)
     {
-        if (value == Guid.Empty)
+        if (guid == Guid.Empty)
             throw new EmptyIdentityValueException();
 
-        Value = value;
+        Value = guid;
     }
 
-    public Identity(string value)
+    public Identity(string guidString)
     {
-        if (string.IsNullOrWhiteSpace(value))
+        if (string.IsNullOrWhiteSpace(guidString))
             throw new EmptyIdentityValueException();
 
-        var normalized = value
+        var normalized = guidString
             .Trim();            
         if (!IsValid(normalized))
             throw new InvalidIdentityValueException(normalized);
@@ -33,12 +33,17 @@ public sealed class Identity : ValueObject<Identity>
         Value = Guid.Parse(normalized);
     }
 
-    private static bool IsValid(string input)
-        => Guid.TryParse(input, out var guid) && guid != Guid.Empty;
+    private static bool IsValid(string guidString)
+        => Guid.TryParse(guidString, out var guid) && guid != Guid.Empty;
 
-    public static Identity New() => new();
-    public static Identity From(Guid guid) => new(guid);
-    public static Identity Parse(string value) => new(value);
+    public static Identity New() 
+        => new();
+
+    public static Identity From(Guid guid)
+        => new(guid);
+
+    public static Identity Parse(string guidString)
+        => new(guidString);
 
     public override string ToString()
         => Value.ToString();

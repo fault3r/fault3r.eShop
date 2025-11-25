@@ -7,7 +7,7 @@ namespace UserService.Domain.ValueObjects;
 
 public sealed class Role : ValueObject<Role>
 {
-    public RoleType Name { get; }
+    public RoleType Value { get; }
 
     public enum RoleType
     {
@@ -15,18 +15,18 @@ public sealed class Role : ValueObject<Role>
         Admin = 101,
     }
 
-    public Role(RoleType name)
-        => Name = name;
+    public Role(RoleType roleType)
+        => Value = roleType;
 
-    public Role(string name)
+    public Role(string roleName)
     {
-        if (string.IsNullOrWhiteSpace(name))
+        if (string.IsNullOrWhiteSpace(roleName))
             throw new MissingRoleNameException();
 
-        var normalized = name
+        var normalized = roleName
             .Trim()
             .ToLowerInvariant();
-        Name = normalized switch
+        Value = normalized switch
         {
             "user" => RoleType.User,
             "admin" => RoleType.Admin,
@@ -44,16 +44,16 @@ public sealed class Role : ValueObject<Role>
         => new(roleName);
 
     public override string ToString()
-        => Name.ToString();
+        => Value.ToString();
 
     public bool IsUser
-        => Name == RoleType.User;
+        => Value == RoleType.User;
 
     public bool IsAdmin
-        => Name == RoleType.Admin;
+        => Value == RoleType.Admin;
 
     protected override IEnumerable<object?> GetEqualityComponents()
     {
-        yield return Name;
+        yield return Value;
     }
 }

@@ -8,14 +8,14 @@ namespace UserService.Domain.ValueObjects;
 
 public sealed class Email : ValueObject<Email>
 {
-    public MailAddress Address { get; }
+    public MailAddress Value { get; }
 
-    public Email(MailAddress address)
+    public Email(MailAddress mailAddress)
     {
-        if (address is null)
+        if (mailAddress is null)
             throw new EmptyEmailAddressException();
 
-        Address = address;
+        Value = mailAddress;
     }
 
     public Email(string address)
@@ -29,7 +29,7 @@ public sealed class Email : ValueObject<Email>
         if (!IsValid(normalized))
             throw new InvalidEmailAddressException(normalized);
 
-        Address = new MailAddress(normalized);
+        Value = new MailAddress(normalized);
     }
 
     private static bool IsValid(string address)
@@ -42,10 +42,10 @@ public sealed class Email : ValueObject<Email>
         => new(address);
 
     public override string ToString()
-        => Address.Address;
+        => Value.Address;
 
     protected override IEnumerable<object?> GetEqualityComponents()
     {
-        yield return Address;
+        yield return Value;
     }
 }
