@@ -26,8 +26,7 @@ public abstract class ValueObject
     }
 
     public static bool operator ==(ValueObject? left, ValueObject? right)
-        => ReferenceEquals(left, right)
-        || (left?.Equals(right) ?? false);
+        => ReferenceEquals(left, right) || (left?.Equals(right) ?? false);
 
     public static bool operator !=(ValueObject? left, ValueObject? right)
         => !(left == right);

@@ -12,9 +12,9 @@ public sealed class Email : ValueObject
 
     public Email(MailAddress address)
     {
-        if(address is null)
-            throw new EmptyEmailAddressException();        
-        
+        if (address is null)
+            throw new EmptyEmailAddressException();
+
         Address = address;
     }
 
@@ -35,8 +35,8 @@ public sealed class Email : ValueObject
     private static bool IsValid(string address)
        => MailAddress.TryCreate(address, out MailAddress? _);
 
-    public static Email From(MailAddress mailAddress) => new(mailAddress);  
-    public static Email Parse(string input) => new(input);  
+    public static Email From(MailAddress mailAddress) => new(mailAddress);
+    public static Email Parse(string address) => new(address);
 
     public override string ToString()
         => Address.Address;

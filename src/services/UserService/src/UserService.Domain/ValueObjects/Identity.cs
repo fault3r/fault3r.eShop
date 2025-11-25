@@ -25,7 +25,8 @@ public sealed class Identity : ValueObject
         if (string.IsNullOrWhiteSpace(value))
             throw new EmptyIdentityValueException();
 
-        var normalized = value.Trim();
+        var normalized = value
+            .Trim();            
         if (!IsValid(normalized))
             throw new InvalidIdentityValueException(normalized);
 
@@ -37,7 +38,7 @@ public sealed class Identity : ValueObject
 
     public static Identity New() => new();
     public static Identity From(Guid guid) => new(guid);
-    public static Identity Parse(string input) => new(input);
+    public static Identity Parse(string value) => new(value);
 
     public override string ToString()
         => Value.ToString();
