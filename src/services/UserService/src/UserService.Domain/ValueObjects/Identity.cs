@@ -5,7 +5,7 @@ using UserService.Domain.Exceptions.ValueObjects.Identity;
 
 namespace UserService.Domain.ValueObjects;
 
-public sealed class Identity : ValueObject
+public sealed class Identity : ValueObject<Identity>
 {
     public Guid Value { get; }
 
@@ -43,7 +43,7 @@ public sealed class Identity : ValueObject
     public override string ToString()
         => Value.ToString();
 
-    protected override IEnumerable<object> GetEqualityComponents()
+    protected override IEnumerable<object?> GetEqualityComponents()
     {
         yield return Value;
     }

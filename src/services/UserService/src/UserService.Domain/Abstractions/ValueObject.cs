@@ -1,21 +1,19 @@
-
 using System;
 
 namespace UserService.Domain.Abstractions;
 
-public abstract class ValueObject
+public abstract class ValueObject<T> : IEquatable<T>
+    where T : ValueObject<T>
 {
-    protected abstract IEnumerable<object> GetEqualityComponents();
+    protected abstract IEnumerable<object?> GetEqualityComponents();
 
     public override bool Equals(object? obj)
-    {
-        if (obj is not ValueObject other) return false;
+        => obj is T other 
+        && Equals(other as T);
 
-        if (ReferenceEquals(this, other)) return true;
-
-        return GetEqualityComponents()
-            .SequenceEqual(other.GetEqualityComponents());
-    }
+    public bool Equals(T? other)
+        => other is not null
+        && GetEqualityComponents().SequenceEqual(other.GetEqualityComponents());
 
     public override int GetHashCode()
     {
@@ -25,9 +23,9 @@ public abstract class ValueObject
         return hash.ToHashCode();
     }
 
-    public static bool operator ==(ValueObject? left, ValueObject? right)
-        => ReferenceEquals(left, right) || (left?.Equals(right) ?? false);
+    public static bool operator ==(ValueObject<T>? left, ValueObject<T>? right)
+        => Equals(left, right); 
 
-    public static bool operator !=(ValueObject? left, ValueObject? right)
-        => !(left == right);
+    public static bool operator !=(ValueObject<T>? left, ValueObject<T>? right)
+        => !Equals(left, right);
 }
