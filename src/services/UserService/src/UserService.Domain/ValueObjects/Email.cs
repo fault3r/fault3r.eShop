@@ -33,7 +33,7 @@ public sealed class Email : ValueObject<Email>
     }
 
     private static bool IsValid(string address)
-       => MailAddress.TryCreate(address, out MailAddress? _);
+       => MailAddress.TryCreate(address, out MailAddress? _); 
 
     public static Email From(MailAddress mailAddress)
         => new(mailAddress);
