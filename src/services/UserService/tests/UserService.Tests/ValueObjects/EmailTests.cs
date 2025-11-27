@@ -10,13 +10,13 @@ public class EmailTests
 {
 
     [Fact]
-    public void Constructor_WithNullMailAddress_ShouldThrowException()
+    public void WithNullMailAddress_ThrowException()
     {
         Assert.Throws<EmptyEmailAddressException>(() => new Email((MailAddress)null!));
     }
 
     [Fact]
-    public void Constructor_WithValidMailAddress_ShouldNormalizeAndSetValue()
+    public void WithValidMailAddress_NormalizeAndSetValue()
     {
         var mailAddress = new MailAddress("  Test@Example.Com  ");
 
@@ -25,20 +25,17 @@ public class EmailTests
         Assert.Equal("test@example.com", email.ToString());
     }
 
-    [Fact]
-    public void Constructor_WithEmptyString_ShouldThrowException()
+    [Theory]
+    [InlineData(null)]
+    [InlineData("")]
+    [InlineData("not-an-email")]
+    public void WithEmptyOrInvalidEmailString_ThrowException(string input)
     {
-        Assert.Throws<EmptyEmailAddressException>(() => new Email(""));
+        Assert.Throws<EmptyEmailAddressException>(() => new Email(input));
     }
 
     [Fact]
-    public void Constructor_WithInvalidString_ShouldThrowException()
-    {
-        Assert.Throws<InvalidEmailAddressException>(() => new Email("invalid-email"));
-    }
-
-    [Fact]
-    public void Constructor_WithValidString_ShouldNormalizeAndSetValue()
+    public void WithValidEmailString_NormalizeAndSetValue()
     {
         var email = new Email("  Test@Example.Com  ");
 

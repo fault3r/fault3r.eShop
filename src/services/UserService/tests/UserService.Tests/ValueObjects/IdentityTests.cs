@@ -8,7 +8,7 @@ namespace UserService.Tests.ValueObjects;
 public class IdentityTests
 {
     [Fact]
-    public void Constructor_WhenNoArgs_ShouldGenerateNewGuid()
+    public void WithNoArgs_GenerateNewGuid()
     {
         var identity = new Identity();
 
@@ -16,13 +16,13 @@ public class IdentityTests
     }
 
     [Fact]
-    public void Constructor_WithEmptyGuid_ShouldThrowException()
+    public void WithEmptyGuid_ThrowException()
     {
         Assert.Throws<EmptyIdentityValueException>(() => new Identity(Guid.Empty));
     }
 
     [Fact]
-    public void Constructor_WithValidGuidProvided_ShouldSetValue()
+    public void WithValidGuidProvided_SetValue()
     {
         var guid = Guid.NewGuid();
 
@@ -35,14 +35,14 @@ public class IdentityTests
     [InlineData(null)]
     [InlineData("")]
     [InlineData("   ")]
-    public void Constructor_WithEmptyString_ShouldThrowException(string input)
+    public void WithEmptyGuidString_ThrowException(string input)
     {
         Assert.Throws<EmptyIdentityValueException>(() => new Identity(input));
     }
 
 
     [Fact]
-    public void Constructor_ShouldParseValidGuidString()
+    public void WithValidGuidString_SetValue()
     {
         var guid = Guid.NewGuid();
         var guidString = guid.ToString();
@@ -53,7 +53,7 @@ public class IdentityTests
     }
 
     [Fact]
-    public void Constructor_ShouldThrow_WhenInvalidGuidStringProvided()
+    public void WithInvalidGuidString_ThrowException()
     {
         Assert.Throws<InvalidIdentityValueException>(() => new Identity("not-a-guid"));
         Assert.Throws<InvalidIdentityValueException>(() => new Identity("00000000-0000-0000-0000-000000000000"));
