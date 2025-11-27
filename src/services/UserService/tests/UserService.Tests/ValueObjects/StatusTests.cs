@@ -28,7 +28,7 @@ public class StatusTests
     [Fact]
     public void WithInvalidStatusValueString_ThrowUnsupportedStatusValueException()
     {
-        Assert.Throws<UnsupportedStatusValueException>(() => new Role("not-a-status"));
+        Assert.Throws<UnsupportedStatusValueException>(() => new Status("not-a-status"));
     }
     
     [Theory]
