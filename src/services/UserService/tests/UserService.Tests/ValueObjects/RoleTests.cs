@@ -20,13 +20,13 @@ public class RoleTests
     [InlineData(null)]
     [InlineData("")]
     [InlineData("   ")]
-    public void WithEmptyRoleNameString_ThrowException(string? input)
+    public void WithEmptyRoleNameString_ThrowMissingRoleNameException(string? input)
     {
         Assert.Throws<MissingRoleNameException>(() => new Role(input!));
     }
 
     [Fact]
-    public void WithInvalidRoleNameString_ThrowException()
+    public void WithInvalidRoleNameString_ThrowUnsupportedRoleNameException()
     {
         Assert.Throws<UnsupportedRoleNameException>(() => new Role("not-a-role"));
     }

@@ -16,7 +16,7 @@ public class IdentityTests
     }
 
     [Fact]
-    public void WithEmptyGuid_ThrowException()
+    public void WithEmptyGuid_ThrowEmptyIdentityValueException()
     {
         Assert.Throws<EmptyIdentityValueException>(() => new Identity(Guid.Empty));
     }
@@ -35,7 +35,7 @@ public class IdentityTests
     [InlineData(null)]
     [InlineData("")]
     [InlineData("   ")]
-    public void WithEmptyGuidString_ThrowException(string input)
+    public void WithEmptyGuidString_ThrowEmptyIdentityValueException(string input)
     {
         Assert.Throws<EmptyIdentityValueException>(() => new Identity(input));
     }
@@ -53,7 +53,7 @@ public class IdentityTests
     }
 
     [Fact]
-    public void WithInvalidGuidString_ThrowException()
+    public void WithInvalidGuidString_ThrowInvalidIdentityValueException()
     {
         Assert.Throws<InvalidIdentityValueException>(() => new Identity("not-a-guid"));
         Assert.Throws<InvalidIdentityValueException>(() => new Identity("00000000-0000-0000-0000-000000000000"));

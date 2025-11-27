@@ -10,7 +10,7 @@ public class EmailTests
 {
 
     [Fact]
-    public void WithNullMailAddress_ThrowException()
+    public void WithNullMailAddress_ThrowEmptyEmailAddressException()
     {
         Assert.Throws<EmptyEmailAddressException>(() => new Email((MailAddress)null!));
     }
@@ -28,10 +28,16 @@ public class EmailTests
     [Theory]
     [InlineData(null)]
     [InlineData("")]
-    [InlineData("not-an-email")]
-    public void WithEmptyOrInvalidEmailString_ThrowException(string input)
+    [InlineData("  ")]
+    public void WithEmptyEmailString_ThrowEmptyEmailAddressException(string? input)
     {
-        Assert.Throws<EmptyEmailAddressException>(() => new Email(input));
+        Assert.Throws<EmptyEmailAddressException>(() => new Email(input!));
+    }
+
+    [Fact]
+    public void WithInvalidEmailString_ThrowInvalidEmailAddressException()
+    {
+        Assert.Throws<InvalidEmailAddressException>(() => new Email("not-an-email"));
     }
 
     [Fact]
