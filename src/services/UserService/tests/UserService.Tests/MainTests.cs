@@ -1,14 +1,9 @@
-using System.Linq.Expressions;
-using UserService.Domain.ValueObjects;
 
-namespace UserService.Tests;
+using System;
 
-public class MainTests
+namespace UserService.Tests
 {
-    [Fact]
-    public void Test1()
+    public class MainTests
     {
-  
-      
     }
 }

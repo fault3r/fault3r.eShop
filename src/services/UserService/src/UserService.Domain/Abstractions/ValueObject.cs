@@ -1,3 +1,4 @@
+
 using System;
 
 namespace UserService.Domain.Abstractions;
@@ -8,12 +9,17 @@ public abstract class ValueObject<T> : IEquatable<T>
     protected abstract IEnumerable<object?> GetEqualityComponents();
 
     public override bool Equals(object? obj)
-        => obj is T other 
-        && Equals(other as T);
+        => obj is T other && Equals(other);
 
     public bool Equals(T? other)
-        => other is not null
-        && GetEqualityComponents().SequenceEqual(other.GetEqualityComponents());
+    {
+        if (ReferenceEquals(this, other)) return true;
+        if (other is null) return false;
+        if (GetType() != other.GetType()) return false;
+
+        return GetEqualityComponents().SequenceEqual(
+            other.GetEqualityComponents());
+    }
 
     public override int GetHashCode()
     {
@@ -24,7 +30,7 @@ public abstract class ValueObject<T> : IEquatable<T>
     }
 
     public static bool operator ==(ValueObject<T>? left, ValueObject<T>? right)
-        => Equals(left, right); 
+        => Equals(left, right);
 
     public static bool operator !=(ValueObject<T>? left, ValueObject<T>? right)
         => !Equals(left, right);
