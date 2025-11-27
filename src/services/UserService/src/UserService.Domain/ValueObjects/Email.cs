@@ -15,7 +15,7 @@ public sealed class Email : ValueObject<Email>
         if (mailAddress is null)
             throw new EmptyEmailAddressException();
 
-        Value = mailAddress;
+        Value = Normalize(mailAddress);
     }
 
     public Email(string address)
@@ -23,22 +23,26 @@ public sealed class Email : ValueObject<Email>
         if (string.IsNullOrWhiteSpace(address))
             throw new EmptyEmailAddressException();
 
-        var normalized = address
-            .Trim()
-            .ToLowerInvariant();
+        var normalized = Normalize(address);
         if (!IsValid(normalized))
             throw new InvalidEmailAddressException(normalized);
 
         Value = new MailAddress(normalized);
     }
 
+    private static string Normalize(string address)
+        => address.Trim().ToLowerInvariant();
+
+    private static MailAddress Normalize(MailAddress mailAddress)
+        => new(Normalize(mailAddress.Address));
+
     private static bool IsValid(string address)
-       => MailAddress.TryCreate(address, out MailAddress? _); 
+       => MailAddress.TryCreate(address, out MailAddress? _);
 
     public static Email From(MailAddress mailAddress)
         => new(mailAddress);
-        
-    public static Email Parse(string address) 
+
+    public static Email Parse(string address)
         => new(address);
 
     public override string ToString()

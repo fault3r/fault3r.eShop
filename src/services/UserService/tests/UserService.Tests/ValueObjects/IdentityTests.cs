@@ -8,7 +8,7 @@ namespace UserService.Tests.ValueObjects;
 public class IdentityTests
 {
     [Fact]
-    public void Constructor_ShouldGenerateNewGuid_WhenNoArgs()
+    public void Constructor_WhenNoArgs_ShouldGenerateNewGuid()
     {
         var identity = new Identity();
 
@@ -16,7 +16,13 @@ public class IdentityTests
     }
 
     [Fact]
-    public void Constructor_ShouldSetGuid_WhenValidGuidProvided()
+    public void Constructor_WithEmptyGuid_ShouldThrowException()
+    {
+        Assert.Throws<EmptyIdentityValueException>(() => new Identity(Guid.Empty));
+    }
+
+    [Fact]
+    public void Constructor_WithValidGuidProvided_ShouldSetValue()
     {
         var guid = Guid.NewGuid();
 
@@ -24,6 +30,16 @@ public class IdentityTests
 
         Assert.Equal(guid, identity.Value);
     }
+
+    [Theory]
+    [InlineData(null)]
+    [InlineData("")]
+    [InlineData("   ")]
+    public void Constructor_WithEmptyString_ShouldThrowException(string input)
+    {
+        Assert.Throws<EmptyIdentityValueException>(() => new Identity(input));
+    }
+
 
     [Fact]
     public void Constructor_ShouldParseValidGuidString()
@@ -37,24 +53,10 @@ public class IdentityTests
     }
 
     [Fact]
-    public void Constructor_ShouldThrow_WhenEmptyGuidProvided()
-    {
-        Assert.Throws<EmptyIdentityValueException>(() => new Identity(Guid.Empty));
-    }
-
-    [Theory]
-    [InlineData(null)]
-    [InlineData("")]
-    [InlineData("   ")]
-    public void Constructor_ShouldThrow_WhenEmptyStringProvided(string input)
-    {
-        Assert.Throws<EmptyIdentityValueException>(() => new Identity(input));
-    }
-
-    [Fact]
     public void Constructor_ShouldThrow_WhenInvalidGuidStringProvided()
     {
         Assert.Throws<InvalidIdentityValueException>(() => new Identity("not-a-guid"));
+        Assert.Throws<InvalidIdentityValueException>(() => new Identity("00000000-0000-0000-0000-000000000000"));
     }
 }
 
