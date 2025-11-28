@@ -3,15 +3,15 @@ using System;
 
 namespace UserService.Domain.Abstractions;
 
-public abstract class ValueObject<T> : IEquatable<T>
-    where T : ValueObject<T>
+public abstract class ValueObject<TType> : IEquatable<TType>
+    where TType : ValueObject<TType>
 {
     protected abstract IEnumerable<object?> GetEqualityComponents();
 
     public override bool Equals(object? obj)
-        => obj is T other && Equals(other);
+        => obj is TType other && Equals(other);
 
-    public bool Equals(T? other)
+    public bool Equals(TType? other)
     {
         if (ReferenceEquals(this, other)) return true;
         if (other is null) return false;
@@ -29,9 +29,9 @@ public abstract class ValueObject<T> : IEquatable<T>
         return hash.ToHashCode();
     }
 
-    public static bool operator ==(ValueObject<T>? left, ValueObject<T>? right)
-        => Equals(left, right);
+    public static bool operator ==(ValueObject<TType>? left, ValueObject<TType>? right)
+        => left?.Equals(right) ?? right is null;
 
-    public static bool operator !=(ValueObject<T>? left, ValueObject<T>? right)
-        => !Equals(left, right);
+    public static bool operator !=(ValueObject<TType>? left, ValueObject<TType>? right)
+        => !(left == right);
 }
