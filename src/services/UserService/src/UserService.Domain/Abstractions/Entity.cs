@@ -1,5 +1,5 @@
+
 using System;
-using System.Collections.Generic;
 using UserService.Domain.Exceptions.Abstraction.Entity;
 
 namespace UserService.Domain.Abstractions;
@@ -22,8 +22,8 @@ public abstract class Entity<TType, TId> : IEquatable<Entity<TType, TId>>
 
     public bool Equals(Entity<TType, TId>? other)
     {
-        if (ReferenceEquals(this, other)) return true;
         if (other is null) return false;
+        if (ReferenceEquals(this, other)) return true;
         if (GetType() != other.GetType()) return false;
 
         return EqualityComparer<TId>.Default.Equals(Id, other.Id);

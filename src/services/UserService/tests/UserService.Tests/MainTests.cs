@@ -1,4 +1,5 @@
 using System;
+using UserService.Domain.Abstractions;
 using UserService.Domain.ValueObjects;
 using UserService.Tests.ValueObjects;
 
@@ -13,4 +14,9 @@ public class MainTests
         var idt = Identity.New();
         Assert.False(id.Equals(idt));
     }
+}
+
+public class Rests : Entity<string, Guid> 
+
+{
 }

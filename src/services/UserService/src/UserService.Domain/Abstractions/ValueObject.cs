@@ -13,8 +13,8 @@ public abstract class ValueObject<TType> : IEquatable<TType>
 
     public bool Equals(TType? other)
     {
-        if (ReferenceEquals(this, other)) return true;
         if (other is null) return false;
+        if (ReferenceEquals(this, other)) return true;
         if (GetType() != other.GetType()) return false;
 
         return GetEqualityComponents().SequenceEqual(
