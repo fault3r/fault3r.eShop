@@ -25,4 +25,7 @@ public abstract class AggregateRoot<TType, TId> : Entity<TType, TId>
 
     public void ClearEvents()
         => domainEvents.Clear();
+
+    public override string ToString()
+        => $"{GetType().Name}:{base.ToString()}";
 }

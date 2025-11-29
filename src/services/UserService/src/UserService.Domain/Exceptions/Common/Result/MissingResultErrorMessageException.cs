@@ -5,5 +5,5 @@ namespace UserService.Domain.Exceptions.Common.Result;
 
 public class MissingResultErrorMessageException : DomainException
 {
-    public MissingResultErrorMessageException() : base("Result error message is required") { }
+    public MissingResultErrorMessageException() : base("result error message is required") { }
 }

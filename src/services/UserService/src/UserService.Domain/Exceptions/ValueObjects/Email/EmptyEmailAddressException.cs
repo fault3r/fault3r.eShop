@@ -5,5 +5,5 @@ namespace UserService.Domain.Exceptions.ValueObjects.Email;
 
 public sealed class EmptyEmailAddressException : DomainException
 {
-    public EmptyEmailAddressException() : base("Email address is required") { }
+    public EmptyEmailAddressException() : base("email address is required") { }
 }

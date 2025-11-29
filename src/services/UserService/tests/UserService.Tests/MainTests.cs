@@ -1,5 +1,6 @@
 using System;
 using UserService.Domain.Abstractions;
+using UserService.Domain.Aggregates.User;
 using UserService.Domain.ValueObjects;
 using UserService.Tests.ValueObjects;
 
@@ -10,13 +11,9 @@ public class MainTests
     [Fact]
     public void TestName()
     {
-        Identity? id = null;
-        var idt = Identity.New();
-        Assert.False(id.Equals(idt));
+        var user = new User(Identity.New());
+        var user2 = new User(Identity.New());
+        var res = user.ToString();
+        user.Equals(user2);
     }
-}
-
-public class Rests : Entity<string, Guid> 
-
-{
 }
