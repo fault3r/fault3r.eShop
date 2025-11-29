@@ -17,6 +17,12 @@ public abstract class Entity<TType, TId> : IEquatable<Entity<TType, TId>>
         Id = id;
     }
 
+    public override string ToString()
+        => Id is null
+            ? $"{typeof(TId).Name}"
+            : $"{typeof(TId).Name}:{Id.ToString()}";
+
+
     public override bool Equals(object? obj)
         => Equals(obj as Entity<TType, TId>);
 
