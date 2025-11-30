@@ -5,11 +5,5 @@ using UserService.Domain.ValueObjects;
 
 namespace UserService.Domain.Aggregates.User.Events;
 
-public class UserCreatedDomainEvent : DomainEvent
-{
-    public Identity AccountId { get; }
-    public Email Email { get; }
-
-    
-
-}
+public sealed record UserCreatedDomainEvent(
+    Identity UserId, Email UserEmail) : DomainEvent;
