@@ -6,7 +6,7 @@ using UserService.Domain.Exceptions.ValueObjects.Email;
 
 namespace UserService.Domain.ValueObjects;
 
-public sealed class Email : ValueObject<Email>
+public sealed record Email : ValueObject
 {
     public MailAddress Value { get; }
 
@@ -47,9 +47,4 @@ public sealed class Email : ValueObject<Email>
 
     public override string ToString()
         => Value.Address;
-
-    protected override IEnumerable<object?> GetEqualityComponents()
-    {
-        yield return Value;
-    }
 }

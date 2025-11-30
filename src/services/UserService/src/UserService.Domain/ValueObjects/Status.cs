@@ -4,7 +4,7 @@ using UserService.Domain.Exceptions.ValueObjects.Status;
 
 namespace UserService.Domain.ValueObjects;
 
-public sealed class Status : ValueObject<Status>
+public sealed record Status : ValueObject
 {
     public StatusType Value { get; }
 
@@ -47,9 +47,4 @@ public sealed class Status : ValueObject<Status>
 
     public override string ToString()
         => Value.ToString();
-
-    protected override IEnumerable<object> GetEqualityComponents()
-    {
-        yield return Value;
-    }
 }

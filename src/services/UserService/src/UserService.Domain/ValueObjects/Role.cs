@@ -5,7 +5,7 @@ using UserService.Domain.Exceptions.ValueObjects.Role;
 
 namespace UserService.Domain.ValueObjects;
 
-public sealed class Role : ValueObject<Role>
+public sealed record Role : ValueObject
 {
     public RoleType Value { get; }
 
@@ -51,9 +51,4 @@ public sealed class Role : ValueObject<Role>
 
     public bool IsAdmin
         => Value == RoleType.Admin;
-
-    protected override IEnumerable<object?> GetEqualityComponents()
-    {
-        yield return Value;
-    }
 }

@@ -4,7 +4,7 @@ using UserService.Domain.Exceptions.Abstraction.Entity;
 
 namespace UserService.Domain.Abstractions;
 
-public abstract class Entity<TType, TId> : IEquatable<Entity<TType, TId>>
+public abstract class Entity<TType, TId> : IEquatable<TType>
     where TType : Entity<TType, TId>
 {
     public TId Id { get; protected set; }
@@ -21,9 +21,9 @@ public abstract class Entity<TType, TId> : IEquatable<Entity<TType, TId>>
         => $"{Id}";
 
     public override bool Equals(object? obj)
-        => Equals(obj as Entity<TType, TId>);
+        => obj is TType other && Equals(obj as TType);
 
-    public bool Equals(Entity<TType, TId>? other)
+    public bool Equals(TType? other)
     {
         if (other is null) return false;
         if (ReferenceEquals(this, other)) return true;

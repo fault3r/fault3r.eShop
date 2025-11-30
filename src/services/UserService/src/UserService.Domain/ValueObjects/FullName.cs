@@ -5,7 +5,7 @@ using UserService.Domain.Exceptions.ValueObjects.FullName;
 
 namespace UserService.Domain.ValueObjects;
 
-public sealed class FullName : ValueObject<FullName>
+public sealed record FullName : ValueObject
 {
     public string Value { get; }
 
@@ -29,9 +29,4 @@ public sealed class FullName : ValueObject<FullName>
 
     public override string ToString()
         => Value;
-
-    protected override IEnumerable<object?> GetEqualityComponents()
-    {
-        yield return Value;
-    }
 }
