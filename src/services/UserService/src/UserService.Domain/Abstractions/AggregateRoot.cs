@@ -10,10 +10,10 @@ public abstract class AggregateRoot<TType, TId> : Entity<TType, TId>
 {
     private readonly List<IDomainEvent> domainEvents = [];
 
-    protected AggregateRoot(TId id) : base(id) { }
-
     public IReadOnlyCollection<IDomainEvent> DomainEvents
-        => domainEvents.AsReadOnly();
+        => domainEvents.AsReadOnly();    
+
+    protected AggregateRoot(TId id) : base(id) { }
 
     protected void RaiseEvent(IDomainEvent domainEvent)
     {

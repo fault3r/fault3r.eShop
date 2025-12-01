@@ -12,9 +12,8 @@ public class MainTests
     [Fact]
     public void TestName()
     {
-        var events = new UserCreatedDomainEvent(
-            Identity.New(), Email.Parse("example@e.com"));
-
-            var (id, email) = events;
+        var user = new User(Identity.New());
+        var user2 = new User(Identity.Parse(user.Id.ToString()));
+        Assert.True(user.Equals(user2));
     }
 }

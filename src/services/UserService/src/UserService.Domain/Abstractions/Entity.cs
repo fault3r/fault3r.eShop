@@ -7,7 +7,7 @@ namespace UserService.Domain.Abstractions;
 public abstract class Entity<TType, TId> : IEquatable<TType>
     where TType : Entity<TType, TId>
 {
-    public TId Id { get; protected set; }
+    public TId Id { get; init; }
 
     protected Entity(TId id)
     {
@@ -21,12 +21,12 @@ public abstract class Entity<TType, TId> : IEquatable<TType>
         => $"{Id}";
 
     public override bool Equals(object? obj)
-        => obj is TType other && Equals(obj as TType);
+        => obj is TType other && Equals(other);
 
     public bool Equals(TType? other)
     {
-        if (other is null) return false;
         if (ReferenceEquals(this, other)) return true;
+        if (other is null) return false;
         if (GetType() != other.GetType()) return false;
 
         return EqualityComparer<TId>.Default.Equals(Id, other.Id);

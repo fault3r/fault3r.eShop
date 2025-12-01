@@ -13,7 +13,7 @@ public sealed record Email : ValueObject
     public Email(MailAddress mailAddress)
     {
         if (mailAddress is null)
-            throw new EmptyEmailAddressException();
+            throw new MissingEmailAddressException();
 
         Value = Normalize(mailAddress);
     }
@@ -21,7 +21,7 @@ public sealed record Email : ValueObject
     public Email(string address)
     {
         if (string.IsNullOrWhiteSpace(address))
-            throw new EmptyEmailAddressException();
+            throw new MissingEmailAddressException();
 
         var normalized = Normalize(address);
         if (!IsValid(normalized))
