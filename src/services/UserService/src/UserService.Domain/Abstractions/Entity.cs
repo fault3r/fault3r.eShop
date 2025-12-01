@@ -1,10 +1,11 @@
 
 using System;
 using UserService.Domain.Exceptions.Abstraction.Entity;
+using UserService.Domain.Interfaces;
 
 namespace UserService.Domain.Abstractions;
 
-public abstract class Entity<TType, TId> : IEquatable<TType>
+public abstract class Entity<TType, TId> : IEquatable<TType>, IEntity
     where TType : Entity<TType, TId>
 {
     public TId Id { get; init; }
