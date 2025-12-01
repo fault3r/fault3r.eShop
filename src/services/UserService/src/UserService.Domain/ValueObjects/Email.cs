@@ -6,9 +6,9 @@ using UserService.Domain.Exceptions.ValueObjects.Email;
 
 namespace UserService.Domain.ValueObjects;
 
-public sealed record Email : ValueObject
+public sealed record Email : ValueObject<MailAddress>
 {
-    public MailAddress Value { get; }
+    public override MailAddress Value { get; }
 
     public Email(MailAddress mailAddress)
     {

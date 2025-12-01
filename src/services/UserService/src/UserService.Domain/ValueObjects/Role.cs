@@ -2,12 +2,13 @@
 using System;
 using UserService.Domain.Abstractions;
 using UserService.Domain.Exceptions.ValueObjects.Role;
+using static UserService.Domain.ValueObjects.Role;
 
 namespace UserService.Domain.ValueObjects;
 
-public sealed record Role : ValueObject
+public sealed record Role : ValueObject<RoleType>
 {
-    public RoleType Value { get; }
+    public override RoleType Value { get; }
 
     public enum RoleType
     {

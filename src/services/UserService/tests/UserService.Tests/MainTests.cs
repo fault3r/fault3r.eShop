@@ -1,9 +1,7 @@
+
 using System;
-using UserService.Domain.Abstractions;
 using UserService.Domain.Aggregates.User;
-using UserService.Domain.Aggregates.User.Events;
 using UserService.Domain.ValueObjects;
-using UserService.Tests.ValueObjects;
 
 namespace UserService.Tests;
 

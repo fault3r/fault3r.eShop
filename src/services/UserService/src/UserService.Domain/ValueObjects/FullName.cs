@@ -5,9 +5,9 @@ using UserService.Domain.Exceptions.ValueObjects.FullName;
 
 namespace UserService.Domain.ValueObjects;
 
-public sealed record FullName : ValueObject
+public sealed record FullName : ValueObject<string>
 {
-    public string Value { get; }
+    public override string Value { get; }
 
     public FullName(string fullName)
     {

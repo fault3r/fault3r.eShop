@@ -1,12 +1,14 @@
+
 using System;
 using UserService.Domain.Abstractions;
 using UserService.Domain.Exceptions.ValueObjects.Status;
+using static UserService.Domain.ValueObjects.Status;
 
 namespace UserService.Domain.ValueObjects;
 
-public sealed record Status : ValueObject
+public sealed record Status : ValueObject<StatusType>
 {
-    public StatusType Value { get; }
+    public override StatusType Value { get; }
 
     public enum StatusType
     {

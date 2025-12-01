@@ -5,9 +5,9 @@ using UserService.Domain.Exceptions.ValueObjects.Identity;
 
 namespace UserService.Domain.ValueObjects;
 
-public sealed record Identity : ValueObject
+public sealed record Identity : ValueObject<Guid>
 {
-    public Guid Value { get; }
+    public override Guid Value { get; }
 
     public Identity()
         => Value = Guid.NewGuid();
