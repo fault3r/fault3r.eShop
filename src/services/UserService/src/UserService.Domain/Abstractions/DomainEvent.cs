@@ -6,6 +6,18 @@ namespace UserService.Domain.Abstractions;
 
 public abstract record DomainEvent : IDomainEvent
 {
-    public DateTime OccurredOn { get; }
-        = DateTime.UtcNow;
+    public Guid EventId { get; init; }
+    public DateTime OccurredOn { get; init; }
+
+    protected DomainEvent()
+    {
+        EventId = Guid.NewGuid();
+        OccurredOn = DateTime.UtcNow;        
+    }
+
+    protected DomainEvent(Guid eventId, DateTime occurredOn)
+    {
+        EventId = eventId;
+        OccurredOn = occurredOn;
+    }
 }
