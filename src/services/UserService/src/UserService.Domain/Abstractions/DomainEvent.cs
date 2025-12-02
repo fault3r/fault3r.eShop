@@ -20,4 +20,6 @@ public abstract record DomainEvent : IDomainEvent
         EventId = eventId;
         OccurredOn = occurredOn;
     }
-}
+
+    public override string ToString()
+        => $"[{OccurredOn:O}] {GetType().Name} (EventId={EventId})";}

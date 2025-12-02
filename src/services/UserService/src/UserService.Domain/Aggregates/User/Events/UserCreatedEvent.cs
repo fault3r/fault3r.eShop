@@ -22,4 +22,7 @@ public sealed record UserCreatedEvent : DomainEvent
         UserId = userId;
         UserEmail = userEmail;
     }
+
+    public override string ToString()
+       => $"{base.ToString()}, UserId={UserId}, UserEmail={UserEmail}";
 }
