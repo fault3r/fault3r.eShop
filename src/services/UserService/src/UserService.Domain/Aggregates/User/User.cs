@@ -22,26 +22,11 @@ public class User : AggregateRoot<User, Identity>
     private User(Identity id, Email email, string passwordHash, FullName fullName, Role role, Status status)
         : base(id)
     {
-        if (id is null)
-            throw new MissingIdentityException();
-
-        if (email is null)
-            throw new MissingEmailException();
-
-        if (fullName is null)
-            throw new MissingFullNameException();
-
-        if (role is null)
-            throw new MissingRoleException();
-
-        if (status is null)
-            throw new MissingStatusException();
-
-        Email = email;
-        PasswordHash = passwordHash;
-        FullName = fullName;
-        Role = role;
-        Status = status;
+        Email = email ?? throw new MissingEmailException();
+        PasswordHash = passwordHash ?? throw new Exception(); // we are here
+        FullName = fullName?? throw new MissingFullNameException();
+        Role = role ??throw new MissingRoleException();
+        Status = status ?? throw new MissingStatusException();
     }
 
     internal static User Create(
