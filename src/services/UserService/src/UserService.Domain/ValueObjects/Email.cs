@@ -6,45 +6,60 @@ using UserService.Domain.Exceptions.ValueObjects.Email;
 
 namespace UserService.Domain.ValueObjects;
 
-public sealed record Email : ValueObject<MailAddress>
+public sealed record Email : ValueObject<string>
 {
-    public override MailAddress Value { get; }
+    public override string Value { get; init; }
 
-    public Email(MailAddress mailAddress)
+    private Email(string value)
     {
-        if (mailAddress is null)
+        if (string.IsNullOrWhiteSpace(value))
             throw new MissingEmailAddressException();
 
-        Value = Normalize(mailAddress);
-    }
+        var normalized = Normalize(value);
 
-    public Email(string address)
-    {
-        if (string.IsNullOrWhiteSpace(address))
-            throw new MissingEmailAddressException();
-
-        var normalized = Normalize(address);
         if (!IsValid(normalized))
             throw new InvalidEmailAddressException(normalized);
 
-        Value = new MailAddress(normalized);
+        Value = normalized;
     }
 
-    private static string Normalize(string address)
-        => address.Trim().ToLowerInvariant();
+    private static string Normalize(string value)
+    {
+        var trimmed = value.Trim();
 
-    private static MailAddress Normalize(MailAddress mailAddress)
-        => new(Normalize(mailAddress.Address));
+        var parts = trimmed.Split('@');
+        if (parts.Length != 2)
+            return trimmed.ToLowerInvariant();
 
-    private static bool IsValid(string address)
-       => MailAddress.TryCreate(address, out MailAddress? _);
+        return $"{parts[0]}@{parts[1].ToLowerInvariant()}";
+    }
 
-    public static Email From(MailAddress mailAddress)
-        => new(mailAddress);
+    private static bool IsValid(string value)
+       => MailAddress.TryCreate(value, out _);
 
     public static Email Parse(string address)
         => new(address);
 
+    public static bool TryParse(string address, out Email? email)
+    {
+        try
+        {
+            email = new(address);
+            return true;
+        }
+        catch
+        {
+            email = null;
+            return false;
+        }
+    }
+
     public override string ToString()
-        => Value.Address;
+        => Value;
+
+    public static implicit operator string(Email email)
+        => email.Value;
+
+    public static explicit operator Email(string address)
+        => new(address);
 }

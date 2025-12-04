@@ -21,8 +21,6 @@ public sealed record FullName : ValueObject<string>
         Value = normalized;
     }
 
-    private string Validate
-
     private static string Normalize(string fullName)
         => fullName.Trim();
 
