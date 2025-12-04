@@ -9,27 +9,48 @@ public sealed record FullName : ValueObject<string>
 {
     public override string Value { get; init; }
 
-    public FullName(string fullName)
+    private FullName(string value)
     {
-        if (string.IsNullOrWhiteSpace(fullName))
+        if (string.IsNullOrWhiteSpace(value))
             throw new MissingFullNameException();
 
-        string normalized = Normalize(fullName);
+        var normalized = Normalize(value);
+
         if (!IsValid(normalized))
             throw new InvalidFullNameException(normalized);
-        
+
         Value = normalized;
     }
 
-    private static string Normalize(string fullName)
-        => fullName.Trim();
+    private static string Normalize(string value)
+        => value.Trim();
 
-    private static bool IsValid(string fullName)
-        => fullName.Length > 1 && fullName.Length < 100;
+    private static bool IsValid(string value)
+        => value.Length > 1 && value.Length < 100;
 
-    public static FullName Parse(string fullName)
-        => new(fullName);
+    public static FullName Parse(string value)
+        => new(value);
+
+    public static bool TryParse(string value, out FullName? fullName)
+    {
+        try
+        {
+            fullName = new(value);
+            return true;
+        }
+        catch
+        {
+            fullName = null;
+            return false;
+        }
+    }
 
     public override string ToString()
         => Value;
+
+    public static implicit operator string(FullName fullName)
+        => fullName.Value;
+
+    public static explicit operator FullName(string value)
+        => Parse(value);
 }

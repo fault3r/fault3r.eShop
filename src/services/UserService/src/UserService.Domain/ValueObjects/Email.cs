@@ -37,14 +37,14 @@ public sealed record Email : ValueObject<string>
     private static bool IsValid(string value)
        => MailAddress.TryCreate(value, out _);
 
-    public static Email Parse(string address)
-        => new(address);
+    public static Email Parse(string value)
+        => new(value);
 
-    public static bool TryParse(string address, out Email? email)
+    public static bool TryParse(string value, out Email? email)
     {
         try
         {
-            email = new(address);
+            email = new(value);
             return true;
         }
         catch
@@ -60,6 +60,6 @@ public sealed record Email : ValueObject<string>
     public static implicit operator string(Email email)
         => email.Value;
 
-    public static explicit operator Email(string address)
-        => new(address);
+    public static explicit operator Email(string value)
+        => Parse(value);
 }
