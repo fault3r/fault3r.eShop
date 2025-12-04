@@ -6,5 +6,5 @@ namespace UserService.Domain.Abstractions;
 
 public abstract record ValueObject<TValue> : IValueObject
 {
-    public abstract TValue Value { get; }
+    public abstract TValue Value { get; init; }
 }

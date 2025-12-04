@@ -7,19 +7,24 @@ namespace UserService.Domain.ValueObjects;
 
 public sealed record FullName : ValueObject<string>
 {
-    public override string Value { get; }
+    public override string Value { get; init; }
 
     public FullName(string fullName)
     {
         if (string.IsNullOrWhiteSpace(fullName))
             throw new MissingFullNameException();
 
-        var normalized = fullName.Trim();
+        string normalized = Normalize(fullName);
         if (!IsValid(normalized))
             throw new InvalidFullNameException(normalized);
         
         Value = normalized;
     }
+
+    private string Validate
+
+    private static string Normalize(string fullName)
+        => fullName.Trim();
 
     private static bool IsValid(string fullName)
         => fullName.Length > 1 && fullName.Length < 100;

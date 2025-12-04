@@ -7,7 +7,7 @@ namespace UserService.Domain.ValueObjects;
 
 public sealed record Identity : ValueObject<Guid>
 {
-    public override Guid Value { get; }
+    public override Guid Value { get; init; }
 
     public Identity()
         => Value = Guid.NewGuid();
@@ -25,18 +25,20 @@ public sealed record Identity : ValueObject<Guid>
         if (string.IsNullOrWhiteSpace(guidString))
             throw new EmptyIdentityValueException();
 
-        var normalized = guidString
-            .Trim();            
+        var normalized = Normalize(guidString);
         if (!IsValid(normalized))
             throw new InvalidIdentityValueException(normalized);
 
         Value = Guid.Parse(normalized);
     }
 
+    private static string Normalize(string guidString)
+        => guidString.Trim();
+
     private static bool IsValid(string guidString)
         => Guid.TryParse(guidString, out var guid) && guid != Guid.Empty;
 
-    public static Identity New() 
+    public static Identity New()
         => new();
 
     public static Identity From(Guid guid)
