@@ -8,7 +8,7 @@ namespace UserService.Domain.ValueObjects;
 
 public sealed record Role : ValueObject<RoleType>
 {
-    public override RoleType Value { get; }
+    public override RoleType Value { get; init; }
 
     public enum RoleType
     {
@@ -16,17 +16,16 @@ public sealed record Role : ValueObject<RoleType>
         Admin = 101,
     }
 
-    public Role(RoleType roleType)
+    private Role(RoleType roleType)
         => Value = roleType;
 
-    public Role(string roleName)
+    private Role(string value)
     {
-        if (string.IsNullOrWhiteSpace(roleName))
+        if (string.IsNullOrWhiteSpace(value))
             throw new MissingRoleNameException();
 
-        var normalized = roleName
-            .Trim()
-            .ToLowerInvariant();
+        var normalized = Normalize(value);
+
         Value = normalized switch
         {
             "user" => RoleType.User,
@@ -35,21 +34,45 @@ public sealed record Role : ValueObject<RoleType>
         };
     }
 
+    private static string Normalize(string value)
+        => value.Trim().ToLowerInvariant();
+
+    public static Role From(RoleType value)
+        => new(value);
+
+    public static Role Parse(string value)
+        => new(value);
+
+    public static bool TryParse(string value, out Role? role)
+    {
+        try
+        {
+            role = new(value);
+            return true;
+        }
+        catch
+        {
+            role = null;
+            return false;
+        }
+    }
+
     public static readonly Role User = new(RoleType.User);
     public static readonly Role Admin = new(RoleType.Admin);
+    
+    public static IEnumerable<Role> All =>  [User, Admin];
 
-    public static Role From(RoleType roleType)
-        => new(roleType);
-
-    public static Role Parse(string roleName)
-        => new(roleName);
+    public bool IsUser
+        => Value == RoleType.User;
+    public bool IsAdmin
+        => Value == RoleType.Admin;
 
     public override string ToString()
         => Value.ToString();
 
-    public bool IsUser
-        => Value == RoleType.User;
+    public static implicit operator string(Role role)
+        => role.Value.ToString();
 
-    public bool IsAdmin
-        => Value == RoleType.Admin;
+    public static explicit operator Role(string value)
+        => Parse(value);
 }

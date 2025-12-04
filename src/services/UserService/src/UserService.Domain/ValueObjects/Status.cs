@@ -8,7 +8,7 @@ namespace UserService.Domain.ValueObjects;
 
 public sealed record Status : ValueObject<StatusType>
 {
-    public override StatusType Value { get; }
+    public override StatusType Value { get; init; }
 
     public enum StatusType
     {
@@ -17,29 +17,27 @@ public sealed record Status : ValueObject<StatusType>
         Active = 1,
     }
 
-    public Status(StatusType statusType)
+    private Status(StatusType statusType)
         => Value = statusType;
 
-    public Status(string value)
+    private Status(string value)
     {
         if (string.IsNullOrWhiteSpace(value))
             throw new MissingStatusValueException();
 
-        var normalized = value
-            .Trim()
-            .ToLowerInvariant();
+        var normalized = Normalize(value);
+
         if (!IsValid(normalized, out StatusType status))
             throw new UnsupportedStatusValueException(normalized);
 
         Value = status;
     }
 
-    public static readonly Status Pending = new(StatusType.Pending);
-    public static readonly Status Active = new(StatusType.Active);
-    public static readonly Status Locked = new(StatusType.Locked);
+    private static string Normalize(string value)
+        => value.Trim().ToLowerInvariant();
 
-    private static bool IsValid(string value, out StatusType result)
-        => Enum.TryParse(value, ignoreCase: true, out result);
+    private static bool IsValid(string value, out StatusType statusType)
+        => Enum.TryParse(value, ignoreCase: true, out statusType);
 
     public static Status From(StatusType statusType)
         => new(statusType);
@@ -47,6 +45,32 @@ public sealed record Status : ValueObject<StatusType>
     public static Status Parse(string value)
         => new(value);
 
+    public static bool TryParse(string value, out Status? status)
+    {
+        try
+        {
+            status = new(value);
+            return true;
+        }
+        catch
+        {
+            status = null;
+            return false;
+        }
+    }
+
+    public static readonly Status Pending = new(StatusType.Pending);
+    public static readonly Status Active = new(StatusType.Active);
+    public static readonly Status Locked = new(StatusType.Locked);
+
+    public static readonly IEnumerable<Status> All = [Pending, Active, Locked];
+
     public override string ToString()
         => Value.ToString();
+
+    public static implicit operator string(Status status)
+    => status.Value.ToString();
+
+    public static explicit operator Status(string value)
+        => Parse(value);
 }
