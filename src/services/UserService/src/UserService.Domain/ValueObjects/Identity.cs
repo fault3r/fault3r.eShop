@@ -9,10 +9,7 @@ public sealed record Identity : ValueObject<Guid>
 {
     public override Guid Value { get; init; }
 
-    public Identity()
-        => Value = Guid.NewGuid();
-
-    public Identity(Guid guid)
+    private Identity(Guid guid)
     {
         if (guid == Guid.Empty)
             throw new EmptyIdentityValueException();
@@ -20,33 +17,54 @@ public sealed record Identity : ValueObject<Guid>
         Value = guid;
     }
 
-    public Identity(string guidString)
+    private Identity(string value)
     {
-        if (string.IsNullOrWhiteSpace(guidString))
+        if (string.IsNullOrWhiteSpace(value))
             throw new EmptyIdentityValueException();
 
-        var normalized = Normalize(guidString);
+        var normalized = Normalize(value);
+
         if (!IsValid(normalized))
             throw new InvalidIdentityValueException(normalized);
 
         Value = Guid.Parse(normalized);
     }
 
-    private static string Normalize(string guidString)
-        => guidString.Trim();
+    private static string Normalize(string value)
+        => value.Trim();
 
-    private static bool IsValid(string guidString)
-        => Guid.TryParse(guidString, out var guid) && guid != Guid.Empty;
+    private static bool IsValid(string value)
+        => Guid.TryParse(value, out var guid) && guid != Guid.Empty;
 
     public static Identity New()
-        => new();
+        => new(Guid.NewGuid());
 
     public static Identity From(Guid guid)
         => new(guid);
 
-    public static Identity Parse(string guidString)
-        => new(guidString);
+    public static Identity Parse(string value)
+        => new(value);
+
+    public static bool TryParse(string value, out Identity? identity)
+    {
+        try
+        {
+            identity = new(value);
+            return true;
+        }
+        catch
+        {
+            identity = null;
+            return false;
+        }
+    }
 
     public override string ToString()
         => Value.ToString();
+
+    public static implicit operator string(Identity identity)
+        => identity.Value.ToString();
+
+    public static explicit operator Identity(string value)
+        => Parse(value);
 }
