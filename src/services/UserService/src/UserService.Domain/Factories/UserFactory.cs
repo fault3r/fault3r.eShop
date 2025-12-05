@@ -1,39 +1,23 @@
 
 using System;
 using UserService.Domain.Aggregates;
-using UserService.Domain.Security;
 using UserService.Domain.ValueObjects;
 
 namespace UserService.Domain.Factories;
 
 public sealed class UserFactory
 {
-    private readonly IPasswordHasher _passwordHasher;
+    public static User CreateNew(Email email, PasswordHash passwordHash, FullName fullName)
+        => User.Create(Identity.New(), email, passwordHash, fullName, Role.User, Status.Pending);
 
-    public UserFactory(IPasswordHasher passwordHasher)
-    {
-        _passwordHasher = passwordHasher;
-    }
-
-    public User Create(
+    public static User CreateNew(
+        Identity id,
         Email email,
-        string rawPassword,
+        PasswordHash passwordHash,
         FullName fullName,
-        Identity? id,
-        Role? role,
-        Status? status)
+        Role role,
+        Status status)
     {
-        if (string.IsNullOrWhiteSpace(rawPassword))
-            throw new ArgumentException("Password cannot be empty.", nameof(rawPassword));
-
-        var passwordHash = _passwordHasher.Hash(rawPassword);
-
-        return User.Create(
-            id ?? Identity.New(),
-            email,
-            passwordHash,
-            fullName,
-            role ?? Role.User,
-            status ?? Status.Pending);
+        return User.Create(id, email, passwordHash, fullName, role, status);
     }
 }

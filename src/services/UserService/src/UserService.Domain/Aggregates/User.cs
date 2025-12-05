@@ -7,7 +7,6 @@ using UserService.Domain.Exceptions.ValueObjects.FullName;
 using UserService.Domain.Exceptions.ValueObjects.PasswordHash;
 using UserService.Domain.Exceptions.ValueObjects.Role;
 using UserService.Domain.Exceptions.ValueObjects.Status;
-using UserService.Domain.Security;
 using UserService.Domain.ValueObjects;
 
 namespace UserService.Domain.Aggregates;
@@ -49,9 +48,6 @@ public class User : AggregateRoot<User, Identity>
         return user;
     }
 
-    public bool CheckPassword(string rawPassword, IPasswordHasher hasher)
-        => hasher.Verify(rawPassword, PasswordHash);
-
     public void ChangeEmail(Email newEmail)
     {
         if (newEmail is null)
@@ -64,17 +60,15 @@ public class User : AggregateRoot<User, Identity>
         RaiseEvent(new UserEmailChangedEvent(Id, Email));
     }
 
-    public void ChangePassword(string rawPassword, IPasswordHasher hasher)
+    public void ChangePassword(PasswordHash newPasswordHash)
     {
-        if (string.IsNullOrWhiteSpace(rawPassword))
+        if (newPasswordHash is null)
             throw new MissingPasswordHashException();
 
-        var newHash = hasher.Hash(rawPassword);
-
-        if (newHash == PasswordHash)
+        if (newPasswordHash == PasswordHash)
             return;
 
-        PasswordHash = newHash;
+        PasswordHash = newPasswordHash;
         RaiseEvent(new UserPasswordChangedEvent(Id));
     }
     
