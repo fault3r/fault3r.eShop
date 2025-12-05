@@ -3,7 +3,7 @@ using System;
 using UserService.Domain.Abstractions;
 using UserService.Domain.ValueObjects;
 
-namespace UserService.Domain.Aggregates.User.Events;
+namespace UserService.Domain.Events.User;
 
 public sealed record UserFullNameChangedEvent : DomainEvent
 {

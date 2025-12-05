@@ -3,7 +3,7 @@ using System;
 using UserService.Domain.Abstractions;
 using UserService.Domain.ValueObjects;
 
-namespace UserService.Domain.Aggregates.User.Events;
+namespace UserService.Domain.Events.User;
 
 public sealed record UserCreatedEvent : DomainEvent
 {
@@ -11,6 +11,7 @@ public sealed record UserCreatedEvent : DomainEvent
     public Email Email { get; init; }
 
     public UserCreatedEvent(Identity userId, Email email)
+        : base()
     {
         UserId = userId!;
         Email = email!;

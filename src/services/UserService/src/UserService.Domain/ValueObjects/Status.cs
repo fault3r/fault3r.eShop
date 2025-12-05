@@ -59,11 +59,18 @@ public sealed record Status : ValueObject<StatusType>
         }
     }
 
+    public static readonly Status Locked = new(StatusType.Locked);
     public static readonly Status Pending = new(StatusType.Pending);
     public static readonly Status Active = new(StatusType.Active);
-    public static readonly Status Locked = new(StatusType.Locked);
 
-    public static readonly IEnumerable<Status> All = [Pending, Active, Locked];
+    public static readonly IEnumerable<Status> All = [Locked, Pending, Active];
+
+    public bool IsLocked
+        => Value == StatusType.Locked;
+    public bool IsPending
+        => Value == StatusType.Pending;
+    public bool IsActive
+        => Value == StatusType.Active;
 
     public override string ToString()
         => Value.ToString();

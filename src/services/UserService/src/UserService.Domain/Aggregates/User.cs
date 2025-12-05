@@ -1,15 +1,16 @@
 
 using System;
 using UserService.Domain.Abstractions;
-using UserService.Domain.Aggregates.User.Events;
+using UserService.Domain.Events.User;
 using UserService.Domain.Exceptions.ValueObjects.Email;
 using UserService.Domain.Exceptions.ValueObjects.FullName;
 using UserService.Domain.Exceptions.ValueObjects.PasswordHash;
 using UserService.Domain.Exceptions.ValueObjects.Role;
 using UserService.Domain.Exceptions.ValueObjects.Status;
+using UserService.Domain.Security;
 using UserService.Domain.ValueObjects;
 
-namespace UserService.Domain.Aggregates.User;
+namespace UserService.Domain.Aggregates;
 
 public class User : AggregateRoot<User, Identity>
 {
@@ -48,6 +49,9 @@ public class User : AggregateRoot<User, Identity>
         return user;
     }
 
+    public bool CheckPassword(string rawPassword, IPasswordHasher hasher)
+        => hasher.Verify(rawPassword, PasswordHash);
+
     public void ChangeEmail(Email newEmail)
     {
         if (newEmail is null)
@@ -60,6 +64,20 @@ public class User : AggregateRoot<User, Identity>
         RaiseEvent(new UserEmailChangedEvent(Id, Email));
     }
 
+    public void ChangePassword(string rawPassword, IPasswordHasher hasher)
+    {
+        if (string.IsNullOrWhiteSpace(rawPassword))
+            throw new MissingPasswordHashException();
+
+        var newHash = hasher.Hash(rawPassword);
+
+        if (newHash == PasswordHash)
+            return;
+
+        PasswordHash = newHash;
+        RaiseEvent(new UserPasswordChangedEvent(Id));
+    }
+    
     public void ChangeFullName(FullName newFullName)
     {
         if (newFullName is null)
@@ -82,5 +100,23 @@ public class User : AggregateRoot<User, Identity>
 
         Role = newRole;
         RaiseEvent(new UserRoleChangedEvent(Id, Role));
+    }
+
+    public void Activate()
+    {
+        if (Status.IsActive)
+            return;
+
+        Status = Status.Active;
+        RaiseEvent(new UserActivatedEvent(Id));
+    }
+
+    public void Lock()
+    {
+        if (Status.IsLocked)
+            return;
+
+        Status = Status.Locked;
+        RaiseEvent(new UserLockedEvent(Id));
     }
 }
