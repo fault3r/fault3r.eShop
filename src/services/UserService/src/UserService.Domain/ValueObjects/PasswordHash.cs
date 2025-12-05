@@ -26,7 +26,7 @@ public sealed record PasswordHash : ValueObject<string>
         => value.Trim();
 
     private static bool IsValid(string value)
-        => value.StartsWith("$argon2id$") && value.Length >= 60;
+        => value.StartsWith("$argon2id$") && value.Length > 60;
 
     public static PasswordHash Parse(string value)
         => new(value);

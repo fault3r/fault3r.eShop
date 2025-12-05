@@ -8,21 +8,25 @@ namespace UserService.Domain.Aggregates.User.Events;
 public sealed record UserCreatedEvent : DomainEvent
 {
     public Identity UserId { get; init; }
-    public Email UserEmail { get; init; }
+    public Email Email { get; init; }
 
-    public UserCreatedEvent(Identity userId, Email userEmail)
+    public UserCreatedEvent(Identity userId, Email email)
     {
         UserId = userId!;
-        UserEmail = userEmail!;
+        Email = email!;
     }
 
-    public UserCreatedEvent(Guid eventId, DateTime occurredOn, Identity userId, Email userEmail)
+    public UserCreatedEvent(
+        Guid eventId,
+        DateTime occurredOn,
+        Identity userId,
+        Email email)
         : base(eventId, occurredOn)
     {
         UserId = userId;
-        UserEmail = userEmail;
+        Email = email;
     }
 
     public override string ToString()
-       => $"{base.ToString()}, UserId={UserId}, UserEmail={UserEmail}";
+        => $"{base.ToString()} | UserId={UserId}, UserEmail={Email}";
 }
