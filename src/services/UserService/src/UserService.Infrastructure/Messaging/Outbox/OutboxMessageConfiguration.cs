@@ -2,7 +2,6 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using UserService.Infrastructure.Messaging.Outbox;
 
 namespace UserService.Infrastructure.Messaging.Outbox;
 

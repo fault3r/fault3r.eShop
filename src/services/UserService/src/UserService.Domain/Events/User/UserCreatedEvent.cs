@@ -1,6 +1,8 @@
 
 using System;
 using UserService.Domain.Abstractions;
+using UserService.Domain.Exceptions.ValueObjects.Email;
+using UserService.Domain.Exceptions.ValueObjects.Identity;
 using UserService.Domain.ValueObjects;
 
 namespace UserService.Domain.Events.User;
@@ -13,8 +15,10 @@ public sealed record UserCreatedEvent : DomainEvent
     public UserCreatedEvent(Identity userId, Email email)
         : base()
     {
-        UserId = userId!;
-        Email = email!;
+        UserId = userId
+            ?? throw new MissingIdentityException();
+        Email = email
+            ?? throw new MissingEmailException();
     }
 
     public UserCreatedEvent(
@@ -24,8 +28,10 @@ public sealed record UserCreatedEvent : DomainEvent
         Email email)
         : base(eventId, occurredOn)
     {
-        UserId = userId;
-        Email = email;
+        UserId = userId
+            ?? throw new MissingIdentityException();
+        Email = email
+            ?? throw new MissingEmailException();
     }
 
     public override string ToString()

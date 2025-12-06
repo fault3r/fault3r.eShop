@@ -71,7 +71,7 @@ public class User : AggregateRoot<User, Identity>
         PasswordHash = newPasswordHash;
         RaiseEvent(new UserPasswordChangedEvent(Id));
     }
-    
+
     public void ChangeFullName(FullName newFullName)
     {
         if (newFullName is null)
@@ -102,7 +102,7 @@ public class User : AggregateRoot<User, Identity>
             return;
 
         Status = Status.Active;
-        RaiseEvent(new UserActivatedEvent(Id));
+        RaiseEvent(new UserActivatedEvent(Id, Email));
     }
 
     public void Lock()

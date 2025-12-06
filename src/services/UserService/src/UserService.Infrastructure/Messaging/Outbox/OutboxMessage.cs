@@ -1,8 +1,8 @@
 
 using System;
 using System.Text.Json;
-using UserService.Domain.Exceptions.Abstraction.AggregateRoot;
 using UserService.Domain.Interfaces;
+using UserService.Infrastructure.Exceptions.Persistence;
 
 namespace UserService.Infrastructure.Messaging.Outbox;
 
@@ -16,7 +16,7 @@ public class OutboxMessage
     public OutboxMessage(IDomainEvent domainEvent)
     {
         if (domainEvent is null)
-            throw new MissingDomainEventException();
+            throw new MissingEventException();
 
         Id = domainEvent.EventId;
         EnqueuedOn = domainEvent.OccurredOn;

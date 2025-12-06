@@ -1,6 +1,9 @@
 
 using System;
 using UserService.Domain.Abstractions;
+using UserService.Domain.Exceptions.ValueObjects.Email;
+using UserService.Domain.Exceptions.ValueObjects.Identity;
+using UserService.Domain.Exceptions.ValueObjects.Role;
 using UserService.Domain.ValueObjects;
 
 namespace UserService.Domain.Events.User;
@@ -8,24 +11,34 @@ namespace UserService.Domain.Events.User;
 public sealed record UserRoleChangedEvent : DomainEvent
 {
     public Identity UserId { get; init; }
+    public Email Email { get; init; }    
     public Role NewRole { get; init; }
 
-    public UserRoleChangedEvent(Identity userId, Role newRole)
+    public UserRoleChangedEvent(Identity userId, Email email, Role newRole)
         : base()
     {
-        UserId = userId;
-        NewRole = newRole;
+        UserId = userId
+            ?? throw new MissingIdentityException();
+        Email = email
+            ?? throw new MissingEmailException();
+        NewRole = newRole
+            ?? throw new MissingRoleException();
     }
 
     public UserRoleChangedEvent(
         Guid eventId,
         DateTime occurredOn,
         Identity userId,
+        Email email,
         Role newRole)
         : base(eventId, occurredOn)
     {
-        UserId = userId;
-        NewRole = newRole;
+        UserId = userId
+            ?? throw new MissingIdentityException();
+        Email = email
+            ?? throw new MissingEmailException();
+        NewRole = newRole
+            ?? throw new MissingRoleException();
     }
 
     public override string ToString()

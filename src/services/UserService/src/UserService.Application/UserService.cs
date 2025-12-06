@@ -1,4 +1,4 @@
-
+/*
 using System;
 using UserService.Domain.Aggregates;
 using UserService.Domain.Common;
@@ -40,3 +40,4 @@ public class UserService
         }
     }
 }
+*/
