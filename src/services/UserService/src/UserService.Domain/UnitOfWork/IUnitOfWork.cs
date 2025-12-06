@@ -11,5 +11,5 @@ public interface IUnitOfWork
         
     IOutbox Outbox { get; init; }
 
-    Task<int> CommitChangesAsync(CancellationToken cancellationToken = default);
+    Task<int> CommitAsync(CancellationToken cancellationToken = default);
 }

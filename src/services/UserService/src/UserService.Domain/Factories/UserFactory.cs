@@ -22,7 +22,7 @@ public sealed class UserFactory
         catch (DomainException ex)
         {
             return Result<User>.Failure(
-                $"cannot create user: {ex.Message}");
+                $"Cannot create user! : {ex.Message}");
         }
     }
 
