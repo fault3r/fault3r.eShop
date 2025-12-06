@@ -24,6 +24,7 @@
 
   <ItemGroup>
     <ProjectReference Include="../../src/UserService.Domain/UserService.Domain.csproj" />
+    <ProjectReference Include="../../src/UserService.Infrastructure/UserService.Infrastructure.csproj" />
   </ItemGroup>
 
 </Project>

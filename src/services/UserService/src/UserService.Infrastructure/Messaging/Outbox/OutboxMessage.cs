@@ -10,8 +10,8 @@ public class OutboxMessage
 {
     public Guid Id { get; init; }
     public DateTime EnqueuedOn { get; init; }
-    public string Type { get; init; } = default!;
-    public string Payload { get; init; } = default!;
+    public string Type { get; init; } 
+    public string Payload { get; init; } 
 
     public OutboxMessage(IDomainEvent domainEvent)
     {

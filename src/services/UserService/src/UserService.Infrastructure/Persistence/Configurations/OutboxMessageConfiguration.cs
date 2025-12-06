@@ -10,6 +10,26 @@ public sealed class OutboxMessageConfiguration : IEntityTypeConfiguration<Outbox
 {
     public void Configure(EntityTypeBuilder<OutboxMessage> builder)
     {
-        throw new NotImplementedException();
+        builder.ToTable("OuboxMessages");
+
+        builder.HasKey(p => p.Id);
+
+        builder.HasIndex(p => p.EnqueuedOn);
+
+        builder.Property(p => p.Id)
+            .HasColumnName("Id")
+            .ValueGeneratedNever();
+
+        builder.Property(p => p.EnqueuedOn)
+            .HasColumnName("EnqueuedOn")
+            .IsRequired();
+
+        builder.Property(p => p.Type)
+            .HasColumnName("Type")
+            .IsRequired();
+
+        builder.Property(p => p.Payload)
+            .HasColumnName("Payload")
+            .IsRequired();
     }
 }
