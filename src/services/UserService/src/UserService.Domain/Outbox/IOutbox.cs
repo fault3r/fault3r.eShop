@@ -6,5 +6,5 @@ namespace UserService.Domain.Outbox;
 
 public interface IOutbox
 {
-    Task EnqueueAsync(IEnumerable<IDomainEvent> domainEvents, CancellationToken cancellationToken = default);
+    Task SaveAsync(IEnumerable<IDomainEvent> domainEvents, CancellationToken cancellationToken = default);
 }
