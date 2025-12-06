@@ -1,6 +1,7 @@
 
 using System;
 using UserService.Domain.Exceptions.Abstraction.Entity;
+using UserService.Domain.Exceptions.ValueObjects.Identity;
 using UserService.Domain.Interfaces;
 
 namespace UserService.Domain.Abstractions;

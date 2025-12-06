@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using UserService.Infrastructure.Messaging.Outbox;
 
-namespace UserService.Infrastructure.Persistence.Configurations;
+namespace UserService.Infrastructure.Messaging.Outbox;
 
 public sealed class OutboxMessageConfiguration : IEntityTypeConfiguration<OutboxMessage>
 {
