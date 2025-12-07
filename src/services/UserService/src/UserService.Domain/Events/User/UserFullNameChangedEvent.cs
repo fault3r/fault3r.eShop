@@ -14,23 +14,12 @@ public sealed record UserFullNameChangedEvent : DomainEvent
     public Email Email { get; init; }
     public FullName NewFullName { get; init; }
 
-    public UserFullNameChangedEvent(Identity userId, Email email, FullName newFullName)
-        : base()
-    {
-        UserId = userId
-            ?? throw new MissingIdentityException();
-        Email = email
-            ?? throw new MissingEmailException();
-        NewFullName = newFullName
-            ?? throw new MissingFullNameException();
-    }
-
     public UserFullNameChangedEvent(
-        Guid eventId,
-        DateTime occurredOn,
         Identity userId,
         Email email,
-        FullName newFullName)
+        FullName newFullName,
+        Guid? eventId = null,
+        DateTime? occurredOn = null)
         : base(eventId, occurredOn)
     {
         UserId = userId
@@ -42,5 +31,5 @@ public sealed record UserFullNameChangedEvent : DomainEvent
     }
 
     public override string ToString()
-        => $"{base.ToString()} | UserId={UserId}, NewFullName={NewFullName}";
+        => $"{base.ToString()} | UserId={UserId}, Email={Email}, NewFullName={NewFullName}";
 }

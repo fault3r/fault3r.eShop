@@ -12,22 +12,13 @@ public sealed record UserActivatedEvent : DomainEvent
     public Identity UserId { get; init; }
     public Email Email { get; init; }
 
-    public UserActivatedEvent(Identity userId, Email email)
-        : base()
-    {
-        UserId = userId
-            ?? throw new MissingIdentityException();
-        Email = email
-            ?? throw new MissingEmailException();
-    }
-
     public UserActivatedEvent(
-        Guid eventId,
-        DateTime occurredOn,
         Identity userId,
-        Email email)
+        Email email,
+        Guid? eventId = null,
+        DateTime? occurredOn = null)
         : base(eventId, occurredOn)
-    {
+    {        
         UserId = userId
             ?? throw new MissingIdentityException();
         Email = email
@@ -35,5 +26,5 @@ public sealed record UserActivatedEvent : DomainEvent
     }
 
     public override string ToString()
-        => $"{base.ToString()} | UserId={UserId}, Activated=true";
+        => $"{base.ToString()} | UserId={UserId}, Email={Email}";
 }

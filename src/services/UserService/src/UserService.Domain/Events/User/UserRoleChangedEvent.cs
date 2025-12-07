@@ -14,23 +14,12 @@ public sealed record UserRoleChangedEvent : DomainEvent
     public Email Email { get; init; }    
     public Role NewRole { get; init; }
 
-    public UserRoleChangedEvent(Identity userId, Email email, Role newRole)
-        : base()
-    {
-        UserId = userId
-            ?? throw new MissingIdentityException();
-        Email = email
-            ?? throw new MissingEmailException();
-        NewRole = newRole
-            ?? throw new MissingRoleException();
-    }
-
     public UserRoleChangedEvent(
-        Guid eventId,
-        DateTime occurredOn,
         Identity userId,
         Email email,
-        Role newRole)
+        Role newRole,
+        Guid? eventId = null,
+        DateTime? occurredOn = null)
         : base(eventId, occurredOn)
     {
         UserId = userId
@@ -42,5 +31,5 @@ public sealed record UserRoleChangedEvent : DomainEvent
     }
 
     public override string ToString()
-        => $"{base.ToString()} | UserId={UserId}, NewRole={NewRole}";
+        => $"{base.ToString()} | UserId={UserId}, Email={Email}, NewRole={NewRole}";
 }

@@ -12,20 +12,11 @@ public sealed record UserPasswordChangedEvent : DomainEvent
     public Identity UserId { get; init; }
     public Email Email { get; init; }    
 
-    public UserPasswordChangedEvent(Identity userId, Email email)
-        : base()
-    {
-        UserId = userId
-            ?? throw new MissingIdentityException();
-        Email = email
-            ?? throw new MissingEmailException();
-    }
-
     public UserPasswordChangedEvent(
-        Guid eventId,
-        DateTime occurredOn,
         Identity userId,
-        Email email)
+        Email email,
+        Guid? eventId = null,
+        DateTime? occurredOn = null)
         : base(eventId, occurredOn)
     {
         UserId = userId
@@ -35,5 +26,5 @@ public sealed record UserPasswordChangedEvent : DomainEvent
     }
 
     public override string ToString()
-        => $"{base.ToString()} | UserId={UserId}, PasswordChanged=true";
+        => $"{base.ToString()} | UserId={UserId}, Email={Email}";
 }

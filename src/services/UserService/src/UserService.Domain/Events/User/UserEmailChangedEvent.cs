@@ -12,20 +12,11 @@ public sealed record UserEmailChangedEvent : DomainEvent
     public Identity UserId { get; init; }
     public Email NewEmail { get; init; }
 
-    public UserEmailChangedEvent(Identity userId, Email newEmail)
-        : base()
-    {
-        UserId = userId
-            ?? throw new MissingIdentityException();
-        NewEmail = newEmail
-            ?? throw new MissingEmailException();
-    }
-
     public UserEmailChangedEvent(
-        Guid eventId,
-        DateTime occurredOn,
         Identity userId,
-        Email newEmail)
+        Email newEmail,
+        Guid? eventId = null,
+        DateTime? occurredOn = null)
         : base(eventId, occurredOn)
     {
         UserId = userId

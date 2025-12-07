@@ -1,5 +1,6 @@
 
 using System;
+using System.Collections;
 using UserService.Domain.Exceptions.Abstraction.AggregateRoot;
 using UserService.Domain.Interfaces;
 
