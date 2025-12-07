@@ -7,9 +7,9 @@ namespace UserService.Domain.Repositories;
 
 public interface IUserRepository
 {
-    Task CreateAsync(User User, CancellationToken cancellationToken = default);
+    Task CreateAsync(User user, CancellationToken cancellationToken = default);
 
-    Task UpdateAsync(User User, CancellationToken cancellationToken = default);
+    Task UpdateAsync(User user, CancellationToken cancellationToken = default);
 
     Task DeleteAsync(Identity id, CancellationToken cancellationToken = default);
 

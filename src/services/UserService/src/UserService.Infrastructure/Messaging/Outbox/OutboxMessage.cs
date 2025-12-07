@@ -30,7 +30,7 @@ public class OutboxMessage
 
     private readonly JsonSerializerOptions jsonSerializerOptions = new()
     {
-        PropertyNamingPolicy = JsonNamingPolicy.KebabCaseLower,
         WriteIndented = false,
+        PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
     };
 }

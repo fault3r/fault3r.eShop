@@ -9,7 +9,8 @@ public abstract record DomainEvent : IDomainEvent
     public Guid EventId { get; init; }
     public DateTime OccurredOn { get; init; }
 
-    protected DomainEvent(Guid? eventId = null, DateTime? occurredOn = null)
+    protected DomainEvent(
+        Guid? eventId = null, DateTime? occurredOn = null)
     {
         EventId = eventId
             ?? Guid.NewGuid();
