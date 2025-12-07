@@ -69,7 +69,7 @@ public class User : AggregateRoot<User, Identity>
             return;
 
         PasswordHash = newPasswordHash;
-        RaiseEvent(new UserPasswordChangedEvent(Id));
+        RaiseEvent(new UserPasswordChangedEvent(Id, Email));
     }
 
     public void ChangeFullName(FullName newFullName)
@@ -81,7 +81,7 @@ public class User : AggregateRoot<User, Identity>
             return;
 
         FullName = newFullName;
-        RaiseEvent(new UserFullNameChangedEvent(Id, FullName));
+        RaiseEvent(new UserFullNameChangedEvent(Id, Email, FullName));
     }
 
     public void ChangeRole(Role newRole)
@@ -93,7 +93,7 @@ public class User : AggregateRoot<User, Identity>
             return;
 
         Role = newRole;
-        RaiseEvent(new UserRoleChangedEvent(Id, Role));
+        RaiseEvent(new UserRoleChangedEvent(Id, Email, Role));
     }
 
     public void Activate()
@@ -111,6 +111,6 @@ public class User : AggregateRoot<User, Identity>
             return;
 
         Status = Status.Locked;
-        RaiseEvent(new UserLockedEvent(Id));
+        RaiseEvent(new UserLockedEvent(Id, Email));
     }
 }
