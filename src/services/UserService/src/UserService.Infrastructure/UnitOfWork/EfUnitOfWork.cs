@@ -1,7 +1,10 @@
+
+using System;
 using Microsoft.EntityFrameworkCore;
 using UserService.Domain.Outbox;
 using UserService.Domain.Repositories;
 using UserService.Domain.UnitOfWork;
+using UserService.Infrastructure.Exceptions.Persistence;
 using UserService.Infrastructure.Persistence;
 
 namespace UserService.Infrastructure.UnitOfWork;
@@ -26,8 +29,8 @@ public class EfUnitOfWork : IUnitOfWork
         if (!_dbContext.ChangeTracker.HasChanges())
             return 0;
 
-        var executionStrategy = _dbContext.Database.CreateExecutionStrategy();
-        return await executionStrategy.ExecuteAsync(async () =>
+        var strategy = _dbContext.Database.CreateExecutionStrategy();
+        return await strategy.ExecuteAsync(async () =>
         {
             await using var transaction = await _dbContext.Database
                 .BeginTransactionAsync(cancellationToken);
@@ -37,10 +40,10 @@ public class EfUnitOfWork : IUnitOfWork
                 await transaction.CommitAsync(cancellationToken);
                 return result;
             }
-            catch
+            catch (Exception ex)
             {
                 await transaction.RollbackAsync(cancellationToken);
-                throw;
+                throw new PersistenceException(ex);
             }
         });
     }
