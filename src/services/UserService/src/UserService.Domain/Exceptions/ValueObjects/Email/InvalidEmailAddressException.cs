@@ -5,5 +5,6 @@ namespace UserService.Domain.Exceptions.ValueObjects.Email;
 
 public sealed class InvalidEmailAddressException : DomainException
 {
-    public InvalidEmailAddressException(string adress) : base($"invalid email address: {adress}") { }
+    public InvalidEmailAddressException(string adress)
+        : base($"invalid email address: {adress}") { }
 }

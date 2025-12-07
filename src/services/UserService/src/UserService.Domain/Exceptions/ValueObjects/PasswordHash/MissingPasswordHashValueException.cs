@@ -5,5 +5,6 @@ namespace UserService.Domain.Exceptions.ValueObjects.PasswordHash;
 
 public class MissingPasswordHashValueException : DomainException
 {
-    public MissingPasswordHashValueException() : base($"password hash value is required") { }
+    public MissingPasswordHashValueException()
+        : base($"password hash value is required") { }
 }

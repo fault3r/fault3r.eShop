@@ -5,5 +5,6 @@ namespace UserService.Domain.Exceptions.Abstraction.Entity;
 
 public class MissingEntityIdentityException : DomainException
 {
-    public MissingEntityIdentityException() : base("entity identity is required") { }
+    public MissingEntityIdentityException()
+        : base("entity identity is required") { }
 }
