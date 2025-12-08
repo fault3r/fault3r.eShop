@@ -7,7 +7,7 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-builder.Host.AddSerilogConfiguration();
+builder.Host.AddSerilogLogging();
 
 var app = builder.Build();
 
