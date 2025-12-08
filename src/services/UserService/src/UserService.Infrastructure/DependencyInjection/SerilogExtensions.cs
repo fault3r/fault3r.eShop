@@ -1,11 +1,10 @@
 
 using System;
 using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Serilog;
 using Serilog.Events;
-using UserService.Infrastructure.Logging;
+using UserService.Infrastructure.Exceptions.Logging;
 using UserService.Infrastructure.Settings;
 
 namespace UserService.Infrastructure.DependencyInjection;
@@ -18,17 +17,13 @@ public static class SerilogExtensions
         {
             var settings = context.Configuration
                 .GetSection(nameof(SerilogSettings))
-                .Get<SerilogSettings>();
+                .Get<SerilogSettings>()
+                    ?? throw new MissingLoggerException();
 
             config.MinimumLevel.Override("Microsoft", LogEventLevel.Fatal)
                   .MinimumLevel.Override("System", LogEventLevel.Fatal)
                   .MinimumLevel.Debug()
                   .WriteTo.File(settings.Filename);
         });
-    }
-
-    public static IServiceCollection AddSerilogDi(this IServiceCollection services)
-    {
-        return services.AddSingleton<Logging.ILogger, SerilogLogger>();
     }
 }
