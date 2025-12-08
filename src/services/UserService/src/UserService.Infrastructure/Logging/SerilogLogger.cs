@@ -4,7 +4,7 @@ using Serilog.Context;
 
 namespace UserService.Infrastructure.Logging;
 
-public sealed class Serilogger(Serilog.ILogger logger) : ILogger
+public class SerilogLogger(Serilog.ILogger logger) : Logging.ILogger
 {
     private readonly Serilog.ILogger _logger = logger;
 
