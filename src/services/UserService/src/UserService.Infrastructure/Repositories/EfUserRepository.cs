@@ -4,14 +4,16 @@ using Microsoft.EntityFrameworkCore;
 using UserService.Domain.Aggregates;
 using UserService.Domain.Repositories;
 using UserService.Domain.ValueObjects;
+using UserService.Infrastructure.Exceptions.Persistence;
 using UserService.Infrastructure.Persistence;
 
 namespace UserService.Infrastructure.Repositories;
 
 public class EfUserRepository(EfDbContext efDbContext) : IUserRepository
 {
-    private readonly EfDbContext _db = efDbContext;
-
+    private readonly EfDbContext _db = efDbContext
+        ?? throw new MissingDbContextException();
+        
     public async Task CreateAsync(User user, CancellationToken cancellationToken = default)
     {
         await _db.Users.AddAsync(user, cancellationToken);

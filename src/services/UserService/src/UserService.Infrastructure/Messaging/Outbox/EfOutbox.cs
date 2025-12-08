@@ -7,15 +7,10 @@ using UserService.Infrastructure.Persistence;
 
 namespace UserService.Infrastructure.Messaging.Outbox;
 
-public sealed class EfOutbox : IOutbox
+public sealed class EfOutbox(EfDbContext efDbContext) : IOutbox
 {
-    private readonly EfDbContext _db;
-
-    public EfOutbox(EfDbContext efDbContext)
-    {
-        _db = efDbContext
-            ?? throw new MissingDbContextException();
-    }
+    private readonly EfDbContext _db = efDbContext
+        ?? throw new MissingDbContextException();
 
     public async Task EnqueueAsync(IEnumerable<IDomainEvent> domainEvents, CancellationToken cancellationToken = default)
     {
