@@ -1,5 +1,6 @@
 
 using System;
+using Serilog.Context;
 
 namespace UserService.Infrastructure.Logging;
 
@@ -17,18 +18,18 @@ public sealed class Serilogger(Serilog.ILogger logger) : ILogger
         => _logger.Error(exception, log);
 
     public void Information(string log, IDictionary<string, object> properties)
-        => Contextualger(properties).Information(log);
+        => ContextualLogger(properties).Information(log);
 
     public void Warning(string log, IDictionary<string, object> properties)
-        => Contextualger(properties).Warning(log);
+        => ContextualLogger(properties).Warning(log);
 
     public void Error(string log, IDictionary<string, object> properties)
-        => Contextualger(properties).Error(log);
+        => ContextualLogger(properties).Error(log);
 
     public void Error(Exception exception, string log, IDictionary<string, object> properties)
-        => Contextualger(properties).Error(exception, log);
+        => ContextualLogger(properties).Error(exception, log);
 
-    private Serilog.ILogger Contextualger(IDictionary<string, object>? properties)
+    private Serilog.ILogger ContextualLogger(IDictionary<string, object> properties)
     {
         if (properties is null)
             return _logger;
