@@ -1,6 +1,7 @@
 
 using System;
 using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Serilog;
 using Serilog.Events;
@@ -24,6 +25,11 @@ public static class SerilogExtensions
                 .MinimumLevel.Override("Microsoft", LogEventLevel.Fatal)
                 .MinimumLevel.Override("System", LogEventLevel.Fatal)
                 .WriteTo.File(settings.Filename);
-        });
+        })
+            .ConfigureServices((context, services) =>
+            {
+                services.AddLogging(config =>
+                    config.AddSerilog());
+            });
     }
 }
