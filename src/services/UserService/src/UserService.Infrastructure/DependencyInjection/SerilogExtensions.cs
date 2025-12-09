@@ -20,10 +20,10 @@ public static class SerilogExtensions
                 .Get<SerilogSettings>()
                     ?? throw new MissingLoggerSettingsException();
 
-            config.MinimumLevel.Override("Microsoft", LogEventLevel.Fatal)
-                  .MinimumLevel.Override("System", LogEventLevel.Fatal)
-                  .MinimumLevel.Debug()
-                  .WriteTo.File(settings.Filename);
+            config.MinimumLevel.Debug()
+                .MinimumLevel.Override("Microsoft", LogEventLevel.Fatal)
+                .MinimumLevel.Override("System", LogEventLevel.Fatal)
+                .WriteTo.File(settings.Filename);
         });
     }
 }

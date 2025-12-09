@@ -25,17 +25,20 @@ public static class PostgresExtensions
 
             if (string.IsNullOrWhiteSpace(connectionString))
                 throw new InvalidPostgresConnectionStringException();
-
+                
             services.AddDbContext<EfDbContext>(options =>
-            {
                 options.UseNpgsql(connectionString, npgsqlOptions =>
                 {
+                    npgsqlOptions.MigrationsAssembly(typeof(EfDbContext).Assembly.FullName);
+
+                    // Retry policy
                     npgsqlOptions.EnableRetryOnFailure(
-                        maxRetryCount: 5,
-                        maxRetryDelay: TimeSpan.FromSeconds(10),
-                        errorCodesToAdd: null);
-                });
-            });
+                        maxRetryCount: 5,                  // how many times to retry
+                        maxRetryDelay: TimeSpan.FromSeconds(10), // max delay between retries
+                        errorCodesToAdd: null              // you can add specific Postgres error codes if needed
+                    );
+                }));
+
         });
     }
 }
