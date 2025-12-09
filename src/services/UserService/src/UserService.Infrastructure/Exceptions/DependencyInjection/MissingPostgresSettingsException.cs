@@ -1,7 +1,7 @@
 
 using System;
 
-namespace UserService.Infrastructure.Exceptions.DependencyInjection.Postgres;
+namespace UserService.Infrastructure.Exceptions.DependencyInjection;
 
 public class MissingPostgresSettingsException : InfrastructureException
 {

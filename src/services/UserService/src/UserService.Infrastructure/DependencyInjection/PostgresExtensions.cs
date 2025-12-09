@@ -6,7 +6,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Npgsql;
 using Polly;
-using UserService.Infrastructure.Exceptions.DependencyInjection.Postgres;
+using UserService.Infrastructure.Exceptions.DependencyInjection;
 using UserService.Infrastructure.Persistence;
 using UserService.Infrastructure.Settings;
 
@@ -38,26 +38,34 @@ public static class PostgresExtensions
                         errorCodesToAdd: null);
                 });
             });
-
-            var retryPolicy = Policy
-                .Handle<NpgsqlException>()
-                .WaitAndRetry(
-                    retryCount: 3,
-                    sleepDurationProvider: attempt => TimeSpan.FromSeconds(Math.Pow(2, attempt)),
-                    onRetry: (exception, timespan, attempt, context) =>
-                    {
-                        string log = $"Retry {attempt} after {timespan.TotalSeconds}s due to: {exception.Message}";
-                    });
-            try
-            {
-                retryPolicy.Execute(() =>
-                {
-                    using var connection = new NpgsqlConnection(connectionString);
-                    connection.Open();
-                    connection.Close();
-                });
-            }
-            catch { throw new PostgresConnectionException(); }
+            CheckConnection(connectionString);
         });
+    }
+
+    private static void CheckConnection(string connectionString)
+    {
+        var retryPolicy = Policy
+            .Handle<NpgsqlException>()
+            .WaitAndRetry(
+                retryCount: 3,
+                sleepDurationProvider: attempt => TimeSpan.FromSeconds(Math.Pow(2, attempt)),
+                onRetry: (exception, timespan, attempt, context) =>
+                {
+                    Console.WriteLine($"Retry {attempt} after {timespan.TotalSeconds}s due to: {exception.Message}");
+                });
+
+        try
+        {
+            retryPolicy.Execute(() =>
+            {
+                using var connection = new NpgsqlConnection(connectionString);
+                connection.Open();
+                connection.Close();
+            });
+        }
+        catch
+        {
+            throw new PostgresConnectionException();
+        }
     }
 }

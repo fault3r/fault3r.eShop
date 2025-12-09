@@ -5,7 +5,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Serilog;
 using Serilog.Events;
-using UserService.Infrastructure.Exceptions.DependencyInjection.Serilog;
+using UserService.Infrastructure.Exceptions.DependencyInjection;
 using UserService.Infrastructure.Settings;
 
 namespace UserService.Infrastructure.DependencyInjection;
@@ -19,7 +19,7 @@ public static class SerilogExtensions
             var settings = context.Configuration
                 .GetSection(nameof(SerilogSettings))
                 .Get<SerilogSettings>()
-                    ?? throw new MissingLoggerSettingsException();
+                    ?? throw new MissingSerilogSettingsException();
 
             config
                 .MinimumLevel.Override("Microsoft", LogEventLevel.Fatal)
