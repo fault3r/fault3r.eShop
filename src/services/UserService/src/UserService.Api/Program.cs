@@ -1,16 +1,19 @@
 
 
 using Serilog;
+using UserService.Api.Middlewares;
 using UserService.Infrastructure.DependencyInjection;
 
 var builder = WebApplication.CreateBuilder(args);
 
+builder.Host.AddSerilogLogging();
+
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-builder.Host.AddSerilogLogging();
-
 var app = builder.Build();
+
+app.UseCorrelationIdMiddleware();
 
 if (app.Environment.IsDevelopment())
 {
@@ -18,8 +21,12 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
-app.MapGet("/",() => "User Service");
+app.MapGet("/",() => 
+{ 
+    Log.Information("request received.");
+    return "User Service";
+});
 
-Log.Information("application started.");
+
 
 app.Run();

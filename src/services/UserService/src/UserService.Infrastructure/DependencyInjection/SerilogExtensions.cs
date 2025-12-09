@@ -21,15 +21,20 @@ public static class SerilogExtensions
                 .Get<SerilogSettings>()
                     ?? throw new MissingLoggerSettingsException();
 
-            config.MinimumLevel.Debug()
+            config
                 .MinimumLevel.Override("Microsoft", LogEventLevel.Fatal)
                 .MinimumLevel.Override("System", LogEventLevel.Fatal)
-                .WriteTo.File(settings.Filename);
+                .MinimumLevel.Debug()
+                .Enrich.FromLogContext()
+                .WriteTo.File(
+                    settings.Filename,
+                    rollingInterval: RollingInterval.Day,
+                    outputTemplate: "[{Timestamp:yyyy-MM-dd HH:mm:ss} {Level:u3}] {CorrelationId} {SourceContext} {MachineName} {Message:lj}{NewLine}{Exception}");
         })
             .ConfigureServices((context, services) =>
             {
-                services.AddLogging(config =>
-                    config.AddSerilog());
+                services.AddLogging(
+                    config => config.AddSerilog());
             });
     }
 }
