@@ -1,5 +1,6 @@
 
 
+using Serilog;
 using UserService.Infrastructure.DependencyInjection;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -18,5 +19,7 @@ if (app.Environment.IsDevelopment())
 }
 
 app.MapGet("/",() => "User Service");
+
+Log.Information("application started.");
 
 app.Run();

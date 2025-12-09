@@ -1,8 +1,8 @@
 
 using System;
+using Microsoft.Extensions.Logging;
 using UserService.Domain.Interfaces;
 using UserService.Domain.Outbox;
-using UserService.Infrastructure.Exceptions.Logging;
 using UserService.Infrastructure.Exceptions.Persistence;
 using UserService.Infrastructure.Persistence;
 
@@ -11,16 +11,16 @@ namespace UserService.Infrastructure.Messaging.Outbox;
 public sealed class EfOutbox : IOutbox
 {
     private readonly EfDbContext _db;
-    private readonly Logging.ILogger _logger;
+
+     private readonly ILogger<EfDbContext> _logger;
 
     public EfOutbox(
-        EfDbContext efDbContext,  Logging.ILogger logger)
+        EfDbContext efDbContext,  ILogger<EfDbContext> logger)
     {
         _db = efDbContext
             ?? throw new MissingDbContextException();
 
-        _logger = logger
-            ?? throw new MissingLoggerException();
+        _logger = logger;
     }
 
 
@@ -42,11 +42,11 @@ public sealed class EfOutbox : IOutbox
 
             await _db.Set<OutboxMessage>().AddRangeAsync(messages, cancellationToken);
             
-            _logger.Information($"enqueued {messages.Count} domain event(s) to outbox.");
+            _logger.LogInformation($"enqueued {messages.Count} domain event(s) to outbox.");
         }
         catch (Exception ex)
         {
-            _logger.Error(ex, $"failed to enqueue domain events!");
+            _logger.LogError(ex, $"failed to enqueue domain events!");
             throw;
         }
     }

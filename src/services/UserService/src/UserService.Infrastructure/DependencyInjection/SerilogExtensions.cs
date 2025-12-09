@@ -13,7 +13,7 @@ namespace UserService.Infrastructure.DependencyInjection;
 public static class SerilogExtensions
 {
     public static IHostBuilder AddSerilogLogging(this IHostBuilder hostBuilder)
-    {
+    { 
         return hostBuilder.UseSerilog((context, config) =>
         {
             var settings = context.Configuration
