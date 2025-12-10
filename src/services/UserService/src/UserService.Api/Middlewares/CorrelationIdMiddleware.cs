@@ -1,6 +1,7 @@
 
 using System;
 using Serilog.Context;
+using UserService.Infrastructure.Correlation;
 
 namespace UserService.Api.Middlewares;
 
@@ -8,17 +9,18 @@ public class CorrelationIdMiddleware(RequestDelegate next)
 {
     private readonly RequestDelegate _next = next;
 
-    private const string HeaderName = "X-Correlation-ID";
+    private const string header = "X-Correlation-ID";
 
-    public async Task InvokeAsync(HttpContext context)
+    public async Task InvokeAsync(
+        HttpContext context, ICorrelationContext correlationContext)
     {
-        var correlationId = context.Request
-            .Headers[HeaderName].FirstOrDefault()
-                ?? Guid.NewGuid().ToString();
+        var correlationId = context.Request.Headers[header]
+            .FirstOrDefault() ?? Guid.NewGuid().ToString();
 
-        context.Items[HeaderName] = correlationId;
-        
-        context.Response.Headers[HeaderName] = correlationId;
+        correlationContext.Set(correlationId);
+
+        context.Items[header] = correlationId;
+        context.Response.Headers[header] = correlationId;
 
         using (LogContext.PushProperty("CorrelationId", correlationId))
         {
@@ -29,6 +31,7 @@ public class CorrelationIdMiddleware(RequestDelegate next)
 
 public static class CorrelationIdMiddlewareExtensions
 {
-    public static IApplicationBuilder UseCorrelationIdMiddleware(this IApplicationBuilder builder)
-        => builder.UseMiddleware<CorrelationIdMiddleware>();
+    public static IApplicationBuilder UseCorrelationIdMiddleware(
+        this IApplicationBuilder builder)
+            => builder.UseMiddleware<CorrelationIdMiddleware>();
 }
