@@ -2,7 +2,7 @@
 using System;
 using UserService.Domain.ValueObjects;
 
-namespace UserService.Domain.Security;
+namespace UserService.Infrastructure.Security;
 
 public interface IPasswordHasher
 {
