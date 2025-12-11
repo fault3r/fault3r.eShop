@@ -6,7 +6,7 @@ using UserService.Infrastructure.Exceptions.Persistence;
 
 namespace UserService.Infrastructure.Messaging.Outbox;
 
-public class OutboxMessage
+public sealed class OutboxMessage
 {
     public Guid Id { get; init; }
     public DateTime EnqueuedOn { get; init; }

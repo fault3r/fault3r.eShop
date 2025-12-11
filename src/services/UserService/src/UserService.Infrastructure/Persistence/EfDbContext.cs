@@ -6,7 +6,7 @@ using UserService.Infrastructure.Messaging.Outbox;
 
 namespace UserService.Infrastructure.Persistence;
 
-public class EfDbContext(
+public sealed class EfDbContext(
     DbContextOptions<EfDbContext> options) : DbContext(options)
 {
     public DbSet<User> Users => Set<User>();

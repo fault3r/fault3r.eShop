@@ -1,10 +1,10 @@
 
 using System;
-using UserService.Infrastructure.Exceptions.Common;
+using UserService.Infrastructure.Exceptions.Correlation;
 
 namespace UserService.Infrastructure.Correlation;
 
-public class CorrelationContext : ICorrelationContext
+public sealed class CorrelationContext : ICorrelationContext
 {
     private static readonly AsyncLocal<string> _id = new();
 

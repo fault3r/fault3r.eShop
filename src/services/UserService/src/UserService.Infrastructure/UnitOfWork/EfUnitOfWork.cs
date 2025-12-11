@@ -10,7 +10,7 @@ using UserService.Infrastructure.Persistence;
 
 namespace UserService.Infrastructure.UnitOfWork;
 
-public class EfUnitOfWork : IUnitOfWork
+public sealed class EfUnitOfWork : IUnitOfWork
 {
     private readonly EfDbContext _dbContext;
 

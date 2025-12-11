@@ -9,7 +9,7 @@ using UserService.Infrastructure.Persistence;
 
 namespace UserService.Infrastructure.Repositories;
 
-public class EfUserRepository(EfDbContext efDbContext) : IUserRepository
+public sealed class EfUserRepository(EfDbContext efDbContext) : IUserRepository
 {
     private readonly EfDbContext _db = efDbContext
         ?? throw new MissingDbContextException();
