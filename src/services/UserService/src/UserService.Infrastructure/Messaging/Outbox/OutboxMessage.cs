@@ -11,9 +11,11 @@ public class OutboxMessage
     public Guid Id { get; init; }
     public DateTime EnqueuedOn { get; init; }
     public string Type { get; init; } 
-    public string Payload { get; init; } 
+    public string Payload { get; init; }    
+    public string CorrelationId { get; init; }
 
-    public OutboxMessage(IDomainEvent domainEvent)
+    private OutboxMessage(
+        IDomainEvent domainEvent, string correlationId)
     {
         if (domainEvent is null)
             throw new MissingEventException();
@@ -23,10 +25,12 @@ public class OutboxMessage
         Type = domainEvent.GetType().Name;
         Payload = JsonSerializer.Serialize(
             domainEvent, domainEvent.GetType(), jsonSerializerOptions);
+        CorrelationId = correlationId;
     }
 
-    public static OutboxMessage FromDomainEvent(IDomainEvent domainEvent)
-        => new(domainEvent);
+    public static OutboxMessage FromDomainEvent(
+        IDomainEvent domainEvent,  string correlationId)
+            => new(domainEvent, correlationId);
 
     private readonly JsonSerializerOptions jsonSerializerOptions = new()
     {

@@ -30,5 +30,9 @@ public sealed class OutboxMessageConfiguration : IEntityTypeConfiguration<Outbox
         builder.Property(p => p.Payload)
             .HasColumnName("Payload")
             .IsRequired();
+
+        builder.Property(p => p.CorrelationId)
+            .HasColumnName("CorrelationId")
+            .IsRequired();
     }
 }

@@ -3,6 +3,7 @@ using System;
 using Microsoft.Extensions.Logging;
 using UserService.Domain.Interfaces;
 using UserService.Domain.Outbox;
+using UserService.Infrastructure.Correlation;
 using UserService.Infrastructure.Exceptions.Persistence;
 using UserService.Infrastructure.Persistence;
 
@@ -12,15 +13,20 @@ public sealed class EfOutbox : IOutbox
 {
     private readonly EfDbContext _db;
 
-     private readonly ILogger<EfDbContext> _logger;
+    private readonly ICorrelationContext _correlation;
+
+    private readonly ILogger<EfDbContext> _logger;
 
     public EfOutbox(
-        EfDbContext efDbContext,  ILogger<EfDbContext> logger)
+        EfDbContext efDbContext,
+        ILogger<EfDbContext> logger,
+        ICorrelationContext correlation)
     {
         _db = efDbContext
             ?? throw new MissingDbContextException();
 
         _logger = logger;
+        _correlation = correlation;
     }
 
 
@@ -37,12 +43,12 @@ public sealed class EfOutbox : IOutbox
                 throw new MissingEventException();
 
             var messages = domainEvents
-                .Select(OutboxMessage.FromDomainEvent)
+                .Select(e => OutboxMessage.FromDomainEvent(e, _correlation.CorrelationId))
                 .ToList();
 
             await _db.Set<OutboxMessage>().AddRangeAsync(messages, cancellationToken);
-            
-            _logger.LogInformation($"enqueued {messages.Count} domain event(s) to outbox.");
+
+            _logger.LogInformation("enqueued {Count} domain event(s) to outbox.", messages.Count);
         }
         catch (Exception ex)
         {
