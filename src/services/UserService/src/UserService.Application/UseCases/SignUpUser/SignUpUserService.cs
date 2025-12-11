@@ -72,7 +72,7 @@ public sealed class SignUpUserService : ISignUpUserService
         var user = createResult.Value;
 
         await _uow.Users.CreateAsync(user, cancellationToken);
-        await _uow.Outbox.EnqueueAsync(user.DomainEvents, cancellationToken);
+        await _uow.Outbox.EnqueueAsync(user.DomainEvents, correlationId, cancellationToken);
         await _uow.CommitAsync(cancellationToken);
 
         return Result<User>.Success(user);

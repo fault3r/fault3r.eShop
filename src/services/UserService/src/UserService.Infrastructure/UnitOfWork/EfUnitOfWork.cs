@@ -21,12 +21,19 @@ public sealed class EfUnitOfWork : IUnitOfWork
 
     public EfUnitOfWork(
         EfDbContext efDbContext,
-        IUserRepository users, IOutbox outbox,
+        IUserRepository users,
+        IOutbox outbox,
         ILogger<EfUnitOfWork> logger)
     {
-        _dbContext = efDbContext;
-        Users = users;
-        Outbox = outbox;
+        _dbContext = efDbContext
+            ?? throw new MissingDbContextException();
+
+        Users = users
+            ?? throw new MissingUserRepositoryException();
+
+        Outbox = outbox
+            ?? throw new MissingOutboxException();
+
         _logger = logger;
     }
 
@@ -55,7 +62,7 @@ public sealed class EfUnitOfWork : IUnitOfWork
             {
                 await transaction.RollbackAsync(cancellationToken);
 
-                _logger.LogInformation(ex, "Failed to commit changes!");
+                _logger.LogError(ex, "Failed to commit changes!");
 
                 throw new PersistenceException(ex);
             }
