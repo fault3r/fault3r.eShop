@@ -16,11 +16,10 @@ public class UserDomainService : IUserDomainService
         _userRepository = userRepository;
     }
 
-    public async Task<Result> CanCreateUserAsync(Email email)
+    public async Task<bool> CanCreateUserAsync(
+        Email email, CancellationToken cancellationToken = default)
     {
         var exists = await _userRepository.GetByEmailAsync(email);
-        return exists is not null
-            ? Result.Failure("A user with this email already exists!")
-            : Result.Success();
+        return exists is null;
     }
 }

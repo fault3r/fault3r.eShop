@@ -52,7 +52,7 @@ public sealed record FullName : ValueObject<string>
         => value.Trim();
 
     private static bool IsValid(string value)
-        => value.Length > 1 && value.Length < 50;
+        => value.Length > 1 && value.Length < 51;
 
     public static FullName From(string firstName, string lastName)
         => new(firstName, lastName);

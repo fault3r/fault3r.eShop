@@ -8,12 +8,17 @@
 
   <ItemGroup>
     <PackageReference Include="MediatR" Version="14.0.0" />
+    <PackageReference Include="FluentValidation" Version="11.11.0" />
   </ItemGroup>
 
   <ItemGroup>
     <Folder Include="Interfaces/" />
     <Folder Include="UseCases/" />
     <Folder Include="UseCases/SignUpUser/" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="../UserService.Domain/UserService.Domain.csproj" />
   </ItemGroup>
 
 </Project>

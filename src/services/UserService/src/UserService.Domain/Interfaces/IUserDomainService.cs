@@ -7,5 +7,5 @@ namespace UserService.Domain.Interfaces;
 
 public interface IUserDomainService
 {
-    Task<Result> CanCreateUserAsync(Email email);
+    Task<bool> CanCreateUserAsync(Email email, CancellationToken cancellationToken = default);
 }

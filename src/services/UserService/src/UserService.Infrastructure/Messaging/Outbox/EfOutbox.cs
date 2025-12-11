@@ -13,19 +13,15 @@ public sealed class EfOutbox : IOutbox
 {
     private readonly EfDbContext _db;
 
-    private readonly ILogger<EfDbContext> _logger;
-
     private readonly ICorrelationContext _correlation;
 
     public EfOutbox(
         EfDbContext efDbContext,
-        ILogger<EfDbContext> logger,
         ICorrelationContext correlation)
     {
         _db = efDbContext
             ?? throw new MissingDbContextException();
 
-        _logger = logger;
         _correlation = correlation;
     }
 

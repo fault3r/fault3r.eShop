@@ -3,6 +3,7 @@ using System;
 using System.Security.Cryptography;
 using System.Text;
 using Konscious.Security.Cryptography;
+using UserService.Application.Security;
 using UserService.Domain.ValueObjects;
 using UserService.Infrastructure.Exceptions.Security;
 
@@ -10,13 +11,13 @@ namespace UserService.Infrastructure.Security;
 
 public sealed class Argon2PasswordHasher : IPasswordHasher
 {
-    public PasswordHash Hash(string rawPassword)
+    public string Hash(string password)
     {
         try
         {
             var salt = RandomNumberGenerator.GetBytes(16);
 
-            var argon2 = new Argon2id(Encoding.UTF8.GetBytes(rawPassword))
+            var argon2 = new Argon2id(Encoding.UTF8.GetBytes(password))
             {
                 Salt = salt,
                 DegreeOfParallelism = 4,
@@ -37,11 +38,11 @@ public sealed class Argon2PasswordHasher : IPasswordHasher
         }
     }
 
-    public bool Verify(string rawPassword, PasswordHash hash)
+    public bool Verify(string password, string hash)
     {
         try
         {
-            var parts = hash.Value.Split('$', StringSplitOptions.RemoveEmptyEntries);
+            var parts = hash.Split('$', StringSplitOptions.RemoveEmptyEntries);
 
             var parameters = parts[2].Split(',');
             var memory = int.Parse(parameters[0].Split('=')[1]);
@@ -51,7 +52,7 @@ public sealed class Argon2PasswordHasher : IPasswordHasher
             var salt = Convert.FromBase64String(parts[3]);
             var expectedHash = Convert.FromBase64String(parts[4]);
 
-            var argon2 = new Argon2id(Encoding.UTF8.GetBytes(rawPassword))
+            var argon2 = new Argon2id(Encoding.UTF8.GetBytes(password))
             {
                 Salt = salt,
                 DegreeOfParallelism = parallelism,

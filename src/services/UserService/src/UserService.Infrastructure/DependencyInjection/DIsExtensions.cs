@@ -1,6 +1,9 @@
 
 using System;
+using FluentValidation;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.IdentityModel.Tokens;
+using UserService.Application.UseCases.SignUpUser;
 using UserService.Domain.Interfaces;
 using UserService.Domain.Outbox;
 using UserService.Domain.Repositories;
@@ -25,6 +28,8 @@ public static class DIsExtensions
         services.AddScoped<IOutbox, EfOutbox>();
 
         services.AddScoped<IUnitOfWork, EfUnitOfWork>();
+
+        services.AddScoped<IValidator<SignUpUserCommand>, SignUpUserValidator>();
 
         services.AddSingleton<ICorrelationContext, CorrelationContext>();
 
