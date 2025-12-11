@@ -33,7 +33,6 @@ public sealed class Argon2PasswordHasher : IPasswordHasher
         }
         catch
         {
-            //logging
             throw new SecurityHashingException("cannot hash password");
         }
     }
@@ -66,7 +65,6 @@ public sealed class Argon2PasswordHasher : IPasswordHasher
         }
         catch
         {
-            //logging
             throw new SecurityHashingException("cannot verify password");
         }
     }

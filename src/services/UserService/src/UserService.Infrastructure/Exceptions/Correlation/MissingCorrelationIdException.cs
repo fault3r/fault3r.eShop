@@ -1,7 +1,7 @@
 
 using System;
 
-namespace UserService.Infrastructure.Exceptions.Common;
+namespace UserService.Infrastructure.Exceptions.Correlation;
 
 public class MissingCorrelationIdException : InfrastructureException
 {

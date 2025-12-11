@@ -29,6 +29,4 @@ app.MapGet("/",() =>
     return "User Service";
 });
 
-
-
 app.Run();

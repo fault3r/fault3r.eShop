@@ -13,9 +13,9 @@ public sealed class EfOutbox : IOutbox
 {
     private readonly EfDbContext _db;
 
-    private readonly ICorrelationContext _correlation;
-
     private readonly ILogger<EfDbContext> _logger;
+
+    private readonly ICorrelationContext _correlation;
 
     public EfOutbox(
         EfDbContext efDbContext,
@@ -32,28 +32,18 @@ public sealed class EfOutbox : IOutbox
 
     public async Task EnqueueAsync(IEnumerable<IDomainEvent> domainEvents, CancellationToken cancellationToken = default)
     {
-        try
-        {
-            if (domainEvents is null)
-                throw new MissingEventsException();
+        if (domainEvents is null)
+            throw new MissingEventsException();
 
-            if (!domainEvents.Any()) return;
+        if (!domainEvents.Any()) return;
 
-            if (domainEvents.Any(e => e is null))
-                throw new MissingEventException();
+        if (domainEvents.Any(e => e is null))
+            throw new MissingEventException();
 
-            var messages = domainEvents
-                .Select(e => OutboxMessage.FromDomainEvent(e, _correlation.CorrelationId))
-                .ToList();
+        var messages = domainEvents
+            .Select(e => OutboxMessage.FromDomainEvent(e, _correlation.CorrelationId))
+            .ToList();
 
-            await _db.Set<OutboxMessage>().AddRangeAsync(messages, cancellationToken);
-
-            _logger.LogInformation("enqueued {Count} domain event(s) to outbox.", messages.Count);
-        }
-        catch (Exception ex)
-        {
-            _logger.LogError(ex, $"failed to enqueue domain events!");
-            throw;
-        }
+        await _db.Set<OutboxMessage>().AddRangeAsync(messages, cancellationToken);
     }
 }

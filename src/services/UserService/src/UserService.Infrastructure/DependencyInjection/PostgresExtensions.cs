@@ -46,14 +46,10 @@ public static class PostgresExtensions
     {
         var retryPolicy = Policy
             .Handle<NpgsqlException>()
-            .Or<Exception>()
             .WaitAndRetry(
                 retryCount: 3,
-                sleepDurationProvider: attempt => TimeSpan.FromSeconds(Math.Pow(2, attempt)),
-                onRetry: (exception, timespan, attempt, context) =>
-                {
-                    Console.WriteLine($"Retry {attempt} after {timespan.TotalSeconds}s due to: {exception.Message}");
-                });
+                sleepDurationProvider:
+                    attempt => TimeSpan.FromSeconds(Math.Pow(2, attempt)));
 
         try
         {
@@ -61,7 +57,6 @@ public static class PostgresExtensions
             {
                 using var connection = new NpgsqlConnection(connectionString);
                 connection.Open();
-                connection.Close();
             });
         }
         catch { throw new PostgresConnectionException(); }
