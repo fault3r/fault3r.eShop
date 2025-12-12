@@ -1,7 +1,7 @@
 
 using System;
 using Serilog.Context;
-using UserService.Infrastructure.Correlation;
+using UserService.Infrastructure.CrossCutting;
 
 namespace UserService.Api.Middlewares;
 

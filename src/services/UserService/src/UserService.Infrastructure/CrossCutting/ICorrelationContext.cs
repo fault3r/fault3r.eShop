@@ -1,7 +1,7 @@
 
 using System;
 
-namespace UserService.Infrastructure.Correlation;
+namespace UserService.Infrastructure.CrossCutting;
 
 public interface ICorrelationContext
 {

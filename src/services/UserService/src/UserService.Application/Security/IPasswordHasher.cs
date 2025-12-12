@@ -1,6 +1,5 @@
 
 using System;
-using UserService.Domain.ValueObjects;
 
 namespace UserService.Application.Security;
 

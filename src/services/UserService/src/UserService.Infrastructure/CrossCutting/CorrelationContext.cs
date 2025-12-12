@@ -2,7 +2,7 @@
 using System;
 using UserService.Infrastructure.Exceptions.Correlation;
 
-namespace UserService.Infrastructure.Correlation;
+namespace UserService.Infrastructure.CrossCutting;
 
 public sealed class CorrelationContext : ICorrelationContext
 {

@@ -2,14 +2,14 @@
 using System;
 using FluentValidation;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.IdentityModel.Tokens;
+using UserService.Application.Security;
 using UserService.Application.UseCases.SignUpUser;
 using UserService.Domain.Interfaces;
 using UserService.Domain.Outbox;
 using UserService.Domain.Repositories;
 using UserService.Domain.Services;
 using UserService.Domain.UnitOfWork;
-using UserService.Infrastructure.Correlation;
+using UserService.Infrastructure.CrossCutting;
 using UserService.Infrastructure.Messaging.Outbox;
 using UserService.Infrastructure.Repositories;
 using UserService.Infrastructure.Security;
