@@ -41,6 +41,8 @@ public sealed class UserConfiguration : IEntityTypeConfiguration<User>
 
         builder.OwnsOne(p => p.FullName, fullName =>
         {
+            fullName.Ignore(p => p.Value);
+             
             fullName.Property(p => p.FirstName)
                 .HasColumnName("FirstName")
                 .IsRequired();
@@ -54,15 +56,15 @@ public sealed class UserConfiguration : IEntityTypeConfiguration<User>
         builder.Property(p => p.Role)
             .HasColumnName("Role")
             .HasConversion(
-                role => role.Value,
-                value => Role.From(value))
+                role => role.Value.ToString(),
+                value => Role.Parse(value))
             .IsRequired();                 
 
         builder.Property(p => p.Status)
             .HasColumnName("Status")
             .HasConversion(
-                status => status.Value,
-                value => Status.From(value))
+                status => status.Value.ToString(),
+                value => Status.Parse(value))
             .IsRequired();           
 
         builder.Ignore(p => p.DomainEvents);

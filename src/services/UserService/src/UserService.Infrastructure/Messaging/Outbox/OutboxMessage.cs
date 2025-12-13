@@ -8,23 +8,24 @@ namespace UserService.Infrastructure.Messaging.Outbox;
 
 public sealed class OutboxMessage
 {
-    public Guid Id { get; init; }
-    public DateTime EnqueuedOn { get; init; }
-    public string Type { get; init; } 
-    public string Payload { get; init; }    
-    public string CorrelationId { get; init; }
+    public Guid Id { get; private set; }
+    public string Type { get; private set; }
+    public string Payload { get; private set; }
+    public DateTime EnqueuedOn { get; private set; }
+    public string CorrelationId { get; private set; }
 
     private OutboxMessage(
-        IDomainEvent domainEvent, string correlationId)
+        IDomainEvent domainEvent,
+        string correlationId)
     {
         if (domainEvent is null)
             throw new MissingEventException();
 
         Id = domainEvent.EventId;
-        EnqueuedOn = domainEvent.OccurredOn;
         Type = domainEvent.GetType().Name;
         Payload = JsonSerializer.Serialize(
             domainEvent, domainEvent.GetType(), jsonSerializerOptions);
+        EnqueuedOn = domainEvent.OccurredOn;
         CorrelationId = correlationId;
     }
 
@@ -37,4 +38,7 @@ public sealed class OutboxMessage
         WriteIndented = false,
         PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
     };
+
+    // EFCore
+    private OutboxMessage() { }  
 }

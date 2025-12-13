@@ -9,7 +9,7 @@ using UserService.Infrastructure.CrossCutting;
 namespace UserService.Api.Controllers;
 
 [ApiController]
-[Route("api/[controller]")]
+[Route("api/user")]
 public class UserController : ControllerBase
 {
     private readonly IMediator _mediator;
@@ -21,8 +21,13 @@ public class UserController : ControllerBase
         _correlation = correlationContext;
     }
 
+    [HttpGet]
+    [Route("test")]
+    public async Task<IActionResult> TestMethod()
+        => Ok("access granted");
+
     [HttpPost]
-    [Route("SignUp")]
+    [Route("signup")]
     public async Task<IActionResult> SignUp([FromBody] SignUpUserDto request)
     {
         var command = new SignUpUserCommand(

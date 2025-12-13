@@ -2,6 +2,7 @@
 using System;
 using FluentValidation;
 using Microsoft.Extensions.DependencyInjection;
+using UserService.Application.Interfaces;
 using UserService.Application.Security;
 using UserService.Application.UseCases.SignUpUser;
 using UserService.Domain.Interfaces;
@@ -21,6 +22,11 @@ public static class DIsExtensions
 {
     public static IServiceCollection AddDIs(this IServiceCollection services)
     {
+        services.AddMediatR(config =>
+            config.RegisterServicesFromAssembly(typeof(SignUpUserCommand).Assembly));
+
+        services.AddScoped<ISignUpUserService, SignUpUserService>();
+
         services.AddScoped<IUserDomainService, UserDomainService>();
 
         services.AddScoped<IUserRepository, EfUserRepository>();

@@ -113,4 +113,7 @@ public class User : AggregateRoot<User, Identity>
         Status = Status.Locked;
         RaiseEvent(new UserLockedEvent(Id, Email));
     }
+
+    // EFCore
+    private User() : base(default!) { }
 }

@@ -5,5 +5,5 @@ namespace UserService.Infrastructure.Exceptions.DependencyInjection;
 public class PostgresConnectionException : InfrastructureException
 {
     public PostgresConnectionException()
-        : base("can not connect to postgres") { }
+        : base("cannot connect to postgres server") { }
 }
