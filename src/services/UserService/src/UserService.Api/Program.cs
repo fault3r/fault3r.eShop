@@ -1,11 +1,9 @@
 
 using System;
-using Serilog;
 using UserService.Api.Middlewares;
 using UserService.Infrastructure.DependencyInjection;
 
 var builder = WebApplication.CreateBuilder(args);
-
 
 builder.Host.AddSerilogLogging();
 
@@ -32,13 +30,5 @@ if (app.Environment.IsDevelopment())
 }
 
 app.MapControllers();
-
-app.MapGet("/",() => 
-{ 
-    Log.Information("request received.");
-    return "User Service";
-});
-
-Console.WriteLine("app started.");
 
 app.Run();
