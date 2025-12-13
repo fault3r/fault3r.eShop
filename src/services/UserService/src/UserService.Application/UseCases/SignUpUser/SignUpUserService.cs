@@ -1,6 +1,5 @@
 ﻿
 using System;
-using FluentValidation;
 using UserService.Application.Interfaces;
 using UserService.Application.Security;
 using UserService.Domain.Aggregates;
