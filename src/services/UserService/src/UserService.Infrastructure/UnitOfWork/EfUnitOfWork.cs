@@ -64,7 +64,7 @@ public sealed class EfUnitOfWork : IUnitOfWork
 
                 _logger.LogError(ex, "Failed to commit changes!");
 
-                throw new PersistenceException(ex);
+                throw new PersistenceException();
             }
         });
     }

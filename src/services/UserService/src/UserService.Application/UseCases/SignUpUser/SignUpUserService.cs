@@ -41,8 +41,9 @@ public sealed class SignUpUserService : ISignUpUserService
         if (!validation.IsValid)
             return Result<User>.Failure(
                 string.Join("\n", validation.Errors.Select(e => e.ErrorMessage))
-            );
+            );        
 
+        User user;
         Email email;
         PasswordHash passwordHash;
         FullName fullName;
@@ -50,30 +51,33 @@ public sealed class SignUpUserService : ISignUpUserService
         {
             email = Email.Parse(command.Email);
 
-            var hashed = _passwordHasher.Hash(command.Password);
+            string hashed = _passwordHasher.Hash(command.Password);
             passwordHash = PasswordHash.Parse(hashed);
 
             fullName = FullName.Parse(command.FullName);
+
+            user = UserFactory.CreateNew(email, passwordHash, fullName);
         }
         catch (DomainException ex)
         {
-            return Result<User>.Failure(ex.Message);
+            return Result<User>.Failure($"Error signing up user: {ex.Message}");
         }
-
+        
         var canCreate = await _domainService.CanCreateUserAsync(email, cancellationToken);
         if (!canCreate)
             return Result<User>.Failure("User with this email already exists!");
 
-        var createResult = UserFactory.TryCreateNew(email, passwordHash, fullName);
-
-        if (createResult.IsFailure || createResult.Value is null)
-            return Result<User>.Failure(createResult.Error ?? "Failed to create user.");
-
-        var user = createResult.Value;
-
-        await _uow.Users.CreateAsync(user, cancellationToken);
-        await _uow.Outbox.EnqueueAsync(user.DomainEvents, correlationId, cancellationToken);
-        await _uow.CommitAsync(cancellationToken);
+        try
+        {
+            await _uow.Users.CreateAsync(user, cancellationToken);
+            await _uow.Outbox.EnqueueAsync(user.DomainEvents, correlationId, cancellationToken);
+            await _uow.CommitAsync(cancellationToken);
+            user.ClearEvents();
+        }
+        catch
+        {
+            return Result<User>.Failure($"An unexpected error occurred!");
+        }
 
         return Result<User>.Success(user);
     }
