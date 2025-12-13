@@ -1,8 +1,6 @@
 
-
 using System;
 using MediatR;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using UserService.Api.DTOs.User;
 using UserService.Application.UseCases.SignUpUser;
@@ -10,8 +8,8 @@ using UserService.Infrastructure.CrossCutting;
 
 namespace UserService.Api.Controllers;
 
-[Route("api/[controller]")]
 [ApiController]
+[Route("api/[controller]")]
 public class UserController : ControllerBase
 {
     private readonly IMediator _mediator;
@@ -23,22 +21,21 @@ public class UserController : ControllerBase
         _correlation = correlationContext;
     }
 
-    [HttpPost("signup")]
-    public async Task<IActionResult> SignUp(SignUpUserDto request)
+    [HttpPost]
+    [Route("SignUp")]
+    public async Task<IActionResult> SignUp([FromBody] SignUpUserDto request)
     {
-        var correlationId = _correlation.CorrelationId;
-
         var command = new SignUpUserCommand(
             request.Email,
             request.Password,
             request.FullName,
-            correlationId
+            _correlation.CorrelationId
         );
 
         var result = await _mediator.Send(command);
 
-        return result.IsSuccess
-            ? Ok(result.Value)
-            : BadRequest(result.Error);
+        return result.IsFailure
+            ? BadRequest(result.Error)
+            : Ok(result.Value);
     }
 }
