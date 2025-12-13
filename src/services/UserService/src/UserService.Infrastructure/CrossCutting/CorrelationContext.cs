@@ -1,6 +1,6 @@
 
 using System;
-using UserService.Infrastructure.Exceptions.Correlation;
+using UserService.Infrastructure.Exceptions.CrossCutting;
 
 namespace UserService.Infrastructure.CrossCutting;
 

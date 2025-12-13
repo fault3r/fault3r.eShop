@@ -17,53 +17,47 @@ public sealed class SignUpUserService : ISignUpUserService
 {
     private readonly IUnitOfWork _uow;
     private readonly IUserDomainService _domainService;
-    private readonly IValidator<SignUpUserCommand> _validator;
+
     private readonly IPasswordHasher _passwordHasher;
 
     public SignUpUserService(
         IUnitOfWork uow,
         IUserDomainService domainService,
-        IValidator<SignUpUserCommand> validator,
         IPasswordHasher passwordHasher)
     {
         _uow = uow;
         _domainService = domainService;
-        _validator = validator;
         _passwordHasher = passwordHasher;
     }
 
     public async Task<Result<User>> ExecuteAsync(
-        SignUpUserCommand command,
+        string email,
+        string password,
+        string fullName,
         string correlationId,
         CancellationToken cancellationToken = default)
     {
-        var validation = await _validator.ValidateAsync(command, cancellationToken);
-        if (!validation.IsValid)
-            return Result<User>.Failure(
-                string.Join("\n", validation.Errors.Select(e => e.ErrorMessage))
-            );        
-
         User user;
-        Email email;
-        PasswordHash passwordHash;
-        FullName fullName;
+        Email vEmail;
+        PasswordHash vPasswordHash;
+        FullName vFullName;
         try
         {
-            email = Email.Parse(command.Email);
+            vEmail = Email.Parse(email);
 
-            string hashed = _passwordHasher.Hash(command.Password);
-            passwordHash = PasswordHash.Parse(hashed);
+            string hashed = _passwordHasher.Hash(password);
+            vPasswordHash = PasswordHash.Parse(hashed);
 
-            fullName = FullName.Parse(command.FullName);
+            vFullName = FullName.Parse(fullName);
 
-            user = UserFactory.CreateNew(email, passwordHash, fullName);
+            user = UserFactory.CreateNew(vEmail, vPasswordHash, vFullName);
         }
         catch (DomainException ex)
         {
             return Result<User>.Failure($"Error signing up user: {ex.Message}");
         }
         
-        var canCreate = await _domainService.CanCreateUserAsync(email, cancellationToken);
+        var canCreate = await _domainService.CanCreateUserAsync(vEmail, cancellationToken);
         if (!canCreate)
             return Result<User>.Failure("User with this email already exists!");
 

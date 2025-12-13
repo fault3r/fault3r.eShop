@@ -1,7 +1,7 @@
 
 using System;
 
-namespace UserService.Infrastructure.Exceptions.Correlation;
+namespace UserService.Infrastructure.Exceptions.CrossCutting;
 
 public class MissingCorrelationIdException : InfrastructureException
 {
