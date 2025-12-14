@@ -1,6 +1,0 @@
-[2025-12-13 19:51:13 WRN] 681e1819-9f78-471b-b528-3e744228f6e7 LuckyPennySoftware.MediatR.License  You do not have a valid license key for the Lucky Penny software MediatR. This is allowed for development and testing scenarios. If you are running in production you are required to have a licensed version. Please visit https://luckypennysoftware.com to obtain a valid license.
-[2025-12-13 19:51:18 INF] 681e1819-9f78-471b-b528-3e744228f6e7 UserService.Infrastructure.UnitOfWork.EfUnitOfWork  Committing changes...
-[2025-12-13 19:51:18 INF] 681e1819-9f78-471b-b528-3e744228f6e7 UserService.Infrastructure.UnitOfWork.EfUnitOfWork  Successfully committed 2 change(s).
-[2025-12-13 20:00:32 WRN] 8939616b-1567-4779-8ed9-dd823234f2d0 LuckyPennySoftware.MediatR.License  You do not have a valid license key for the Lucky Penny software MediatR. This is allowed for development and testing scenarios. If you are running in production you are required to have a licensed version. Please visit https://luckypennysoftware.com to obtain a valid license.
-[2025-12-13 20:02:14 INF] c4aabf0e-bbce-4a4d-aaef-04a8e89a8e40 UserService.Infrastructure.UnitOfWork.EfUnitOfWork  Committing changes...
-[2025-12-13 20:02:14 INF] c4aabf0e-bbce-4a4d-aaef-04a8e89a8e40 UserService.Infrastructure.UnitOfWork.EfUnitOfWork  Successfully committed 2 change(s).
