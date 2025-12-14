@@ -22,6 +22,7 @@ builder.Services.AddSwaggerGen();
 var app = builder.Build();
 
 app.UseCorrelationIdMiddleware();
+app.UseExceptionHandlingMiddleware();
 
 if (app.Environment.IsDevelopment())
 {

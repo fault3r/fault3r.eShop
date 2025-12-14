@@ -115,5 +115,5 @@ public class User : AggregateRoot<User, Identity>
     }
 
     // EFCore
-    private User() : base(default!) { }
+    private User(Identity id) : base(id) { }
 }

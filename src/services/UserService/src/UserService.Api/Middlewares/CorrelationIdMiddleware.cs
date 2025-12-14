@@ -16,40 +16,22 @@ public class CorrelationIdMiddleware(RequestDelegate next)
         HttpContext context, ICorrelationContext correlationContext)
     {
         var correlationId = context.Request.Headers[header]
-            .FirstOrDefault() ?? Guid.NewGuid().ToString();
+            .FirstOrDefault()
+            ?? Guid.NewGuid().ToString();
 
         correlationContext.Set(correlationId);
-
         context.Items[header] = correlationId;
         context.Response.Headers[header] = correlationId;
 
         using (LogContext.PushProperty("CorrelationId", correlationId))
         {            
             Log.Information(
-                "Incoming request {Method} {Path}.", context.Request.Method, context.Request.Path);               
+                "Incoming request {Method} {Path}.", context.Request.Method, context.Request.Path);   
 
-            try
-            {
-                await _next(context);
+            await _next(context);
 
-                Log.Information(
-                    "Completed request {Method} {Path} with status {StatusCode} and correlation id {CorrelationId}",
-                    context.Request.Method,
-                    context.Request.Path,
-                    context.Response.StatusCode,
-                    correlationId);
-            }
-            catch (Exception ex)
-            {
-                Log.Error(
-                    ex,
-                    "Unhandled exception for {Method} {Path} with correlation id {CorrelationId}",
-                    context.Request.Method,
-                    context.Request.Path,
-                    correlationId);
-
-                throw;
-            }
+            Log.Information(
+                "Completed request {Method} {Path} with status {StatusCode}.", context.Request.Method, context.Request.Path, context.Response.StatusCode);       
         }
     }
 }
