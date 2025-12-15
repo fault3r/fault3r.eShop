@@ -1,6 +1,6 @@
 
 using System;
-using UserService.Domain.Aggregates;
+using UserService.Domain.Aggregates.UserAggregate;
 using UserService.Domain.ValueObjects;
 
 namespace UserService.Domain.Repositories;

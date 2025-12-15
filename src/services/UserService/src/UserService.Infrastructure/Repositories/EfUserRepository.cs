@@ -1,7 +1,7 @@
 
 using System;
 using Microsoft.EntityFrameworkCore;
-using UserService.Domain.Aggregates;
+using UserService.Domain.Aggregates.UserAggregate;
 using UserService.Domain.Repositories;
 using UserService.Domain.ValueObjects;
 using UserService.Infrastructure.Exceptions.Persistence;

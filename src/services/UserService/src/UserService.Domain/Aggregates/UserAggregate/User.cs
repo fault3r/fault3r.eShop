@@ -1,7 +1,7 @@
 
 using System;
 using UserService.Domain.Abstractions;
-using UserService.Domain.Aggregates.User.Events;
+using UserService.Domain.Aggregates.UserAggregate.Events;
 using UserService.Domain.Exceptions.ValueObjects.Email;
 using UserService.Domain.Exceptions.ValueObjects.FullName;
 using UserService.Domain.Exceptions.ValueObjects.PasswordHash;
@@ -9,7 +9,7 @@ using UserService.Domain.Exceptions.ValueObjects.Role;
 using UserService.Domain.Exceptions.ValueObjects.Status;
 using UserService.Domain.ValueObjects;
 
-namespace UserService.Domain.Aggregates.User;
+namespace UserService.Domain.Aggregates.UserAggregate;
 
 public class User : AggregateRoot<User, Identity>
 {

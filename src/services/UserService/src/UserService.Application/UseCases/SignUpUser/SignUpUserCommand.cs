@@ -1,7 +1,7 @@
 ﻿
 using System;
 using MediatR;
-using UserService.Domain.Aggregates;
+using UserService.Domain.Aggregates.UserAggregate;
 using UserService.Domain.Common;
 
 namespace UserService.Application.UseCases.SignUpUser;

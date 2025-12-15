@@ -2,7 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using UserService.Domain.Aggregates;
+using UserService.Domain.Aggregates.UserAggregate;
 using UserService.Domain.ValueObjects;
 
 namespace UserService.Infrastructure.Persistence.Configurations;

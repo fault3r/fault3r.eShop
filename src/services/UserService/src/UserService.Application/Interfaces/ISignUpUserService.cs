@@ -1,7 +1,6 @@
 ﻿
 using System;
-using UserService.Application.UseCases.SignUpUser;
-using UserService.Domain.Aggregates;
+using UserService.Domain.Aggregates.UserAggregate;
 using UserService.Domain.Common;
 
 namespace UserService.Application.Interfaces;

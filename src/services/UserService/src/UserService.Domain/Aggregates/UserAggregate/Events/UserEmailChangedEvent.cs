@@ -5,8 +5,7 @@ using UserService.Domain.Exceptions.ValueObjects.Email;
 using UserService.Domain.Exceptions.ValueObjects.Identity;
 using UserService.Domain.ValueObjects;
 
-namespace UserService.Domain.Aggregates.User.Events;
-
+namespace UserService.Domain.Aggregates.UserAggregate.Events;
 public sealed record UserEmailChangedEvent : DomainEvent
 {
     public Identity UserId { get; init; }

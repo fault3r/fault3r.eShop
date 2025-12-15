@@ -3,7 +3,7 @@ using System;
 using FluentValidation;
 using MediatR;
 using UserService.Application.Interfaces;
-using UserService.Domain.Aggregates;
+using UserService.Domain.Aggregates.UserAggregate;
 using UserService.Domain.Common;
 
 namespace UserService.Application.UseCases.SignUpUser;

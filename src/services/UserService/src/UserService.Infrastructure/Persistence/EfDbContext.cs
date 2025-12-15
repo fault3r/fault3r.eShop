@@ -1,7 +1,7 @@
 
 using System;
 using Microsoft.EntityFrameworkCore;
-using UserService.Domain.Aggregates;
+using UserService.Domain.Aggregates.UserAggregate;
 using UserService.Infrastructure.Messaging.Outbox;
 
 namespace UserService.Infrastructure.Persistence;
