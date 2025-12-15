@@ -58,11 +58,11 @@ public sealed class EfUnitOfWork : IUnitOfWork
 
                 return result;
             }
-            catch (Exception ex)
+            catch (Exception exception)
             {
                 await transaction.RollbackAsync(cancellationToken);
 
-                _logger.LogError(ex, "Failed to commit changes!");
+                _logger.LogError(exception, "Failed to commit changes!");
 
                 throw new PersistenceException();
             }

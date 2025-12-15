@@ -36,7 +36,7 @@ public class UserController : ControllerBase
     public async Task<IActionResult> SignUp([FromBody] SignUpUserDto request)
     {
         _logger.LogInformation(
-            "Received SignUpUser request for email:{Email}", request.Email);
+            "SignUpUser request received for email:{Email}", request.Email);
 
         var command = new SignUpUserCommand(
             request.Email,
@@ -50,13 +50,13 @@ public class UserController : ControllerBase
         if (result.IsFailure)
         {
             _logger.LogWarning(
-                "SignUpUser failed for email:{Email}, Error:{Error}", request.Email, result.Error);
+                "SignUpUser request failed for email:{Email}, Error(s):{Error}", request.Email, result.Error);
 
             return BadRequest(result.Error);
         }
 
         _logger.LogInformation(
-            "User signed up successfully with email:{Email}", request.Email);
+            "SignUpUser request complete successfully with email:{Email}", request.Email);
 
         return Ok(result.Value);
     }
