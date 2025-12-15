@@ -22,3 +22,57 @@
 [2025-12-15 22:03:25 INF] 59897e1a-155f-4fef-b53f-3ce6d56d5c96 UserService.Application.UseCases.SignUpUser.SignUpUserCommandHandler  Request handled
 [2025-12-15 22:03:25 WRN] 59897e1a-155f-4fef-b53f-3ce6d56d5c96 UserService.Api.Controllers.UserController  SignUpUser request failed, Error:User with this email already exists!
 [2025-12-15 22:03:25 INF] 59897e1a-155f-4fef-b53f-3ce6d56d5c96   Completed request POST /api/user/signup with status 409.
+[2025-12-15 22:08:40 INF] 4bf9e0d9-dc51-4f4a-9d0a-596a1113db1d   Incoming request POST /api/user/signup
+[2025-12-15 22:08:40 WRN] 4bf9e0d9-dc51-4f4a-9d0a-596a1113db1d LuckyPennySoftware.MediatR.License  You do not have a valid license key for the Lucky Penny software MediatR. This is allowed for development and testing scenarios. If you are running in production you are required to have a licensed version. Please visit https://luckypennysoftware.com to obtain a valid license.
+[2025-12-15 22:08:40 INF] 4bf9e0d9-dc51-4f4a-9d0a-596a1113db1d UserService.Api.Controllers.UserController  SignUpUser request received for email:test@exx
+[2025-12-15 22:08:40 INF] 4bf9e0d9-dc51-4f4a-9d0a-596a1113db1d UserService.Application.UseCases.SignUpUser.SignUpUserCommandHandler  Handling request
+[2025-12-15 22:08:40 INF] 4bf9e0d9-dc51-4f4a-9d0a-596a1113db1d UserService.Application.UseCases.SignUpUser.SignUpUserService  Executing service
+[2025-12-15 22:08:41 INF] 4bf9e0d9-dc51-4f4a-9d0a-596a1113db1d UserService.Application.UseCases.SignUpUser.SignUpUserService  User created successfully
+[2025-12-15 22:08:41 INF] 4bf9e0d9-dc51-4f4a-9d0a-596a1113db1d UserService.Application.UseCases.SignUpUser.SignUpUserService  Checking if user can be created
+[2025-12-15 22:08:52 ERR] 4bf9e0d9-dc51-4f4a-9d0a-596a1113db1d   Unhandled exception occurred while processing POST /api/user/signup.
+Microsoft.EntityFrameworkCore.Storage.RetryLimitExceededException: The maximum number of retries (5) was exceeded while executing database operations with 'NpgsqlRetryingExecutionStrategy'. See the inner exception for the most recent failure.
+ ---> Npgsql.NpgsqlException (0x80004005): Failed to connect to 127.0.0.1:5432
+ ---> System.Net.Sockets.SocketException (111): Connection refused
+   at System.Net.Sockets.Socket.AwaitableSocketAsyncEventArgs.ThrowException(SocketError error, CancellationToken cancellationToken)
+   at System.Net.Sockets.Socket.AwaitableSocketAsyncEventArgs.System.Threading.Tasks.Sources.IValueTaskSource.GetResult(Int16 token)
+   at System.Net.Sockets.Socket.<ConnectAsync>g__WaitForConnectWithCancellation|285_0(AwaitableSocketAsyncEventArgs saea, ValueTask connectTask, CancellationToken cancellationToken)
+   at Npgsql.TaskTimeoutAndCancellation.ExecuteAsync(Func`2 getTaskFunc, NpgsqlTimeout timeout, CancellationToken cancellationToken)
+   at Npgsql.Internal.NpgsqlConnector.ConnectAsync(NpgsqlTimeout timeout, CancellationToken cancellationToken)
+   at Npgsql.Internal.NpgsqlConnector.ConnectAsync(NpgsqlTimeout timeout, CancellationToken cancellationToken)
+   at Npgsql.Internal.NpgsqlConnector.RawOpen(SslMode sslMode, NpgsqlTimeout timeout, Boolean async, CancellationToken cancellationToken, Boolean isFirstAttempt)
+   at Npgsql.Internal.NpgsqlConnector.<Open>g__OpenCore|213_1(NpgsqlConnector conn, SslMode sslMode, NpgsqlTimeout timeout, Boolean async, CancellationToken cancellationToken, Boolean isFirstAttempt)
+   at Npgsql.Internal.NpgsqlConnector.Open(NpgsqlTimeout timeout, Boolean async, CancellationToken cancellationToken)
+   at Npgsql.PoolingDataSource.OpenNewConnector(NpgsqlConnection conn, NpgsqlTimeout timeout, Boolean async, CancellationToken cancellationToken)
+   at Npgsql.PoolingDataSource.<Get>g__RentAsync|34_0(NpgsqlConnection conn, NpgsqlTimeout timeout, Boolean async, CancellationToken cancellationToken)
+   at Npgsql.NpgsqlConnection.<Open>g__OpenAsync|42_0(Boolean async, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Storage.RelationalConnection.OpenInternalAsync(Boolean errorsExpected, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Storage.RelationalConnection.OpenInternalAsync(Boolean errorsExpected, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Storage.RelationalConnection.OpenAsync(CancellationToken cancellationToken, Boolean errorsExpected)
+   at Microsoft.EntityFrameworkCore.Storage.RelationalCommand.ExecuteReaderAsync(RelationalCommandParameterObject parameterObject, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Query.Internal.SingleQueryingEnumerable`1.AsyncEnumerator.InitializeReaderAsync(AsyncEnumerator enumerator, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Storage.ExecutionStrategy.<>c__DisplayClass30_0`2.<<ExecuteAsync>b__0>d.MoveNext()
+--- End of stack trace from previous location ---
+   at Microsoft.EntityFrameworkCore.Storage.ExecutionStrategy.ExecuteImplementationAsync[TState,TResult](Func`4 operation, Func`4 verifySucceeded, TState state, CancellationToken cancellationToken)
+   --- End of inner exception stack trace ---
+   at Microsoft.EntityFrameworkCore.Storage.ExecutionStrategy.ExecuteImplementationAsync[TState,TResult](Func`4 operation, Func`4 verifySucceeded, TState state, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Storage.ExecutionStrategy.ExecuteAsync[TState,TResult](TState state, Func`4 operation, Func`4 verifySucceeded, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Query.Internal.SingleQueryingEnumerable`1.AsyncEnumerator.MoveNextAsync()
+   at Microsoft.EntityFrameworkCore.Query.ShapedQueryCompilingExpressionVisitor.SingleOrDefaultAsync[TSource](IAsyncEnumerable`1 asyncEnumerable, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Query.ShapedQueryCompilingExpressionVisitor.SingleOrDefaultAsync[TSource](IAsyncEnumerable`1 asyncEnumerable, CancellationToken cancellationToken)
+   at UserService.Domain.Services.UserDomainService.CanCreateUserAsync(Email email, CancellationToken cancellationToken) in /home/hamed-damavandi/Documents/fault3r.eShop/src/services/UserService/src/UserService.Domain/Services/UserDomainService.cs:line 22
+   at UserService.Application.UseCases.SignUpUser.SignUpUserService.ExecuteAsync(String email, String password, String fullName, String correlationId, CancellationToken cancellationToken) in /home/hamed-damavandi/Documents/fault3r.eShop/src/services/UserService/src/UserService.Application/UseCases/SignUpUser/SignUpUserService.cs:line 70
+   at UserService.Application.UseCases.SignUpUser.SignUpUserCommandHandler.Handle(SignUpUserCommand request, CancellationToken cancellationToken) in /home/hamed-damavandi/Documents/fault3r.eShop/src/services/UserService/src/UserService.Application/UseCases/SignUpUser/SignUpUserCommandHandler.cs:line 43
+   at UserService.Api.Controllers.UserController.SignUp(SignUpUserDto request) in /home/hamed-damavandi/Documents/fault3r.eShop/src/services/UserService/src/UserService.Api/Controllers/UserController.cs:line 48
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ActionMethodExecutor.TaskOfIActionResultExecutor.Execute(ActionContext actionContext, IActionResultTypeMapper mapper, ObjectMethodExecutor executor, Object controller, Object[] arguments)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeActionMethodAsync>g__Awaited|12_0(ControllerActionInvoker invoker, ValueTask`1 actionResultValueTask)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeNextActionFilterAsync>g__Awaited|10_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Rethrow(ActionExecutedContextSealed context)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeInnerFilterAsync>g__Awaited|13_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeFilterPipelineAsync>g__Awaited|20_0(ResourceInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Swashbuckle.AspNetCore.SwaggerUI.SwaggerUIMiddleware.Invoke(HttpContext httpContext)
+   at Swashbuckle.AspNetCore.Swagger.SwaggerMiddleware.Invoke(HttpContext httpContext, ISwaggerProvider swaggerProvider)
+   at UserService.Api.Middlewares.ExceptionHandlingMiddleware.InvokeAsync(HttpContext context) in /home/hamed-damavandi/Documents/fault3r.eShop/src/services/UserService/src/UserService.Api/Middlewares/ExceptionHandlingMiddleware.cs:line 15
+[2025-12-15 22:08:53 INF] 4bf9e0d9-dc51-4f4a-9d0a-596a1113db1d   Completed request POST /api/user/signup with status 500
