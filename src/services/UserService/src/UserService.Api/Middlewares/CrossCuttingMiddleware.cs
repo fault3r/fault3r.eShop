@@ -6,7 +6,7 @@ using UserService.Infrastructure.CrossCutting;
 
 namespace UserService.Api.Middlewares;
 
-public class CorrelationIdMiddleware(RequestDelegate next)
+public class CrossCuttingMiddleware(RequestDelegate next)
 {
     private const string header = "X-Correlation-ID";
 
@@ -36,10 +36,10 @@ public class CorrelationIdMiddleware(RequestDelegate next)
     }
 }
 
-public static class CorrelationIdMiddlewareExtensions
+public static class CrossCuttingMiddlewareExtensions
 {
-    public static IApplicationBuilder UseCorrelationIdMiddleware(
+    public static IApplicationBuilder UseCrossCuttingMiddleware(
         this IApplicationBuilder builder)
-            => builder.UseMiddleware<CorrelationIdMiddleware>();
+            => builder.UseMiddleware<CrossCuttingMiddleware>();
 }
 

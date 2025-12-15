@@ -14,11 +14,16 @@ public class UserController : ControllerBase
 {
     private readonly IMediator _mediator;
     private readonly ICorrelationContext _correlation;
+    private readonly ILogger<UserController> _logger;
 
-    public UserController(IMediator mediator, ICorrelationContext correlationContext)
+    public UserController(
+        IMediator mediator,
+        ICorrelationContext correlationContext,
+        ILogger<UserController> logger)
     {
         _mediator = mediator;
         _correlation = correlationContext;
+        _logger = logger;
     }
 
     [HttpGet]
@@ -30,6 +35,9 @@ public class UserController : ControllerBase
     [Route("signup")]
     public async Task<IActionResult> SignUp([FromBody] SignUpUserDto request)
     {
+        _logger.LogInformation(
+            "Received SignUpUser request for email:{Email}", request.Email);
+
         var command = new SignUpUserCommand(
             request.Email,
             request.Password,
@@ -39,8 +47,17 @@ public class UserController : ControllerBase
 
         var result = await _mediator.Send(command);
 
-        return result.IsFailure
-            ? BadRequest(result.Error)
-            : Ok(result.Value);
+        if (result.IsFailure)
+        {
+            _logger.LogWarning(
+                "SignUpUser failed for email:{Email}, Error:{Error}", request.Email, result.Error);
+
+            return BadRequest(result.Error);
+        }
+
+        _logger.LogInformation(
+            "User signed up successfully with email:{Email}", request.Email);
+
+        return Ok(result.Value);
     }
 }

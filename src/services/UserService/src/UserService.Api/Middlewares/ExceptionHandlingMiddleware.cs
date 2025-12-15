@@ -22,15 +22,13 @@ public class ExceptionHandlingMiddleware(RequestDelegate next)
 
             context.Response.StatusCode = StatusCodes.Status500InternalServerError;
             context.Response.ContentType = "application/json";
-
+                        
             var correlationId = context.Items["X-Correlation-ID"];
-
             var response = new
             {
                 error = "Internal Server Error",
                 correlationId,
             };
-
             await context.Response.WriteAsJsonAsync(response);
         }
     }
