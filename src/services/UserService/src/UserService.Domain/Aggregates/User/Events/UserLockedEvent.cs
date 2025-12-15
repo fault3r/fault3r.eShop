@@ -5,20 +5,20 @@ using UserService.Domain.Exceptions.ValueObjects.Email;
 using UserService.Domain.Exceptions.ValueObjects.Identity;
 using UserService.Domain.ValueObjects;
 
-namespace UserService.Domain.Events.User;
+namespace UserService.Domain.Aggregates.User.Events;
 
-public sealed record UserActivatedEvent : DomainEvent
+public sealed record UserLockedEvent : DomainEvent
 {
     public Identity UserId { get; init; }
     public Email Email { get; init; }
 
-    public UserActivatedEvent(
+    public UserLockedEvent(
         Identity userId,
         Email email,
         Guid? eventId = null,
         DateTime? occurredOn = null)
         : base(eventId, occurredOn)
-    {        
+    {
         UserId = userId
             ?? throw new MissingIdentityException();
         Email = email

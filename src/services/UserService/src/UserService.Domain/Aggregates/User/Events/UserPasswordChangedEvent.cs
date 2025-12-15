@@ -5,26 +5,26 @@ using UserService.Domain.Exceptions.ValueObjects.Email;
 using UserService.Domain.Exceptions.ValueObjects.Identity;
 using UserService.Domain.ValueObjects;
 
-namespace UserService.Domain.Events.User;
+namespace UserService.Domain.Aggregates.User.Events;
 
-public sealed record UserEmailChangedEvent : DomainEvent
+public sealed record UserPasswordChangedEvent : DomainEvent
 {
     public Identity UserId { get; init; }
-    public Email NewEmail { get; init; }
+    public Email Email { get; init; }    
 
-    public UserEmailChangedEvent(
+    public UserPasswordChangedEvent(
         Identity userId,
-        Email newEmail,
+        Email email,
         Guid? eventId = null,
         DateTime? occurredOn = null)
         : base(eventId, occurredOn)
     {
         UserId = userId
             ?? throw new MissingIdentityException();
-        NewEmail = newEmail
+        Email = email
             ?? throw new MissingEmailException();
     }
 
     public override string ToString()
-        => $"{base.ToString()} | UserId={UserId}, NewEmail={NewEmail}";
+        => $"{base.ToString()} | UserId={UserId}, Email={Email}";
 }

@@ -5,14 +5,14 @@ using UserService.Domain.Exceptions.ValueObjects.Email;
 using UserService.Domain.Exceptions.ValueObjects.Identity;
 using UserService.Domain.ValueObjects;
 
-namespace UserService.Domain.Events.User;
+namespace UserService.Domain.Aggregates.User.Events;
 
-public sealed record UserPasswordChangedEvent : DomainEvent
+public sealed record UserCreatedEvent : DomainEvent
 {
     public Identity UserId { get; init; }
-    public Email Email { get; init; }    
+    public Email Email { get; init; }
 
-    public UserPasswordChangedEvent(
+    public UserCreatedEvent(
         Identity userId,
         Email email,
         Guid? eventId = null,
