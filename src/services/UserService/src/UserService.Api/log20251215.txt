@@ -1,0 +1,24 @@
+[2025-12-15 21:58:15 INF] 708dc3b5-a40e-4911-9a6b-7e1c2269ed3c   Incoming request POST /api/user/signup.
+[2025-12-15 21:58:15 WRN] 708dc3b5-a40e-4911-9a6b-7e1c2269ed3c LuckyPennySoftware.MediatR.License  You do not have a valid license key for the Lucky Penny software MediatR. This is allowed for development and testing scenarios. If you are running in production you are required to have a licensed version. Please visit https://luckypennysoftware.com to obtain a valid license.
+[2025-12-15 21:58:15 INF] 708dc3b5-a40e-4911-9a6b-7e1c2269ed3c UserService.Api.Controllers.UserController  SignUpUser request received for email:test@exx
+[2025-12-15 21:58:16 INF] 708dc3b5-a40e-4911-9a6b-7e1c2269ed3c UserService.Application.UseCases.SignUpUser.SignUpUserCommandHandler  Handling request
+[2025-12-15 21:58:16 INF] 708dc3b5-a40e-4911-9a6b-7e1c2269ed3c UserService.Application.UseCases.SignUpUser.SignUpUserService  Executing service
+[2025-12-15 21:58:17 INF] 708dc3b5-a40e-4911-9a6b-7e1c2269ed3c UserService.Application.UseCases.SignUpUser.SignUpUserService  User created successfully
+[2025-12-15 21:58:17 INF] 708dc3b5-a40e-4911-9a6b-7e1c2269ed3c UserService.Application.UseCases.SignUpUser.SignUpUserService  Checking if user can be created
+[2025-12-15 21:58:19 INF] 708dc3b5-a40e-4911-9a6b-7e1c2269ed3c UserService.Application.UseCases.SignUpUser.SignUpUserService  Persisting user to database
+[2025-12-15 21:58:20 INF] 708dc3b5-a40e-4911-9a6b-7e1c2269ed3c UserService.Infrastructure.UnitOfWork.EfUnitOfWork  Committing changes...
+[2025-12-15 21:58:20 INF] 708dc3b5-a40e-4911-9a6b-7e1c2269ed3c UserService.Infrastructure.UnitOfWork.EfUnitOfWork  Successfully committed 2 change(s).
+[2025-12-15 21:58:20 INF] 708dc3b5-a40e-4911-9a6b-7e1c2269ed3c UserService.Application.UseCases.SignUpUser.SignUpUserService  User successfully created and committed
+[2025-12-15 21:58:20 INF] 708dc3b5-a40e-4911-9a6b-7e1c2269ed3c UserService.Application.UseCases.SignUpUser.SignUpUserCommandHandler  Request handled
+[2025-12-15 21:58:20 INF] 708dc3b5-a40e-4911-9a6b-7e1c2269ed3c UserService.Api.Controllers.UserController  SignUpUser request complete successfully
+[2025-12-15 21:58:20 INF] 708dc3b5-a40e-4911-9a6b-7e1c2269ed3c   Completed request POST /api/user/signup with status 200.
+[2025-12-15 22:03:24 INF] 59897e1a-155f-4fef-b53f-3ce6d56d5c96   Incoming request POST /api/user/signup.
+[2025-12-15 22:03:24 INF] 59897e1a-155f-4fef-b53f-3ce6d56d5c96 UserService.Api.Controllers.UserController  SignUpUser request received for email:test@exx
+[2025-12-15 22:03:24 INF] 59897e1a-155f-4fef-b53f-3ce6d56d5c96 UserService.Application.UseCases.SignUpUser.SignUpUserCommandHandler  Handling request
+[2025-12-15 22:03:24 INF] 59897e1a-155f-4fef-b53f-3ce6d56d5c96 UserService.Application.UseCases.SignUpUser.SignUpUserService  Executing service
+[2025-12-15 22:03:25 INF] 59897e1a-155f-4fef-b53f-3ce6d56d5c96 UserService.Application.UseCases.SignUpUser.SignUpUserService  User created successfully
+[2025-12-15 22:03:25 INF] 59897e1a-155f-4fef-b53f-3ce6d56d5c96 UserService.Application.UseCases.SignUpUser.SignUpUserService  Checking if user can be created
+[2025-12-15 22:03:25 WRN] 59897e1a-155f-4fef-b53f-3ce6d56d5c96 UserService.Application.UseCases.SignUpUser.SignUpUserService  User with this email already exists
+[2025-12-15 22:03:25 INF] 59897e1a-155f-4fef-b53f-3ce6d56d5c96 UserService.Application.UseCases.SignUpUser.SignUpUserCommandHandler  Request handled
+[2025-12-15 22:03:25 WRN] 59897e1a-155f-4fef-b53f-3ce6d56d5c96 UserService.Api.Controllers.UserController  SignUpUser request failed, Error:User with this email already exists!
+[2025-12-15 22:03:25 INF] 59897e1a-155f-4fef-b53f-3ce6d56d5c96   Completed request POST /api/user/signup with status 409.

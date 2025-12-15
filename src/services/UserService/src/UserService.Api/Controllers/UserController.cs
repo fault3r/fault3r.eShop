@@ -49,14 +49,27 @@ public class UserController : ControllerBase
 
         if (result.IsFailure)
         {
-            _logger.LogWarning(
-                "SignUpUser request failed for email:{Email}, Error(s):{Error}", request.Email, result.Error);
+            string error = result.Error ?? "Unknown error";
 
-            return BadRequest(result.Error);
+            _logger.LogWarning(
+                "SignUpUser request failed, Error:{Error}", error);
+            
+            if (error.Contains("already exists"))
+                return Conflict(new
+                {
+                    error,
+                    correlationId = _correlation.CorrelationId
+                });
+
+            return BadRequest(new
+            {
+                error,
+                correlationId = _correlation.CorrelationId
+            });
         }
 
         _logger.LogInformation(
-            "SignUpUser request complete successfully with email:{Email}", request.Email);
+            "SignUpUser request complete successfully");
 
         return Ok(result.Value);
     }

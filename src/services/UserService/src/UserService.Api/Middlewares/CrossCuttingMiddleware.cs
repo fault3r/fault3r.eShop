@@ -26,12 +26,12 @@ public class CrossCuttingMiddleware(RequestDelegate next)
         using (LogContext.PushProperty("CorrelationId", correlationId))
         {            
             Log.Information(
-                "Incoming request {Method} {Path}.", context.Request.Method, context.Request.Path);   
+                "Incoming request {Method} {Path}", context.Request.Method, context.Request.Path);   
 
             await _next(context);
 
             Log.Information(
-                "Completed request {Method} {Path} with status {StatusCode}.", context.Request.Method, context.Request.Path, context.Response.StatusCode);       
+                "Completed request {Method} {Path} with status {StatusCode}", context.Request.Method, context.Request.Path, context.Response.StatusCode);       
         }
     }
 }
