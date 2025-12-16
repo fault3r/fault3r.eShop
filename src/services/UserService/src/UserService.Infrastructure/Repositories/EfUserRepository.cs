@@ -34,7 +34,6 @@ public sealed class EfUserRepository : IUserRepository
         {
             return await _db.Users.FirstOrDefaultAsync(p => p.Id == id, ct);
         }, cancellationToken);
-
     }
 
     public async Task<User?> GetByEmailAsync(Email email, CancellationToken cancellationToken = default)

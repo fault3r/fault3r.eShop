@@ -31,6 +31,7 @@ public class SignUpUserCommandHandler
         _logger.LogInformation("Handling request");
 
         var validation = await _validator.ValidateAsync(request, cancellationToken);
+        
         if (!validation.IsValid)
         {
             var errors = string.Join(" - ", validation.Errors.Select(e => e.ErrorMessage));

@@ -19,7 +19,7 @@ public class UserDomainService : IUserDomainService
     public async Task<bool> CanCreateUserAsync(
         Email email, CancellationToken cancellationToken = default)
     {
-        var exists = await _userRepository.GetByEmailAsync(email);
+        var exists = await _userRepository.GetByEmailAsync(email, cancellationToken);
         return exists is null;
     }
 }
