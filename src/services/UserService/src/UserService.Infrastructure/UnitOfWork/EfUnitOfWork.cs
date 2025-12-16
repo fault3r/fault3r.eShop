@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
+using UserService.Domain.Aggregates.UserAggregate;
 using UserService.Domain.Outbox;
 using UserService.Domain.Repositories;
 using UserService.Domain.UnitOfWork;
@@ -63,6 +64,32 @@ public sealed class EfUnitOfWork : IUnitOfWork
                 await transaction.RollbackAsync(cancellationToken);
 
                 _logger.LogError(exception, "Failed to commit changes");
+
+                throw new PersistenceException();
+            }
+        });
+    }
+
+    public async Task<T?> QueryAsync<T>(
+        Func<CancellationToken, Task<T?>> query,
+        CancellationToken cancellationToken = default)
+    {
+        var strategy = _dbContext.Database.CreateExecutionStrategy();
+        return await strategy.ExecuteAsync(async () =>
+        {
+            _logger.LogInformation("Executing query");
+
+            try
+            {
+                var result =  await query(cancellationToken);
+
+                _logger.LogInformation("Query executed");
+
+                return result;
+            }
+            catch (Exception exception)
+            {
+                _logger.LogError(exception, "Database query failed.");
 
                 throw new PersistenceException();
             }

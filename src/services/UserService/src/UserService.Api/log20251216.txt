@@ -1,35 +1,22 @@
-[2025-12-15 21:58:15 INF] 708dc3b5-a40e-4911-9a6b-7e1c2269ed3c   Incoming request POST /api/user/signup.
-[2025-12-15 21:58:15 WRN] 708dc3b5-a40e-4911-9a6b-7e1c2269ed3c LuckyPennySoftware.MediatR.License  You do not have a valid license key for the Lucky Penny software MediatR. This is allowed for development and testing scenarios. If you are running in production you are required to have a licensed version. Please visit https://luckypennysoftware.com to obtain a valid license.
-[2025-12-15 21:58:15 INF] 708dc3b5-a40e-4911-9a6b-7e1c2269ed3c UserService.Api.Controllers.UserController  SignUpUser request received for email:test@exx
-[2025-12-15 21:58:16 INF] 708dc3b5-a40e-4911-9a6b-7e1c2269ed3c UserService.Application.UseCases.SignUpUser.SignUpUserCommandHandler  Handling request
-[2025-12-15 21:58:16 INF] 708dc3b5-a40e-4911-9a6b-7e1c2269ed3c UserService.Application.UseCases.SignUpUser.SignUpUserService  Executing service
-[2025-12-15 21:58:17 INF] 708dc3b5-a40e-4911-9a6b-7e1c2269ed3c UserService.Application.UseCases.SignUpUser.SignUpUserService  User created successfully
-[2025-12-15 21:58:17 INF] 708dc3b5-a40e-4911-9a6b-7e1c2269ed3c UserService.Application.UseCases.SignUpUser.SignUpUserService  Checking if user can be created
-[2025-12-15 21:58:19 INF] 708dc3b5-a40e-4911-9a6b-7e1c2269ed3c UserService.Application.UseCases.SignUpUser.SignUpUserService  Persisting user to database
-[2025-12-15 21:58:20 INF] 708dc3b5-a40e-4911-9a6b-7e1c2269ed3c UserService.Infrastructure.UnitOfWork.EfUnitOfWork  Committing changes...
-[2025-12-15 21:58:20 INF] 708dc3b5-a40e-4911-9a6b-7e1c2269ed3c UserService.Infrastructure.UnitOfWork.EfUnitOfWork  Successfully committed 2 change(s).
-[2025-12-15 21:58:20 INF] 708dc3b5-a40e-4911-9a6b-7e1c2269ed3c UserService.Application.UseCases.SignUpUser.SignUpUserService  User successfully created and committed
-[2025-12-15 21:58:20 INF] 708dc3b5-a40e-4911-9a6b-7e1c2269ed3c UserService.Application.UseCases.SignUpUser.SignUpUserCommandHandler  Request handled
-[2025-12-15 21:58:20 INF] 708dc3b5-a40e-4911-9a6b-7e1c2269ed3c UserService.Api.Controllers.UserController  SignUpUser request complete successfully
-[2025-12-15 21:58:20 INF] 708dc3b5-a40e-4911-9a6b-7e1c2269ed3c   Completed request POST /api/user/signup with status 200.
-[2025-12-15 22:03:24 INF] 59897e1a-155f-4fef-b53f-3ce6d56d5c96   Incoming request POST /api/user/signup.
-[2025-12-15 22:03:24 INF] 59897e1a-155f-4fef-b53f-3ce6d56d5c96 UserService.Api.Controllers.UserController  SignUpUser request received for email:test@exx
-[2025-12-15 22:03:24 INF] 59897e1a-155f-4fef-b53f-3ce6d56d5c96 UserService.Application.UseCases.SignUpUser.SignUpUserCommandHandler  Handling request
-[2025-12-15 22:03:24 INF] 59897e1a-155f-4fef-b53f-3ce6d56d5c96 UserService.Application.UseCases.SignUpUser.SignUpUserService  Executing service
-[2025-12-15 22:03:25 INF] 59897e1a-155f-4fef-b53f-3ce6d56d5c96 UserService.Application.UseCases.SignUpUser.SignUpUserService  User created successfully
-[2025-12-15 22:03:25 INF] 59897e1a-155f-4fef-b53f-3ce6d56d5c96 UserService.Application.UseCases.SignUpUser.SignUpUserService  Checking if user can be created
-[2025-12-15 22:03:25 WRN] 59897e1a-155f-4fef-b53f-3ce6d56d5c96 UserService.Application.UseCases.SignUpUser.SignUpUserService  User with this email already exists
-[2025-12-15 22:03:25 INF] 59897e1a-155f-4fef-b53f-3ce6d56d5c96 UserService.Application.UseCases.SignUpUser.SignUpUserCommandHandler  Request handled
-[2025-12-15 22:03:25 WRN] 59897e1a-155f-4fef-b53f-3ce6d56d5c96 UserService.Api.Controllers.UserController  SignUpUser request failed, Error:User with this email already exists!
-[2025-12-15 22:03:25 INF] 59897e1a-155f-4fef-b53f-3ce6d56d5c96   Completed request POST /api/user/signup with status 409.
-[2025-12-15 22:08:40 INF] 4bf9e0d9-dc51-4f4a-9d0a-596a1113db1d   Incoming request POST /api/user/signup
-[2025-12-15 22:08:40 WRN] 4bf9e0d9-dc51-4f4a-9d0a-596a1113db1d LuckyPennySoftware.MediatR.License  You do not have a valid license key for the Lucky Penny software MediatR. This is allowed for development and testing scenarios. If you are running in production you are required to have a licensed version. Please visit https://luckypennysoftware.com to obtain a valid license.
-[2025-12-15 22:08:40 INF] 4bf9e0d9-dc51-4f4a-9d0a-596a1113db1d UserService.Api.Controllers.UserController  SignUpUser request received for email:test@exx
-[2025-12-15 22:08:40 INF] 4bf9e0d9-dc51-4f4a-9d0a-596a1113db1d UserService.Application.UseCases.SignUpUser.SignUpUserCommandHandler  Handling request
-[2025-12-15 22:08:40 INF] 4bf9e0d9-dc51-4f4a-9d0a-596a1113db1d UserService.Application.UseCases.SignUpUser.SignUpUserService  Executing service
-[2025-12-15 22:08:41 INF] 4bf9e0d9-dc51-4f4a-9d0a-596a1113db1d UserService.Application.UseCases.SignUpUser.SignUpUserService  User created successfully
-[2025-12-15 22:08:41 INF] 4bf9e0d9-dc51-4f4a-9d0a-596a1113db1d UserService.Application.UseCases.SignUpUser.SignUpUserService  Checking if user can be created
-[2025-12-15 22:08:52 ERR] 4bf9e0d9-dc51-4f4a-9d0a-596a1113db1d   Unhandled exception occurred while processing POST /api/user/signup.
+[2025-12-16 18:17:08 INF] 89e17968-4dfd-4f6f-b2cd-bef4d2c53863   Incoming request GET /
+[2025-12-16 18:17:08 INF] 89e17968-4dfd-4f6f-b2cd-bef4d2c53863   Completed request GET / with status 404
+[2025-12-16 18:17:08 INF] c6b6c551-5d1f-42d5-918f-8147c1ba84cc   Incoming request GET /favicon.ico
+[2025-12-16 18:17:08 INF] c6b6c551-5d1f-42d5-918f-8147c1ba84cc   Completed request GET /favicon.ico with status 404
+[2025-12-16 18:17:10 INF] 684c4307-47cf-4c84-a146-3b096ddeac00   Incoming request GET /swagger/index.html
+[2025-12-16 18:17:10 INF] 684c4307-47cf-4c84-a146-3b096ddeac00   Completed request GET /swagger/index.html with status 200
+[2025-12-16 18:17:10 INF] 667682b9-e19b-4212-8da1-2e05bc2bb066   Incoming request GET /swagger/favicon-32x32.png
+[2025-12-16 18:17:10 INF] 667682b9-e19b-4212-8da1-2e05bc2bb066   Completed request GET /swagger/favicon-32x32.png with status 200
+[2025-12-16 18:17:10 INF] 4392b75f-002f-45d3-95f2-07cf671be7c0   Incoming request GET /swagger/v1/swagger.json
+[2025-12-16 18:17:11 INF] 4392b75f-002f-45d3-95f2-07cf671be7c0   Completed request GET /swagger/v1/swagger.json with status 200
+[2025-12-16 18:17:33 INF] 7a42ec65-67a0-447b-9818-8265530e17b1   Incoming request POST /api/user/signup
+[2025-12-16 18:17:33 WRN] 7a42ec65-67a0-447b-9818-8265530e17b1 LuckyPennySoftware.MediatR.License  You do not have a valid license key for the Lucky Penny software MediatR. This is allowed for development and testing scenarios. If you are running in production you are required to have a licensed version. Please visit https://luckypennysoftware.com to obtain a valid license.
+[2025-12-16 18:17:33 INF] 7a42ec65-67a0-447b-9818-8265530e17b1 UserService.Api.Controllers.UserController  SignUpUser request received for email:stiuytiuyr@ing
+[2025-12-16 18:17:34 INF] 7a42ec65-67a0-447b-9818-8265530e17b1 UserService.Application.UseCases.SignUpUser.SignUpUserCommandHandler  Handling request
+[2025-12-16 18:17:34 INF] 7a42ec65-67a0-447b-9818-8265530e17b1 UserService.Application.UseCases.SignUpUser.SignUpUserService  Executing service
+[2025-12-16 18:17:34 INF] 7a42ec65-67a0-447b-9818-8265530e17b1 UserService.Application.UseCases.SignUpUser.SignUpUserService  User created successfully
+[2025-12-16 18:17:34 INF] 7a42ec65-67a0-447b-9818-8265530e17b1 UserService.Application.UseCases.SignUpUser.SignUpUserService  Checking if user can be created
+[2025-12-16 18:17:34 INF] 7a42ec65-67a0-447b-9818-8265530e17b1 UserService.Infrastructure.Repositories.EfUserRepository  Executing query
+[2025-12-16 18:17:46 ERR] 7a42ec65-67a0-447b-9818-8265530e17b1 UserService.Infrastructure.Repositories.EfUserRepository  Failed to execute query
 Microsoft.EntityFrameworkCore.Storage.RetryLimitExceededException: The maximum number of retries (5) was exceeded while executing database operations with 'NpgsqlRetryingExecutionStrategy'. See the inner exception for the most recent failure.
  ---> Npgsql.NpgsqlException (0x80004005): Failed to connect to 127.0.0.1:5432
  ---> System.Net.Sockets.SocketException (111): Connection refused
@@ -59,6 +46,11 @@ Microsoft.EntityFrameworkCore.Storage.RetryLimitExceededException: The maximum n
    at Microsoft.EntityFrameworkCore.Query.Internal.SingleQueryingEnumerable`1.AsyncEnumerator.MoveNextAsync()
    at Microsoft.EntityFrameworkCore.Query.ShapedQueryCompilingExpressionVisitor.SingleOrDefaultAsync[TSource](IAsyncEnumerable`1 asyncEnumerable, CancellationToken cancellationToken)
    at Microsoft.EntityFrameworkCore.Query.ShapedQueryCompilingExpressionVisitor.SingleOrDefaultAsync[TSource](IAsyncEnumerable`1 asyncEnumerable, CancellationToken cancellationToken)
+   at UserService.Infrastructure.Repositories.EfUserRepository.ExecuteQueryAsync(Expression`1 expression, CancellationToken cancellationToken) in /home/hamed-damavandi/Documents/fault3r.eShop/src/services/UserService/src/UserService.Infrastructure/Repositories/EfUserRepository.cs:line 35
+[2025-12-16 18:17:46 ERR] 7a42ec65-67a0-447b-9818-8265530e17b1   Unhandled exception occurred while processing POST /api/user/signup
+UserService.Infrastructure.Exceptions.Persistence.PersistenceException: error committing transaction
+   at UserService.Infrastructure.Repositories.EfUserRepository.ExecuteQueryAsync(Expression`1 expression, CancellationToken cancellationToken) in /home/hamed-damavandi/Documents/fault3r.eShop/src/services/UserService/src/UserService.Infrastructure/Repositories/EfUserRepository.cs:line 46
+   at UserService.Infrastructure.Repositories.EfUserRepository.GetByEmailAsync(Email email, CancellationToken cancellationToken) in /home/hamed-damavandi/Documents/fault3r.eShop/src/services/UserService/src/UserService.Infrastructure/Repositories/EfUserRepository.cs:line 57
    at UserService.Domain.Services.UserDomainService.CanCreateUserAsync(Email email, CancellationToken cancellationToken) in /home/hamed-damavandi/Documents/fault3r.eShop/src/services/UserService/src/UserService.Domain/Services/UserDomainService.cs:line 22
    at UserService.Application.UseCases.SignUpUser.SignUpUserService.ExecuteAsync(String email, String password, String fullName, String correlationId, CancellationToken cancellationToken) in /home/hamed-damavandi/Documents/fault3r.eShop/src/services/UserService/src/UserService.Application/UseCases/SignUpUser/SignUpUserService.cs:line 70
    at UserService.Application.UseCases.SignUpUser.SignUpUserCommandHandler.Handle(SignUpUserCommand request, CancellationToken cancellationToken) in /home/hamed-damavandi/Documents/fault3r.eShop/src/services/UserService/src/UserService.Application/UseCases/SignUpUser/SignUpUserCommandHandler.cs:line 43
@@ -75,4 +67,4 @@ Microsoft.EntityFrameworkCore.Storage.RetryLimitExceededException: The maximum n
    at Swashbuckle.AspNetCore.SwaggerUI.SwaggerUIMiddleware.Invoke(HttpContext httpContext)
    at Swashbuckle.AspNetCore.Swagger.SwaggerMiddleware.Invoke(HttpContext httpContext, ISwaggerProvider swaggerProvider)
    at UserService.Api.Middlewares.ExceptionHandlingMiddleware.InvokeAsync(HttpContext context) in /home/hamed-damavandi/Documents/fault3r.eShop/src/services/UserService/src/UserService.Api/Middlewares/ExceptionHandlingMiddleware.cs:line 15
-[2025-12-15 22:08:53 INF] 4bf9e0d9-dc51-4f4a-9d0a-596a1113db1d   Completed request POST /api/user/signup with status 500
+[2025-12-16 18:17:46 INF] 7a42ec65-67a0-447b-9818-8265530e17b1   Completed request POST /api/user/signup with status 500

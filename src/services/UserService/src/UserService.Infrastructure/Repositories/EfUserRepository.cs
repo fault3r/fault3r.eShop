@@ -5,6 +5,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using UserService.Domain.Aggregates.UserAggregate;
 using UserService.Domain.Repositories;
+using UserService.Domain.UnitOfWork;
 using UserService.Domain.ValueObjects;
 using UserService.Infrastructure.Exceptions.Persistence;
 using UserService.Infrastructure.Persistence;
@@ -14,47 +15,34 @@ namespace UserService.Infrastructure.Repositories;
 public sealed class EfUserRepository : IUserRepository
 {
     private readonly EfDbContext _db;
+    private readonly IUnitOfWork _uow;
     private readonly ILogger<EfUserRepository> _logger;
 
     public EfUserRepository(
         EfDbContext efDbContext,
+        IUnitOfWork uow,
         ILogger<EfUserRepository> logger)
     {
         _db = efDbContext;
+        _uow = uow;
         _logger = logger;
-    }
-
-    private async Task<User?> ExecuteQueryAsync(
-        Expression<Func<User, bool>> expression,
-        CancellationToken cancellationToken = default)
-    {
-        try
-        {
-            _logger.LogInformation("Executing query");
-
-            var result =  await _db.Users
-                .FirstOrDefaultAsync(expression, cancellationToken);
-
-            _logger.LogInformation("Query executed");
-
-            return result;
-        }
-        catch (Exception exception)
-        {
-            _logger.LogError(exception, "Failed to execute query");
-
-            throw new PersistenceException();
-        }
     }
 
     public async Task<User?> GetByIdAsync(Identity id, CancellationToken cancellationToken = default)
     {
-        return await ExecuteQueryAsync(p => p.Id == id, cancellationToken);
+        return await _uow.QueryAsync(async ct =>
+        {
+            return await _db.Users.FirstOrDefaultAsync(p => p.Id == id, ct);
+        }, cancellationToken);
+
     }
 
     public async Task<User?> GetByEmailAsync(Email email, CancellationToken cancellationToken = default)
     {
-        return await ExecuteQueryAsync(p => p.Email == email, cancellationToken);
+        return await _uow.QueryAsync(async ct =>
+        {
+            return await _db.Users.FirstOrDefaultAsync(p => p.Email == email, ct);
+        }, cancellationToken);
     }
 
     public async Task CreateAsync(User user, CancellationToken cancellationToken = default)
