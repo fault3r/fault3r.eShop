@@ -1,0 +1,26 @@
+[2025-12-17 19:19:07 INF] f23845d4-306e-4474-9267-49e1dd01ca87  Incoming request GET / 
+ [2025-12-17 19:19:07 INF] f23845d4-306e-4474-9267-49e1dd01ca87  Completed request GET / with status 404 
+ [2025-12-17 19:19:10 INF] f0bd1f24-8c43-402b-bb06-9d12ab1660cc  Incoming request GET /swagger/index.html 
+ [2025-12-17 19:19:11 INF] f0bd1f24-8c43-402b-bb06-9d12ab1660cc  Completed request GET /swagger/index.html with status 200 
+ [2025-12-17 19:19:11 INF] 59c209b1-3982-4f43-9138-30add951a2a2  Incoming request GET /swagger/swagger-ui.css 
+ [2025-12-17 19:19:11 INF] 59c209b1-3982-4f43-9138-30add951a2a2  Completed request GET /swagger/swagger-ui.css with status 200 
+ [2025-12-17 19:19:11 INF] 44e875ce-2186-4106-b580-9fcb05ad6ca4  Incoming request GET /swagger/favicon-32x32.png 
+ [2025-12-17 19:19:11 INF] 44e875ce-2186-4106-b580-9fcb05ad6ca4  Completed request GET /swagger/favicon-32x32.png with status 200 
+ [2025-12-17 19:19:11 INF] c30bd03f-b785-4b3b-b288-1ebc0bc2bfa6  Incoming request GET /swagger/v1/swagger.json 
+ [2025-12-17 19:19:12 INF] c30bd03f-b785-4b3b-b288-1ebc0bc2bfa6  Completed request GET /swagger/v1/swagger.json with status 200 
+ [2025-12-17 19:19:41 INF] 88f57b28-fe70-4c69-be8e-88cac0f82144  Incoming request POST /api/user/signup 
+ [2025-12-17 19:19:42 INF] 88f57b28-fe70-4c69-be8e-88cac0f82144 UserService.Api.Controllers.UserController SignUpUser request received for email:hamed@fa.com 
+ [2025-12-17 19:19:42 INF] 88f57b28-fe70-4c69-be8e-88cac0f82144 UserService.Application.UseCases.SignUpUser.SignUpUserCommandHandler Handling request 
+ [2025-12-17 19:19:42 INF] 88f57b28-fe70-4c69-be8e-88cac0f82144 UserService.Application.UseCases.SignUpUser.SignUpUserService Executing service 
+ [2025-12-17 19:19:43 INF] 88f57b28-fe70-4c69-be8e-88cac0f82144 UserService.Application.UseCases.SignUpUser.SignUpUserService User created successfully 
+ [2025-12-17 19:19:43 INF] 88f57b28-fe70-4c69-be8e-88cac0f82144 UserService.Application.UseCases.SignUpUser.SignUpUserService Checking if user can be created 
+ [2025-12-17 19:19:43 INF] 88f57b28-fe70-4c69-be8e-88cac0f82144 UserService.Infrastructure.Repositories.EfUserRepository Executing query.. 
+ [2025-12-17 19:19:44 INF] 88f57b28-fe70-4c69-be8e-88cac0f82144 UserService.Infrastructure.Repositories.EfUserRepository Query executed successfully. User not found. 
+ [2025-12-17 19:19:44 INF] 88f57b28-fe70-4c69-be8e-88cac0f82144 UserService.Application.UseCases.SignUpUser.SignUpUserService Persisting user to database 
+ [2025-12-17 19:19:45 INF] 88f57b28-fe70-4c69-be8e-88cac0f82144 UserService.Infrastructure.UnitOfWork.EfUnitOfWork Committing changes.. 
+ [2025-12-17 19:19:45 INF] 88f57b28-fe70-4c69-be8e-88cac0f82144 UserService.Infrastructure.UnitOfWork.EfUnitOfWork Successfully committed 2 change(s). 
+ [2025-12-17 19:19:45 INF] 88f57b28-fe70-4c69-be8e-88cac0f82144 UserService.Application.UseCases.SignUpUser.SignUpUserService User successfully created and committed 
+ [2025-12-17 19:19:45 INF] 88f57b28-fe70-4c69-be8e-88cac0f82144 UserService.Application.UseCases.SignUpUser.SignUpUserCommandHandler Request handled 
+ [2025-12-17 19:19:45 INF] 88f57b28-fe70-4c69-be8e-88cac0f82144 UserService.Api.Controllers.UserController SignUpUser request complete successfully 
+ [2025-12-17 19:19:45 INF] 88f57b28-fe70-4c69-be8e-88cac0f82144  Completed request POST /api/user/signup with status 200 
+ 
