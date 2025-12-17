@@ -1,0 +1,156 @@
+└── src
+    └── services
+        └── UserService
+            ├── Dockerfile
+            ├── docs
+            │   └── Domain Driven Design
+            │   └── Clean Architecture
+            │   └── Microservices Architecture
+            ├── src
+            │   ├── UserService.Api
+            │   │   ├── appsettings.json
+            │   │   ├── Controllers
+            │   │   │   └── UserController.cs
+            │   │   ├── DTOs
+            │   │   │   └── User
+            │   │   │       └── SignUpUserDto.cs
+            │   │   ├── log.txt
+            │   │   ├── Middlewares
+            │   │   │   ├── CrossCuttingMiddleware.cs
+            │   │   │   └── ExceptionHandlingMiddleware.cs
+            │   │   ├── Program.cs
+            │   │   └── UserService.Api.csproj
+            │   │   ├── Interfaces
+            │   │   │   └── ISignUpUserService.cs
+            │   │   ├── Security
+            │   │   │   └── IPasswordHasher.cs
+            │   │   ├── UseCases
+            │   │   │   └── SignUpUser
+            │   │   │       ├── SignUpUserCommand.cs
+            │   │   │       ├── SignUpUserCommandHandler.cs
+            │   │   │       ├── SignUpUserService.cs
+            │   │   │       └── SignUpUserValidator.cs
+            │   │   └── UserService.Application.csproj
+            │   ├── UserService.Domain
+            │   │   ├── Abstractions
+            │   │   │   ├── AggregateRoot.cs
+            │   │   │   ├── DomainEvent.cs
+            │   │   │   ├── Entity.cs
+            │   │   │   └── ValueObject.cs
+            │   │   ├── Aggregates
+            │   │   │   └── UserAggregate
+            │   │   │       ├── Events
+            │   │   │       │   ├── UserActivatedEvent.cs
+            │   │   │       │   ├── UserCreatedEvent.cs
+            │   │   │       │   ├── UserEmailChangedEvent.cs
+            │   │   │       │   ├── UserFullNameChangedEvent.cs
+            │   │   │       │   ├── UserLockedEvent.cs
+            │   │   │       │   ├── UserPasswordChangedEvent.cs
+            │   │   │       │   └── UserRoleChangedEvent.cs
+            │   │   │       └── User.cs
+            │   │   ├── Common
+            │   │   │   └── Result.cs
+            │   │   ├── Exceptions
+            │   │   │   ├── Abstraction
+            │   │   │   ├── DomainException.cs
+            │   │   │   │   ├── AggregateRoot
+            │   │   │   │   │   └── MissingDomainEventException.cs
+            │   │   │   │   └── Entity
+            │   │   │   │       └── MissingEntityIdentityException.cs
+            │   │   │   ├── Common
+            │   │   │   │   └── Result
+            │   │   │   │       ├── MissingResultErrorMessageException.cs
+            │   │   │   │       └── MissingResultValueException.cs
+            │   │   │   └── ValueObjects
+            │   │   │       ├── Email
+            │   │   │       │   ├── InvalidEmailAddressException.cs
+            │   │   │       │   ├── MissingEmailAddressException.cs
+            │   │   │       │   └── MissingEmailException.cs
+            │   │   │       ├── FullName
+            │   │   │       │   ├── InvalidFullNameException.cs
+            │   │   │       │   └── MissingFullNameException.cs
+            │   │   │       ├── Identity
+            │   │   │       │   ├── EmptyIdentityValueException.cs
+            │   │   │       │   ├── InvalidIdentityValueException.cs
+            │   │   │       │   └── MissingIdentityException.cs
+            │   │   │       ├── PasswordHash
+            │   │   │       │   ├── InvalidPasswordHashValueException.cs
+            │   │   │       │   ├── MissingPasswordHashException.cs
+            │   │   │       │   └── MissingPasswordHashValueException.cs
+            │   │   │       ├── Role
+            │   │   │       │   ├── MissingRoleException.cs
+            │   │   │       │   ├── MissingRoleNameException.cs
+            │   │   │       │   └── UnsupportedRoleNameException.cs
+            │   │   │       └── Status
+            │   │   │           ├── MissingStatusException.cs
+            │   │   │           ├── MissingStatusValueException.cs
+            │   │   │           └── UnsupportedStatusValueException.cs
+            │   │   ├── Factories
+            │   │   │   └── UserFactory.cs
+            │   │   ├── Interfaces
+            │   │   │   ├── IAggregateRoot.cs
+            │   │   │   ├── IDomainEvent.cs
+            │   │   │   ├── IEntity.cs
+            │   │   │   ├── IUserDomainService.cs
+            │   │   │   └── IValueObject.cs
+            │   │   ├── Outbox
+            │   │   │   └── IOutbox.cs
+            │   │   ├── Repositories
+            │   │   │   └── IUserRepository.cs
+            │   │   ├── Services
+            │   │   │   └── UserDomainService.cs
+            │   │   ├── UnitOfWork
+            │   │   │   └── IUnitOfWork.cs
+            │   │   ├── UserService.Domain.csproj
+            │   │   └── ValueObjects
+            │   │       ├── Email.cs
+            │   │       ├── FullName.cs
+            │   │       ├── Identity.cs
+            │   │       ├── PasswordHash.cs
+            │   │       ├── Role.cs
+            │   │       └── Status.cs
+            │   └── UserService.Infrastructure
+            │       ├── CrossCutting
+            │       │   ├── CorrelationContext.cs
+            │       │   └── ICorrelationContext.cs
+            │       ├── DependencyInjection
+            │       │   ├── DIsExtensions.cs
+            │       │   ├── PostgresExtensions.cs
+            │       │   └── SerilogExtensions.cs
+            │       ├── Exceptions
+            │       │   ├── CrossCutting
+            │       │   │   └── MissingCorrelationIdException.cs
+            │       │   ├── DependencyInjection
+            │       │   │   ├── MissingPostgresSettingsException.cs
+            │       │   │   └── MissingSerilogSettingsException.cs
+            │       │   ├── InfrastructureException.cs
+            │       │   ├── Persistence
+            │       │   │   ├── MissingDbContextException.cs
+            │       │   │   ├── MissingOutboxEventException.cs
+            │       │   │   ├── MissingOutboxException.cs
+            │       │   │   ├── MissingUserRepositoryException.cs
+            │       │   │   ├── PersistenceException.cs
+            │       │   │   └── PostgresConnectionException.cs
+            │       │   └── Security
+            │       │       └── SecurityHashingException.cs
+            │       ├── Messaging
+            │       │   └── Outbox
+            │       │       ├── EfOutbox.cs
+            │       │       ├── OutboxMessageConfiguration.cs
+            │       │       └── OutboxMessage.cs
+            │       ├── Persistence
+            │       │   ├── Configurations
+            │       │   │   └── UserConfiguration.cs
+            │       │   ├── EfDbContext.cs
+            │       │   └── Migrations
+            │       ├── Repositories
+            │       │   └── EfUserRepository.cs
+            │       ├── Security
+            │       │   └── Argon2PasswordHasher.cs
+            │       ├── Settings
+            │       │   ├── PostgresSettings.cs
+            │       │   └── SerilogSettings.cs
+            │       ├── UnitOfWork
+            │       │   └── EfUnitOfWork.cs
+            │       └── UserService.Infrastructure.csproj
+            └── UserService.sln
