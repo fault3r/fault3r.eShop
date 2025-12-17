@@ -15,33 +15,48 @@ namespace UserService.Infrastructure.Repositories;
 public sealed class EfUserRepository : IUserRepository
 {
     private readonly EfDbContext _db;
-    private readonly IUnitOfWork _uow;
     private readonly ILogger<EfUserRepository> _logger;
 
     public EfUserRepository(
         EfDbContext efDbContext,
-        IUnitOfWork uow,
         ILogger<EfUserRepository> logger)
     {
-        _db = efDbContext;
-        _uow = uow;
+        _db = efDbContext
+            ?? throw new MissingDbContextException();
+
         _logger = logger;
+    }
+
+    private async Task<User?> FindByExpression(
+        Expression<Func<User, bool>> expression,
+        CancellationToken cancellationToken = default)
+    {
+        _logger.LogInformation("Executing query");
+
+        try
+        {
+            var result = await _db.Users.FirstOrDefaultAsync(expression, cancellationToken);
+
+            _logger.LogInformation("Query executed");
+
+            return result;
+        }
+        catch (Exception exception)
+        {
+            _logger.LogError(exception, "Database query failed.");
+
+            throw new PersistenceException();
+        }
     }
 
     public async Task<User?> GetByIdAsync(Identity id, CancellationToken cancellationToken = default)
     {
-        return await _uow.QueryAsync(async ct =>
-        {
-            return await _db.Users.FirstOrDefaultAsync(p => p.Id == id, ct);
-        }, cancellationToken);
+        return await FindByExpression(p => p.Id == id, cancellationToken);
     }
 
     public async Task<User?> GetByEmailAsync(Email email, CancellationToken cancellationToken = default)
     {
-        return await _uow.QueryAsync(async ct =>
-        {
-            return await _db.Users.FirstOrDefaultAsync(p => p.Email == email, ct);
-        }, cancellationToken);
+        return await FindByExpression(p => p.Email == email, cancellationToken);
     }
 
     public async Task CreateAsync(User user, CancellationToken cancellationToken = default)

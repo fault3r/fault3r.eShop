@@ -6,7 +6,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Npgsql;
 using Polly;
-using UserService.Infrastructure.Exceptions.DependencyInjection;
+using UserService.Infrastructure.Exceptions.Persistence;
 using UserService.Infrastructure.Persistence;
 using UserService.Infrastructure.Settings;
 
@@ -23,7 +23,8 @@ public static class PostgresExtensions
                 .Get<PostgresSettings>()
                     ?? throw new MissingPostgresSettingsException();
 
-            var connectionString = settings.ToConnectionString();
+            var connectionString = settings.ToConnectionString()
+                ?? throw new PostgresConnectionException();
 
             services.AddDbContext<EfDbContext>(config =>
             {
@@ -34,8 +35,9 @@ public static class PostgresExtensions
 
                     config.EnableRetryOnFailure(
                         maxRetryCount: 5,
-                        maxRetryDelay: TimeSpan.FromSeconds(3),
-                        errorCodesToAdd: null);
+                        maxRetryDelay: TimeSpan.FromSeconds(2),
+                        errorCodesToAdd: null
+                    );
                 });
             });
             CheckConnection(connectionString);
@@ -49,7 +51,8 @@ public static class PostgresExtensions
             .WaitAndRetry(
                 retryCount: 3,
                 sleepDurationProvider:
-                    attempt => TimeSpan.FromSeconds(Math.Pow(2, attempt)));
+                    attempt => TimeSpan.FromSeconds(Math.Pow(2, attempt))
+            );
 
         try
         {

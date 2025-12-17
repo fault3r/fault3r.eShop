@@ -6,11 +6,12 @@ namespace UserService.Infrastructure.CrossCutting;
 
 public sealed class CorrelationContext : ICorrelationContext
 {
-    private static readonly AsyncLocal<string> _id = new();
+    private static readonly AsyncLocal<string> _correlationId
+        = new();
 
     public string CorrelationId
     {
-        get => _id.Value
+        get => _correlationId.Value
             ?? throw new MissingCorrelationIdException();
     }
 
@@ -19,6 +20,6 @@ public sealed class CorrelationContext : ICorrelationContext
         if (string.IsNullOrWhiteSpace(correlationId))
             throw new MissingCorrelationIdException();
 
-        _id.Value = correlationId;
+        _correlationId.Value = correlationId;
     }
 }

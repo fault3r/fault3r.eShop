@@ -13,7 +13,7 @@ namespace UserService.Infrastructure.DependencyInjection;
 public static class SerilogExtensions
 {
     public static IHostBuilder AddSerilogLogging(this IHostBuilder hostBuilder)
-    { 
+    {
         return hostBuilder.UseSerilog((context, config) =>
         {
             var settings = context.Configuration
@@ -27,14 +27,17 @@ public static class SerilogExtensions
                 .MinimumLevel.Debug()
                 .Enrich.FromLogContext()
                 .WriteTo.File(
-                    settings.Filename,
+                    path: settings.Filename,
                     rollingInterval: RollingInterval.Day,
-                    outputTemplate: "[{Timestamp:yyyy-MM-dd HH:mm:ss} {Level:u3}] {CorrelationId} {SourceContext} {MachineName} {Message:lj}{NewLine}{Exception}");
+                    outputTemplate: "[{Timestamp:yyyy-MM-dd HH:mm:ss} {Level:u3}] {CorrelationId} {SourceContext}{Message:lj}{NewLine}{Exception}"
+                );
         })
             .ConfigureServices((context, services) =>
             {
-                services.AddLogging(
-                    config => config.AddSerilog());
+                services.AddLogging(config =>
+                {
+                    config.AddSerilog();
+                });
             });
     }
 }

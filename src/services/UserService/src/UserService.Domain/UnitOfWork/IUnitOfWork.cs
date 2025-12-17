@@ -12,6 +12,4 @@ public interface IUnitOfWork
     IOutbox Outbox { get; init; }
 
     Task<int> CommitAsync(CancellationToken cancellationToken = default);
-
-    Task<T?> QueryAsync<T>(Func<CancellationToken, Task<T?>> query, CancellationToken cancellationToken = default);
 }
