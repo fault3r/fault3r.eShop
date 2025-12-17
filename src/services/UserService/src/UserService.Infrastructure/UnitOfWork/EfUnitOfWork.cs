@@ -16,8 +16,7 @@ public sealed class EfUnitOfWork : IUnitOfWork
     private readonly EfDbContext _dbContext;
 
     public IUserRepository Users { get; init; }
-    public IOutbox Outbox { get; init; }
-
+    public IOutbox Outbox { get; init; }    
     private readonly ILogger<EfUnitOfWork> _logger;
 
     public EfUnitOfWork(
@@ -53,6 +52,7 @@ public sealed class EfUnitOfWork : IUnitOfWork
                 _logger.LogInformation("Committing changes");
 
                 var result = await _dbContext.SaveChangesAsync(cancellationToken);
+                
                 await transaction.CommitAsync(cancellationToken);
 
                 _logger.LogInformation("Successfully committed {Count} change(s)", result);

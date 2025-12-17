@@ -22,21 +22,24 @@ public sealed class UserConfiguration : IEntityTypeConfiguration<User>
             .HasColumnName("Id")
             .HasConversion(
                 identity => identity.Value,
-                value => Identity.From(value))
+                value => Identity.From(value)
+            )
             .ValueGeneratedNever();
 
         builder.Property(p => p.Email)
             .HasColumnName("Email")
             .HasConversion(
                 email => email.Value,
-                value => Email.Parse(value))
+                value => Email.Parse(value)
+            )
             .IsRequired();
 
         builder.Property(p => p.PasswordHash)
             .HasColumnName("Password")
             .HasConversion(
                 passwordHash => passwordHash.Value,
-                value => PasswordHash.Parse(value))
+                value => PasswordHash.Parse(value)
+            )
             .IsRequired();
 
         builder.OwnsOne(p => p.FullName, fullName =>
@@ -50,21 +53,24 @@ public sealed class UserConfiguration : IEntityTypeConfiguration<User>
             fullName.Property(p => p.LastName)
                 .HasColumnName("LastName")
                 .IsRequired();
-        }).Navigation(p => p.FullName)
+        })
+            .Navigation(p => p.FullName)
             .IsRequired();
 
         builder.Property(p => p.Role)
             .HasColumnName("Role")
             .HasConversion(
                 role => role.Value.ToString(),
-                value => Role.Parse(value))
+                value => Role.Parse(value)
+            )
             .IsRequired();                 
 
         builder.Property(p => p.Status)
             .HasColumnName("Status")
             .HasConversion(
                 status => status.Value.ToString(),
-                value => Status.Parse(value))
+                value => Status.Parse(value)
+            )
             .IsRequired();           
 
         builder.Ignore(p => p.DomainEvents);

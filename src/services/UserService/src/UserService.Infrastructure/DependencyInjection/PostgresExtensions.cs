@@ -23,8 +23,7 @@ public static class PostgresExtensions
                 .Get<PostgresSettings>()
                     ?? throw new MissingPostgresSettingsException();
 
-            var connectionString = settings.ToConnectionString()
-                ?? throw new PostgresConnectionException();
+            var connectionString = settings.ToConnectionString();
 
             services.AddDbContext<EfDbContext>(config =>
             {

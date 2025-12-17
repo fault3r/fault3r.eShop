@@ -2,35 +2,43 @@
 using System;
 using UserService.Domain.Interfaces;
 using UserService.Domain.Outbox;
+using UserService.Infrastructure.Exceptions.CrossCutting;
 using UserService.Infrastructure.Exceptions.Persistence;
 using UserService.Infrastructure.Persistence;
 
 namespace UserService.Infrastructure.Messaging.Outbox;
 
-public sealed class EfOutbox(
-    EfDbContext efDbContext
-) : IOutbox
+public sealed class EfOutbox : IOutbox
 {
-    private readonly EfDbContext _db = efDbContext
-        ?? throw new MissingDbContextException();
+    private readonly EfDbContext _dbContext;
+
+    public EfOutbox(EfDbContext efDbContext)
+    {
+        _dbContext = efDbContext
+            ?? throw new MissingDbContextException();
+    }
 
     public async Task EnqueueAsync(
-        IEnumerable<IDomainEvent> domainEvents,
+        IEnumerable<IDomainEvent> events,
         string correlationId,
         CancellationToken cancellationToken = default)
     {
-        if (domainEvents is null)
-            throw new MissingEventsException();
-
-        if (!domainEvents.Any()) return;
-
-        if (domainEvents.Any(e => e is null))
+        if (events is null)
             throw new MissingEventException();
 
-        var messages = domainEvents
-            .Select(e => OutboxMessage.FromDomainEvent(e, correlationId))
+        if (!events.Any()) return;
+
+        if (events.Any(e => e is null))
+            throw new MissingEventException();
+
+        if (string.IsNullOrWhiteSpace(correlationId))
+            throw new MissingCorrelationIdException();
+
+        var messages = events
+            .Select(e => OutboxMessage.FromEvent(e, correlationId))
             .ToList();
 
-        await _db.Set<OutboxMessage>().AddRangeAsync(messages, cancellationToken);
+        await _dbContext.Set<OutboxMessage>()
+            .AddRangeAsync(messages, cancellationToken);
     }
 }
