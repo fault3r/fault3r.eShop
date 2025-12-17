@@ -6,6 +6,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Npgsql;
 using Polly;
+using UserService.Infrastructure.Exceptions.DependencyInjection;
 using UserService.Infrastructure.Exceptions.Persistence;
 using UserService.Infrastructure.Persistence;
 using UserService.Infrastructure.Settings;

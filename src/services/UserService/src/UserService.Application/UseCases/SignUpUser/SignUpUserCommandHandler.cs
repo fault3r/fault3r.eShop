@@ -12,7 +12,7 @@ namespace UserService.Application.UseCases.SignUpUser;
 public class SignUpUserCommandHandler
     : IRequestHandler<SignUpUserCommand, Result<User>>
 {
-    private readonly ISignUpUserService _signUpUserService;
+    private readonly ISignUpUserService _signUpService;
     private readonly IValidator<SignUpUserCommand> _validator;
     private readonly ILogger<SignUpUserCommandHandler> _logger;
 
@@ -21,14 +21,18 @@ public class SignUpUserCommandHandler
         IValidator<SignUpUserCommand> validator,
         ILogger<SignUpUserCommandHandler> logger)
     {
-        _signUpUserService = signUpUserService;
-        _validator = validator;
+        _signUpService = signUpUserService
+            ?? throw new ArgumentNullException(nameof(signUpUserService));
+
+        _validator = validator
+            ?? throw new ArgumentNullException(nameof(validator));
+
         _logger = logger;
     }
 
     public async Task<Result<User>> Handle(SignUpUserCommand request, CancellationToken cancellationToken)
     {
-        _logger.LogInformation("Handling request");
+        _logger.LogInformation("Handling request..");
 
         var validation = await _validator.ValidateAsync(request, cancellationToken);
         
@@ -36,12 +40,12 @@ public class SignUpUserCommandHandler
         {
             var errors = string.Join(" - ", validation.Errors.Select(e => e.ErrorMessage));
 
-            _logger.LogWarning("Validation failed, Error:{Error}", errors);
+            _logger.LogWarning("Validation failed with the following errors: {Errors}!", errors);
 
-            return Result<User>.Failure(errors);
+            return Result<User>.Failure($"Validation failed: {errors}!");
         }
 
-        var result = await _signUpUserService
+        var result = await _signUpService
             .ExecuteAsync(
                 request.Email,
                 request.Password,
@@ -50,7 +54,7 @@ public class SignUpUserCommandHandler
                 cancellationToken
             );
 
-        _logger.LogInformation("Request handled");
+        _logger.LogInformation("Request handled successfully.");
 
         return result;
     }

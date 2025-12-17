@@ -36,16 +36,13 @@ public sealed class EfUserRepository : IUserRepository
 
             var result = await _dbContext.Users.FirstOrDefaultAsync(expression, cancellationToken);
 
-            _logger.LogInformation(
-                "Query executed successfully. {Message}",
-                result is null ? "User not found." : "User found."
-            );
+            _logger.LogInformation("Query executed successfully.");
 
             return result;
         }
         catch (Exception exception)
         {
-            _logger.LogError(exception, "Query execution failed");
+            _logger.LogError(exception, "Query execution failed!");
 
             throw new PersistenceException();
         }

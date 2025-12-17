@@ -35,8 +35,7 @@ public class UserController : ControllerBase
     [Route("signup")]
     public async Task<IActionResult> SignUp([FromBody] SignUpUserDto request)
     {
-        _logger.LogInformation(
-            "SignUpUser request received for email:{Email}", request.Email);
+        _logger.LogInformation("SignUpUser request received for Email: {Email}.", request.Email);
 
         var command = new SignUpUserCommand(
             request.Email,
@@ -49,10 +48,9 @@ public class UserController : ControllerBase
 
         if (result.IsFailure)
         {
-            string error = result.Error ?? "Unknown error";
-
-            _logger.LogWarning(
-                "SignUpUser request failed, Error:{Error}", error);
+            _logger.LogWarning("SignUpUser request failed!");
+            
+            string error = result.Error ?? "unknown error";
             
             if (error.Contains("already exists"))
                 return Conflict(new
@@ -68,8 +66,7 @@ public class UserController : ControllerBase
             });
         }
 
-        _logger.LogInformation(
-            "SignUpUser request complete successfully");
+        _logger.LogInformation("SignUpUser request completed successfully.");
 
         return Ok(result.Value);
     }
