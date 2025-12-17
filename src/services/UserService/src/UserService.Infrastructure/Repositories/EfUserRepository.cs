@@ -30,19 +30,22 @@ public sealed class EfUserRepository : IUserRepository
         Expression<Func<User, bool>> expression,
         CancellationToken cancellationToken = default)
     {
-        _logger.LogInformation("executing query");
-
         try
         {
+            _logger.LogInformation("Executing query..");
+
             var result = await _dbContext.Users.FirstOrDefaultAsync(expression, cancellationToken);
 
-            _logger.LogInformation("query executed successfully");
+            _logger.LogInformation(
+                "Query executed successfully. {Message}",
+                result is null ? "User not found." : "User found."
+            );
 
             return result;
         }
         catch (Exception exception)
         {
-            _logger.LogError(exception, "query execution failed");
+            _logger.LogError(exception, "Query execution failed");
 
             throw new PersistenceException();
         }
@@ -60,20 +63,20 @@ public sealed class EfUserRepository : IUserRepository
 
     public async Task CreateAsync(User user, CancellationToken cancellationToken = default)
     {
-        await _dbContext.Set<User>()
+        await _dbContext.Users
             .AddAsync(user, cancellationToken);
     }
 
     public Task UpdateAsync(User user, CancellationToken cancellationToken = default)
     {
-        _dbContext.Set<User>()
+        _dbContext.Users
             .Update(user);
         return Task.CompletedTask;
     }
 
     public Task DeleteAsync(Identity id, CancellationToken cancellationToken = default)
     {
-        _dbContext.Set<User>()
+        _dbContext.Users
             .Remove(new User(id));            
         return Task.CompletedTask;
     }

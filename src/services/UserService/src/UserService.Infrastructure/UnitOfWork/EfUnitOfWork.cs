@@ -49,13 +49,13 @@ public sealed class EfUnitOfWork : IUnitOfWork
                 .BeginTransactionAsync(cancellationToken);
             try
             {
-                _logger.LogInformation("Committing changes");
+                _logger.LogInformation("Committing changes..");
 
                 var result = await _dbContext.SaveChangesAsync(cancellationToken);
                 
                 await transaction.CommitAsync(cancellationToken);
 
-                _logger.LogInformation("Successfully committed {Count} change(s)", result);
+                _logger.LogInformation("Successfully committed {Count} change(s).", result);
 
                 return result;
             }
@@ -63,7 +63,7 @@ public sealed class EfUnitOfWork : IUnitOfWork
             {
                 await transaction.RollbackAsync(cancellationToken);
 
-                _logger.LogError(exception, "Failed to commit changes");
+                _logger.LogError(exception, "Failed to commit changes!");
 
                 throw new PersistenceException();
             }

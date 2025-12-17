@@ -29,7 +29,7 @@ public static class SerilogExtensions
                 .WriteTo.File(
                     path: settings.Filename,
                     rollingInterval: RollingInterval.Day,
-                    outputTemplate: "[{Timestamp:yyyy-MM-dd HH:mm:ss} {Level:u3}] {CorrelationId} {SourceContext}{Message:lj}{NewLine}{Exception}"
+                    outputTemplate: "[{Timestamp:yyyy-MM-dd HH:mm:ss} {Level:u3}] {CorrelationId} {SourceContext} {Message:lj} {NewLine} {Exception}"
                 );
         })
             .ConfigureServices((context, services) =>

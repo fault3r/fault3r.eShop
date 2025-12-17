@@ -6,5 +6,5 @@ namespace UserService.Infrastructure.Exceptions.Persistence;
 public class PersistenceException : InfrastructureException
 {
     public PersistenceException() 
-        : base("error committing transaction") { }
+        : base("unexpected persistence error") { }
 }
