@@ -1,11 +1,10 @@
 
 using System;
-using UserService.Domain.Common;
-using UserService.Domain.Interfaces;
+using UserService.Domain.Exceptions.Repositories;
 using UserService.Domain.Repositories;
 using UserService.Domain.ValueObjects;
 
-namespace UserService.Domain.Services;
+namespace UserService.Domain.Services.UserService;
 
 public class UserDomainService : IUserDomainService
 {
@@ -13,7 +12,8 @@ public class UserDomainService : IUserDomainService
 
     public UserDomainService(IUserRepository userRepository)
     {
-        _userRepository = userRepository;
+        _userRepository = userRepository
+            ?? throw new MissingUserRepositoryException();
     }
 
     public async Task<bool> CanCreateUserAsync(

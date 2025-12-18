@@ -20,7 +20,7 @@ public sealed class OutboxMessage
         string correlationId)
     {
         if (domainEvent is null)
-            throw new MissingEventException();
+            throw new MissingOutboxEventException();
 
         if (string.IsNullOrWhiteSpace(correlationId))
             throw new MissingCorrelationIdException();

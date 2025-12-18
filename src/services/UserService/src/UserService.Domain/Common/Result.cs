@@ -4,32 +4,6 @@ using UserService.Domain.Exceptions.Common.Result;
 
 namespace UserService.Domain.Common;
 
-public readonly struct Result
-{
-    public bool IsSuccess { get; }
-    public string? Error { get; }
-
-    private Result(bool isSuccess, string? error)
-    {
-        IsSuccess = isSuccess;
-        Error = error;
-    }
-
-    public bool IsFailure
-        => !IsSuccess;
-
-    public static Result Success()
-        => new(true, null);
-
-    public static Result Failure(string error)
-    {
-        if (string.IsNullOrWhiteSpace(error))
-            throw new MissingResultErrorMessageException();
-
-        return new(false, error);
-    }
-}
-
 public readonly struct Result<T>
 {
     public bool IsSuccess { get; }

@@ -2,7 +2,6 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
-using UserService.Domain.Aggregates.UserAggregate;
 using UserService.Domain.Outbox;
 using UserService.Domain.Repositories;
 using UserService.Domain.UnitOfWork;
@@ -14,21 +13,20 @@ namespace UserService.Infrastructure.UnitOfWork;
 public sealed class EfUnitOfWork : IUnitOfWork
 {
     private readonly EfDbContext _dbContext;
-
-    public IUserRepository Users { get; init; }
-    public IOutbox Outbox { get; init; }    
+    public IOutbox Outbox { get; init; } 
+    public IUserRepository UserRepository { get; init; }
     private readonly ILogger<EfUnitOfWork> _logger;
 
     public EfUnitOfWork(
         EfDbContext efDbContext,
-        IUserRepository users,
+        IUserRepository userRepository,
         IOutbox outbox,
         ILogger<EfUnitOfWork> logger)
     {
         _dbContext = efDbContext
             ?? throw new MissingDbContextException();
 
-        Users = users
+        UserRepository = userRepository
             ?? throw new MissingUserRepositoryException();
 
         Outbox = outbox
