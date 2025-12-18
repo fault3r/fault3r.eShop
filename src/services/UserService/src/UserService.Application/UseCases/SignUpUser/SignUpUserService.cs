@@ -9,7 +9,7 @@ using UserService.Domain.Factories;
 using UserService.Domain.UnitOfWork;
 using UserService.Domain.ValueObjects;
 using Microsoft.Extensions.Logging;
-using UserService.Domain.Services.UserService;
+using UserService.Domain.Interfaces;
 
 namespace UserService.Application.UseCases.SignUpUser;
 

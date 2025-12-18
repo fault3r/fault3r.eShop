@@ -1,0 +1,7 @@
+docker run --name postgres-dev \
+  -e POSTGRES_USER=eShop \
+  -e POSTGRES_PASSWORD=fault3r \
+  -e POSTGRES_DB=UsersDatabase \
+  -p 5432:5432 \
+  -v pgdata:/var/lib/postgresql \
+  -d postgres

@@ -2,7 +2,7 @@
 using System;
 using UserService.Domain.ValueObjects;
 
-namespace UserService.Domain.Services.UserService;
+namespace UserService.Domain.Interfaces;
 
 public interface IUserDomainService
 {

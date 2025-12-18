@@ -24,10 +24,4 @@
     <ProjectReference Include="../UserService.Infrastructure/UserService.Infrastructure.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Controllers/" />
-    <Folder Include="DTOs/" />
-    <Folder Include="DTOs/User/" />
-  </ItemGroup>
-
 </Project>

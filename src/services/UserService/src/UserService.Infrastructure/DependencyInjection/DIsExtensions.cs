@@ -6,6 +6,7 @@ using Microsoft.Extensions.DependencyInjection;
 using UserService.Application.Interfaces;
 using UserService.Application.Security;
 using UserService.Application.UseCases.SignUpUser;
+using UserService.Domain.Interfaces;
 using UserService.Domain.Outbox;
 using UserService.Domain.Repositories;
 using UserService.Domain.Services.UserService;

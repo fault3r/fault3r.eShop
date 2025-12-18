@@ -18,17 +18,17 @@ public class ExceptionHandlingMiddleware(RequestDelegate next)
         {
             Log.Error(
                 exception,
-                "Unhandled exception occurred while processing {Method} {Path}", context.Request.Method, context.Request.Path);
+                "Unhandled exception occurred while processing {Method} {Path}", context.Request.Method, context.Request.Path
+            );
 
-            context.Response.StatusCode = StatusCodes.Status500InternalServerError;
-            context.Response.ContentType = "application/json";
-                        
-            var correlationId = context.Items["X-Correlation-ID"];
             var response = new
             {
                 error = "Internal Server Error",
-                correlationId,
+                correlationId = context.Items["X-Correlation-ID"],
             };
+
+            context.Response.StatusCode = StatusCodes.Status500InternalServerError;
+            context.Response.ContentType = "application/json";
             await context.Response.WriteAsJsonAsync(response);
         }
     }

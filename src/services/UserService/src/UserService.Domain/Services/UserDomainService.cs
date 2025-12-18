@@ -1,6 +1,7 @@
 
 using System;
 using UserService.Domain.Exceptions.Repositories;
+using UserService.Domain.Interfaces;
 using UserService.Domain.Repositories;
 using UserService.Domain.ValueObjects;
 
