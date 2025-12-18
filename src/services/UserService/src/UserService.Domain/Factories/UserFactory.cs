@@ -22,11 +22,11 @@ public sealed class UserFactory
         catch (DomainException ex)
         {
             return Result<User>.Failure(
-                $"Cannot create user! : {ex.Message}");
+                $"failed: {ex.Message}");
         }
     }
 
-    public static User Create(
+    public static User From(
         Identity id,
         Email email,
         PasswordHash passwordHash,

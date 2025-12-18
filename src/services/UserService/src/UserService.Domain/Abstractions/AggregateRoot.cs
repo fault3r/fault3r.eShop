@@ -1,13 +1,13 @@
 
 using System;
-using System.Collections;
 using UserService.Domain.Exceptions.Abstraction.AggregateRoot;
 using UserService.Domain.Interfaces;
 
 namespace UserService.Domain.Abstractions;
 
-public abstract class AggregateRoot<TType, TId> : Entity<TType, TId>, IAggregateRoot
-    where TType : AggregateRoot<TType, TId>
+public abstract class AggregateRoot<T, TId>
+    : Entity<T, TId>, IAggregateRoot, IAggregateRoot<TId>
+    where T : AggregateRoot<T, TId>
 {
     private readonly List<IDomainEvent> domainEvents = [];
 

@@ -5,6 +5,6 @@ namespace UserService.Domain.Interfaces;
 
 public interface IDomainEvent
 {
-    Guid EventId { get; init; }
-    DateTime OccurredOn { get; init; }
+    Guid EventId { get; }
+    DateTime OccurredOn { get; }
 }

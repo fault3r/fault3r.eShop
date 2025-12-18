@@ -28,11 +28,20 @@ public class User : AggregateRoot<User, Identity>
         Status status)
         : base(id)
     {
-        Email = email ?? throw new MissingEmailException();
-        PasswordHash = passwordHash ?? throw new MissingPasswordHashException();
-        FullName = fullName ?? throw new MissingFullNameException();
-        Role = role ?? throw new MissingRoleException();
-        Status = status ?? throw new MissingStatusException();
+        Email = email
+            ?? throw new MissingEmailException();
+
+        PasswordHash = passwordHash
+            ?? throw new MissingPasswordHashException();
+            
+        FullName = fullName
+            ?? throw new MissingFullNameException();
+
+        Role = role
+            ?? throw new MissingRoleException();
+
+        Status = status
+            ?? throw new MissingStatusException();
     }
 
     internal static User Create(
