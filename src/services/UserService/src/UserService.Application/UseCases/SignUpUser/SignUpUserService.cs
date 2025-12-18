@@ -6,10 +6,10 @@ using UserService.Domain.Aggregates.UserAggregate;
 using UserService.Domain.Common;
 using UserService.Domain.Exceptions;
 using UserService.Domain.Factories;
-using UserService.Domain.Interfaces;
 using UserService.Domain.UnitOfWork;
 using UserService.Domain.ValueObjects;
 using Microsoft.Extensions.Logging;
+using UserService.Domain.Services.UserService;
 
 namespace UserService.Application.UseCases.SignUpUser;
 
@@ -83,7 +83,7 @@ public sealed class SignUpUserService : ISignUpUserService
 
         _logger.LogInformation("Persisting instance to database..");
 
-        await _uow.Users.CreateAsync(user, cancellationToken);
+        await _uow.UserRepository.CreateAsync(user, cancellationToken);
         await _uow.Outbox.EnqueueAsync(user.DomainEvents, correlationId, cancellationToken);
         await _uow.CommitAsync(cancellationToken);
         user.ClearEvents();

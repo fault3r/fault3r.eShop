@@ -124,5 +124,12 @@ public class User : AggregateRoot<User, Identity>
     }
 
     // EFCore
-    public User(Identity id) : base(id) { }
+    public User(Identity id) : base(id)
+    {
+        Email = null!;
+        PasswordHash = null!;
+        FullName = null!;
+        Role = null!;
+        Status = null!;
+    }
 }

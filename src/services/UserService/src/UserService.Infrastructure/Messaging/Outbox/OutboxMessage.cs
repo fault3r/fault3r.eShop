@@ -47,5 +47,10 @@ public sealed class OutboxMessage
     };
 
     // EFCore
-    public OutboxMessage() { }
+    public OutboxMessage()
+    {
+        Type = null!;
+        Payload = null!;
+        CorrelationId = null!;
+    }
 }

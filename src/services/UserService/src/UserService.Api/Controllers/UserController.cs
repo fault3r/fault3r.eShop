@@ -26,11 +26,6 @@ public class UserController : ControllerBase
         _logger = logger;
     }
 
-    [HttpGet]
-    [Route("test")]
-    public async Task<IActionResult> TestMethod()
-        => Ok("access granted");
-
     [HttpPost]
     [Route("signup")]
     public async Task<IActionResult> SignUp([FromBody] SignUpUserDto request)

@@ -12,8 +12,8 @@ using UserService.Infrastructure.Persistence;
 namespace UserService.Infrastructure.Persistence.Migrations
 {
     [DbContext(typeof(EfDbContext))]
-    [Migration("20251217154453_initial-database")]
-    partial class initialdatabase
+    [Migration("20251218104908_DatabaseInitialMigration")]
+    partial class DatabaseInitialMigration
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
