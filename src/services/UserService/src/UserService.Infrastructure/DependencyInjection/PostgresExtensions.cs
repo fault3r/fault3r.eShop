@@ -34,7 +34,7 @@ public static class PostgresExtensions
                         typeof(EfDbContext).Assembly.FullName);
 
                     config.EnableRetryOnFailure(
-                        maxRetryCount: 5,
+                        maxRetryCount: 3,
                         maxRetryDelay: TimeSpan.FromSeconds(2),
                         errorCodesToAdd: null
                     );

@@ -4,9 +4,18 @@ using Serilog;
 
 namespace UserService.Api.Middlewares;
 
-public class ExceptionHandlingMiddleware(RequestDelegate next)
+public class ExceptionHandlingMiddleware
 {
-    private readonly RequestDelegate _next = next;
+    private readonly RequestDelegate _next;
+    private readonly string correlationHeader;
+
+    public ExceptionHandlingMiddleware(
+        RequestDelegate next,
+        string correlationHeader)
+    {
+        _next = next;
+        this.correlationHeader = correlationHeader;
+    }
 
     public async Task InvokeAsync(HttpContext context)
     {
@@ -24,7 +33,7 @@ public class ExceptionHandlingMiddleware(RequestDelegate next)
             var response = new
             {
                 error = "Internal Server Error",
-                correlationId = context.Items["X-Correlation-ID"],
+                correlationId = context.Items[correlationHeader],
             };
 
             context.Response.StatusCode = StatusCodes.Status500InternalServerError;
@@ -37,6 +46,8 @@ public class ExceptionHandlingMiddleware(RequestDelegate next)
 public static class ExceptionHandlingMiddlewareExtensions
 {
     public static IApplicationBuilder UseExceptionHandlingMiddleware(
-        this IApplicationBuilder builder)
-            => builder.UseMiddleware<ExceptionHandlingMiddleware>();
+        this IApplicationBuilder builder,
+        string correlationHeader
+    )
+        => builder.UseMiddleware<ExceptionHandlingMiddleware>(correlationHeader);
 }

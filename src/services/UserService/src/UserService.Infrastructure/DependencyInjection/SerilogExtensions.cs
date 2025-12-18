@@ -17,7 +17,7 @@ public static class SerilogExtensions
         return hostBuilder.UseSerilog((context, config) =>
         {
             var settings = context.Configuration
-                .GetSection(nameof(SerilogSettings))
+                .GetSection($"Logging:{nameof(SerilogSettings)}")
                 .Get<SerilogSettings>()
                     ?? throw new MissingSerilogSettingsException();
 
