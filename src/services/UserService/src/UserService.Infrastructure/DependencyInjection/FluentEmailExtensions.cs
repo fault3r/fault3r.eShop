@@ -4,9 +4,9 @@ using System.Net;
 using System.Net.Mail;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using UserService.Domain.Services;
+using UserService.Application.Services.EmailService;
 using UserService.Infrastructure.Exceptions.DependencyInjection;
-using UserService.Infrastructure.Services;
+using UserService.Infrastructure.Services.EmailService;
 using UserService.Infrastructure.Settings;
 
 namespace UserService.Infrastructure.DependencyInjection;

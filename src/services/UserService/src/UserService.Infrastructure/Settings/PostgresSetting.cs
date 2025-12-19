@@ -12,7 +12,7 @@ public class PostgresSetting
     public required string Database { get; set; }
 
     public string ToConnectionString()
-        => $"Host={Host};Port={Port};" +
-           $"Username={Username};Password={Password};" +
-           $"Database={Database}";
+        => @$"Host={Host};Port={Port};
+           Username={Username};Password={Password};
+           Database={Database};";
 }
