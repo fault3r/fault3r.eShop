@@ -19,7 +19,7 @@ public static class SerilogExtensions
             var setting = context.Configuration
                 .GetSection($"Logging:{nameof(SerilogSetting)}")
                 .Get<SerilogSetting>()
-                    ?? throw new MissingSerilogSettingsException();
+                    ?? throw new MissingSerilogSettingException();
 
             config
                 .MinimumLevel.Override("Microsoft", LogEventLevel.Fatal)

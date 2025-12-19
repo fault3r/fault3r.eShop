@@ -3,8 +3,8 @@ using System;
 
 namespace UserService.Infrastructure.Exceptions.DependencyInjection;
 
-public class MissingFluentEmailSetting : InfrastructureException
+public class MissingFluentEmailSettingException : InfrastructureException
 {
-    public MissingFluentEmailSetting()
+    public MissingFluentEmailSettingException()
         : base("missing fluent email smtp setting") { }
 }

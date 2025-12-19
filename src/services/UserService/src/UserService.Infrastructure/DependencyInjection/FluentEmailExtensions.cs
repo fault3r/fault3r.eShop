@@ -1,9 +1,12 @@
 
 using System;
+using System.Net;
 using System.Net.Mail;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using UserService.Domain.Services;
 using UserService.Infrastructure.Exceptions.DependencyInjection;
+using UserService.Infrastructure.Services;
 using UserService.Infrastructure.Settings;
 
 namespace UserService.Infrastructure.DependencyInjection;
@@ -17,19 +20,28 @@ public static class FluentEmailExtensions
         var setting = configuration
             .GetSection(nameof(FluentEmailSetting))
             .Get<FluentEmailSetting>()
-                ?? throw new MissingFluentEmailSetting();
+                ?? throw new MissingFluentEmailSettingException();
 
         services
-            .AddFluentEmail(setting.Address,setting.Name)
+            .AddFluentEmail(
+                defaultFromEmail: setting.Email,
+                defaultFromName: setting.Name
+            )
             .AddRazorRenderer()
-            .AddSmtpSender(new SmtpClient
-            {
-                Host = setting.Host,
-                Port = setting.Port,
-                EnableSsl = setting.EnableSsl,
+            .AddSmtpSender(
+                new SmtpClient
+                {
+                    Host = setting.Host,
+                    Port = setting.Port,
+                    EnableSsl = true,
+                    Credentials = new NetworkCredential(
+                        userName: setting.Email,
+                        password: setting.Password
+                    ),
+                }
+            );
 
-
-            })
+        services.AddScoped<IEmailSender, FluentEmailSender>();
 
         return services;
     }
