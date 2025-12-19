@@ -3,7 +3,7 @@ using System;
 using System.Security.Cryptography;
 using System.Text;
 using Konscious.Security.Cryptography;
-using UserService.Application.Security;
+using UserService.Domain.Security;
 using UserService.Domain.ValueObjects;
 using UserService.Infrastructure.Exceptions.Security;
 

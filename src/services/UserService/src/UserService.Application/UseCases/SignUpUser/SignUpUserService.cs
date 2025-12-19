@@ -1,7 +1,6 @@
 ﻿
 using System;
 using UserService.Application.Interfaces;
-using UserService.Application.Security;
 using UserService.Domain.Aggregates.UserAggregate;
 using UserService.Domain.Common;
 using UserService.Domain.Exceptions;
@@ -10,13 +9,14 @@ using UserService.Domain.UnitOfWork;
 using UserService.Domain.ValueObjects;
 using Microsoft.Extensions.Logging;
 using UserService.Domain.Interfaces;
+using UserService.Domain.Security;
 
 namespace UserService.Application.UseCases.SignUpUser;
 
 public sealed class SignUpUserService : ISignUpUserService
 {
     private readonly IUnitOfWork _uow;
-    private readonly IUserDomainService _domainService;
+    private readonly IUserDomainService _userService;
     private readonly IPasswordHasher _hasher;
     private readonly ILogger<SignUpUserService> _logger;
 
@@ -29,7 +29,7 @@ public sealed class SignUpUserService : ISignUpUserService
         _uow = unitOfWork
             ?? throw new ArgumentNullException(nameof(unitOfWork));
 
-        _domainService = userDomainService
+        _userService = userDomainService
             ?? throw new ArgumentNullException(nameof(userDomainService));
 
         _hasher = passwordHasher
@@ -73,7 +73,7 @@ public sealed class SignUpUserService : ISignUpUserService
 
         _logger.LogInformation("Checking email exists..");
 
-        var canCreate = await _domainService.CanCreateUserAsync(vEmail, cancellationToken);
+        var canCreate = await _userService.CanCreateAsync(vEmail, cancellationToken);
         if (!canCreate)
         {
             _logger.LogWarning("User with this email already exists!");

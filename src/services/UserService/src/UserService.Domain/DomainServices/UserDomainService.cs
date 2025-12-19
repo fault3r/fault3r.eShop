@@ -5,7 +5,7 @@ using UserService.Domain.Interfaces;
 using UserService.Domain.Repositories;
 using UserService.Domain.ValueObjects;
 
-namespace UserService.Domain.Services.UserService;
+namespace UserService.Domain.DomainServices;
 
 public class UserDomainService : IUserDomainService
 {
@@ -17,7 +17,7 @@ public class UserDomainService : IUserDomainService
             ?? throw new MissingUserRepositoryException();
     }
 
-    public async Task<bool> CanCreateUserAsync(
+    public async Task<bool> CanCreateAsync(
         Email email,
         CancellationToken cancellationToken = default)
     {
