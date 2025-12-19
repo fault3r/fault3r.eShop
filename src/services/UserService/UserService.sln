@@ -20,7 +20,7 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "docs", "docs", "{208BA388-4CEE-2CBF-559C-5607C099C1F8}"
 	ProjectSection(SolutionItems) = preProject
 		docs\readme.txt = docs\readme.txt
-		..\..\..\..\..\Desktop\postgres-docker = ..\..\..\..\..\Desktop\postgres-docker
+		docs\postgres-docker.txt = docs\postgres-docker.txt
 	EndProjectSection
 EndProject
 Global

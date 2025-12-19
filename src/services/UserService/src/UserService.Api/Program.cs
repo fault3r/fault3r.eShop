@@ -12,11 +12,11 @@ var settings = builder.Configuration
     .Get<AppSettings>()
         ?? throw new MissingAppSettingsException();
 
-builder.Services.AddDIs();
+builder.Services.AddInfrastructure();
 
 builder.Host.AddSerilogLogging();
 
-builder.Host.AddPostgresDbContext();
+builder.Services.AddPostgresDbContext(builder.Configuration);
 
 builder.Services.AddControllers(config =>
     config.SuppressAsyncSuffixInActionNames = false);

@@ -21,7 +21,7 @@ namespace UserService.Infrastructure.DependencyInjection;
 
 public static class DIsExtensions
 {
-    public static IServiceCollection AddDIs(this IServiceCollection services)
+    public static IServiceCollection AddInfrastructure(this IServiceCollection services)
     {
         services.AddMediatR(typeof(SignUpUserCommand).Assembly);
 
