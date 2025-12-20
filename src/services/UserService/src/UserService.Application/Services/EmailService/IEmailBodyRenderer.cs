@@ -3,12 +3,8 @@ using System;
 
 namespace UserService.Application.Services.EmailService;
 
-public interface IEmailBodyMaker
+public interface IEmailBodyRenderer
 {
-    string ResolveTemplatePath(
-        EmailTemplateType templateType
-    );
-    
     Task<string> RenderRazorBody(
         string templatePath,
         object model,

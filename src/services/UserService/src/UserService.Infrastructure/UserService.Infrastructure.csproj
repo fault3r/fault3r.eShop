@@ -25,9 +25,4 @@
     <ProjectReference Include="../UserService.Domain/UserService.Domain.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Services/EmailService/Templates/" />
-    <Folder Include="Services/EmailService/Templates/Models/" />
-  </ItemGroup>
-
 </Project>
