@@ -41,10 +41,6 @@ public static class DIsExtensions
 
         services.AddSingleton<IPasswordHasher, Argon2PasswordHasher>();
 
-        services.AddScoped<IEmailTemplatePathResolver, EmailTemplatePathResolver>();
-
-        services.AddScoped<IEmailBodyRenderer, FluentEmailRazorBodyRenderer>();
-
         return services;
     }
 }

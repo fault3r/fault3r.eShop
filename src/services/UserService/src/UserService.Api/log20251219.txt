@@ -1,9 +1,0 @@
-[2025-12-19 10:05:01 INF] 5cad0377-4979-4284-8fe1-5d8309e65237  Incoming request GET /swagger/index.html. 
- [2025-12-19 10:05:01 INF] 5cad0377-4979-4284-8fe1-5d8309e65237  Completed request GET /swagger/index.html with status 200. 
- [2025-12-19 10:05:01 INF] 3c724e2d-d7ee-4ef5-a278-500524c948a5  Incoming request GET /swagger/favicon-32x32.png. 
- [2025-12-19 10:05:01 INF] 3c724e2d-d7ee-4ef5-a278-500524c948a5  Completed request GET /swagger/favicon-32x32.png with status 200. 
- [2025-12-19 10:05:01 INF] 1b6a11f4-9d67-407a-b631-8525e36b36aa  Incoming request GET /swagger/v1/swagger.json. 
- [2025-12-19 10:05:01 INF] 1b6a11f4-9d67-407a-b631-8525e36b36aa  Completed request GET /swagger/v1/swagger.json with status 200. 
- [2025-12-19 10:05:13 INF] f1c143ad-555a-4420-9bb4-cd529ef505b5  Incoming request GET /. 
- [2025-12-19 10:05:13 INF] f1c143ad-555a-4420-9bb4-cd529ef505b5  Completed request GET / with status 200. 
- 

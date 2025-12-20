@@ -8,9 +8,9 @@ using UserService.Infrastructure.Settings;
 var builder = WebApplication.CreateBuilder(args);
 
 var settings = builder.Configuration
-    .GetSection(nameof(AppSettings))
-    .Get<AppSettings>()
-        ?? throw new MissingAppSettingsException();
+    .GetSection(nameof(AppSetting))
+    .Get<AppSetting>()
+        ?? throw new MissingAppSettingException();
 
 builder.Services.AddInfrastructure();
 
@@ -21,13 +21,15 @@ builder.Services.AddPostgresDbContext(builder.Configuration);
 builder.Services.AddControllers(config =>
     config.SuppressAsyncSuffixInActionNames = false);
 
+builder.Services.AddFluentEmailService(builder.Configuration, builder.Environment);
+
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 var app = builder.Build();
 
-app.UseCrossCuttingMiddleware(settings.Common.CorrelationHeader);
-app.UseExceptionHandlingMiddleware(settings.Common.CorrelationHeader);
+app.UseCrossCuttingMiddleware(settings.CorrelationHeader);
+app.UseExceptionHandlingMiddleware(settings.CorrelationHeader);
 
 if (app.Environment.IsDevelopment())
 {
@@ -37,6 +39,6 @@ if (app.Environment.IsDevelopment())
 
 app.MapControllers();
 
-app.MapGet("/",() => settings);
+app.MapGet("/", () => settings.Metadata);
 
 app.Run();

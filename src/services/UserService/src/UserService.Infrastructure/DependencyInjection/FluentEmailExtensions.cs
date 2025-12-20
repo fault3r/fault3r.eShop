@@ -4,6 +4,7 @@ using System.Net;
 using System.Net.Mail;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
 using UserService.Application.Services.EmailService;
 using UserService.Infrastructure.Exceptions.DependencyInjection;
 using UserService.Infrastructure.Services.EmailService;
@@ -13,9 +14,10 @@ namespace UserService.Infrastructure.DependencyInjection;
 
 public static class FluentEmailExtensions
 {
-    public static IServiceCollection AddFluentEmailSmtp(
+    public static IServiceCollection AddFluentEmailService(
         this IServiceCollection services,
-        IConfiguration configuration)
+        IConfiguration configuration,
+        IHostEnvironment environment)
     {
         var setting = configuration
             .GetSection(nameof(FluentEmailSetting))
@@ -27,7 +29,6 @@ public static class FluentEmailExtensions
                 defaultFromEmail: setting.Email,
                 defaultFromName: setting.Name
             )
-            .AddRazorRenderer()
             .AddSmtpSender(
                 new SmtpClient
                 {
@@ -39,9 +40,15 @@ public static class FluentEmailExtensions
                         password: setting.Password
                     ),
                 }
-            );
+            )
+            .AddRazorRenderer();
 
         services.AddScoped<IEmailSender, FluentEmailSender>();
+
+        services.AddScoped<IEmailTemplateResolver>(
+            provider => new EmailTemplateResolver(environment.ContentRootPath));
+
+        services.AddScoped<IEmailBodyRenderer, FluentEmailRazorBodyRenderer>();
 
         return services;
     }
