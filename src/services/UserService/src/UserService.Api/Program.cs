@@ -21,7 +21,7 @@ builder.Services.AddPostgresDbContext(builder.Configuration);
 builder.Services.AddControllers(config =>
     config.SuppressAsyncSuffixInActionNames = false);
 
-builder.Services.AddFluentEmailService(builder.Configuration, builder.Environment);
+builder.Services.AddFluentEmailService(builder.Configuration);
 
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
@@ -41,6 +41,6 @@ if (app.Environment.IsDevelopment())
 
 app.MapControllers();
 
-app.MapGet("/", () => settings.Metadata);
+app.MapGet("/", () => settings.Application);
 
 app.Run();

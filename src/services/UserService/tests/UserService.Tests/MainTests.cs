@@ -18,7 +18,7 @@ public class MainTests
         string root = "/home/hamed-damavandi/Documents/fault3r.eShop/src/services/UserService/src";
         string temp = "UserService.Infrastructure/Services/EmailService/Templates";
 
-        var resolver = new EmailTemplateResolver(root,temp);
+        var resolver = new EmailTemplateResolver(Path.Combine(root,temp));
         var template = await resolver.GetWelcome();
         var renderer = new FluentEmailRazorBodyRenderer();
         var rendered = await renderer

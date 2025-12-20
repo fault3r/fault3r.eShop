@@ -24,7 +24,7 @@ public static class FluentEmailExtensions
         var setting = configuration
             .GetSection(nameof(FluentEmailSetting))
             .Get<FluentEmailSetting>()
-                ?? throw new MissingFluentEmailSettingException();           
+                ?? throw new MissingFluentEmailSettingException();
 
         services
             .AddFluentEmail(
@@ -48,7 +48,10 @@ public static class FluentEmailExtensions
         services.AddScoped<IEmailSender, FluentEmailSender>();
 
         services.AddScoped<IEmailTemplateResolver>(provider =>
-            new EmailTemplateResolver(rootPath, setting.TemplatesPath));
+        {
+            var templatesPath = Path.Combine(rootPath, setting.TemplatesPath);
+            return new EmailTemplateResolver(templatesPath);
+        });
 
         services.AddScoped<IEmailBodyRenderer, FluentEmailRazorBodyRenderer>();
 

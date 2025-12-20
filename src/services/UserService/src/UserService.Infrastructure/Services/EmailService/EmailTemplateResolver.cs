@@ -9,22 +9,19 @@ public sealed class EmailTemplateResolver : IEmailTemplateResolver
 {
     public readonly Dictionary<EmailTemplateType, string> Templates = [];
 
-    public EmailTemplateResolver(string rootPath, string templatesPath)
+    public EmailTemplateResolver(string templatesPath)
     {
-        if (string.IsNullOrWhiteSpace(rootPath))
-            throw new MissingRootPathException();
-
         if (string.IsNullOrWhiteSpace(templatesPath))
-            throw new MissingTemplatePathException();
+            throw new MissingTemplatesPathException();
 
-        SeedTemplates(Path.Combine(rootPath, templatesPath));
+        SeedTemplates(templatesPath);
     }    
     
-    public void  SeedTemplates(string path)
+    private void  SeedTemplates(string templatesPath)
     {
         Templates.Add(
             key: EmailTemplateType.Welcome,
-            value: Path.Combine(path, $"{nameof(EmailTemplateType.Welcome)}.cshtml")
+            value: Path.Combine(templatesPath, $"{nameof(EmailTemplateType.Welcome)}.cshtml")
         );
     }
 
@@ -32,12 +29,7 @@ public sealed class EmailTemplateResolver : IEmailTemplateResolver
         EmailTemplateType templateType,
         CancellationToken cancellationToken = default)
     {
-        bool hasTemplate = Templates
-            .TryGetValue(templateType, out var templatePath);
-
-        if (!hasTemplate || string.IsNullOrWhiteSpace(templatePath))
-            throw new InvalidEmailTemplateException(templateType.ToString());
-
+        var templatePath = Templates[templateType];
         return await File.ReadAllTextAsync(templatePath, cancellationToken);
     }
 
