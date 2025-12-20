@@ -1,5 +1,6 @@
 
 using System;
+using UserService.Application.Services.EmailService;
 
 namespace UserService.Infrastructure.Services.EmailService;
 

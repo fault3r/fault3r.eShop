@@ -43,6 +43,8 @@ public static class DIsExtensions
 
         services.AddScoped<IEmailTemplatePathResolver, EmailTemplatePathResolver>();
 
+        services.AddScoped<IEmailBodyRenderer, FluentEmailRazorBodyRenderer>();
+
         return services;
     }
 }
