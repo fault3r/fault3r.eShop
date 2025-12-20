@@ -1,7 +1,7 @@
 
 using System;
 
-namespace UserService.Infrastructure.Exceptions.Services;
+namespace UserService.Infrastructure.Exceptions.Services.EmailService;
 
 public class InvalidEmailTemplateException : InfrastructureException
 {

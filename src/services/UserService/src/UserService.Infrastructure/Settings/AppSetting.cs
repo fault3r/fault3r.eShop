@@ -7,6 +7,7 @@ public class AppSetting
 {
     public required MetadataSetting Metadata { get; set; }
 
+    public required string RootPath { get; set; }
     public required string UrlVersionSegment { get; set; }
     public required string VersionHeader { get; set; }
     public required string CorrelationHeader { get; set; }

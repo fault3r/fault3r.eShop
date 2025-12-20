@@ -1,18 +1,32 @@
 
 using System;
 using UserService.Application.Services.EmailService;
-using UserService.Infrastructure.Exceptions.Services;
+using UserService.Infrastructure.Exceptions.Services.EmailService;
 
 namespace UserService.Infrastructure.Services.EmailService;
 
-public sealed class EmailTemplateResolver(string contentRoot) : IEmailTemplateResolver
+public sealed class EmailTemplateResolver : IEmailTemplateResolver
 {
-    private readonly string rootPath = contentRoot;
-    
-    public readonly Dictionary<EmailTemplateType, string> Templates = new()
+    public readonly Dictionary<EmailTemplateType, string> Templates = [];
+
+    public EmailTemplateResolver(string rootPath, string templatesPath)
     {
-        {EmailTemplateType.Welcome, "UserService.Infrastructure/Services/EmailService/Templates/welcome.cshtml"}
-    };
+        if (string.IsNullOrWhiteSpace(rootPath))
+            throw new MissingRootPathException();
+
+        if (string.IsNullOrWhiteSpace(templatesPath))
+            throw new MissingTemplatePathException();
+
+        SeedTemplates(Path.Combine(rootPath, templatesPath));
+    }    
+    
+    public void  SeedTemplates(string path)
+    {
+        Templates.Add(
+            key: EmailTemplateType.Welcome,
+            value: Path.Combine(path, $"{nameof(EmailTemplateType.Welcome)}.cshtml")
+        );
+    }
 
     public async Task<string> ResolveAsync(
         EmailTemplateType templateType,
@@ -24,8 +38,7 @@ public sealed class EmailTemplateResolver(string contentRoot) : IEmailTemplateRe
         if (!hasTemplate || string.IsNullOrWhiteSpace(templatePath))
             throw new InvalidEmailTemplateException(templateType.ToString());
 
-        string fullPath = Path.Combine(rootPath, templatePath);
-        return await File.ReadAllTextAsync(fullPath, cancellationToken);
+        return await File.ReadAllTextAsync(templatePath, cancellationToken);
     }
 
     public async Task<string> GetWelcome(CancellationToken cancellationToken = default)
