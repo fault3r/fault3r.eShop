@@ -45,8 +45,11 @@ public static class FluentEmailExtensions
 
         services.AddScoped<IEmailSender, FluentEmailSender>();
 
+        var root = new DirectoryInfo(environment.ContentRootPath).Parent;
+        string rootPath = root?.Parent?.FullName ?? throw new Exception();
+
         services.AddScoped<IEmailTemplateResolver>(
-            provider => new EmailTemplateResolver(environment.ContentRootPath));
+            provider => new EmailTemplateResolver(rootPath));
 
         services.AddScoped<IEmailBodyRenderer, FluentEmailRazorBodyRenderer>();
 

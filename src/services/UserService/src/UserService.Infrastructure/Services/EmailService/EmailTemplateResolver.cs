@@ -7,11 +7,11 @@ namespace UserService.Infrastructure.Services.EmailService;
 
 public sealed class EmailTemplateResolver(string contentRoot) : IEmailTemplateResolver
 {
-    private readonly string root = contentRoot;
+    private readonly string rootPath = contentRoot;
     
     public readonly Dictionary<EmailTemplateType, string> Templates = new()
     {
-        {EmailTemplateType.Welcome, "Services/EmailService/Templates/welcome.cshtml"}
+        {EmailTemplateType.Welcome, "UserService.Infrastructure/Services/EmailService/Templates/welcome.cshtml"}
     };
 
     public async Task<string> ResolveAsync(
@@ -24,7 +24,7 @@ public sealed class EmailTemplateResolver(string contentRoot) : IEmailTemplateRe
         if (!hasTemplate || string.IsNullOrWhiteSpace(templatePath))
             throw new InvalidEmailTemplateException(templateType.ToString());
 
-        string fullPath = Path.Combine(root, templatePath);
+        string fullPath = Path.Combine(rootPath, templatePath);
         return await File.ReadAllTextAsync(fullPath, cancellationToken);
     }
 
