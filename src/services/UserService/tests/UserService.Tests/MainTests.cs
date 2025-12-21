@@ -20,7 +20,6 @@ public class MainTests
         string temp = "UserService.Infrastructure/Services/EmailService/Templates";
 
         var resolver = new EmailTemplateResolver(Path.Combine(root,temp));
-        var tmps = resolver.Templates;
         var template = await resolver.ResolveAsync(EmailTemplateType.Welcome);
         var renderer = new FluentEmailRazorBodyRenderer();
         var rendered = await renderer

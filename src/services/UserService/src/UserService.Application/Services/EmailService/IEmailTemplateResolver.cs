@@ -15,7 +15,4 @@ public interface IEmailTemplateResolver
       EmailTemplateType emailTemplateType,
       CancellationToken cancellationToken = default
    );
-
-   Task<string> GetWelcome(
-      CancellationToken cancellationToken = default);
 }

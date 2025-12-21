@@ -7,20 +7,25 @@ namespace UserService.Infrastructure.Services.EmailService;
 
 public sealed class EmailTemplateResolver : IEmailTemplateResolver
 {
-    public readonly Dictionary<EmailTemplateType, string> Templates = [];
+    private readonly Dictionary<EmailTemplateType, string> templates = [];
 
     public EmailTemplateResolver(string templatesPath)
     {
         if (string.IsNullOrWhiteSpace(templatesPath))
             throw new MissingTemplatesPathException();
 
-        var enumValues = Enum.GetValues<EmailTemplateType>();
+        var values = Enum.GetValues<EmailTemplateType>();
 
-        foreach (var item in enumValues)
+        foreach (var item in values)
         {
-            Templates.Add(
+            var path = Path.Combine(templatesPath, $"{item}.cshtml");
+
+            if (!File.Exists(path))
+                throw new MissingTemplateFileException();
+
+            templates.Add(
                 key: item,
-                value: Path.Combine(templatesPath, $"{item}.cshtml")
+                value: path
             );
         }
     }
@@ -31,12 +36,9 @@ public sealed class EmailTemplateResolver : IEmailTemplateResolver
     {
         try
         {
-            var templatePath = Templates[templateType];
-            return await File.ReadAllTextAsync(templatePath, cancellationToken);
+            var path = templates[templateType];
+            return await File.ReadAllTextAsync(path, cancellationToken);
         }
         catch { throw new EmailTemplateResolveException(); }
     }
-
-    public async Task<string> GetWelcome(CancellationToken cancellationToken = default)
-        => await ResolveAsync(EmailTemplateType.Welcome, cancellationToken);
 }
