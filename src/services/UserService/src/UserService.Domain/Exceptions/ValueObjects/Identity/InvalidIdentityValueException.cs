@@ -5,6 +5,6 @@ namespace UserService.Domain.Exceptions.ValueObjects.Identity;
 
 public sealed class InvalidIdentityValueException : DomainException
 {
-    public InvalidIdentityValueException(string value)
-        : base($"invalid identity value: {value}") { }
+    public InvalidIdentityValueException(string identity)
+        : base($"invalid identity value: {identity}") { }
 }

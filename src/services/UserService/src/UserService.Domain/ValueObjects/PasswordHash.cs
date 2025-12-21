@@ -1,6 +1,7 @@
 
 using System;
 using UserService.Domain.Abstractions;
+using UserService.Domain.Exceptions;
 using UserService.Domain.Exceptions.ValueObjects.PasswordHash;
 
 namespace UserService.Domain.ValueObjects;
@@ -14,16 +15,13 @@ public sealed record PasswordHash : ValueObject<string>
         if (string.IsNullOrWhiteSpace(value))
             throw new MissingPasswordHashValueException();
 
-        var normalized = Normalize(value);
+        value = value.Trim();
 
-        if (!IsValid(normalized))
-            throw new InvalidPasswordHashValueException(normalized);
+        if (!IsValid(value))
+            throw new InvalidPasswordHashValueException(value);
 
-        Value = normalized;
+        Value = value;
     }
-
-    private static string Normalize(string value)
-        => value.Trim();
 
     private static bool IsValid(string value)
         => value.StartsWith("$argon2id$") && value.Length > 60;
@@ -38,7 +36,7 @@ public sealed record PasswordHash : ValueObject<string>
             passwordHash = new(value);
             return true;
         }
-        catch
+        catch (DomainException)
         {
             passwordHash = null;
             return false;

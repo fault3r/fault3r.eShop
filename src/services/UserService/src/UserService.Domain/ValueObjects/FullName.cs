@@ -17,12 +17,12 @@ public sealed record FullName : ValueObject<string>
         if (string.IsNullOrWhiteSpace(value))
             throw new MissingFullNameException();
 
-        value = value.Trim();
-
-        if (!IsValid(value))
+        if (!IsValid(value.Trim()))
             throw new InvalidFullNameException(value);
 
-        var parts = value.Split(' ', StringSplitOptions.RemoveEmptyEntries);
+        var parts = value
+            .Trim()
+            .Split(' ', StringSplitOptions.RemoveEmptyEntries);
 
         FirstName = parts[0];
         LastName = string.Join(" ", parts.Skip(1));
@@ -31,12 +31,12 @@ public sealed record FullName : ValueObject<string>
 
     private static bool IsValid(string value)
     {
-        if (value.Length < 2 || value.Length > 99)
+        if (value.Length < 2 || value.Length > 100)
             return false;
 
-        var parts = value.Split(' ', StringSplitOptions.RemoveEmptyEntries);
-        if (parts.Length < 2)
-            return false;
+        var parts = value
+            .Split(' ', StringSplitOptions.RemoveEmptyEntries);
+        if (parts.Length < 2) return false;
 
         return true;
     }

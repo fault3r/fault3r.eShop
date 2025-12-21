@@ -1,6 +1,7 @@
 
 using System;
 using UserService.Domain.Abstractions;
+using UserService.Domain.Exceptions;
 using UserService.Domain.Exceptions.ValueObjects.Identity;
 
 namespace UserService.Domain.ValueObjects;
@@ -22,16 +23,13 @@ public sealed record Identity : ValueObject<Guid>
         if (string.IsNullOrWhiteSpace(value))
             throw new EmptyIdentityValueException();
 
-        var normalized = Normalize(value);
+        value = value.Trim();
 
-        if (!IsValid(normalized))
-            throw new InvalidIdentityValueException(normalized);
+        if (!IsValid(value))
+            throw new InvalidIdentityValueException(value);
 
-        Value = Guid.Parse(normalized);
+        Value = Guid.Parse(value);
     }
-
-    private static string Normalize(string value)
-        => value.Trim();
 
     private static bool IsValid(string value)
         => Guid.TryParse(value, out var guid) && guid != Guid.Empty;
@@ -52,7 +50,7 @@ public sealed record Identity : ValueObject<Guid>
             identity = new(value);
             return true;
         }
-        catch
+        catch (DomainException)
         {
             identity = null;
             return false;
@@ -60,10 +58,10 @@ public sealed record Identity : ValueObject<Guid>
     }
 
     public override string ToString()
-        => Value.ToString();
+        => Value.ToString("N");
 
     public static implicit operator string(Identity identity)
-        => identity.Value.ToString();
+        => identity.Value.ToString("N");
 
     public static explicit operator Identity(string value)
         => Parse(value);

@@ -1,6 +1,7 @@
 
 using System;
 using UserService.Domain.Abstractions;
+using UserService.Domain.Exceptions;
 using UserService.Domain.Exceptions.ValueObjects.Role;
 using static UserService.Domain.ValueObjects.Role;
 
@@ -17,25 +18,29 @@ public sealed record Role : ValueObject<RoleType>
     }
 
     private Role(RoleType roleType)
-        => Value = roleType;
+    {
+        Value = roleType;
+    }
 
     private Role(string value)
     {
         if (string.IsNullOrWhiteSpace(value))
             throw new MissingRoleNameException();
 
-        var normalized = Normalize(value);
+        value = value
+            .Trim()
+            .ToLowerInvariant();
 
-        Value = normalized switch
+        Value = value switch
         {
             "user" => RoleType.User,
             "admin" => RoleType.Admin,
-            _ => throw new UnsupportedRoleNameException(normalized),
+            _ => throw new UnsupportedRoleNameException(value),
         };
     }
 
-    private static string Normalize(string value)
-        => value.Trim().ToLowerInvariant();
+    public static readonly Role User = new(RoleType.User);
+    public static readonly Role Admin = new(RoleType.Admin);
 
     public static Role From(RoleType value)
         => new(value);
@@ -50,25 +55,19 @@ public sealed record Role : ValueObject<RoleType>
             role = new(value);
             return true;
         }
-        catch
+        catch (DomainException)
         {
             role = null;
             return false;
         }
     }
-
-    public static readonly Role User = new(RoleType.User);
-    public static readonly Role Admin = new(RoleType.Admin);
     
-    public static IEnumerable<Role> All =>  [User, Admin];
-
-    public bool IsUser
-        => Value == RoleType.User;
-    public bool IsAdmin
-        => Value == RoleType.Admin;
+    public bool IsUser => Value == RoleType.User;
+    public bool IsAdmin => Value == RoleType.Admin;
 
     public override string ToString()
         => Value.ToString();
+
 
     public static implicit operator string(Role role)
         => role.Value.ToString();

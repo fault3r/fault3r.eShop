@@ -16,12 +16,10 @@ public sealed record Email : ValueObject<string>
         if (string.IsNullOrWhiteSpace(value))
             throw new MissingEmailAddressException();
 
-        if (!IsValid(value))
+        if (!IsValid(value.Trim()))
             throw new InvalidEmailAddressException(value);
 
-        var normalized = Normalize(value);
-
-        Value = normalized;
+        Value = Normalize(value);
     }
 
     private static string Normalize(string value)
