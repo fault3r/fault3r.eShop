@@ -14,7 +14,7 @@ public static class SerilogExtensions
 {
     public static IHostBuilder AddSerilogLogging(this IHostBuilder hostBuilder)
     {
-        return hostBuilder.UseSerilog((context, config) =>
+        hostBuilder.UseSerilog((context, config) =>
         {
             var setting = context.Configuration
                 .GetSection($"Logging:{nameof(SerilogSetting)}")
@@ -39,5 +39,7 @@ public static class SerilogExtensions
                     config.AddSerilog();
                 });
             });
+
+        return hostBuilder;
     }
 }

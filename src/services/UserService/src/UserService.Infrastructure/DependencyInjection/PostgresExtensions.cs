@@ -3,10 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Npgsql;
-using Polly;
 using UserService.Infrastructure.Exceptions.DependencyInjection;
-using UserService.Infrastructure.Exceptions.Persistence;
 using UserService.Infrastructure.Persistence;
 using UserService.Infrastructure.Settings;
 
@@ -40,29 +37,6 @@ public static class PostgresExtensions
             });
         });
 
-        TestConnection(connectionString);
-
         return services;
-    }
-
-    private static void TestConnection(string connectionString)
-    {
-        var retryPolicy = Policy
-            .Handle<NpgsqlException>()
-            .WaitAndRetry(
-                retryCount: 3,
-                sleepDurationProvider:
-                    attempt => TimeSpan.FromSeconds(Math.Pow(2, attempt))
-            );
-
-        try
-        {
-            retryPolicy.Execute(() =>
-            {
-                using var connection = new NpgsqlConnection(connectionString);
-                connection.Open();
-            });
-        }
-        catch { throw new PostgresConnectionException(); }
     }
 }

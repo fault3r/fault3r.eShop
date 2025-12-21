@@ -14,23 +14,27 @@ public sealed class EmailTemplateResolver : IEmailTemplateResolver
         if (string.IsNullOrWhiteSpace(templatesPath))
             throw new MissingTemplatesPathException();
 
-        SeedTemplates(templatesPath);
-    }    
-    
-    private void  SeedTemplates(string templatesPath)
-    {
-        Templates.Add(
-            key: EmailTemplateType.Welcome,
-            value: Path.Combine(templatesPath, $"{nameof(EmailTemplateType.Welcome)}.cshtml")
-        );
+        var enumValues = Enum.GetValues<EmailTemplateType>();
+
+        foreach (var item in enumValues)
+        {
+            Templates.Add(
+                key: item,
+                value: Path.Combine(templatesPath, $"{item}.cshtml")
+            );
+        }
     }
 
     public async Task<string> ResolveAsync(
         EmailTemplateType templateType,
         CancellationToken cancellationToken = default)
     {
-        var templatePath = Templates[templateType];
-        return await File.ReadAllTextAsync(templatePath, cancellationToken);
+        try
+        {
+            var templatePath = Templates[templateType];
+            return await File.ReadAllTextAsync(templatePath, cancellationToken);
+        }
+        catch { throw new EmailTemplateResolveException(); }
     }
 
     public async Task<string> GetWelcome(CancellationToken cancellationToken = default)

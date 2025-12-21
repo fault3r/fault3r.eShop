@@ -6,7 +6,6 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using UserService.Application.Services.EmailService;
 using UserService.Infrastructure.Exceptions.DependencyInjection;
-using UserService.Infrastructure.Exceptions.Services.EmailService;
 using UserService.Infrastructure.Services.EmailService;
 using UserService.Infrastructure.Settings;
 
@@ -19,7 +18,7 @@ public static class FluentEmailExtensions
         IConfiguration configuration)
     {
         var rootPath = configuration[$"{nameof(AppSetting)}:RootPath"]
-            ?? throw new MissingRootPathException();
+            ?? throw new MissingAppSettingException();
 
         var setting = configuration
             .GetSection(nameof(FluentEmailSetting))
