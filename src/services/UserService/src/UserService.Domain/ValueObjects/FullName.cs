@@ -1,6 +1,7 @@
 
 using System;
 using UserService.Domain.Abstractions;
+using UserService.Domain.Exceptions;
 using UserService.Domain.Exceptions.ValueObjects.FullName;
 
 namespace UserService.Domain.ValueObjects;
@@ -15,47 +16,30 @@ public sealed record FullName : ValueObject<string>
     {
         if (string.IsNullOrWhiteSpace(value))
             throw new MissingFullNameException();
-        
-        var normalized = Normalize(value);   
-        var parts = normalized.Split(' ', StringSplitOptions.RemoveEmptyEntries);
 
-        if (parts.Length < 2)
-            throw new InvalidFullNameException(normalized);
+        value = value.Trim();
 
-        var normalizedFirstName = parts[0];
-        var normalizedLastName = string.Join(" ", parts.Skip(1));
-        if (!IsValid(normalizedFirstName) || !IsValid(normalizedLastName))
-            throw new InvalidFullNameException(normalized);
+        if (!IsValid(value))
+            throw new InvalidFullNameException(value);
 
-        FirstName = normalizedFirstName;
-        LastName = normalizedLastName;
-        Value =  $"{FirstName} {LastName}";
-    }
+        var parts = value.Split(' ', StringSplitOptions.RemoveEmptyEntries);
 
-    private FullName(string firstName, string lastName)
-    {
-        if (string.IsNullOrWhiteSpace(firstName) || string.IsNullOrWhiteSpace(lastName))
-            throw new MissingFullNameException();
-
-        var normalizedFirstName = Normalize(firstName);
-        var normalizedLastName = Normalize(lastName);
-
-        if (!IsValid(normalizedFirstName) || !IsValid(normalizedLastName))
-            throw new InvalidFullNameException($"{normalizedFirstName} {normalizedLastName}");
-
-        FirstName = normalizedFirstName;
-        LastName = normalizedLastName;
+        FirstName = parts[0];
+        LastName = string.Join(" ", parts.Skip(1));
         Value = $"{FirstName} {LastName}";
     }
 
-    private static string Normalize(string value)
-        => value.Trim();
-
     private static bool IsValid(string value)
-        => value.Length > 1 && value.Length < 51;
+    {
+        if (value.Length < 2 || value.Length > 99)
+            return false;
 
-    public static FullName From(string firstName, string lastName)
-        => new(firstName, lastName);
+        var parts = value.Split(' ', StringSplitOptions.RemoveEmptyEntries);
+        if (parts.Length < 2)
+            return false;
+
+        return true;
+    }
 
     public static FullName Parse(string value)
         => new(value);
@@ -67,7 +51,7 @@ public sealed record FullName : ValueObject<string>
             fullName = new(value);
             return true;
         }
-        catch
+        catch (DomainException)
         {
             fullName = null;
             return false;

@@ -2,6 +2,7 @@
 using System;
 using System.Net.Mail;
 using UserService.Domain.Abstractions;
+using UserService.Domain.Exceptions;
 using UserService.Domain.Exceptions.ValueObjects.Email;
 
 namespace UserService.Domain.ValueObjects;
@@ -15,23 +16,23 @@ public sealed record Email : ValueObject<string>
         if (string.IsNullOrWhiteSpace(value))
             throw new MissingEmailAddressException();
 
-        var normalized = Normalize(value);
+        if (!IsValid(value))
+            throw new InvalidEmailAddressException(value);
 
-        if (!IsValid(normalized))
-            throw new InvalidEmailAddressException(normalized);
+        var normalized = Normalize(value);
 
         Value = normalized;
     }
 
     private static string Normalize(string value)
     {
-        var trimmed = value.Trim();
+        value = value.Trim();
 
-        var parts = trimmed.Split('@');
-        if (parts.Length != 2)
-            return trimmed.ToLowerInvariant();
+        var atIndex = value.IndexOf('@');
+        var local = value[..atIndex];
+        var domain = value[(atIndex + 1)..];
 
-        return $"{parts[0]}@{parts[1].ToLowerInvariant()}";
+        return $"{local}@{domain.ToLowerInvariant()}";
     }
 
     private static bool IsValid(string value)
@@ -47,7 +48,7 @@ public sealed record Email : ValueObject<string>
             email = new(value);
             return true;
         }
-        catch
+        catch (DomainException)
         {
             email = null;
             return false;
