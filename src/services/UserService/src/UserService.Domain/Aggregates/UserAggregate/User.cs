@@ -105,22 +105,13 @@ public class User : AggregateRoot<User, Identity>
         RaiseEvent(new UserRoleChangedEvent(Id, Email, Role));
     }
 
-    public void Activate()
+    public void ChangeStatus(Status newStatus)
     {
-        if (Status.IsActive)
-            return;
+        if (newStatus is null)
+            throw new MissingStatusException();
 
-        Status = Status.Active;
-        RaiseEvent(new UserActivatedEvent(Id, Email));
-    }
-
-    public void Lock()
-    {
-        if (Status.IsLocked)
-            return;
-
-        Status = Status.Locked;
-        RaiseEvent(new UserLockedEvent(Id, Email));
+        Status = newStatus;
+        RaiseEvent(new UserStatusChangedEvent(Id, Email, Status));
     }
 
     // EFCore

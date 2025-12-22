@@ -12,7 +12,7 @@ public abstract class AggregateRoot<T, TId>
     private readonly List<IDomainEvent> domainEvents = [];
 
     public IReadOnlyCollection<IDomainEvent> DomainEvents
-        => domainEvents.AsReadOnly();    
+        => [.. domainEvents];
 
     protected AggregateRoot(TId id) : base(id) { }
 
