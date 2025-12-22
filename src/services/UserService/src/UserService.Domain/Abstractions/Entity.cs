@@ -5,7 +5,7 @@ using UserService.Domain.Interfaces;
 
 namespace UserService.Domain.Abstractions;
 
-public abstract class Entity<T, TId>
+public abstract class Entity<T, TId> 
     : IEquatable<T>, IEntity, IEntity<TId>
     where T : Entity<T, TId>
 {
@@ -19,17 +19,15 @@ public abstract class Entity<T, TId>
         Id = id;
     }
 
-    public override string ToString()
-        => $"{Id}";
+    public override string ToString() => $"{Id}";
 
     public override bool Equals(object? obj)
         => obj is T other && Equals(other);
 
     public bool Equals(T? other)
     {
-        if (other is null) return false;
         if (ReferenceEquals(this, other)) return true;
-        if (GetType() != other.GetType()) return false;
+        if (other is null) return false;
 
         return EqualityComparer<TId>.Default.Equals(Id, other.Id);
     }
@@ -38,7 +36,12 @@ public abstract class Entity<T, TId>
         => HashCode.Combine(GetType(), Id);
 
     public static bool operator ==(Entity<T, TId>? left, Entity<T, TId>? right)
-        => left?.Equals(right) ?? right is null;
+    {
+        if (ReferenceEquals(left, right)) return true;
+        if (left is null || right is null) return false;
+
+        return left.Equals((T)right);
+    }
 
     public static bool operator !=(Entity<T, TId>? left, Entity<T, TId>? right)
         => !(left == right);
