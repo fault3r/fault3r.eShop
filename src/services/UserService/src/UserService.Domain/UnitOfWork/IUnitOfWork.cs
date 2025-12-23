@@ -7,9 +7,9 @@ namespace UserService.Domain.UnitOfWork;
 
 public interface IUnitOfWork
 {
-    IOutbox Outbox { get; }
-
     Task<int> CommitAsync(CancellationToken cancellationToken = default);
+    
+    IOutbox Outbox { get; }
 
     IUserRepository UserRepository { get; }
 }

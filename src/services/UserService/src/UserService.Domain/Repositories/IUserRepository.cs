@@ -7,10 +7,9 @@ namespace UserService.Domain.Repositories;
 
 public interface IUserRepository
 {
+    Task CreateAsync(User user, CancellationToken cancellationToken = default);
     Task<User?> GetByIdAsync(Identity id, CancellationToken cancellationToken = default);
     Task<User?> GetByEmailAsync(Email email, CancellationToken cancellationToken = default);
-
-    Task CreateAsync(User user, CancellationToken cancellationToken = default);
     Task UpdateAsync(User user, CancellationToken cancellationToken = default);
     Task DeleteAsync(Identity id, CancellationToken cancellationToken = default);
 }
