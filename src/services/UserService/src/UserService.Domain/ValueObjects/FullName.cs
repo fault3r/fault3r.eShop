@@ -6,11 +6,10 @@ using UserService.Domain.Exceptions.ValueObjects.FullName;
 
 namespace UserService.Domain.ValueObjects;
 
-public sealed record FullName : ValueObject<string>
+public sealed class FullName : ValueObject<FullName>
 {
-    public override string Value { get; init; }
-    public string FirstName { get; init; }
-    public string LastName { get; init; }
+    public string FirstName { get; }
+    public string LastName { get; }
 
     private FullName(string value)
     {
@@ -26,16 +25,16 @@ public sealed record FullName : ValueObject<string>
 
         FirstName = parts[0];
         LastName = string.Join(" ", parts.Skip(1));
-        Value = $"{FirstName} {LastName}";
     }
 
     private static bool IsValid(string value)
     {
-        if (value.Length < 2 || value.Length > 100)
+        if (value.Length < 1 + 1 || value.Length > 101)
             return false;
 
         var parts = value
             .Split(' ', StringSplitOptions.RemoveEmptyEntries);
+
         if (parts.Length < 2) return false;
 
         return true;
@@ -59,11 +58,17 @@ public sealed record FullName : ValueObject<string>
     }
 
     public override string ToString()
-        => Value;
+        => $"{FirstName} {LastName}";
 
     public static implicit operator string(FullName fullName)
-        => fullName.Value;
+        => fullName.ToString();
 
     public static explicit operator FullName(string value)
         => Parse(value);
+
+    protected override IEnumerable<object> GetEqualityComponents()
+    {
+        yield return FirstName;
+        yield return LastName;
+    }
 }

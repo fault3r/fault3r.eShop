@@ -6,9 +6,9 @@ using UserService.Domain.Exceptions.ValueObjects.Identity;
 
 namespace UserService.Domain.ValueObjects;
 
-public sealed record Identity : ValueObject<Guid>
+public sealed class Identity : ValueObject<Identity>
 {
-    public override Guid Value { get; init; }
+    public  Guid Value { get; }
 
     private Identity(Guid guid)
     {
@@ -61,8 +61,13 @@ public sealed record Identity : ValueObject<Guid>
         => Value.ToString("N");
 
     public static implicit operator string(Identity identity)
-        => identity.Value.ToString("N");
+        => identity.ToString();
 
     public static explicit operator Identity(string value)
         => Parse(value);
+
+    protected override IEnumerable<object> GetEqualityComponents()
+    {
+        yield return Value;
+    }
 }

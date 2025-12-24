@@ -7,9 +7,9 @@ using UserService.Domain.Exceptions.ValueObjects.Email;
 
 namespace UserService.Domain.ValueObjects;
 
-public sealed record Email : ValueObject<string>
+public sealed class Email : ValueObject<Email>
 {
-    public override string Value { get; init; }
+    public string Value { get; }
 
     private Email(string value)
     {
@@ -22,19 +22,19 @@ public sealed record Email : ValueObject<string>
         Value = Normalize(value);
     }
 
+    private static bool IsValid(string value)
+       => MailAddress.TryCreate(value, out _);
+       
     private static string Normalize(string value)
     {
         value = value.Trim();
 
         var atIndex = value.IndexOf('@');
         var local = value[..atIndex];
-        var domain = value[(atIndex + 1)..];
+        var domain = value[++atIndex..];
 
         return $"{local}@{domain.ToLowerInvariant()}";
     }
-
-    private static bool IsValid(string value)
-       => MailAddress.TryCreate(value, out _);
 
     public static Email Parse(string value)
         => new(value);
@@ -61,4 +61,9 @@ public sealed record Email : ValueObject<string>
 
     public static explicit operator Email(string value)
         => Parse(value);
+
+    protected override IEnumerable<object> GetEqualityComponents()
+    {
+        yield return Value;
+    }
 }
