@@ -3,13 +3,12 @@ using System;
 using UserService.Domain.Abstractions;
 using UserService.Domain.Exceptions;
 using UserService.Domain.Exceptions.ValueObjects.Role;
-using static UserService.Domain.ValueObjects.Role;
 
 namespace UserService.Domain.ValueObjects;
 
-public sealed record Role : ValueObject<RoleType>
+public sealed class Role : ValueObject<Role>
 {
-    public override RoleType Value { get; init; }
+    public RoleType Value { get; }
 
     public enum RoleType
     {
@@ -27,32 +26,49 @@ public sealed record Role : ValueObject<RoleType>
         if (string.IsNullOrWhiteSpace(value))
             throw new MissingRoleNameException();
 
-        value = value
-            .Trim()
-            .ToLowerInvariant();
+        value = value.Trim().ToLowerInvariant();
 
-        Value = value switch
+        var role = value switch
         {
             "user" => RoleType.User,
             "admin" => RoleType.Admin,
             _ => throw new UnsupportedRoleNameException(value),
         };
+
+        Value = role;
     }
 
     public static readonly Role User = new(RoleType.User);
     public static readonly Role Admin = new(RoleType.Admin);
 
     public static Role From(RoleType value)
-        => new(value);
+        => value switch
+        {
+            RoleType.User => User,
+            RoleType.Admin => Admin,
+            _ => throw new UnsupportedRoleNameException(value.ToString())
+        };
 
     public static Role Parse(string value)
-        => new(value);
+    {
+        if (string.IsNullOrWhiteSpace(value))
+            throw new MissingRoleNameException();
+
+        value = value.Trim().ToLowerInvariant();
+
+        return value switch
+        {
+            "user" => User,
+            "admin" => Admin,
+            _ => throw new UnsupportedRoleNameException(value)
+        };
+    }
 
     public static bool TryParse(string value, out Role? role)
     {
         try
         {
-            role = new(value);
+            role = Parse(value);
             return true;
         }
         catch (DomainException)
@@ -61,17 +77,21 @@ public sealed record Role : ValueObject<RoleType>
             return false;
         }
     }
-    
+
     public bool IsUser => Value == RoleType.User;
     public bool IsAdmin => Value == RoleType.Admin;
 
     public override string ToString()
         => Value.ToString();
 
-
     public static implicit operator string(Role role)
-        => role.Value.ToString();
+        => role.ToString();
 
     public static explicit operator Role(string value)
         => Parse(value);
+
+    protected override IEnumerable<object> GetEqualityComponents()
+    {
+        yield return Value;
+    }
 }

@@ -6,9 +6,9 @@ using UserService.Domain.Exceptions.ValueObjects.PasswordHash;
 
 namespace UserService.Domain.ValueObjects;
 
-public sealed record PasswordHash : ValueObject<string>
+public sealed class PasswordHash : ValueObject<PasswordHash>
 {
-    public override string Value { get; init; }
+    public string Value { get; }
 
     private PasswordHash(string value)
     {
@@ -51,4 +51,9 @@ public sealed record PasswordHash : ValueObject<string>
 
     public static explicit operator PasswordHash(string value)
         => Parse(value);
+
+    protected override IEnumerable<object> GetEqualityComponents()
+    {
+        yield return Value;
+    }
 }
