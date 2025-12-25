@@ -1,13 +1,13 @@
 
 using System;
-using System.Net.Mail;
+using System.Text.RegularExpressions;
 using UserService.Domain.Abstractions;
-using UserService.Domain.Exceptions;
+using UserService.Domain.Common;
 using UserService.Domain.Exceptions.ValueObjects.Email;
 
 namespace UserService.Domain.ValueObjects;
 
-public sealed class Email : ValueObject<Email>
+public sealed partial class Email : ValueObject<Email>
 {
     public string Value { get; }
 
@@ -23,8 +23,8 @@ public sealed class Email : ValueObject<Email>
     }
 
     private static bool IsValid(string value)
-       => MailAddress.TryCreate(value, out _);
-       
+       => EmailRegex().IsMatch(value);
+
     private static string Normalize(string value)
     {
         value = value.Trim();
@@ -39,17 +39,17 @@ public sealed class Email : ValueObject<Email>
     public static Email From(string value)
         => new(value);
 
-    public static bool TryFrom(string value, out Email? email)
+    public static Result<Email> TryFrom(string value, out Email? email)
     {
         try
         {
             email = new(value);
-            return true;
+            return Result<Email>.Success(email);
         }
-        catch (DomainException)
+        catch (EmailException ex)
         {
             email = null;
-            return false;
+            return Result<Email>.Failure(ex.Message);
         }
     }
 
@@ -66,4 +66,8 @@ public sealed class Email : ValueObject<Email>
     {
         yield return Value;
     }
+
+    [GeneratedRegex(@"^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$",
+        RegexOptions.Compiled | RegexOptions.CultureInvariant)]
+    private static partial Regex EmailRegex();
 }
