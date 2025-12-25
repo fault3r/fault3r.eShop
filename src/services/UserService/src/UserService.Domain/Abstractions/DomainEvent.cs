@@ -6,17 +6,13 @@ namespace UserService.Domain.Abstractions;
 
 public abstract record DomainEvent : IDomainEvent
 {
-    public Guid EventId { get; init; }
-    public DateTime OccurredOn { get; init; }
+    public Guid EventId { get; }
+    public DateTime OccurredOn { get; }
 
-    protected DomainEvent(
-        Guid? eventId = null, DateTime? occurredOn = null)
+    protected DomainEvent()
     {
-        EventId = eventId
-            ?? Guid.NewGuid();
-
-        OccurredOn = occurredOn
-            ?? DateTime.UtcNow;
+        EventId = Guid.NewGuid();
+        OccurredOn = DateTime.UtcNow;
     }
 
     public override string ToString()

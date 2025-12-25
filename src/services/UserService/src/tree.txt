@@ -1,0 +1,282 @@
+.
+├── tree.txt
+├── UserService.Api
+│   ├── appsettings.Development.json
+│   ├── appsettings.json
+│   ├── bin
+│   │   └── Debug
+│   │       └── net8.0
+│   │           ├── cs
+│   │           ├── de
+│   │           ├── es
+│   │           ├── fr
+│   │           ├── it
+│   │           ├── ja
+│   │           ├── ko
+│   │           ├── pl
+│   │           ├── pt-BR
+│   │           ├── ru
+│   │           ├── runtimes
+│   │           │   └── browser
+│   │           │       └── lib
+│   │           │           └── net8.0
+│   │           ├── tr
+│   │           ├── zh-Hans
+│   │           └── zh-Hant
+│   ├── Controllers
+│   │   └── UserController.cs
+│   ├── DTOs
+│   │   └── User
+│   │       └── SignUpUserDto.cs
+│   ├── log20251220.txt
+│   ├── Middlewares
+│   │   ├── CrossCuttingMiddleware.cs
+│   │   └── ExceptionHandlingMiddleware.cs
+│   ├── obj
+│   │   ├── Debug
+│   │   │   └── net8.0
+│   │   │       ├── apphost
+│   │   │       ├── ref
+│   │   │       ├── refint
+│   │   │       ├── staticwebassets
+│   │   │       ├── UserService.Api.AssemblyInfo.cs
+│   │   │       ├── UserService.Api.AssemblyInfoInputs.cache
+│   │   │       ├── UserService.Api.assets.cache
+│   │   │       ├── UserService.Api.csproj.AssemblyReference.cache
+│   │   │       ├── UserService.Api.csproj.FileListAbsolute.txt
+│   │   │       ├── UserService.Api.GeneratedMSBuildEditorConfig.editorconfig
+│   │   │       └── UserService.Api.GlobalUsings.g.cs
+│   │   ├── project.assets.json
+│   │   ├── project.nuget.cache
+│   │   ├── UserService.Api.csproj.EntityFrameworkCore.targets
+│   │   ├── UserService.Api.csproj.nuget.dgspec.json
+│   │   ├── UserService.Api.csproj.nuget.g.props
+│   │   └── UserService.Api.csproj.nuget.g.targets
+│   ├── Program.cs
+│   ├── Properties
+│   │   └── launchSettings.json
+│   └── UserService.Api.csproj
+├── UserService.Application
+│   ├── bin
+│   │   └── Debug
+│   │       └── net8.0
+│   ├── Interfaces
+│   │   └── ISignUpUserService.cs
+│   ├── obj
+│   │   ├── Debug
+│   │   │   └── net8.0
+│   │   │       ├── ref
+│   │   │       ├── refint
+│   │   │       ├── UserService.Application.assets.cache
+│   │   │       ├── UserService.Application.csproj.FileListAbsolute.txt
+│   │   │       └── UserService.Application.GlobalUsings.g.cs
+│   │   ├── project.assets.json
+│   │   ├── project.nuget.cache
+│   │   ├── UserService.Application.csproj.nuget.dgspec.json
+│   │   ├── UserService.Application.csproj.nuget.g.props
+│   │   └── UserService.Application.csproj.nuget.g.targets
+│   ├── Security
+│   │   └── IPasswordHasher.cs
+│   ├── Services
+│   │   └── EmailService
+│   │       ├── EmailTemplateType.cs
+│   │       ├── IEmailBodyRenderer.cs
+│   │       ├── IEmailSender.cs
+│   │       └── IEmailTemplateResolver.cs
+│   ├── UseCases
+│   │   └── SignUpUser
+│   │       ├── SignUpUserCommand.cs
+│   │       ├── SignUpUserCommandHandler.cs
+│   │       ├── SignUpUserService.cs
+│   │       └── SignUpUserValidator.cs
+│   └── UserService.Application.csproj
+├── UserService.Domain
+│   ├── Abstractions
+│   │   ├── AggregateRoot.cs
+│   │   ├── DomainEvent.cs
+│   │   ├── Entity.cs
+│   │   └── ValueObject.cs
+│   ├── Aggregates
+│   │   └── UserAggregate
+│   │       ├── Events
+│   │       │   ├── UserCreatedEvent.cs
+│   │       │   ├── UserEmailChangedEvent.cs
+│   │       │   ├── UserFullNameChangedEvent.cs
+│   │       │   ├── UserPasswordChangedEvent.cs
+│   │       │   ├── UserRoleChangedEvent.cs
+│   │       │   └── UserStatusChangedEvent.cs
+│   │       └── User.cs
+│   ├── bin
+│   │   └── Debug
+│   │       └── net8.0
+│   ├── Common
+│   │   └── Result.cs
+│   ├── DomainServices
+│   │   └── UserDomainService.cs
+│   ├── Exceptions
+│   │   ├── Abstraction
+│   │   │   ├── AggregateRoot
+│   │   │   │   └── MissingDomainEventException.cs
+│   │   │   └── Entity
+│   │   │       └── MissingEntityIdentityException.cs
+│   │   ├── Common
+│   │   │   └── Result
+│   │   │       ├── MissingResultErrorMessageException.cs
+│   │   │       └── MissingResultValueException.cs
+│   │   ├── DomainException.cs
+│   │   ├── Repositories
+│   │   │   └── MissingUserRepositoryException.cs
+│   │   └── ValueObjects
+│   │       ├── Email
+│   │       │   ├── EmailException.cs
+│   │       │   ├── InvalidEmailValueException.cs
+│   │       │   ├── MissingEmailException.cs
+│   │       │   └── MissingEmailValueException.cs
+│   │       ├── FullName
+│   │       │   ├── FullNameException.cs
+│   │       │   ├── InvalidFullNameValueException.cs
+│   │       │   ├── MissingFullNameException.cs
+│   │       │   └── MissingFullNameValueException.cs
+│   │       ├── Identity
+│   │       │   ├── EmptyIdentityValueException.cs
+│   │       │   ├── IdentityException.cs
+│   │       │   ├── InvalidIdentityValueException.cs
+│   │       │   └── MissingIdentityException.cs
+│   │       ├── PasswordHash
+│   │       │   ├── InvalidPasswordHashValueException.cs
+│   │       │   ├── MissingPasswordHashException.cs
+│   │       │   ├── MissingPasswordHashValueException.cs
+│   │       │   └── PasswordHashException.cs
+│   │       ├── Role
+│   │       │   ├── MissingRoleException.cs
+│   │       │   ├── MissingRoleValueException.cs
+│   │       │   ├── RoleException.cs
+│   │       │   └── UnsupportedRoleException.cs
+│   │       └── Status
+│   │           ├── MissingStatusException.cs
+│   │           ├── MissingStatusValueException.cs
+│   │           ├── StatusException.cs
+│   │           └── UnsupportedStatusException.cs
+│   ├── Factories
+│   │   └── UserFactory.cs
+│   ├── Interfaces
+│   │   ├── IAggregateRoot.cs
+│   │   ├── IDomainEvent.cs
+│   │   ├── IEntity.cs
+│   │   ├── IUserDomainService.cs
+│   │   └── IValueObject.cs
+│   ├── obj
+│   │   ├── Debug
+│   │   │   └── net8.0
+│   │   │       ├── ref
+│   │   │       ├── refint
+│   │   │       ├── UserService.Domain.assets.cache
+│   │   │       ├── UserService.Domain.csproj.FileListAbsolute.txt
+│   │   │       └── UserService.Domain.GlobalUsings.g.cs
+│   │   ├── project.assets.json
+│   │   ├── project.nuget.cache
+│   │   ├── UserService.Domain.csproj.nuget.dgspec.json
+│   │   ├── UserService.Domain.csproj.nuget.g.props
+│   │   └── UserService.Domain.csproj.nuget.g.targets
+│   ├── Outbox
+│   │   └── IOutbox.cs
+│   ├── Repositories
+│   │   └── IUserRepository.cs
+│   ├── UnitOfWork
+│   │   └── IUnitOfWork.cs
+│   ├── UserService.Domain.csproj
+│   └── ValueObjects
+│       ├── Email.cs
+│       ├── FullName.cs
+│       ├── Identity.cs
+│       ├── PasswordHash.cs
+│       ├── Role.cs
+│       └── Status.cs
+└── UserService.Infrastructure
+    ├── bin
+    │   └── Debug
+    │       └── net8.0
+    ├── CrossCutting
+    │   ├── CorrelationContext.cs
+    │   └── ICorrelationContext.cs
+    ├── DependencyInjection
+    │   ├── DIsExtensions.cs
+    │   ├── FluentEmailExtensions.cs
+    │   ├── PostgresExtensions.cs
+    │   └── SerilogExtensions.cs
+    ├── Exceptions
+    │   ├── CrossCutting
+    │   │   └── MissingCorrelationIdException.cs
+    │   ├── DependencyInjection
+    │   │   ├── MissingAppSettingException.cs
+    │   │   ├── MissingFluentEmailSettingException.cs
+    │   │   ├── MissingPostgresSettingException.cs
+    │   │   └── MissingSerilogSettingException.cs
+    │   ├── InfrastructureException.cs
+    │   ├── Persistence
+    │   │   ├── MissingDbContextException.cs
+    │   │   ├── MissingOutboxEventException.cs
+    │   │   ├── MissingOutboxException.cs
+    │   │   ├── MissingUserRepositoryException.cs
+    │   │   ├── PersistenceException.cs
+    │   │   └── PostgresConnectionException.cs
+    │   ├── Security
+    │   │   └── SecurityHashingException.cs
+    │   └── Services
+    │       └── EmailService
+    │           ├── EmailBodyRenderException.cs
+    │           ├── EmailSenderArgumentException.cs
+    │           ├── EmailSenderException.cs
+    │           ├── EmailTemplateResolveException.cs
+    │           ├── MissingTemplateFileException.cs
+    │           └── MissingTemplatesPathException.cs
+    ├── Messaging
+    │   └── Outbox
+    │       ├── EfOutbox.cs
+    │       ├── OutboxMessageConfiguration.cs
+    │       └── OutboxMessage.cs
+    ├── obj
+    │   ├── Debug
+    │   │   └── net8.0
+    │   │       ├── ref
+    │   │       ├── refint
+    │   │       ├── UserService.Infrastructure.assets.cache
+    │   │       ├── UserService.Infrastructure.csproj.FileListAbsolute.txt
+    │   │       └── UserService.Infrastructure.GlobalUsings.g.cs
+    │   ├── project.assets.json
+    │   ├── project.nuget.cache
+    │   ├── UserService.Infrastructure.csproj.EntityFrameworkCore.targets
+    │   ├── UserService.Infrastructure.csproj.nuget.dgspec.json
+    │   ├── UserService.Infrastructure.csproj.nuget.g.props
+    │   └── UserService.Infrastructure.csproj.nuget.g.targets
+    ├── Persistence
+    │   ├── Configurations
+    │   │   └── UserConfiguration.cs
+    │   ├── EfDbContext.cs
+    │   └── Migrations
+    │       ├── 20251218104908_DatabaseInitialMigration.cs
+    │       ├── 20251218104908_DatabaseInitialMigration.Designer.cs
+    │       └── EfDbContextModelSnapshot.cs
+    ├── Repositories
+    │   └── EfUserRepository.cs
+    ├── Security
+    │   └── Argon2PasswordHasher.cs
+    ├── Services
+    │   └── EmailService
+    │       ├── FluentEmailRazorBodyRenderer.cs
+    │       ├── FluentEmailSender.cs
+    │       ├── RazorEmailTemplateResolver.cs
+    │       └── Templates
+    │           ├── Models
+    │           │   └── WelcomeModel.cs
+    │           └── Welcome.cshtml
+    ├── Settings
+    │   ├── AppSetting.cs
+    │   ├── FluentEmailSetting.cs
+    │   ├── PostgresSetting.cs
+    │   └── SerilogSetting.cs
+    ├── UnitOfWork
+    │   └── EfUnitOfWork.cs
+    └── UserService.Infrastructure.csproj
+
+114 directories, 166 files

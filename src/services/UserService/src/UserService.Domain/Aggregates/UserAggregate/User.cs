@@ -53,7 +53,7 @@ public sealed class User : AggregateRoot<User, Identity>
         Status status)
     {
         var user = new User(id, email, passwordHash, fullName, role, status);
-        user.RaiseEvent(new UserCreatedEvent(user.Id, user.Email));
+        user.RaiseEvent(new UserCreatedEvent(user.Id, user.Email, user.FullName));
         return user;
     }
 

@@ -33,7 +33,7 @@ public sealed class OutboxMessage
         CorrelationId = correlationId;
     }
 
-    public static OutboxMessage FromEvent(
+    public static OutboxMessage FromDomainEvent(
         IDomainEvent domainEvent,
         string correlationId)
     {

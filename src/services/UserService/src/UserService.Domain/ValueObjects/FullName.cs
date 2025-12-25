@@ -2,7 +2,6 @@
 using System;
 using UserService.Domain.Abstractions;
 using UserService.Domain.Common;
-using UserService.Domain.Exceptions;
 using UserService.Domain.Exceptions.ValueObjects.FullName;
 
 namespace UserService.Domain.ValueObjects;
