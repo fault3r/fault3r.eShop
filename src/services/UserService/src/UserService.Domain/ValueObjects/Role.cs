@@ -67,7 +67,7 @@ public sealed class Role : ValueObject<Role>
     public bool IsAdmin => Value == RoleType.Admin;
 
     public override string ToString()
-        => Value.ToString();
+        => Value.ToString().ToLowerInvariant();
 
     public static implicit operator string(Role role)
         => role.ToString();

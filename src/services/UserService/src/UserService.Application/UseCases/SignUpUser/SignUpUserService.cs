@@ -60,15 +60,15 @@ public sealed class SignUpUserService : ISignUpUserService
 
             vFullName = FullName.From(fullName);
 
-            user = UserFactory.CreateNew(vEmail, vPasswordHash, vFullName);
+            user = UserFactory.Create(vEmail, vPasswordHash, vFullName);
 
             _logger.LogInformation("Instance created successfully..");
         }
-        catch (DomainException exception)
+        catch (DomainException ex)
         {
-            _logger.LogWarning("Domain validation failed with the following exception: {Exception}!", exception.Message);
+            _logger.LogWarning("Domain validation failed with the following exception: {Exception}!", ex.Message);
 
-            return Result<User>.Failure($"Sign up failed: {exception.Message}!");
+            return Result<User>.Failure($"Sign up failed: {ex.Message}!");
         }
 
         _logger.LogInformation("Checking email exists..");

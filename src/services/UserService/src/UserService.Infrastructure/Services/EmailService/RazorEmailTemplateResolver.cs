@@ -5,38 +5,38 @@ using UserService.Infrastructure.Exceptions.Services.EmailService;
 
 namespace UserService.Infrastructure.Services.EmailService;
 
-public sealed class EmailTemplateResolver : IEmailTemplateResolver
+public sealed class RazorEmailTemplateResolver : IEmailTemplateResolver
 {
     private readonly Dictionary<EmailTemplateType, string> templates = [];
 
-    public EmailTemplateResolver(string templatesPath)
+    public RazorEmailTemplateResolver(string templatesPath)
     {
         if (string.IsNullOrWhiteSpace(templatesPath))
             throw new MissingTemplatesPathException();
 
-        var values = Enum.GetValues<EmailTemplateType>();
+        var allTemplates = Enum.GetValues<EmailTemplateType>();
 
-        foreach (var item in values)
+        foreach (var template in allTemplates)
         {
-            var path = Path.Combine(templatesPath, $"{item}.cshtml");
+            var path = Path.Combine(templatesPath, $"{template}.cshtml");
 
             if (!File.Exists(path))
                 throw new MissingTemplateFileException();
 
             templates.Add(
-                key: item,
+                key: template,
                 value: path
             );
         }
     }
 
     public async Task<string> ResolveAsync(
-        EmailTemplateType templateType,
+        EmailTemplateType emailTemplateType,
         CancellationToken cancellationToken = default)
     {
         try
         {
-            var path = templates[templateType];
+            var path = templates[emailTemplateType];
             return await File.ReadAllTextAsync(path, cancellationToken);
         }
         catch { throw new EmailTemplateResolveException(); }

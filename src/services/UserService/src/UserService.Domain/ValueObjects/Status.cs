@@ -72,7 +72,7 @@ public sealed class Status : ValueObject<Status>
     public bool IsActive => Value == StatusType.Active;
 
     public override string ToString()
-        => Value.ToString();
+        => Value.ToString().ToLowerInvariant();
 
     public static implicit operator string(Status status)
         => status.ToString();

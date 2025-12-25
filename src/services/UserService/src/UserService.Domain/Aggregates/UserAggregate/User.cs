@@ -11,7 +11,7 @@ using UserService.Domain.ValueObjects;
 
 namespace UserService.Domain.Aggregates.UserAggregate;
 
-public class User : AggregateRoot<User, Identity>
+public sealed class User : AggregateRoot<User, Identity>
 {
     public Email Email { get; private set; }
     public PasswordHash PasswordHash { get; private set; }

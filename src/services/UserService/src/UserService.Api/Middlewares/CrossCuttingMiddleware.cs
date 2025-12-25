@@ -24,8 +24,7 @@ public class CrossCuttingMiddleware
         HttpContext context,
         ICorrelationContext correlationContext)
     {
-        if (correlationContext is null)
-            throw new ArgumentNullException(nameof(correlationContext));
+        ArgumentNullException.ThrowIfNull(correlationContext);
 
         var correlationId = context.Request.Headers[correlationHeader]
             .FirstOrDefault()
@@ -36,7 +35,7 @@ public class CrossCuttingMiddleware
         context.Items[correlationHeader] = correlationId;
         context.Response.Headers[correlationHeader] = correlationId;
 
-        using (LogContext.PushProperty("CorrelationId", correlationId))
+        using (LogContext.PushProperty("CorrelationId", correlationContext.CorrelationId))
         {
             Log.Information(
                 "Incoming request {Method} {Path}.", context.Request.Method, context.Request.Path);

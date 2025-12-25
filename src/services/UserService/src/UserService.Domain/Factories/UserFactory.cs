@@ -9,7 +9,7 @@ namespace UserService.Domain.Factories;
 
 public sealed class UserFactory
 {
-    public static User CreateNew(Email email, PasswordHash passwordHash, FullName fullName)
+    public static User Create(Email email, PasswordHash passwordHash, FullName fullName)
     {
         var defaultId = Identity.New();
         var defaultRole = Role.User;
@@ -25,20 +25,20 @@ public sealed class UserFactory
         );
     }
 
-    public static Result<User> TryCreateNew(Email email, PasswordHash passwordHash, FullName fullName)
+    public static Result<User> TryCreate(Email email, PasswordHash passwordHash, FullName fullName)
     {
         try
         {
-            var user = CreateNew(email, passwordHash, fullName);
+            var user = Create(email, passwordHash, fullName);
             return Result<User>.Success(user);
         }
-        catch (DomainException exception)
+        catch (DomainException ex)
         {
-            return Result<User>.Failure(exception.Message);
+            return Result<User>.Failure(ex.Message);
         }
     }
 
-    public static User CreateFrom(
+    public static User From(
         Identity id,
         Email email,
         PasswordHash passwordHash,

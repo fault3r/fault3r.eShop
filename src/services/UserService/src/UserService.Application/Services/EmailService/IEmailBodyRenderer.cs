@@ -6,7 +6,7 @@ namespace UserService.Application.Services.EmailService;
 public interface IEmailBodyRenderer
 {
     Task<string> RenderAsync(
-        string templatePath,
+        string template,
         object model,
         CancellationToken cancellationToken = default
     );
