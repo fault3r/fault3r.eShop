@@ -53,12 +53,12 @@ public sealed class SignUpUserService : ISignUpUserService
         FullName vFullName;
         try
         {
-            vEmail = Email.Parse(email);
+            vEmail = Email.From(email);
 
             string hashed = _hasher.Hash(password);
-            vPasswordHash = PasswordHash.Parse(hashed);
+            vPasswordHash = PasswordHash.From(hashed);
 
-            vFullName = FullName.Parse(fullName);
+            vFullName = FullName.From(fullName);
 
             user = UserFactory.CreateNew(vEmail, vPasswordHash, vFullName);
 

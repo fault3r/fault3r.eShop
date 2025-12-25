@@ -4,7 +4,6 @@ using System.Security.Cryptography;
 using System.Text;
 using Konscious.Security.Cryptography;
 using UserService.Application.Security;
-using UserService.Domain.ValueObjects;
 using UserService.Infrastructure.Exceptions.Security;
 
 namespace UserService.Infrastructure.Security;
@@ -30,7 +29,7 @@ public sealed class Argon2PasswordHasher : IPasswordHasher
             var hashString =
                 $"$argon2id$v=19$m=65536,t=3,p=4${Convert.ToBase64String(salt)}${Convert.ToBase64String(hashBytes)}";
 
-            return PasswordHash.Parse(hashString);
+            return hashString;
         }
         catch
         {

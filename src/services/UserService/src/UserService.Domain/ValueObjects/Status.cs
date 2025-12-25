@@ -1,15 +1,14 @@
 
 using System;
 using UserService.Domain.Abstractions;
-using UserService.Domain.Exceptions;
+using UserService.Domain.Common;
 using UserService.Domain.Exceptions.ValueObjects.Status;
-using static UserService.Domain.ValueObjects.Status;
 
 namespace UserService.Domain.ValueObjects;
 
-public sealed record Status : ValueObject<StatusType>
+public sealed class Status : ValueObject<Status>
 {
-    public override StatusType Value { get; init; }
+    public StatusType Value { get; }
 
     public enum StatusType
     {
@@ -30,8 +29,8 @@ public sealed record Status : ValueObject<StatusType>
 
         value = value.Trim();
 
-        if (!IsValid(value, out StatusType status))
-            throw new UnsupportedStatusValueException(value);
+        if (!TryParse(value, out StatusType status))
+            throw new UnsupportedStatusException(value);
 
         Value = status;
     }
@@ -40,26 +39,31 @@ public sealed record Status : ValueObject<StatusType>
     public static readonly Status Pending = new(StatusType.Pending);
     public static readonly Status Active = new(StatusType.Active);
 
-    private static bool IsValid(string value, out StatusType statusType)
-        => Enum.TryParse(value, ignoreCase: true, out statusType);
+    private static bool TryParse(string value, out StatusType statusType)
+    {
+        if (!Enum.TryParse(value, ignoreCase: true, out statusType))
+            return false;
+
+        return Enum.IsDefined(typeof(StatusType), statusType);
+    }
 
     public static Status From(StatusType statusType)
         => new(statusType);
 
-    public static Status Parse(string value)
+    public static Status From(string value)
         => new(value);
 
-    public static bool TryParse(string value, out Status? status)
+    public static Result<Status> TryFrom(string value, out Status? status)
     {
         try
         {
             status = new(value);
-            return true;
+            return Result<Status>.Success(status);
         }
-        catch (DomainException)
+        catch (StatusException ex)
         {
             status = null;
-            return false;
+            return Result<Status>.Failure(ex.Message);
         }
     }
 
@@ -71,8 +75,13 @@ public sealed record Status : ValueObject<StatusType>
         => Value.ToString();
 
     public static implicit operator string(Status status)
-        => status.Value.ToString();
+        => status.ToString();
 
     public static explicit operator Status(string value)
-        => Parse(value);
+        => From(value);
+
+    protected override IEnumerable<object> GetEqualityComponents()
+    {
+        yield return Value;
+    }
 }

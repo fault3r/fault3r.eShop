@@ -1,7 +1,7 @@
 
 using System;
 using UserService.Domain.Abstractions;
-using UserService.Domain.Exceptions;
+using UserService.Domain.Common;
 using UserService.Domain.Exceptions.ValueObjects.Role;
 
 namespace UserService.Domain.ValueObjects;
@@ -24,15 +24,17 @@ public sealed class Role : ValueObject<Role>
     private Role(string value)
     {
         if (string.IsNullOrWhiteSpace(value))
-            throw new MissingRoleNameException();
+            throw new MissingRoleValueException();
 
-        value = value.Trim().ToLowerInvariant();
+        value = value
+            .Trim()
+            .ToLowerInvariant();
 
         var role = value switch
         {
             "user" => RoleType.User,
             "admin" => RoleType.Admin,
-            _ => throw new UnsupportedRoleNameException(value),
+            _ => throw new UnsupportedRoleException(value),
         };
 
         Value = role;
@@ -42,39 +44,22 @@ public sealed class Role : ValueObject<Role>
     public static readonly Role Admin = new(RoleType.Admin);
 
     public static Role From(RoleType value)
-        => value switch
-        {
-            RoleType.User => User,
-            RoleType.Admin => Admin,
-            _ => throw new UnsupportedRoleNameException(value.ToString())
-        };
+        => new(value);
 
-    public static Role Parse(string value)
-    {
-        if (string.IsNullOrWhiteSpace(value))
-            throw new MissingRoleNameException();
+    public static Role From(string value)
+        => new(value);
 
-        value = value.Trim().ToLowerInvariant();
-
-        return value switch
-        {
-            "user" => User,
-            "admin" => Admin,
-            _ => throw new UnsupportedRoleNameException(value)
-        };
-    }
-
-    public static bool TryParse(string value, out Role? role)
+    public static Result<Role> TryFrom(string value, out Role? role)
     {
         try
         {
-            role = Parse(value);
-            return true;
+            role = From(value);
+            return Result<Role>.Success(role);
         }
-        catch (DomainException)
+        catch (RoleException ex)
         {
             role = null;
-            return false;
+            return Result<Role>.Failure(ex.Message);
         }
     }
 
@@ -88,7 +73,7 @@ public sealed class Role : ValueObject<Role>
         => role.ToString();
 
     public static explicit operator Role(string value)
-        => Parse(value);
+        => From(value);
 
     protected override IEnumerable<object> GetEqualityComponents()
     {

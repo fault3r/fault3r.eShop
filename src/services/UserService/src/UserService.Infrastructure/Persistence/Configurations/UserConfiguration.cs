@@ -30,7 +30,7 @@ public sealed class UserConfiguration : IEntityTypeConfiguration<User>
             .HasColumnName("Email")
             .HasConversion(
                 email => email.Value,
-                value => Email.Parse(value)
+                value => Email.From(value)
             )
             .IsRequired();
 
@@ -38,14 +38,12 @@ public sealed class UserConfiguration : IEntityTypeConfiguration<User>
             .HasColumnName("Password")
             .HasConversion(
                 passwordHash => passwordHash.Value,
-                value => PasswordHash.Parse(value)
+                value => PasswordHash.From(value)
             )
             .IsRequired();
 
         builder.OwnsOne(p => p.FullName, fullName =>
         {
-            fullName.Ignore(p => p.Value);
-             
             fullName.Property(p => p.FirstName)
                 .HasColumnName("FirstName")
                 .IsRequired();
@@ -61,7 +59,7 @@ public sealed class UserConfiguration : IEntityTypeConfiguration<User>
             .HasColumnName("Role")
             .HasConversion(
                 role => role.Value.ToString(),
-                value => Role.Parse(value)
+                value => Role.From(value)
             )
             .IsRequired();                 
 
@@ -69,7 +67,7 @@ public sealed class UserConfiguration : IEntityTypeConfiguration<User>
             .HasColumnName("Status")
             .HasConversion(
                 status => status.Value.ToString(),
-                value => Status.Parse(value)
+                value => Status.From(value)
             )
             .IsRequired();           
 

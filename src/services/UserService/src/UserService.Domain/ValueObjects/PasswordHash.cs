@@ -2,7 +2,6 @@
 using System;
 using UserService.Domain.Abstractions;
 using UserService.Domain.Common;
-using UserService.Domain.Exceptions;
 using UserService.Domain.Exceptions.ValueObjects.PasswordHash;
 
 namespace UserService.Domain.ValueObjects;
@@ -27,10 +26,10 @@ public sealed class PasswordHash : ValueObject<PasswordHash>
     private static bool IsValid(string value)
         => value.StartsWith("$argon2id$") && value.Length > 60;
 
-    public static PasswordHash Parse(string value)
+    public static PasswordHash From(string value)
         => new(value);
 
-    public static Result<PasswordHash> TryParse(string value, out PasswordHash? passwordHash)
+    public static Result<PasswordHash> TryFrom(string value, out PasswordHash? passwordHash)
     {
         try
         {
@@ -51,7 +50,7 @@ public sealed class PasswordHash : ValueObject<PasswordHash>
         => hash.Value;
 
     public static explicit operator PasswordHash(string value)
-        => Parse(value);
+        => From(value);
 
     protected override IEnumerable<object> GetEqualityComponents()
     {

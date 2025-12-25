@@ -2,7 +2,6 @@
 using System;
 using UserService.Domain.Abstractions;
 using UserService.Domain.Common;
-using UserService.Domain.Exceptions;
 using UserService.Domain.Exceptions.ValueObjects.Identity;
 
 namespace UserService.Domain.ValueObjects;
@@ -41,10 +40,10 @@ public sealed class Identity : ValueObject<Identity>
     public static Identity From(Guid guid)
         => new(guid);
 
-    public static Identity Parse(string value)
+    public static Identity From(string value)
         => new(value);
 
-    public static Result<Identity> TryParse(string value, out Identity? identity)
+    public static Result<Identity> TryFrom(string value, out Identity? identity)
     {
         try
         {
@@ -65,7 +64,7 @@ public sealed class Identity : ValueObject<Identity>
         => identity.ToString();
 
     public static explicit operator Identity(string value)
-        => Parse(value);
+        => From(value);
 
     protected override IEnumerable<object> GetEqualityComponents()
     {

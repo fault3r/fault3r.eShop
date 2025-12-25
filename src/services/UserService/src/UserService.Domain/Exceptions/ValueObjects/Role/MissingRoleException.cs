@@ -3,7 +3,7 @@ using System;
 
 namespace UserService.Domain.Exceptions.ValueObjects.Role;
 
-public sealed class MissingRoleException : DomainException
+public class MissingRoleException : RoleException
 {
     public MissingRoleException()
         : base("role is required"){}

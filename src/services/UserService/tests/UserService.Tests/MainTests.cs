@@ -18,6 +18,8 @@ public class MainTests
     [Fact]
     public void TestName()
     {
+        var aa = Status.From("Locked");
+        var sss = Status.From("33");
 
     }
 }
