@@ -1,8 +1,9 @@
 
 using System;
 using UserService.Domain.Interfaces;
-using UserService.Domain.Outbox;
+using UserService.Domain.Messaging;
 using UserService.Infrastructure.Exceptions.CrossCutting;
+using UserService.Infrastructure.Exceptions.Messaging.Outbox;
 using UserService.Infrastructure.Exceptions.Persistence;
 using UserService.Infrastructure.Persistence;
 
@@ -35,7 +36,7 @@ public sealed class EfOutbox : IOutbox
             throw new MissingCorrelationIdException();
 
         var messages = events
-            .Select(e => OutboxMessage.FromEvent(e, correlationId))
+            .Select(e => OutboxMessage.FromDomainEvent(e, correlationId))
             .ToList();
 
         await _dbContext.OutboxMessages

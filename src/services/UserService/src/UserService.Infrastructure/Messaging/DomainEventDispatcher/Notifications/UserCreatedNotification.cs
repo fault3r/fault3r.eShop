@@ -1,8 +1,9 @@
 
 using MediatR;
 using UserService.Domain.Aggregates.UserAggregate.Events;
+using UserService.Infrastructure.Exceptions.Messaging.Notifications;
 
-namespace UserService.Application.Messaging.Notifications;
+namespace UserService.Infrastructure.Messaging.DomainEventDispatcher.Notifications;
 
 public sealed class UserCreatedNotification : INotification
 {
@@ -14,16 +15,17 @@ public sealed class UserCreatedNotification : INotification
         string fullName)
     {
         Email = email
-            ?? throw new ArgumentNullException(nameof(email));
+            ?? throw new MissingNotificationEmailException();
 
         FullName = fullName
-            ?? throw new ArgumentNullException(nameof(fullName));
+            ?? throw new MissingNotificationFullNameException();
     }
 
     public static UserCreatedNotification FromDomainEvent(
         UserCreatedEvent @event)
     {
-        ArgumentNullException.ThrowIfNull(@event);
+        if (@event is null)
+            throw new MissingNotificationEventException();
 
         return new(@event.Email, @event.FullName);
     }

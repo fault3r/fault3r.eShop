@@ -2,7 +2,7 @@
 using System;
 using UserService.Domain.Interfaces;
 
-namespace UserService.Domain.Outbox;
+namespace UserService.Domain.Messaging;
 
 public interface IOutbox
 {

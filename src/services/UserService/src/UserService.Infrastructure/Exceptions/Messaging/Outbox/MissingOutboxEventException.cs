@@ -1,7 +1,7 @@
 
 using System;
 
-namespace UserService.Infrastructure.Exceptions.Persistence;
+namespace UserService.Infrastructure.Exceptions.Messaging.Outbox;
 
 public class MissingOutboxEventException : InfrastructureException
 {

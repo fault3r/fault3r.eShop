@@ -25,4 +25,8 @@
     <ProjectReference Include="../UserService.Domain/UserService.Domain.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Exceptions/Messaging/Notifications/" />
+  </ItemGroup>
+
 </Project>
