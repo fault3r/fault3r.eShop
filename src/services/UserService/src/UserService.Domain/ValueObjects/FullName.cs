@@ -1,6 +1,7 @@
 
 using System;
 using UserService.Domain.Abstractions;
+using UserService.Domain.Common;
 using UserService.Domain.Exceptions;
 using UserService.Domain.Exceptions.ValueObjects.FullName;
 
@@ -14,10 +15,10 @@ public sealed class FullName : ValueObject<FullName>
     private FullName(string value)
     {
         if (string.IsNullOrWhiteSpace(value))
-            throw new MissingFullNameException();
+            throw new MissingFullNameValueException();
 
         if (!IsValid(value.Trim()))
-            throw new InvalidFullNameException(value);
+            throw new InvalidFullNameValueException(value);
 
         var parts = value
             .Trim()
@@ -40,20 +41,21 @@ public sealed class FullName : ValueObject<FullName>
         return true;
     }
 
-    public static FullName Parse(string value)
+    public static FullName From(string value)
         => new(value);
 
-    public static bool TryParse(string value, out FullName? fullName)
+    public static Result<FullName> TryFrom(string value, out FullName? fullName)
     {
         try
         {
             fullName = new(value);
-            return true;
+            return Result<FullName>.Success(fullName);
+
         }
-        catch (DomainException)
+        catch (FullNameException ex)
         {
             fullName = null;
-            return false;
+            return Result<FullName>.Failure(ex.Message);
         }
     }
 
@@ -64,7 +66,7 @@ public sealed class FullName : ValueObject<FullName>
         => fullName.ToString();
 
     public static explicit operator FullName(string value)
-        => Parse(value);
+        => From(value);
 
     protected override IEnumerable<object> GetEqualityComponents()
     {

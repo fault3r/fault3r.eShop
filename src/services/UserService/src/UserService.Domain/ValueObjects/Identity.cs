@@ -1,6 +1,7 @@
 
 using System;
 using UserService.Domain.Abstractions;
+using UserService.Domain.Common;
 using UserService.Domain.Exceptions;
 using UserService.Domain.Exceptions.ValueObjects.Identity;
 
@@ -43,17 +44,17 @@ public sealed class Identity : ValueObject<Identity>
     public static Identity Parse(string value)
         => new(value);
 
-    public static bool TryParse(string value, out Identity? identity)
+    public static Result<Identity> TryParse(string value, out Identity? identity)
     {
         try
         {
             identity = new(value);
-            return true;
+            return Result<Identity>.Success(identity);
         }
-        catch (DomainException)
+        catch (IdentityException ex)
         {
             identity = null;
-            return false;
+            return Result<Identity>.Failure(ex.Message);
         }
     }
 

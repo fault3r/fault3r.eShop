@@ -1,6 +1,7 @@
 
 using System;
 using UserService.Domain.Abstractions;
+using UserService.Domain.Common;
 using UserService.Domain.Exceptions;
 using UserService.Domain.Exceptions.ValueObjects.PasswordHash;
 
@@ -29,17 +30,17 @@ public sealed class PasswordHash : ValueObject<PasswordHash>
     public static PasswordHash Parse(string value)
         => new(value);
 
-    public static bool TryParse(string value, out PasswordHash? passwordHash)
+    public static Result<PasswordHash> TryParse(string value, out PasswordHash? passwordHash)
     {
         try
         {
             passwordHash = new(value);
-            return true;
+            return Result<PasswordHash>.Success(passwordHash);
         }
-        catch (DomainException)
+        catch (PasswordHashException ex)
         {
             passwordHash = null;
-            return false;
+            return Result<PasswordHash>.Failure(ex.Message);
         }
     }
 

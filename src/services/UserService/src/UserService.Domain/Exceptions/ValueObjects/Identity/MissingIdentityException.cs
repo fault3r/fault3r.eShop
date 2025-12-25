@@ -3,7 +3,7 @@ using System;
 
 namespace UserService.Domain.Exceptions.ValueObjects.Identity;
 
-public sealed class MissingIdentityException : DomainException
+public class MissingIdentityException : IdentityException
 {
     public MissingIdentityException()
         : base("identity is required") { }

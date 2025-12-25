@@ -14,10 +14,10 @@ public sealed partial class Email : ValueObject<Email>
     private Email(string value)
     {
         if (string.IsNullOrWhiteSpace(value))
-            throw new MissingEmailAddressException();
+            throw new MissingEmailValueException();
 
         if (!IsValid(value.Trim()))
-            throw new InvalidEmailAddressException(value);
+            throw new InvalidEmailValueException(value);
 
         Value = Normalize(value);
     }
