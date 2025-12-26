@@ -4,11 +4,11 @@ using UserService.Domain.Interfaces;
 
 namespace UserService.Domain.Messaging;
 
-public interface IOutbox
+public interface IDomainOutbox
 {
     Task EnqueueAsync(
         IEnumerable<IDomainEvent> domainEvents,
         string correlationId,
         CancellationToken cancellationToken = default
-    );
+    );    
 }

@@ -3,7 +3,7 @@ using System;
 using System.Text.Json;
 using UserService.Domain.Interfaces;
 using UserService.Infrastructure.Exceptions.CrossCutting;
-using UserService.Infrastructure.Exceptions.Persistence;
+using UserService.Infrastructure.Exceptions.Messaging.Outbox;
 
 namespace UserService.Infrastructure.Messaging.Outbox;
 
@@ -33,7 +33,7 @@ public sealed class OutboxMessage
         CorrelationId = correlationId;
     }
 
-    public static OutboxMessage FromDomainEvent(
+    public static OutboxMessage FromEvent(
         IDomainEvent domainEvent,
         string correlationId)
     {

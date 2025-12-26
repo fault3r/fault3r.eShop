@@ -4,7 +4,7 @@ using UserService.Domain.Interfaces;
 
 namespace UserService.Domain.Messaging;
 
-public interface IEventDispatcher
+public interface IDomainNotification
 {
     Task DispatchAsync(
         IEnumerable<IDomainEvent> events,

@@ -1,9 +1,9 @@
 
 using System;
 using MediatR;
-using UserService.Application.Messaging.Notifications;
+using UserService.Application.Messaging.Notifications.UserAggregate;
 
-namespace UserService.Application.Messaging.NotificationHandlers;
+namespace UserService.Application.Messaging.NotificationHandlers.UserAggregate;
 
 public sealed class UserCreatedNotificationHandler
     : INotificationHandler<UserCreatedNotification>

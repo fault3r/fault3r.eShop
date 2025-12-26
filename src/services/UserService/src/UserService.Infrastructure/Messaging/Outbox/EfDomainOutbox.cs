@@ -9,11 +9,11 @@ using UserService.Infrastructure.Persistence;
 
 namespace UserService.Infrastructure.Messaging.Outbox;
 
-public sealed class EfOutbox : IOutbox
+public sealed class EfDomainOutbox : IDomainOutbox
 {
     private readonly EfDbContext _dbContext;
 
-    public EfOutbox(EfDbContext efDbContext)
+    public EfDomainOutbox(EfDbContext efDbContext)
     {
         _dbContext = efDbContext
             ?? throw new MissingDbContextException();
@@ -36,7 +36,7 @@ public sealed class EfOutbox : IOutbox
             throw new MissingCorrelationIdException();
 
         var messages = events
-            .Select(e => OutboxMessage.FromDomainEvent(e, correlationId))
+            .Select(e => OutboxMessage.FromEvent(e, correlationId))
             .ToList();
 
         await _dbContext.OutboxMessages
