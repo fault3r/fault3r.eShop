@@ -7,24 +7,24 @@ using UserService.Domain.Exceptions.ValueObjects.Identity;
 using UserService.Domain.ValueObjects;
 
 namespace UserService.Domain.Aggregates.UserAggregate.Events;
+
 public sealed record UserFullNameChangedEvent : DomainEvent
 {
-    public Identity UserId { get; init; }
-    public Email Email { get; init; }
-    public FullName NewFullName { get; init; }
+    public Identity UserId { get; }
+    public Email Email { get; }
+    public FullName NewFullName { get; }
 
     public UserFullNameChangedEvent(
         Identity userId,
         Email email,
-        FullName newFullName,
-        Guid? eventId = null,
-        DateTime? occurredOn = null)
-        : base(eventId, occurredOn)
+        FullName newFullName)
     {
         UserId = userId
             ?? throw new MissingIdentityException();
+
         Email = email
             ?? throw new MissingEmailException();
+
         NewFullName = newFullName
             ?? throw new MissingFullNameException();
     }

@@ -49,7 +49,7 @@ public static class FluentEmailExtensions
         services.AddScoped<IEmailTemplateResolver>(provider =>
         {
             var templatesPath = Path.Combine(rootPath, setting.TemplatesPath);
-            return new EmailTemplateResolver(templatesPath);
+            return new RazorEmailTemplateResolver(templatesPath);
         });
 
         services.AddScoped<IEmailBodyRenderer, FluentEmailRazorBodyRenderer>();

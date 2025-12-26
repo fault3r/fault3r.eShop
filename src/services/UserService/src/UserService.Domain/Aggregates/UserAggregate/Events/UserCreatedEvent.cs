@@ -7,6 +7,7 @@ using UserService.Domain.Exceptions.ValueObjects.Identity;
 using UserService.Domain.ValueObjects;
 
 namespace UserService.Domain.Aggregates.UserAggregate.Events;
+
 public sealed record UserCreatedEvent : DomainEvent
 {
     public Identity UserId { get; }

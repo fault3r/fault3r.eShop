@@ -66,7 +66,7 @@ public sealed class User : AggregateRoot<User, Identity>
             return;
 
         Email = newEmail;
-        RaiseEvent(new UserEmailChangedEvent(Id, Email));
+        RaiseEvent(new UserEmailChangedEvent(Id, Email, FullName));
     }
 
     public void ChangePassword(PasswordHash newPasswordHash)
@@ -78,7 +78,7 @@ public sealed class User : AggregateRoot<User, Identity>
             return;
 
         PasswordHash = newPasswordHash;
-        RaiseEvent(new UserPasswordChangedEvent(Id, Email));
+        RaiseEvent(new UserPasswordChangedEvent(Id, Email, FullName));
     }
 
     public void ChangeFullName(FullName newFullName)
@@ -102,7 +102,7 @@ public sealed class User : AggregateRoot<User, Identity>
             return;
 
         Role = newRole;
-        RaiseEvent(new UserRoleChangedEvent(Id, Email, Role));
+        RaiseEvent(new UserRoleChangedEvent(Id, Email, FullName, Role));
     }
 
     public void ChangeStatus(Status newStatus)
@@ -111,7 +111,7 @@ public sealed class User : AggregateRoot<User, Identity>
             throw new MissingStatusException();
 
         Status = newStatus;
-        RaiseEvent(new UserStatusChangedEvent(Id, Email, Status));
+        RaiseEvent(new UserStatusChangedEvent(Id, Email, FullName, Status));
     }
 
     // EFCore

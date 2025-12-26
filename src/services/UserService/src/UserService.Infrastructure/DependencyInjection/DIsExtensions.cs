@@ -4,11 +4,12 @@ using FluentValidation;
 using MediatR;
 using Microsoft.Extensions.DependencyInjection;
 using UserService.Application.Interfaces;
+using UserService.Application.Messaging;
 using UserService.Application.Security;
 using UserService.Application.UseCases.SignUpUser;
 using UserService.Domain.DomainServices;
 using UserService.Domain.Interfaces;
-using UserService.Domain.Outbox;
+using UserService.Domain.Messaging;
 using UserService.Domain.Repositories;
 using UserService.Domain.UnitOfWork;
 using UserService.Infrastructure.CrossCutting;
@@ -31,7 +32,7 @@ public static class DIsExtensions
 
         services.AddScoped<IUserRepository, EfUserRepository>();
 
-        services.AddScoped<IOutbox, EfOutbox>();
+        services.AddScoped<IDomainOutbox, EfDomainOutbox>();
 
         services.AddScoped<IUnitOfWork, EfUnitOfWork>();
 
@@ -40,6 +41,9 @@ public static class DIsExtensions
         services.AddSingleton<ICorrelationContext, CorrelationContext>();
 
         services.AddSingleton<IPasswordHasher, Argon2PasswordHasher>();
+
+        services.AddSingleton<IDomainEventNotificationMapper, DomainEventNotificationMapper>();
+        
 
         return services;
     }
