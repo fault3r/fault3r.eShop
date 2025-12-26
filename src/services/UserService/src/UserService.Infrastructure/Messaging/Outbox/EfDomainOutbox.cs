@@ -25,12 +25,12 @@ public sealed class EfDomainOutbox : IDomainOutbox
         CancellationToken cancellationToken = default)
     {
         if (events is null)
-            throw new MissingOutboxEventException();
+            throw new MissingDomainOutboxEventException();
 
         if (!events.Any()) return;
 
         if (events.Any(e => e is null))
-            throw new MissingOutboxEventException();
+            throw new MissingDomainOutboxEventException();
 
         if (string.IsNullOrWhiteSpace(correlationId))
             throw new MissingCorrelationIdException();

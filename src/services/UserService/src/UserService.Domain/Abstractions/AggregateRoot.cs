@@ -9,23 +9,23 @@ public abstract class AggregateRoot<T, TId>
     : Entity<T, TId>, IAggregateRoot, IAggregateRoot<TId>
     where T : AggregateRoot<T, TId>
 {
-    private readonly List<IDomainEvent> domainEvents = [];
+    private readonly List<IDomainEvent> events = [];
 
-    public IReadOnlyCollection<IDomainEvent> DomainEvents
-        => [.. domainEvents];
+    public IReadOnlyCollection<IDomainEvent> Events
+        => [.. events];
 
     protected AggregateRoot(TId id) : base(id) { }
 
-    protected void RaiseEvent(IDomainEvent domainEvent)
+    protected void RaiseEvent(IDomainEvent @event)
     {
-        if (domainEvent is null)
+        if (@event is null)
             throw new MissingDomainEventException();
 
-        domainEvents.Add(domainEvent);
+        events.Add(@event);
     }
 
     public void ClearEvents()
-        => domainEvents.Clear();
+        => events.Clear();
 
     public override string ToString()
         => $"{GetType().Name}:{base.ToString()}";
