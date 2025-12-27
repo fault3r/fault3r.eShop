@@ -1,8 +1,6 @@
 
 using System;
-using System.Linq.Expressions;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Logging;
 using UserService.Domain.Aggregates.UserAggregate;
 using UserService.Domain.Repositories;
 using UserService.Domain.ValueObjects;
@@ -14,36 +12,28 @@ namespace UserService.Infrastructure.Repositories;
 public sealed class EfUserRepository : IUserRepository
 {
     private readonly EfDbContext _dbContext;
-    private readonly ILogger<EfUserRepository> _logger;
 
     public EfUserRepository(
-        EfDbContext efDbContext,
-        ILogger<EfUserRepository> logger)
+        EfDbContext efDbContext)
     {
         _dbContext = efDbContext
             ?? throw new MissingDbContextException();
-
-        _logger = logger;
-    }
-
-    private async Task<User?> QueryAsync(
-        Expression<Func<User, bool>> expression,
-        CancellationToken cancellationToken = default)
-    {
-        if (expression is null)
-            throw new MissingQueryExpressionException();
-
-        return await _dbContext.Users.FirstOrDefaultAsync(expression, cancellationToken);
     }
 
     public async Task<User?> GetByIdAsync(Identity id, CancellationToken cancellationToken = default)
     {
-        return await QueryAsync(p => p.Id == id, cancellationToken);
+        if (id is null)
+            throw new RepositoryArgumentException();
+
+        return await _dbContext.Users.FirstOrDefaultAsync(p => p.Id == id);
     }
 
     public async Task<User?> GetByEmailAsync(Email email, CancellationToken cancellationToken = default)
     {
-        return await QueryAsync(p => p.Email == email, cancellationToken);
+        if (email is null)
+            throw new RepositoryArgumentException();
+
+        return await _dbContext.Users.FirstOrDefaultAsync(p => p.Email == email);
     }
 
     public async Task CreateAsync(User user, CancellationToken cancellationToken = default)

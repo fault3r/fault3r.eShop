@@ -1,7 +1,6 @@
 
 using System;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Logging;
 using UserService.Domain.Messaging;
 using UserService.Domain.Repositories;
 using UserService.Domain.UnitOfWork;
@@ -17,14 +16,12 @@ public sealed class EfUnitOfWork : IUnitOfWork
     public IDomainOutbox Outbox { get; }
     public IDomainNotification Notification { get; }
     public IUserRepository UserRepository { get; }
-    private readonly ILogger<EfUnitOfWork> _logger;
 
     public EfUnitOfWork(
         EfDbContext efDbContext,
         IDomainOutbox outbox,
         IDomainNotification notification,
-        IUserRepository userRepository,
-        ILogger<EfUnitOfWork> logger)
+        IUserRepository userRepository)
     {
         _dbContext = efDbContext
             ?? throw new MissingDbContextException();
@@ -37,8 +34,6 @@ public sealed class EfUnitOfWork : IUnitOfWork
 
         UserRepository = userRepository
             ?? throw new MissingUserRepositoryException();
-
-        _logger = logger;
     }
 
     public async Task<int> CommitAsync(CancellationToken cancellationToken = default)

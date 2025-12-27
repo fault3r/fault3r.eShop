@@ -84,7 +84,7 @@ public sealed class SignUpUserService : ISignUpUserService
         _logger.LogInformation("Persisting instance to database..");
 
         await _uow.UserRepository.CreateAsync(user, cancellationToken);
-        await _uow.Outbox.EnqueueAsync(user.DomainEvents, correlationId, cancellationToken);
+        await _uow.Outbox.EnqueueAsync(user.Events, correlationId, cancellationToken);
         await _uow.CommitAsync(cancellationToken);
         user.ClearEvents();
 
