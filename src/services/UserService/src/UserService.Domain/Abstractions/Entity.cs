@@ -1,6 +1,5 @@
 
 using System;
-using UserService.Domain.Exceptions.Abstraction.Entity;
 using UserService.Domain.Interfaces;
 
 namespace UserService.Domain.Abstractions;
@@ -13,8 +12,7 @@ public abstract class Entity<T, TId>
 
     protected Entity(TId id)
     {
-        if (id is null)
-            throw new MissingEntityIdentityException();
+        ArgumentNullException.ThrowIfNull(id);
 
         Id = id;
     }

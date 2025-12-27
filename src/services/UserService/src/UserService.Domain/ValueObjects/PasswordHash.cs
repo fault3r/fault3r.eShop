@@ -2,7 +2,7 @@
 using System;
 using UserService.Domain.Abstractions;
 using UserService.Domain.Common;
-using UserService.Domain.Exceptions.ValueObjects.PasswordHash;
+using UserService.Domain.Exceptions.PasswordHash;
 
 namespace UserService.Domain.ValueObjects;
 
@@ -13,12 +13,12 @@ public sealed class PasswordHash : ValueObject<PasswordHash>
     private PasswordHash(string value)
     {
         if (string.IsNullOrWhiteSpace(value))
-            throw new MissingPasswordHashValueException();
+            throw new MissingPasswordHashException();
 
         value = value.Trim();
 
         if (!IsValid(value))
-            throw new InvalidPasswordHashValueException(value);
+            throw new InvalidPasswordHashException(value);
 
         Value = value;
     }

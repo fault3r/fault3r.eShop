@@ -2,7 +2,7 @@
 using System;
 using UserService.Domain.Abstractions;
 using UserService.Domain.Common;
-using UserService.Domain.Exceptions.ValueObjects.Role;
+using UserService.Domain.Exceptions.Role;
 
 namespace UserService.Domain.ValueObjects;
 
@@ -24,7 +24,7 @@ public sealed class Role : ValueObject<Role>
     private Role(string value)
     {
         if (string.IsNullOrWhiteSpace(value))
-            throw new MissingRoleValueException();
+            throw new MissingRoleException();
 
         value = value
             .Trim()

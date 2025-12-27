@@ -2,7 +2,7 @@
 using System;
 using UserService.Domain.Abstractions;
 using UserService.Domain.Common;
-using UserService.Domain.Exceptions.ValueObjects.Identity;
+using UserService.Domain.Exceptions.Identity;
 
 namespace UserService.Domain.ValueObjects;
 
@@ -13,7 +13,7 @@ public sealed class Identity : ValueObject<Identity>
     private Identity(Guid guid)
     {
         if (guid == Guid.Empty)
-            throw new EmptyIdentityValueException();
+            throw new EmptyIdentityException();
 
         Value = guid;
     }
@@ -21,12 +21,12 @@ public sealed class Identity : ValueObject<Identity>
     private Identity(string value)
     {
         if (string.IsNullOrWhiteSpace(value))
-            throw new EmptyIdentityValueException();
+            throw new EmptyIdentityException();
 
         value = value.Trim();
 
         if (!IsValid(value))
-            throw new InvalidIdentityValueException(value);
+            throw new InvalidIdentityException(value);
 
         Value = Guid.Parse(value);
     }

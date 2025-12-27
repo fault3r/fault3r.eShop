@@ -1,6 +1,5 @@
 
 using System;
-using UserService.Domain.Exceptions.Abstraction.AggregateRoot;
 using UserService.Domain.Interfaces;
 
 namespace UserService.Domain.Abstractions;
@@ -18,8 +17,7 @@ public abstract class AggregateRoot<T, TId>
 
     protected void RaiseEvent(IDomainEvent @event)
     {
-        if (@event is null)
-            throw new MissingDomainEventException();
+        ArgumentNullException.ThrowIfNull(@event);
 
         events.Add(@event);
     }

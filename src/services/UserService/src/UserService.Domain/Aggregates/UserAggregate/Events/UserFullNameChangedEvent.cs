@@ -1,9 +1,6 @@
 
 using System;
 using UserService.Domain.Abstractions;
-using UserService.Domain.Exceptions.ValueObjects.Email;
-using UserService.Domain.Exceptions.ValueObjects.FullName;
-using UserService.Domain.Exceptions.ValueObjects.Identity;
 using UserService.Domain.ValueObjects;
 
 namespace UserService.Domain.Aggregates.UserAggregate.Events;
@@ -19,14 +16,14 @@ public sealed record UserFullNameChangedEvent : DomainEvent
         Email email,
         FullName newFullName)
     {
-        UserId = userId
-            ?? throw new MissingIdentityException();
+        ArgumentNullException.ThrowIfNull(userId);
+        UserId = userId;
 
-        Email = email
-            ?? throw new MissingEmailException();
+        ArgumentNullException.ThrowIfNull(email);
+        Email = email;
 
-        NewFullName = newFullName
-            ?? throw new MissingFullNameException();
+        ArgumentNullException.ThrowIfNull(newFullName);
+        NewFullName = newFullName;
     }
 
     public override string ToString()

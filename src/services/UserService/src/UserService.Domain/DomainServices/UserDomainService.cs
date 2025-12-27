@@ -1,6 +1,5 @@
 
 using System;
-using UserService.Domain.Exceptions.Repositories;
 using UserService.Domain.Exceptions.ValueObjects.Email;
 using UserService.Domain.Interfaces;
 using UserService.Domain.Repositories;
@@ -14,16 +13,16 @@ public class UserDomainService : IUserDomainService
 
     public UserDomainService(IUserRepository userRepository)
     {
-        _userRepository = userRepository
-            ?? throw new MissingUserRepositoryException();
+        ArgumentNullException.ThrowIfNull(userRepository);
+
+        _userRepository = userRepository;
     }
 
     public async Task<bool> CanCreateAsync(
         Email email,
         CancellationToken cancellationToken = default)
     {
-        if (email is null)
-            throw new MissingEmailException();
+        ArgumentNullException.ThrowIfNull(email);
 
         var exists = await _userRepository
             .GetByEmailAsync(email, cancellationToken);

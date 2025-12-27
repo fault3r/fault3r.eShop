@@ -2,7 +2,7 @@
 using System;
 using UserService.Domain.Abstractions;
 using UserService.Domain.Common;
-using UserService.Domain.Exceptions.ValueObjects.FullName;
+using UserService.Domain.Exceptions.FullName;
 
 namespace UserService.Domain.ValueObjects;
 
@@ -14,10 +14,10 @@ public sealed class FullName : ValueObject<FullName>
     private FullName(string value)
     {
         if (string.IsNullOrWhiteSpace(value))
-            throw new MissingFullNameValueException();
+            throw new MissingFullNameException();
 
         if (!IsValid(value.Trim()))
-            throw new InvalidFullNameValueException(value);
+            throw new InvalidFullNameException(value);
 
         var parts = value
             .Trim()

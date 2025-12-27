@@ -1,6 +1,5 @@
 
 using System;
-using UserService.Domain.Exceptions.Common.Result;
 
 namespace UserService.Domain.Common;
 
@@ -22,8 +21,7 @@ public readonly struct Result
 
     public static Result Failure(string error)
     {
-        if (string.IsNullOrWhiteSpace(error))
-            throw new MissingResultErrorMessageException();
+        ArgumentException.ThrowIfNullOrEmpty(error);
 
         return new(false, error);
     }
@@ -47,16 +45,14 @@ public readonly struct Result<T>
 
     public static Result<T> Success(T value)
     {
-        if (value is null)
-            throw new MissingResultValueException();
+        ArgumentNullException.ThrowIfNull(value);
 
         return new(true, null, value);
     }
 
     public static Result<T> Failure(string error)
     {
-        if (string.IsNullOrWhiteSpace(error))
-            throw new MissingResultErrorMessageException();
+        ArgumentException.ThrowIfNullOrEmpty(error);
 
         return new(false, error, null);
     }

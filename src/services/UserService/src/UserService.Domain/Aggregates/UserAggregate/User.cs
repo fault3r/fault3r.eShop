@@ -28,20 +28,20 @@ public sealed class User : AggregateRoot<User, Identity>
         Status status)
         : base(id)
     {
-        Email = email
-            ?? throw new MissingEmailException();
+        ArgumentNullException.ThrowIfNull(email);
+        Email = email;
 
-        PasswordHash = passwordHash
-            ?? throw new MissingPasswordHashException();
-            
-        FullName = fullName
-            ?? throw new MissingFullNameException();
+        ArgumentNullException.ThrowIfNull(passwordHash);
+        PasswordHash = passwordHash;
 
-        Role = role
-            ?? throw new MissingRoleException();
+        ArgumentNullException.ThrowIfNull(fullName);
+        FullName = fullName;
 
-        Status = status
-            ?? throw new MissingStatusException();
+        ArgumentNullException.ThrowIfNull(role);
+        Role = role;
+
+        ArgumentNullException.ThrowIfNull(status);
+        Status = status;
     }
 
     internal static User Create(
@@ -59,8 +59,7 @@ public sealed class User : AggregateRoot<User, Identity>
 
     public void ChangeEmail(Email newEmail)
     {
-        if (newEmail is null)
-            throw new MissingEmailException();
+        ArgumentNullException.ThrowIfNull(newEmail);
 
         if (newEmail == Email)
             return;
@@ -71,8 +70,7 @@ public sealed class User : AggregateRoot<User, Identity>
 
     public void ChangePassword(PasswordHash newPasswordHash)
     {
-        if (newPasswordHash is null)
-            throw new MissingPasswordHashException();
+        ArgumentNullException.ThrowIfNull(newPasswordHash);
 
         if (newPasswordHash == PasswordHash)
             return;
@@ -83,8 +81,7 @@ public sealed class User : AggregateRoot<User, Identity>
 
     public void ChangeFullName(FullName newFullName)
     {
-        if (newFullName is null)
-            throw new MissingFullNameException();
+        ArgumentNullException.ThrowIfNull(newFullName);
 
         if (newFullName == FullName)
             return;
@@ -95,8 +92,7 @@ public sealed class User : AggregateRoot<User, Identity>
 
     public void ChangeRole(Role newRole)
     {
-        if (newRole is null)
-            throw new MissingRoleException();
+        ArgumentNullException.ThrowIfNull(newRole);
 
         if (newRole == Role)
             return;
@@ -107,8 +103,7 @@ public sealed class User : AggregateRoot<User, Identity>
 
     public void ChangeStatus(Status newStatus)
     {
-        if (newStatus is null)
-            throw new MissingStatusException();
+        ArgumentNullException.ThrowIfNull(newStatus);
 
         Status = newStatus;
         RaiseEvent(new UserStatusChangedEvent(Id, Email, FullName, Status));

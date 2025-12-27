@@ -2,7 +2,7 @@
 using System;
 using UserService.Domain.Abstractions;
 using UserService.Domain.Common;
-using UserService.Domain.Exceptions.ValueObjects.Status;
+using UserService.Domain.Exceptions.Status;
 
 namespace UserService.Domain.ValueObjects;
 
@@ -25,7 +25,7 @@ public sealed class Status : ValueObject<Status>
     private Status(string value)
     {
         if (string.IsNullOrWhiteSpace(value))
-            throw new MissingStatusValueException();
+            throw new MissingStatusException();
 
         value = value.Trim();
 
@@ -84,4 +84,5 @@ public sealed class Status : ValueObject<Status>
     {
         yield return Value;
     }
+
 }

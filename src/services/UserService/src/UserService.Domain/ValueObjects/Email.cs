@@ -3,7 +3,7 @@ using System;
 using System.Text.RegularExpressions;
 using UserService.Domain.Abstractions;
 using UserService.Domain.Common;
-using UserService.Domain.Exceptions.ValueObjects.Email;
+using UserService.Domain.Exceptions.Email;
 
 namespace UserService.Domain.ValueObjects;
 
@@ -14,10 +14,10 @@ public sealed partial class Email : ValueObject<Email>
     private Email(string value)
     {
         if (string.IsNullOrWhiteSpace(value))
-            throw new MissingEmailValueException();
+            throw new MissingEmailException();
 
         if (!IsValid(value.Trim()))
-            throw new InvalidEmailValueException(value);
+            throw new InvalidEmailException(value);
 
         Value = Normalize(value);
     }
