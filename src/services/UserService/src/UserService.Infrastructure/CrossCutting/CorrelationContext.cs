@@ -9,7 +9,7 @@ public sealed class CorrelationContext : ICorrelationContext
     private static readonly AsyncLocal<string> asyncLocalId
         = new();
 
-    public string CorrelationId { get; }
+    public string CorrelationId { get; private set; }
         = asyncLocalId.Value ?? string.Empty;
 
     public void Set(string correlationId)

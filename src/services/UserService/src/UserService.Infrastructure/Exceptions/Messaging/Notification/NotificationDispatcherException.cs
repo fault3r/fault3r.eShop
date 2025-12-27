@@ -5,6 +5,6 @@ namespace UserService.Infrastructure.Exceptions.Messaging.Notification;
 
 public class NotificationDispatcherException : InfrastructureException
 {
-    public NotificationDispatcherException()
-        : base("an unexpected error occurred") { }
+    public NotificationDispatcherException(Exception exception)
+        : base("an unexpected error has occurred", exception) { }
 }

@@ -6,7 +6,6 @@ using Microsoft.Extensions.DependencyInjection;
 using UserService.Application.Interfaces;
 using UserService.Application.Messaging;
 using UserService.Application.Security;
-using UserService.Application.Services.EmailService;
 using UserService.Application.UseCases.SignUpUser;
 using UserService.Domain.DomainServices;
 using UserService.Domain.Interfaces;
@@ -14,18 +13,19 @@ using UserService.Domain.Messaging;
 using UserService.Domain.Repositories;
 using UserService.Domain.UnitOfWork;
 using UserService.Infrastructure.CrossCutting;
+using UserService.Infrastructure.Exceptions.DependencyInjection;
 using UserService.Infrastructure.Messaging.Notification;
 using UserService.Infrastructure.Messaging.Outbox;
 using UserService.Infrastructure.Repositories;
 using UserService.Infrastructure.Security;
-using UserService.Infrastructure.Services.EmailService;
 using UserService.Infrastructure.UnitOfWork;
 
 namespace UserService.Infrastructure.DependencyInjection;
 
 public static class DIsExtensions
 {
-    public static IServiceCollection AddInfrastructure(this IServiceCollection services)
+    public static IServiceCollection AddInfrastructure(
+        this IServiceCollection services)
     {
         services.AddScoped<IUnitOfWork, EfUnitOfWork>();
 
@@ -43,20 +43,15 @@ public static class DIsExtensions
 
         services.AddSingleton<IDomainEventNotificationMapper, DomainEventNotificationMapper>();
 
-
-
         return services;
     }
 
-    public static IServiceCollection AddUseCases(this IServiceCollection services)
+    public static IServiceCollection AddUseCases(
+        this IServiceCollection services)
     {
-
         services.AddMediatR(typeof(SignUpUserCommand).Assembly);
-
         services.AddScoped<ISignUpUserService, SignUpUserService>();
-
         services.AddScoped<IValidator<SignUpUserCommand>, SignUpUserValidator>();
         return services;
-
     }
 }

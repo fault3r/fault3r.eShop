@@ -5,7 +5,7 @@ using UserService.Domain.Interfaces;
 
 namespace UserService.Application.Interfaces;
 
-public interface IDomainEventNotificationMapper
+public interface IEventNotificationMapper
 {
     INotification Map(IDomainEvent domainEvent);
 }

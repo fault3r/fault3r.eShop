@@ -1,7 +1,7 @@
 
 using System;
 
-namespace UserService.Infrastructure.Exceptions.Messaging.Notification;
+namespace UserService.Infrastructure.Exceptions.Messaging;
 
 public class MissingEventNotificationMapperException : InfrastructureException
 {
