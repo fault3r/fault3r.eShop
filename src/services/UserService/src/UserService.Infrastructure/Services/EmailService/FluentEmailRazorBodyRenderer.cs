@@ -19,7 +19,7 @@ public sealed class FluentEmailRazorBodyRenderer : IEmailBodyRenderer
             string.IsNullOrWhiteSpace(template) ||
             model is null
         )
-            throw new MissingBodyRendererArgumentException();
+            throw new BodyRendererArgumentException();
 
         return await renderer.ParseAsync(template, model, isHtml: true);
     }
