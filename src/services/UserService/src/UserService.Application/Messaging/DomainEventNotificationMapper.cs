@@ -10,9 +10,12 @@ namespace UserService.Application.Messaging;
 
 public sealed class DomainEventNotificationMapper : IEventNotificationMapper
 {
-    public INotification Map(IDomainEvent domainEvent)
+    public INotification Map(IDomainEvent @event)
     {
-        return domainEvent switch
+        // should i check for???? -> if(@event is null) 
+        // throw new CustomException(); 
+        // or throw new ArgumentNullException()
+        return @event switch
         {
             UserCreatedEvent e => UserCreatedNotification.FromEvent(e),
             _ => throw new Exception()

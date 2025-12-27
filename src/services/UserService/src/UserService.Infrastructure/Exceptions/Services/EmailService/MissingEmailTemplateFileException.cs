@@ -3,9 +3,9 @@ using System;
 
 namespace UserService.Infrastructure.Exceptions.Services.EmailService;
 
-public class MissingTemplateFileException : InfrastructureException
+public class MissingEmailTemplateFileException : InfrastructureException
 {
-    public MissingTemplateFileException()
+    public MissingEmailTemplateFileException()
         : base("email temaplate file does not exist") { }
 }
  

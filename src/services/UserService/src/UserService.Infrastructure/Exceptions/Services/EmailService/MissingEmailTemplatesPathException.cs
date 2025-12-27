@@ -3,8 +3,8 @@ using System;
 
 namespace UserService.Infrastructure.Exceptions.Services.EmailService;
 
-public class MissingTemplatesPathException : InfrastructureException
+public class MissingEmailTemplatesPathException : InfrastructureException
 {
-    public MissingTemplatesPathException()
+    public MissingEmailTemplatesPathException()
         : base("missing templates path") { }
 }
