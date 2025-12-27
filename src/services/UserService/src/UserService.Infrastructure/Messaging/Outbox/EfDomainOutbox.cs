@@ -1,23 +1,18 @@
 
 using System;
+using UserService.Domain.Exceptions.Abstraction.AggregateRoot;
 using UserService.Domain.Interfaces;
 using UserService.Domain.Messaging;
 using UserService.Infrastructure.Exceptions.CrossCutting;
-using UserService.Infrastructure.Exceptions.Messaging.Outbox;
 using UserService.Infrastructure.Exceptions.Persistence;
 using UserService.Infrastructure.Persistence;
 
 namespace UserService.Infrastructure.Messaging.Outbox;
 
-public sealed class EfDomainOutbox : IDomainOutbox
+public sealed class EfDomainOutbox(EfDbContext efDbContext) : IDomainOutbox
 {
-    private readonly EfDbContext _dbContext;
-
-    public EfDomainOutbox(EfDbContext efDbContext)
-    {
-        _dbContext = efDbContext
-            ?? throw new MissingDbContextException();
-    }
+    private readonly EfDbContext _dbContext = efDbContext
+        ?? throw new MissingDbContextException();
 
     public async Task EnqueueAsync(
         IEnumerable<IDomainEvent> events,
@@ -25,12 +20,12 @@ public sealed class EfDomainOutbox : IDomainOutbox
         CancellationToken cancellationToken = default)
     {
         if (events is null)
-            throw new MissingDomainOutboxEventException();
+            throw new MissingDomainEventException();
 
         if (!events.Any()) return;
 
         if (events.Any(e => e is null))
-            throw new MissingDomainOutboxEventException();
+            throw new MissingDomainEventException();
 
         if (string.IsNullOrWhiteSpace(correlationId))
             throw new MissingCorrelationIdException();

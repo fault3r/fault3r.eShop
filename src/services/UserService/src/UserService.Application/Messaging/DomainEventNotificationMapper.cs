@@ -8,7 +8,7 @@ using UserService.Domain.Interfaces;
 
 namespace UserService.Application.Messaging;
 
-public sealed class DomainEventNotificationMapper : IDomainEventNotificationMapper
+public sealed class DomainEventNotificationMapper : IEventNotificationMapper
 {
     public INotification Map(IDomainEvent domainEvent)
     {

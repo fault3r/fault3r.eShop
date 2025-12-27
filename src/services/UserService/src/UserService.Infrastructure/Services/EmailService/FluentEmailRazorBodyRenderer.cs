@@ -15,10 +15,12 @@ public sealed class FluentEmailRazorBodyRenderer : IEmailBodyRenderer
         object model,
         CancellationToken cancellationToken = default)
     {
-        try
-        {
-            return await renderer.ParseAsync(template, model, isHtml: true);
-        }
-        catch { throw new EmailBodyRenderException(); }
+        if (
+            string.IsNullOrWhiteSpace(template) ||
+            model is null
+        )
+            throw new MissingBodyRendererArgumentException();
+
+        return await renderer.ParseAsync(template, model, isHtml: true);
     }
 }

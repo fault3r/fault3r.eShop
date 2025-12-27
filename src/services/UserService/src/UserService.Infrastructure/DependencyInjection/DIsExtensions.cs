@@ -13,7 +13,6 @@ using UserService.Domain.Messaging;
 using UserService.Domain.Repositories;
 using UserService.Domain.UnitOfWork;
 using UserService.Infrastructure.CrossCutting;
-using UserService.Infrastructure.Exceptions.DependencyInjection;
 using UserService.Infrastructure.Messaging.Notification;
 using UserService.Infrastructure.Messaging.Outbox;
 using UserService.Infrastructure.Repositories;
@@ -41,7 +40,7 @@ public static class DIsExtensions
 
         services.AddSingleton<IPasswordHasher, Argon2PasswordHasher>();
 
-        services.AddSingleton<IDomainEventNotificationMapper, DomainEventNotificationMapper>();
+        services.AddSingleton<IEventNotificationMapper, DomainEventNotificationMapper>();
 
         return services;
     }

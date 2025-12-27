@@ -17,25 +17,21 @@ public class FluentEmailSender(IFluentEmail fluentEmail) : IEmailSender
         string body,
         CancellationToken cancellationToken = default)
     {
-        try
-        {
-            if (
-                string.IsNullOrWhiteSpace(to) ||
-                string.IsNullOrWhiteSpace(subject) ||
-                string.IsNullOrWhiteSpace(body)
-            )
-                throw new EmailSenderArgumentException();
+        if (
+            string.IsNullOrWhiteSpace(to) ||
+            string.IsNullOrWhiteSpace(subject) ||
+            string.IsNullOrWhiteSpace(body)
+        )
+            throw new EmailSenderArgumentException();
 
-            var response = await _fluentEmail
-                .To(to)
-                .Subject(subject)
-                .Body(body, isHtml: true)
-                .SendAsync(cancellationToken);
+        var response = await _fluentEmail
+            .To(to)
+            .Subject(subject)
+            .Body(body, isHtml: true)
+            .SendAsync(cancellationToken);
 
-            return !response.Successful
-                ? Result.Failure(string.Join(", ", response.ErrorMessages))
-                : Result.Success();
-        }
-        catch { throw new EmailSenderException(); }
+        return !response.Successful
+            ? Result.Failure(string.Join(", ", response.ErrorMessages))
+            : Result.Success();
     }
 }

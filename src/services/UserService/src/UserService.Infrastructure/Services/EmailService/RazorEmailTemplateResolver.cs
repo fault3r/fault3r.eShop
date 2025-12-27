@@ -34,11 +34,7 @@ public sealed class RazorEmailTemplateResolver : IEmailTemplateResolver
         EmailTemplateType emailTemplateType,
         CancellationToken cancellationToken = default)
     {
-        try
-        {
-            var path = templates[emailTemplateType];
-            return await File.ReadAllTextAsync(path, cancellationToken);
-        }
-        catch { throw new EmailTemplateResolveException(); }
+        var path = templates[emailTemplateType];
+        return await File.ReadAllTextAsync(path, cancellationToken);
     }
 }

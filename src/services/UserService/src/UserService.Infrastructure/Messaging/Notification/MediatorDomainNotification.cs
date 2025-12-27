@@ -31,6 +31,9 @@ public sealed class MediatorDomainNotification : IDomainNotification
         if (events is null)
             throw new MissingDomainEventException();
 
+        if (events.Any(e => e is null))
+            throw new MissingDomainEventException();
+
         foreach (var @event in events)
         {
             var notification = _mapper.Map(@event);

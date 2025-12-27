@@ -1,7 +1,7 @@
 
 using System;
 
-namespace UserService.Infrastructure.Exceptions.Messaging.Outbox;
+namespace UserService.Infrastructure.Exceptions.Messaging;
 
 public class MissingDomainOutboxException : InfrastructureException
 {

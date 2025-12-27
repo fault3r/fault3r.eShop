@@ -71,6 +71,6 @@ public sealed class UserConfiguration : IEntityTypeConfiguration<User>
             )
             .IsRequired();           
 
-        builder.Ignore(p => p.DomainEvents);
+        builder.Ignore(p => p.Events);
     }
 }

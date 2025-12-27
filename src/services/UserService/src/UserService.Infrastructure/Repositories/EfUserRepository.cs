@@ -30,22 +30,10 @@ public sealed class EfUserRepository : IUserRepository
         Expression<Func<User, bool>> expression,
         CancellationToken cancellationToken = default)
     {
-        try
-        {
-            _logger.LogInformation("Executing query..");
+        if (expression is null)
+            throw new MissingQueryExpressionException();
 
-            var result = await _dbContext.Users.FirstOrDefaultAsync(expression, cancellationToken);
-
-            _logger.LogInformation("Query executed successfully.");
-
-            return result;
-        }
-        catch (Exception exception)
-        {
-            _logger.LogError(exception, "Query execution failed!");
-
-            throw new PersistenceException();
-        }
+        return await _dbContext.Users.FirstOrDefaultAsync(expression, cancellationToken);
     }
 
     public async Task<User?> GetByIdAsync(Identity id, CancellationToken cancellationToken = default)
@@ -74,7 +62,7 @@ public sealed class EfUserRepository : IUserRepository
     public Task DeleteAsync(Identity id, CancellationToken cancellationToken = default)
     {
         _dbContext.Users
-            .Remove(new User(id));            
+            .Remove(new User(id));
         return Task.CompletedTask;
     }
 }
