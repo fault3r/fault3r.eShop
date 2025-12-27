@@ -14,6 +14,8 @@ var settings = builder.Configuration
 
 builder.Services.AddInfrastructure();
 
+builder.Services.AddUseCases();
+
 builder.Host.AddSerilogLogging();
 
 builder.Services.AddPostgresDbContext(builder.Configuration);

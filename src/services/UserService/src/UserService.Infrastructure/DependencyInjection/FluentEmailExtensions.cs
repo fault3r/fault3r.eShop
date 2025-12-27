@@ -44,15 +44,15 @@ public static class FluentEmailExtensions
             )
             .AddRazorRenderer();
 
-        services.AddScoped<IEmailSender, FluentEmailSender>();
-
-        services.AddScoped<IEmailTemplateResolver>(provider =>
+        services.AddSingleton<IEmailTemplateResolver>(provider =>
         {
-            var templatesPath = Path.Combine(rootPath, setting.TemplatesPath);
-            return new RazorEmailTemplateResolver(templatesPath);
+            var path = Path.Combine(rootPath, setting.TemplatesPath);
+            return new RazorEmailTemplateResolver(path);
         });
 
-        services.AddScoped<IEmailBodyRenderer, FluentEmailRazorBodyRenderer>();
+        services.AddSingleton<IEmailBodyRenderer, FluentEmailRazorBodyRenderer>();
+
+        services.AddScoped<IEmailSender, FluentEmailSender>();
 
         return services;
     }
