@@ -2,16 +2,20 @@
 using System;
 using UserService.Domain.Interfaces;
 using UserService.Domain.Messaging;
-using UserService.Infrastructure.Exceptions.CrossCutting;
-using UserService.Infrastructure.Exceptions.Persistence;
 using UserService.Infrastructure.Persistence;
 
 namespace UserService.Infrastructure.Messaging.Outbox;
 
-public sealed class EfDomainOutbox(EfDbContext efDbContext) : IDomainOutbox
+public sealed class EfDomainOutbox : IDomainOutbox
 {
-    private readonly EfDbContext _dbContext = efDbContext
-        ?? throw new MissingDbContextException();
+    private readonly EfDbContext _dbContext;
+
+    public EfDomainOutbox(EfDbContext efDbContext)
+    {
+        ArgumentNullException.ThrowIfNull(efDbContext);
+
+        _dbContext = efDbContext;
+    }
 
     public async Task EnqueueAsync(
         IEnumerable<IDomainEvent> events,
@@ -23,7 +27,7 @@ public sealed class EfDomainOutbox(EfDbContext efDbContext) : IDomainOutbox
         if (!events.Any()) return;
 
         if (events.Any(e => e is null))
-            throw new ArgumentNullException(nameof(events));
+            throw new ArgumentException($"{nameof(events)} contains null element");
 
         ArgumentNullException.ThrowIfNull(correlationId);
 

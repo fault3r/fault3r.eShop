@@ -4,7 +4,6 @@ using MediatR;
 using UserService.Application.Interfaces;
 using UserService.Domain.Interfaces;
 using UserService.Domain.Messaging;
-using UserService.Infrastructure.Exceptions.Messaging;
 
 namespace UserService.Infrastructure.Messaging.Notification;
 
@@ -17,22 +16,21 @@ public sealed class MediatorDomainNotification : IDomainNotification
         IMediator mediator,
         IEventNotificationMapper mapper)
     {
-        _mediator = mediator
-            ?? throw new MissingMediatorException();
+        ArgumentNullException.ThrowIfNull(mediator);
+        ArgumentNullException.ThrowIfNull(mapper);
 
-        _mapper = mapper
-            ?? throw new MissingEventNotificationMapperException();
+        _mediator = mediator;
+        _mapper = mapper;
     }
 
     public async Task DispatchAsync(
         IEnumerable<IDomainEvent> events,
         CancellationToken cancellationToken = default)
     {
-        if (events is null)
-            throw new MissingDomainEventException();
+        ArgumentNullException.ThrowIfNull(events);
 
         if (events.Any(e => e is null))
-            throw new MissingDomainEventException();
+            throw new ArgumentException($"{nameof(events)} contains null element");
 
         foreach (var @event in events)
         {

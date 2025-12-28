@@ -9,14 +9,17 @@ public sealed class CorrelationContext : ICorrelationContext
     private static readonly AsyncLocal<string> asyncLocalId
         = new();
 
-    public string CorrelationId { get; private set; }
-        = asyncLocalId.Value ?? string.Empty;
+    public string CorrelationId
+    {
+        get => asyncLocalId.Value
+            ?? throw new CorrelationIdUnsetException();
+    }
+        
 
     public void Set(string correlationId)
     {
-        if (string.IsNullOrWhiteSpace(correlationId))
-            throw new MissingCorrelationIdException();
-
+        ArgumentException.ThrowIfNullOrEmpty(correlationId);
+        
         asyncLocalId.Value = correlationId;
     }
 }

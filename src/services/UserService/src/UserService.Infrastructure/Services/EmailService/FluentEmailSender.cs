@@ -3,11 +3,10 @@ using System;
 using FluentEmail.Core;
 using UserService.Application.Services.EmailService;
 using UserService.Domain.Common;
-using UserService.Infrastructure.Exceptions.Services.EmailService;
 
 namespace UserService.Infrastructure.Services.EmailService;
 
-public class FluentEmailSender(IFluentEmail fluentEmail) : IEmailSender
+public sealed class FluentEmailSender(IFluentEmail fluentEmail) : IEmailSender
 {
     private readonly IFluentEmail _fluentEmail = fluentEmail;
 
@@ -17,12 +16,9 @@ public class FluentEmailSender(IFluentEmail fluentEmail) : IEmailSender
         string body,
         CancellationToken cancellationToken = default)
     {
-        if (
-            string.IsNullOrWhiteSpace(to) ||
-            string.IsNullOrWhiteSpace(subject) ||
-            string.IsNullOrWhiteSpace(body)
-        )
-            throw new EmailSenderArgumentException();
+        ArgumentException.ThrowIfNullOrEmpty(to);
+        ArgumentException.ThrowIfNullOrEmpty(subject);
+        ArgumentException.ThrowIfNullOrEmpty(body);
 
         var response = await _fluentEmail
             .To(to)

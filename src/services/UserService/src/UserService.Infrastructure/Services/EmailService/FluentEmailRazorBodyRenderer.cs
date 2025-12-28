@@ -2,7 +2,6 @@
 using System;
 using FluentEmail.Razor;
 using UserService.Application.Services.EmailService;
-using UserService.Infrastructure.Exceptions.Services.EmailService;
 
 namespace UserService.Infrastructure.Services.EmailService;
 
@@ -15,11 +14,8 @@ public sealed class FluentEmailRazorBodyRenderer : IEmailBodyRenderer
         object model,
         CancellationToken cancellationToken = default)
     {
-        if (
-            string.IsNullOrWhiteSpace(template) ||
-            model is null
-        )
-            throw new EmailBodyRendererArgumentException();
+        ArgumentException.ThrowIfNullOrEmpty(template);
+        ArgumentNullException.ThrowIfNull(model);
 
         return await renderer.ParseAsync(template, model, isHtml: true);
     }

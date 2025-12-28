@@ -1,9 +1,7 @@
 
 using System;
 using System.Text.Json;
-using UserService.Domain.Exceptions.Abstraction.AggregateRoot;
 using UserService.Domain.Interfaces;
-using UserService.Infrastructure.Exceptions.CrossCutting;
 
 namespace UserService.Infrastructure.Messaging.Outbox;
 
@@ -19,12 +17,9 @@ public sealed class OutboxMessage
         IDomainEvent domainEvent,
         string correlationId)
     {
-        if (domainEvent is null)
-            throw new MissingDomainEventException();
-
-        if (string.IsNullOrWhiteSpace(correlationId))
-            throw new MissingCorrelationIdException();
-
+        ArgumentNullException.ThrowIfNull(domainEvent);
+        ArgumentException.ThrowIfNullOrEmpty(correlationId);
+        
         Id = domainEvent.EventId;
         EnqueuedOn = domainEvent.OccurredOn;
         Type = domainEvent.GetType().Name;

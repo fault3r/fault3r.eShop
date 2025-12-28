@@ -5,7 +5,6 @@ using Microsoft.Extensions.Configuration;
 using UserService.Application.Services.EmailService;
 using UserService.Domain.Aggregates.UserAggregate.Events;
 using UserService.Domain.Exceptions;
-using UserService.Domain.Exceptions.ValueObjects.FullName;
 using UserService.Domain.ValueObjects;
 using UserService.Infrastructure.Exceptions.DependencyInjection;
 using UserService.Infrastructure.Services.EmailService;

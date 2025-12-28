@@ -4,8 +4,6 @@ using Microsoft.EntityFrameworkCore;
 using UserService.Domain.Messaging;
 using UserService.Domain.Repositories;
 using UserService.Domain.UnitOfWork;
-using UserService.Infrastructure.Exceptions.Messaging;
-using UserService.Infrastructure.Exceptions.Persistence;
 using UserService.Infrastructure.Persistence;
 
 namespace UserService.Infrastructure.UnitOfWork;
@@ -23,17 +21,15 @@ public sealed class EfUnitOfWork : IUnitOfWork
         IDomainNotification notification,
         IUserRepository userRepository)
     {
-        _dbContext = efDbContext
-            ?? throw new MissingDbContextException();
+        ArgumentNullException.ThrowIfNull(efDbContext);
+        ArgumentNullException.ThrowIfNull(outbox);
+        ArgumentNullException.ThrowIfNull(notification);
+        ArgumentNullException.ThrowIfNull(userRepository);
 
-        Outbox = outbox
-            ?? throw new MissingDomainOutboxException();
-
-        Notification = notification
-            ?? throw new MissingDomainNotificationException();
-
-        UserRepository = userRepository
-            ?? throw new MissingUserRepositoryException();
+        _dbContext = efDbContext;
+        Outbox = outbox;
+        Notification = notification;
+        UserRepository = userRepository;
     }
 
     public async Task<int> CommitAsync(CancellationToken cancellationToken = default)

@@ -11,8 +11,7 @@ public sealed class RazorEmailTemplateResolver : IEmailTemplateResolver
 
     public RazorEmailTemplateResolver(string templatesPath)
     {
-        if (string.IsNullOrWhiteSpace(templatesPath))
-            throw new MissingEmailTemplatesPathException();
+        ArgumentException.ThrowIfNullOrEmpty(templatesPath);
 
         var allTemplates = Enum.GetValues<EmailTemplateType>();
 
@@ -21,7 +20,7 @@ public sealed class RazorEmailTemplateResolver : IEmailTemplateResolver
             var path = Path.Combine(templatesPath, $"{template}.cshtml");
 
             if (!File.Exists(path))
-                throw new MissingEmailTemplateFileException();
+                throw new EmailTemplateFileNotFoundException();
 
             templates.Add(
                 key: template,
