@@ -2,7 +2,7 @@
 using System;
 using FluentValidation;
 
-namespace UserService.Application.UseCases.SignUpUser;
+namespace UserService.Application.UseCases.UserAggregate.SignUpUser;
 
 public sealed class SignUpUserValidator : AbstractValidator<SignUpUserCommand>
 {
@@ -14,10 +14,10 @@ public sealed class SignUpUserValidator : AbstractValidator<SignUpUserCommand>
 
         RuleFor(p => p.Password)
             .NotEmpty()
-            .Length(8, 50);
+            .Length(6, 100);
 
         RuleFor(p => p.FullName)
             .NotEmpty()
-            .Length(2, 50);
+            .Length(2, 100);
     }
 }

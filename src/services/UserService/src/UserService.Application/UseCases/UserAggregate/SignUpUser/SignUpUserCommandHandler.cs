@@ -7,7 +7,7 @@ using UserService.Application.Interfaces;
 using UserService.Domain.Aggregates.UserAggregate;
 using UserService.Domain.Common;
 
-namespace UserService.Application.UseCases.SignUpUser;
+namespace UserService.Application.UseCases.UserAggregate.SignUpUser;
 
 public class SignUpUserCommandHandler
     : IRequestHandler<SignUpUserCommand, Result<User>>

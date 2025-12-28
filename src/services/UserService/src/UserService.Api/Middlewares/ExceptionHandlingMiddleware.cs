@@ -13,6 +13,8 @@ public class ExceptionHandlingMiddleware
         RequestDelegate next,
         string correlationHeader)
     {
+        ArgumentException.ThrowIfNullOrEmpty(correlationHeader);
+
         _next = next;
         this.correlationHeader = correlationHeader;
     }
@@ -26,9 +28,7 @@ public class ExceptionHandlingMiddleware
         catch (Exception exception)
         {
             Log.Error(
-                exception,
-                "Unhandled exception occurred while processing {Method} {Path}", context.Request.Method, context.Request.Path
-            );
+                exception, "Unhandled exception occurred while processing {Method} {Path}.", context.Request.Method, context.Request.Path);
 
             var response = new
             {

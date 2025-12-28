@@ -34,7 +34,7 @@ public sealed class MediatorDomainNotification : IDomainNotification
 
         foreach (var @event in events)
         {
-            var notification = _mapper.Map(@event);
+            var notification = _mapper.ToNotification(@event);
             await _mediator.Publish(notification, cancellationToken);
         }
     }

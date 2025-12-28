@@ -5,7 +5,7 @@ using UserService.Domain.Aggregates.UserAggregate.Events;
 
 namespace UserService.Application.Messaging.Notifications.UserAggregate;
 
-public sealed class UserCreatedNotification : INotification
+public sealed record UserCreatedNotification : INotification
 {
     public string Email { get; }
     public string FullName { get; }
@@ -14,6 +14,9 @@ public sealed class UserCreatedNotification : INotification
         string email,
         string fullName)
     {
+        ArgumentException.ThrowIfNullOrEmpty(email);
+        ArgumentException.ThrowIfNullOrEmpty(fullName);
+
         Email = email;
         FullName = fullName;
     }

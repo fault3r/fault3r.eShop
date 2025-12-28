@@ -8,7 +8,6 @@ namespace UserService.Api.Middlewares;
 
 public class CrossCuttingMiddleware
 {
-
     private readonly RequestDelegate _next;
     private readonly string correlationHeader;
 
@@ -16,6 +15,8 @@ public class CrossCuttingMiddleware
         RequestDelegate next,
         string correlationHeader)
     {
+        ArgumentException.ThrowIfNullOrEmpty(correlationHeader);
+
         _next = next;
         this.correlationHeader = correlationHeader;
     }
@@ -24,8 +25,6 @@ public class CrossCuttingMiddleware
         HttpContext context,
         ICorrelationContext correlationContext)
     {
-        ArgumentNullException.ThrowIfNull(correlationContext);
-
         var correlationId = context.Request.Headers[correlationHeader]
             .FirstOrDefault()
             ?? Guid.NewGuid().ToString();
@@ -43,7 +42,7 @@ public class CrossCuttingMiddleware
             await _next(context);
 
             Log.Information(
-                "Completed request {Method} {Path} with status {StatusCode}.", context.Request.Method, context.Request.Path, context.Response.StatusCode);
+                "Completed request {Method} {Path} with status code {StatusCode}.", context.Request.Method, context.Request.Path, context.Response.StatusCode);
         }
     }
 }

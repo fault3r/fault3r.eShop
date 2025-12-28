@@ -11,7 +11,6 @@ public interface ISignUpUserService
         string email,
         string password,
         string fullName,
-        string correlationId,
         CancellationToken cancellationToken = default
     );
 }

@@ -29,7 +29,7 @@ public sealed class FullName : ValueObject<FullName>
 
     private static bool IsValid(string value)
     {
-        if (value.Length < 1 + 1 || value.Length > 101)
+        if (value.Length < 1 + 1 || value.Length > 100)
             return false;
 
         var parts = value

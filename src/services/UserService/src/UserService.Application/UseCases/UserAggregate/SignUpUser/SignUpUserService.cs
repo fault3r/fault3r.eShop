@@ -11,7 +11,7 @@ using Microsoft.Extensions.Logging;
 using UserService.Domain.Interfaces;
 using UserService.Application.Security;
 
-namespace UserService.Application.UseCases.SignUpUser;
+namespace UserService.Application.UseCases.UserAggregate.SignUpUser;
 
 public sealed class SignUpUserService : ISignUpUserService
 {

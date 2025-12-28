@@ -7,5 +7,5 @@ namespace UserService.Application.Interfaces;
 
 public interface IEventNotificationMapper
 {
-    INotification Map(IDomainEvent domainEvent);
+    INotification ToNotification(IDomainEvent domainEvent);
 }
