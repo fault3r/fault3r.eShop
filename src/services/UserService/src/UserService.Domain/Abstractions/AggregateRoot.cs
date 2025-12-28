@@ -11,7 +11,7 @@ public abstract class AggregateRoot<T, TId>
     private readonly List<IDomainEvent> events = [];
 
     public IReadOnlyCollection<IDomainEvent> Events
-        => [.. events];
+        => [.. events];      
 
     protected AggregateRoot(TId id) : base(id) { }
 

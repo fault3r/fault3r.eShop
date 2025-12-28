@@ -8,7 +8,7 @@ public abstract class Entity<T, TId>
     : IEquatable<T>, IEntity, IEntity<TId>
     where T : Entity<T, TId>
 {
-    public TId Id { get; init; }
+    public TId Id { get; }
 
     protected Entity(TId id)
     {

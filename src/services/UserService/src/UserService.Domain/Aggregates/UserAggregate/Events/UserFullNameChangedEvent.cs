@@ -17,12 +17,11 @@ public sealed record UserFullNameChangedEvent : DomainEvent
         FullName newFullName)
     {
         ArgumentNullException.ThrowIfNull(userId);
-        UserId = userId;
-
         ArgumentNullException.ThrowIfNull(email);
-        Email = email;
-
         ArgumentNullException.ThrowIfNull(newFullName);
+        
+        UserId = userId;
+        Email = email;
         NewFullName = newFullName;
     }
 

@@ -19,15 +19,13 @@ public sealed record UserStatusChangedEvent : DomainEvent
         Status status)
     {
         ArgumentNullException.ThrowIfNull(userId);
-        UserId = userId;
-
         ArgumentNullException.ThrowIfNull(email);
-        Email = email;
-
         ArgumentNullException.ThrowIfNull(fullName);
-        FullName = fullName;
-
         ArgumentNullException.ThrowIfNull(status);
+
+        UserId = userId;
+        Email = email;
+        FullName = fullName;
         NewStatus = status;
     }
 

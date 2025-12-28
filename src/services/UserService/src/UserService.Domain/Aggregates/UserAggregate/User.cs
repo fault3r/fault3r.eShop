@@ -2,11 +2,6 @@
 using System;
 using UserService.Domain.Abstractions;
 using UserService.Domain.Aggregates.UserAggregate.Events;
-using UserService.Domain.Exceptions.ValueObjects.Email;
-using UserService.Domain.Exceptions.ValueObjects.FullName;
-using UserService.Domain.Exceptions.ValueObjects.PasswordHash;
-using UserService.Domain.Exceptions.ValueObjects.Role;
-using UserService.Domain.Exceptions.ValueObjects.Status;
 using UserService.Domain.ValueObjects;
 
 namespace UserService.Domain.Aggregates.UserAggregate;
@@ -29,18 +24,15 @@ public sealed class User : AggregateRoot<User, Identity>
         : base(id)
     {
         ArgumentNullException.ThrowIfNull(email);
-        Email = email;
-
         ArgumentNullException.ThrowIfNull(passwordHash);
-        PasswordHash = passwordHash;
-
         ArgumentNullException.ThrowIfNull(fullName);
-        FullName = fullName;
-
         ArgumentNullException.ThrowIfNull(role);
-        Role = role;
-
         ArgumentNullException.ThrowIfNull(status);
+
+        Email = email;
+        PasswordHash = passwordHash;
+        FullName = fullName;
+        Role = role;
         Status = status;
     }
 

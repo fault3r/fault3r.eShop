@@ -1,6 +1,5 @@
 
 using System;
-using UserService.Domain.Exceptions.Abstraction.AggregateRoot;
 using UserService.Domain.Interfaces;
 using UserService.Domain.Messaging;
 using UserService.Infrastructure.Exceptions.CrossCutting;
@@ -19,16 +18,14 @@ public sealed class EfDomainOutbox(EfDbContext efDbContext) : IDomainOutbox
         string correlationId,
         CancellationToken cancellationToken = default)
     {
-        if (events is null)
-            throw new MissingDomainEventException();
+        ArgumentNullException.ThrowIfNull(events);
 
         if (!events.Any()) return;
 
         if (events.Any(e => e is null))
-            throw new MissingDomainEventException();
+            throw new ArgumentNullException(nameof(events));
 
-        if (string.IsNullOrWhiteSpace(correlationId))
-            throw new MissingCorrelationIdException();
+        ArgumentNullException.ThrowIfNull(correlationId);
 
         var messages = events
             .Select(e => OutboxMessage.FromEvent(e, correlationId))

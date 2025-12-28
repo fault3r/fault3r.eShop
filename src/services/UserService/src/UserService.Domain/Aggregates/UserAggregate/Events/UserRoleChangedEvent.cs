@@ -19,15 +19,13 @@ public sealed record UserRoleChangedEvent : DomainEvent
         Role newRole)
     {
         ArgumentNullException.ThrowIfNull(userId);
-        UserId = userId;
-
         ArgumentNullException.ThrowIfNull(email);
-        Email = email;
-
         ArgumentNullException.ThrowIfNull(fullName);
-        FullName = fullName;
-
         ArgumentNullException.ThrowIfNull(newRole);
+
+        UserId = userId;
+        Email = email;
+        FullName = fullName;
         NewRole = newRole;
     }
 
