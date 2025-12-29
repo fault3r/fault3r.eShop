@@ -25,7 +25,7 @@ public class SignUpUserCommandHandler(
     {
         ArgumentNullException.ThrowIfNull(request);
         
-        _logger.LogInformation("Handling request..");
+        _logger.LogInformation("Handling request…");
 
         var validation = await _validator.ValidateAsync(request, cancellationToken);
 

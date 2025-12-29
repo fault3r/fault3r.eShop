@@ -8,29 +8,16 @@ using UserService.Infrastructure.Persistence;
 
 namespace UserService.Infrastructure.UnitOfWork;
 
-public sealed class EfUnitOfWork : IUnitOfWork
+public sealed class EfUnitOfWork(
+    EfDbContext efDbContext,
+    IDomainOutbox outbox,
+    IDomainNotification notification,
+    IUserRepository userRepository) : IUnitOfWork
 {
-    private readonly EfDbContext _dbContext;
-    public IDomainOutbox Outbox { get; }
-    public IDomainNotification Notification { get; }
-    public IUserRepository UserRepository { get; }
-
-    public EfUnitOfWork(
-        EfDbContext efDbContext,
-        IDomainOutbox outbox,
-        IDomainNotification notification,
-        IUserRepository userRepository)
-    {
-        ArgumentNullException.ThrowIfNull(efDbContext);
-        ArgumentNullException.ThrowIfNull(outbox);
-        ArgumentNullException.ThrowIfNull(notification);
-        ArgumentNullException.ThrowIfNull(userRepository);
-
-        _dbContext = efDbContext;
-        Outbox = outbox;
-        Notification = notification;
-        UserRepository = userRepository;
-    }
+    private readonly EfDbContext _dbContext = efDbContext;
+    public IDomainOutbox Outbox { get; } = outbox;
+    public IDomainNotification Notification { get; } = notification;
+    public IUserRepository UserRepository { get; } = userRepository;
 
     public async Task<int> CommitAsync(CancellationToken cancellationToken = default)
     {

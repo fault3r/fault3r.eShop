@@ -7,6 +7,7 @@ using UserService.Application.CrossCutting;
 using UserService.Application.Interfaces;
 using UserService.Application.Messaging;
 using UserService.Application.Security;
+using UserService.Application.UseCases.UserAggregate.SignUpUser;
 using UserService.Domain.DomainServices;
 using UserService.Domain.Interfaces;
 using UserService.Domain.Messaging;

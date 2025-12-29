@@ -33,14 +33,18 @@ public sealed class SignUpUserService(
         string password,
         string fullName,
         CancellationToken cancellationToken = default)
-    {        
+    {
+        ArgumentNullException.ThrowIfNull(email);
+        ArgumentNullException.ThrowIfNull(password);
+        ArgumentNullException.ThrowIfNull(fullName);
+
         User user;
         Email vEmail;
         PasswordHash vPasswordHash;
         FullName vFullName;
         try
         {
-            _logger.LogInformation("Creating user for '{Email}' email..", email.Trim());
+            _logger.LogInformation("Creating user with '{Email}' email..", email.Trim());
             
             vEmail = Email.From(email);
 
@@ -57,10 +61,10 @@ public sealed class SignUpUserService(
         {
             _logger.LogWarning("Domain validation failed: {Error}!", ex.Message);
 
-            return Result<User>.Failure($"Validation failed: {ex.Message}!");
+            return Result<User>.Failure($"Domain validation failed: {ex.Message}!");
         }
 
-        _logger.LogInformation("Checking whether the user can be created..");
+        _logger.LogInformation("Checking whether the user can be created…");
 
         var canCreate = await _userService.CanCreateAsync(vEmail, cancellationToken);
 
@@ -71,11 +75,22 @@ public sealed class SignUpUserService(
             return Result<User>.Failure("Sign up failed: User with this email already exists!");
         }
 
-        _logger.LogInformation("Persisting instance to database..");
+        _logger.LogInformation("The user is allowed to create.");
+
+        _logger.LogInformation("Persisting user data to the database…");
 
         await _uow.UserRepository.CreateAsync(user, cancellationToken);
-        await _uow.Outbox.EnqueueAsync(user.Events, correlationId, cancellationToken);
+        await _uow.Outbox.EnqueueAsync(user.Events, _correlation.CorrelationId, cancellationToken);
         await _uow.CommitAsync(cancellationToken);
+
+        _logger.LogInformation("User data successfully persisted.");
+        
+        _logger.LogInformation("Dispatching user creation notification…");
+
+        await _uow.Notification.DispatchAsync(user.Events, cancellationToken);
+
+        _logger.LogInformation("Notification dispatched successfully.");
+
         user.ClearEvents();
 
         _logger.LogInformation("User successfully created with Id: {Id}.", user.Id.ToString());
