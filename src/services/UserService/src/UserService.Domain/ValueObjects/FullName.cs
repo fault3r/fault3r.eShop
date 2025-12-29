@@ -72,4 +72,7 @@ public sealed class FullName : ValueObject<FullName>
         yield return FirstName;
         yield return LastName;
     }
+
+    // EFCore
+    private FullName() { }
 }
