@@ -17,24 +17,21 @@ public sealed class SignUpUserService : ISignUpUserService
 {
     private readonly IUnitOfWork _uow;
     private readonly IUserDomainService _userService;
+    private readonly ICorrelationContext _correlation;
     private readonly IPasswordHasher _hasher;
     private readonly ILogger<SignUpUserService> _logger;
 
     public SignUpUserService(
         IUnitOfWork unitOfWork,
         IUserDomainService userDomainService,
+        ICorrelationContext correlation,
         IPasswordHasher passwordHasher,
         ILogger<SignUpUserService> logger)
     {
-        _uow = unitOfWork
-            ?? throw new ArgumentNullException(nameof(unitOfWork));
-
-        _userService = userDomainService
-            ?? throw new ArgumentNullException(nameof(userDomainService));
-
-        _hasher = passwordHasher
-            ?? throw new ArgumentNullException(nameof(passwordHasher));
-
+        _uow = unitOfWork;
+        _userService = userDomainService;
+        _correlation = correlation;
+        _hasher = passwordHasher;
         _logger = logger;
     }
 
@@ -42,10 +39,9 @@ public sealed class SignUpUserService : ISignUpUserService
         string email,
         string password,
         string fullName,
-        string correlationId,
         CancellationToken cancellationToken = default)
     {
-        _logger.LogInformation("Executing service for Email: {Email}..", email.Trim());
+        _logger.LogInformation("Executing service..");
 
         User user;
         Email vEmail;

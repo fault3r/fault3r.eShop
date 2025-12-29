@@ -1,5 +1,6 @@
 
 using System;
+using UserService.Application.Interfaces;
 using UserService.Infrastructure.Exceptions.CrossCutting;
 
 namespace UserService.Infrastructure.CrossCutting;
@@ -14,8 +15,7 @@ public sealed class CorrelationContext : ICorrelationContext
         get => asyncLocalId.Value
             ?? throw new CorrelationIdUnsetException();
     }
-        
-
+    
     public void Set(string correlationId)
     {
         ArgumentException.ThrowIfNullOrEmpty(correlationId);

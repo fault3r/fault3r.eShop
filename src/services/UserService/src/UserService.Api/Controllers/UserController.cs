@@ -9,7 +9,7 @@ namespace UserService.Api.Controllers;
 
 [ApiController]
 [Route("api/user")]
-public class UserController(IMediator mediator) : ControllerBase
+public sealed class UserController(IMediator mediator) : ControllerBase
 {
     private readonly IMediator _mediator = mediator;
 

@@ -18,41 +18,40 @@ public class SignUpUserCommandHandler
 
     public SignUpUserCommandHandler(
         ISignUpUserService signUpUserService,
-        IValidator<SignUpUserCommand> validator,
+        IValidator<SignUpUserCommand> validator,        
         ILogger<SignUpUserCommandHandler> logger)
     {
-        _signUpService = signUpUserService
-            ?? throw new ArgumentNullException(nameof(signUpUserService));
-
-        _validator = validator
-            ?? throw new ArgumentNullException(nameof(validator));
-
+        _signUpService = signUpUserService;
+        _validator = validator;
+        
         _logger = logger;
     }
 
-    public async Task<Result<User>> Handle(SignUpUserCommand request, CancellationToken cancellationToken)
+    public async Task<Result<User>> Handle(
+        SignUpUserCommand request,
+        CancellationToken cancellationToken = default)
     {
-        _logger.LogInformation("Handling request..");
+        ArgumentNullException.ThrowIfNull(request);
+        
+        _logger.LogInformation("Handling request for {Email} email..", request.Email.Trim());
 
         var validation = await _validator.ValidateAsync(request, cancellationToken);
-        
+
         if (!validation.IsValid)
         {
             var errors = string.Join(" - ", validation.Errors.Select(e => e.ErrorMessage));
 
-            _logger.LogWarning("Validation failed with the following errors: {Errors}!", errors);
+            _logger.LogWarning("Validation failed: {Errors}!", errors);
 
             return Result<User>.Failure($"Validation failed: {errors}!");
         }
 
-        var result = await _signUpService
-            .ExecuteAsync(
-                request.Email,
-                request.Password,
-                request.FullName,
-                request.CorrelationId,
-                cancellationToken
-            );
+        var result = await _signUpService.ExecuteAsync(
+            request.Email,
+            request.Password,
+            request.FullName,
+            cancellationToken
+        );
 
         _logger.LogInformation("Request handled successfully.");
 
