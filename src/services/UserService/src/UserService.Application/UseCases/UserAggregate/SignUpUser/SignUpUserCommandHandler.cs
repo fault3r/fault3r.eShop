@@ -9,23 +9,15 @@ using UserService.Domain.Common;
 
 namespace UserService.Application.UseCases.UserAggregate.SignUpUser;
 
-public class SignUpUserCommandHandler
-    : IRequestHandler<SignUpUserCommand, Result<User>>
+public class SignUpUserCommandHandler(
+    ISignUpUserService signUpUserService,
+    IValidator<SignUpUserCommand> validator,
+    ILogger<SignUpUserCommandHandler> logger)
+        : IRequestHandler<SignUpUserCommand, Result<User>>
 {
-    private readonly ISignUpUserService _signUpService;
-    private readonly IValidator<SignUpUserCommand> _validator;
-    private readonly ILogger<SignUpUserCommandHandler> _logger;
-
-    public SignUpUserCommandHandler(
-        ISignUpUserService signUpUserService,
-        IValidator<SignUpUserCommand> validator,        
-        ILogger<SignUpUserCommandHandler> logger)
-    {
-        _signUpService = signUpUserService;
-        _validator = validator;
-        
-        _logger = logger;
-    }
+    private readonly ISignUpUserService _signUpService = signUpUserService;
+    private readonly IValidator<SignUpUserCommand> _validator = validator;
+    private readonly ILogger<SignUpUserCommandHandler> _logger = logger;
 
     public async Task<Result<User>> Handle(
         SignUpUserCommand request,
@@ -33,7 +25,7 @@ public class SignUpUserCommandHandler
     {
         ArgumentNullException.ThrowIfNull(request);
         
-        _logger.LogInformation("Handling request for {Email} email..", request.Email.Trim());
+        _logger.LogInformation("Handling request..");
 
         var validation = await _validator.ValidateAsync(request, cancellationToken);
 

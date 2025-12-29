@@ -10,45 +10,38 @@ using UserService.Domain.ValueObjects;
 using Microsoft.Extensions.Logging;
 using UserService.Domain.Interfaces;
 using UserService.Application.Security;
+using UserService.Application.CrossCutting;
 
 namespace UserService.Application.UseCases.UserAggregate.SignUpUser;
 
-public sealed class SignUpUserService : ISignUpUserService
+public sealed class SignUpUserService(
+    IUnitOfWork unitOfWork,
+    IUserDomainService userDomainService,
+    ICorrelationContext correlation,
+    IPasswordHasher passwordHasher,
+    ILogger<SignUpUserService> logger)
+        : ISignUpUserService
 {
-    private readonly IUnitOfWork _uow;
-    private readonly IUserDomainService _userService;
-    private readonly ICorrelationContext _correlation;
-    private readonly IPasswordHasher _hasher;
-    private readonly ILogger<SignUpUserService> _logger;
-
-    public SignUpUserService(
-        IUnitOfWork unitOfWork,
-        IUserDomainService userDomainService,
-        ICorrelationContext correlation,
-        IPasswordHasher passwordHasher,
-        ILogger<SignUpUserService> logger)
-    {
-        _uow = unitOfWork;
-        _userService = userDomainService;
-        _correlation = correlation;
-        _hasher = passwordHasher;
-        _logger = logger;
-    }
+    private readonly IUnitOfWork _uow = unitOfWork;
+    private readonly IUserDomainService _userService = userDomainService;
+    private readonly ICorrelationContext _correlation = correlation;
+    private readonly IPasswordHasher _hasher = passwordHasher;
+    private readonly ILogger<SignUpUserService> _logger = logger;
 
     public async Task<Result<User>> ExecuteAsync(
         string email,
         string password,
         string fullName,
         CancellationToken cancellationToken = default)
-    {
-        _logger.LogInformation("Executing service..");
-
+    {        
         User user;
         Email vEmail;
         PasswordHash vPasswordHash;
         FullName vFullName;
         try
         {
+            _logger.LogInformation("Creating user for '{Email}' email..", email.Trim());
+            
             vEmail = Email.From(email);
 
             string hashed = _hasher.Hash(password);
@@ -58,18 +51,19 @@ public sealed class SignUpUserService : ISignUpUserService
 
             user = UserFactory.Create(vEmail, vPasswordHash, vFullName);
 
-            _logger.LogInformation("Instance created successfully..");
+            _logger.LogInformation("User instance created successfully.");
         }
         catch (DomainException ex)
         {
-            _logger.LogWarning("Domain validation failed with the following exception: {Exception}!", ex.Message);
+            _logger.LogWarning("Domain validation failed: {Error}!", ex.Message);
 
-            return Result<User>.Failure($"Sign up failed: {ex.Message}!");
+            return Result<User>.Failure($"Validation failed: {ex.Message}!");
         }
 
-        _logger.LogInformation("Checking email exists..");
+        _logger.LogInformation("Checking whether the user can be created..");
 
         var canCreate = await _userService.CanCreateAsync(vEmail, cancellationToken);
+
         if (!canCreate)
         {
             _logger.LogWarning("User with this email already exists!");

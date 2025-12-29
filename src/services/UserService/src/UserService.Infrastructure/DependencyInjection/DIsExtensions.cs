@@ -3,6 +3,7 @@ using System;
 using FluentValidation;
 using MediatR;
 using Microsoft.Extensions.DependencyInjection;
+using UserService.Application.CrossCutting;
 using UserService.Application.Interfaces;
 using UserService.Application.Messaging;
 using UserService.Application.Security;
