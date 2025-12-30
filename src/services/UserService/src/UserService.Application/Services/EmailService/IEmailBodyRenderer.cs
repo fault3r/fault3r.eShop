@@ -5,9 +5,9 @@ namespace UserService.Application.Services.EmailService;
 
 public interface IEmailBodyRenderer
 {
-    Task<string> RenderAsync(
+    Task<string> RenderAsync<T>(
         string template,
-        object model,
+        T model,
         CancellationToken cancellationToken = default
     );
 }

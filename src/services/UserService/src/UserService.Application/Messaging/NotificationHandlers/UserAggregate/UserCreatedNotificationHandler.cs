@@ -2,15 +2,27 @@
 using System;
 using MediatR;
 using UserService.Application.Messaging.Notifications.UserAggregate;
+using UserService.Application.Services.EmailService;
+using UserService.Application.Services.EmailService.EmailTemplateModels;
 
 namespace UserService.Application.Messaging.NotificationHandlers.UserAggregate;
 
-public sealed class UserCreatedNotificationHandler
-    : INotificationHandler<UserCreatedNotification>
+public sealed class UserCreatedNotificationHandler(
+    IEmailTemplateResolver resolver,
+    IEmailBodyRenderer renderer,
+    IEmailSender sender)
+        : INotificationHandler<UserCreatedNotification>
 {
-    public Task Handle(UserCreatedNotification notification, CancellationToken cancellationToken)
+    private readonly IEmailTemplateResolver _resolver = resolver;
+    private readonly IEmailBodyRenderer _renderer = renderer;
+    private readonly IEmailSender _sender = sender;
+
+    public async Task Handle(UserCreatedNotification notification, CancellationToken cancellationToken)
     {
-        //send welcome email
-        throw new NotImplementedException();
+        var template = await _resolver.ResolveAsync(EmailTemplateType.Welcome, cancellationToken);
+        var model = new WelcomeModel(notification.FullName);
+        var body = await _renderer.RenderAsync(template, model, cancellationToken);
+
+        await _sender.SendAsync(notification.Email, "Wewlcome", body, cancellationToken);
     }
 }

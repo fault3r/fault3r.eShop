@@ -6,16 +6,10 @@ using UserService.Domain.ValueObjects;
 
 namespace UserService.Domain.DomainServices;
 
-public class UserDomainService : IUserDomainService
+public class UserDomainService(IUserRepository userRepository)
+    : IUserDomainService
 {
-    private readonly IUserRepository _userRepository;
-
-    public UserDomainService(IUserRepository userRepository)
-    {
-        ArgumentNullException.ThrowIfNull(userRepository);
-
-        _userRepository = userRepository;
-    }
+    private readonly IUserRepository _userRepository = userRepository;
 
     public async Task<bool> CanCreateAsync(
         Email email,

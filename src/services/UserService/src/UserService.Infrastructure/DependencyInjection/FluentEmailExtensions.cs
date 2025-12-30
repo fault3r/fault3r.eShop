@@ -2,6 +2,7 @@
 using System;
 using System.Net;
 using System.Net.Mail;
+using FluentEmail.Razor;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using UserService.Application.Services.EmailService;
@@ -41,8 +42,9 @@ public static class FluentEmailExtensions
                         password: setting.Password
                     ),
                 }
-            )
-            .AddRazorRenderer();
+            );
+        
+        services.AddSingleton<RazorRenderer>();
 
         services.AddSingleton<IEmailTemplateResolver>(provider =>
         {

@@ -1,0 +1,390 @@
+[2025-12-29 20:39:00 INF] 33d6f083-cce1-4a0b-9d7e-7cfc42d559a8  Incoming request POST /api/user/signup. 
+ [2025-12-29 20:39:00 INF] 33d6f083-cce1-4a0b-9d7e-7cfc42d559a8 UserService.Application.UseCases.UserAggregate.SignUpUser.SignUpUserCommandHandler Handling request… 
+ [2025-12-29 20:39:00 INF] 33d6f083-cce1-4a0b-9d7e-7cfc42d559a8 UserService.Application.UseCases.UserAggregate.SignUpUser.SignUpUserService Creating user with 'hamed.damaavandi@gmail.com' email address.. 
+ [2025-12-29 20:39:02 INF] 33d6f083-cce1-4a0b-9d7e-7cfc42d559a8 UserService.Application.UseCases.UserAggregate.SignUpUser.SignUpUserService User instance created successfully. 
+ [2025-12-29 20:39:02 INF] 33d6f083-cce1-4a0b-9d7e-7cfc42d559a8 UserService.Application.UseCases.UserAggregate.SignUpUser.SignUpUserService Checking whether the user can be created… 
+ [2025-12-29 20:39:04 INF] 33d6f083-cce1-4a0b-9d7e-7cfc42d559a8 UserService.Application.UseCases.UserAggregate.SignUpUser.SignUpUserService The user is allowed to create. 
+ [2025-12-29 20:39:04 INF] 33d6f083-cce1-4a0b-9d7e-7cfc42d559a8 UserService.Application.UseCases.UserAggregate.SignUpUser.SignUpUserService Persisting user data to the database… 
+ [2025-12-29 20:39:05 INF] 33d6f083-cce1-4a0b-9d7e-7cfc42d559a8 UserService.Application.UseCases.UserAggregate.SignUpUser.SignUpUserService User data successfully persisted. 
+ [2025-12-29 20:39:05 INF] 33d6f083-cce1-4a0b-9d7e-7cfc42d559a8 UserService.Application.UseCases.UserAggregate.SignUpUser.SignUpUserService Dispatching user creation notification… 
+ [2025-12-29 20:39:05 ERR] 33d6f083-cce1-4a0b-9d7e-7cfc42d559a8  Unhandled exception occurred while processing POST /api/user/signup. 
+ RazorLight.RazorLightException: Can't load metadata reference from the entry assembly. Make sure PreserveCompilationContext is set to true in *.csproj file
+   at RazorLight.Compilation.DefaultMetadataReferenceManager.Resolve(Assembly assembly, DependencyContext dependencyContext)
+   at RazorLight.Compilation.DefaultMetadataReferenceManager.Resolve(Assembly assembly)
+   at RazorLight.Compilation.RoslynCompilationService.EnsureOptions()
+   at RazorLight.Compilation.RoslynCompilationService.get_ParseOptions()
+   at RazorLight.Compilation.RoslynCompilationService.CreateSyntaxTree(SourceText sourceText)
+   at RazorLight.Compilation.RoslynCompilationService.CreateCompilation(String compilationContent, String assemblyName)
+   at RazorLight.Compilation.RoslynCompilationService.CompileAndEmit(IGeneratedRazorTemplate razorTemplate)
+   at RazorLight.Compilation.RazorTemplateCompiler.CompileAndEmitAsync(RazorLightProjectItem projectItem)
+   at RazorLight.Compilation.RazorTemplateCompiler.OnCacheMissAsync(String templateKey)
+   at RazorLight.Compilation.RazorTemplateCompiler.OnCacheMissAsync(String templateKey)
+   at RazorLight.EngineHandler.CompileTemplateAsync(String key)
+   at RazorLight.EngineHandler.CompileRenderAsync[T](String key, T model, ExpandoObject viewBag)
+   at UserService.Infrastructure.Services.EmailService.FluentEmailRazorBodyRenderer.RenderAsync(String template, Object model, CancellationToken cancellationToken) in /home/hamed-damavandi/Documents/fault3r.eShop/src/services/UserService/src/UserService.Infrastructure/Services/EmailService/FluentEmailRazorBodyRenderer.cs:line 20
+   at UserService.Application.Messaging.NotificationHandlers.UserAggregate.UserCreatedNotificationHandler.Handle(UserCreatedNotification notification, CancellationToken cancellationToken) in /home/hamed-damavandi/Documents/fault3r.eShop/src/services/UserService/src/UserService.Application/Messaging/NotificationHandlers/UserAggregate/UserCreatedNotificationHandler.cs:line 24
+   at MediatR.Mediator.PublishCore(IEnumerable`1 allHandlers, INotification notification, CancellationToken cancellationToken)
+   at UserService.Infrastructure.Messaging.Notification.MediatorDomainNotification.DispatchAsync(IEnumerable`1 events, CancellationToken cancellationToken) in /home/hamed-damavandi/Documents/fault3r.eShop/src/services/UserService/src/UserService.Infrastructure/Messaging/Notification/MediatorDomainNotification.cs:line 38
+   at UserService.Application.UseCases.UserAggregate.SignUpUser.SignUpUserService.ExecuteAsync(String email, String password, String fullName, CancellationToken cancellationToken) in /home/hamed-damavandi/Documents/fault3r.eShop/src/services/UserService/src/UserService.Application/UseCases/UserAggregate/SignUpUser/SignUpUserService.cs:line 90
+   at UserService.Application.UseCases.UserAggregate.SignUpUser.SignUpUserCommandHandler.Handle(SignUpUserCommand request, CancellationToken cancellationToken) in /home/hamed-damavandi/Documents/fault3r.eShop/src/services/UserService/src/UserService.Application/UseCases/UserAggregate/SignUpUser/SignUpUserCommandHandler.cs:line 41
+   at MediatR.Pipeline.RequestExceptionProcessorBehavior`2.Handle(TRequest request, RequestHandlerDelegate`1 next, CancellationToken cancellationToken)
+   at MediatR.Pipeline.RequestExceptionProcessorBehavior`2.Handle(TRequest request, RequestHandlerDelegate`1 next, CancellationToken cancellationToken)
+   at MediatR.Pipeline.RequestExceptionActionProcessorBehavior`2.Handle(TRequest request, RequestHandlerDelegate`1 next, CancellationToken cancellationToken)
+   at MediatR.Pipeline.RequestExceptionActionProcessorBehavior`2.Handle(TRequest request, RequestHandlerDelegate`1 next, CancellationToken cancellationToken)
+   at MediatR.Pipeline.RequestPostProcessorBehavior`2.Handle(TRequest request, RequestHandlerDelegate`1 next, CancellationToken cancellationToken)
+   at MediatR.Pipeline.RequestPreProcessorBehavior`2.Handle(TRequest request, RequestHandlerDelegate`1 next, CancellationToken cancellationToken)
+   at UserService.Api.Controllers.UserController.SignUp(SignUpUserDto request) in /home/hamed-damavandi/Documents/fault3r.eShop/src/services/UserService/src/UserService.Api/Controllers/UserController.cs:line 28
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ActionMethodExecutor.TaskOfIActionResultExecutor.Execute(ActionContext actionContext, IActionResultTypeMapper mapper, ObjectMethodExecutor executor, Object controller, Object[] arguments)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeActionMethodAsync>g__Awaited|12_0(ControllerActionInvoker invoker, ValueTask`1 actionResultValueTask)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeNextActionFilterAsync>g__Awaited|10_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Rethrow(ActionExecutedContextSealed context)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeInnerFilterAsync>g__Awaited|13_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeFilterPipelineAsync>g__Awaited|20_0(ResourceInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Swashbuckle.AspNetCore.SwaggerUI.SwaggerUIMiddleware.Invoke(HttpContext httpContext)
+   at Swashbuckle.AspNetCore.Swagger.SwaggerMiddleware.Invoke(HttpContext httpContext, ISwaggerProvider swaggerProvider)
+   at UserService.Api.Middlewares.ExceptionHandlingMiddleware.InvokeAsync(HttpContext context) in /home/hamed-damavandi/Documents/fault3r.eShop/src/services/UserService/src/UserService.Api/Middlewares/ExceptionHandlingMiddleware.cs:line 26
+[2025-12-29 20:39:05 INF] 33d6f083-cce1-4a0b-9d7e-7cfc42d559a8  Completed request POST /api/user/signup with status code 500. 
+ [2025-12-29 20:40:32 INF] 0b6c6b3f-0604-4dc0-9e30-f552dc8e45bd  Incoming request POST /api/user/signup. 
+ [2025-12-29 20:40:33 INF] 0b6c6b3f-0604-4dc0-9e30-f552dc8e45bd UserService.Application.UseCases.UserAggregate.SignUpUser.SignUpUserCommandHandler Handling request… 
+ [2025-12-29 20:40:33 INF] 0b6c6b3f-0604-4dc0-9e30-f552dc8e45bd UserService.Application.UseCases.UserAggregate.SignUpUser.SignUpUserService Creating user with 'hamed.damaavandi@gmail.com' email address.. 
+ [2025-12-29 20:40:33 INF] 0b6c6b3f-0604-4dc0-9e30-f552dc8e45bd UserService.Application.UseCases.UserAggregate.SignUpUser.SignUpUserService User instance created successfully. 
+ [2025-12-29 20:40:33 INF] 0b6c6b3f-0604-4dc0-9e30-f552dc8e45bd UserService.Application.UseCases.UserAggregate.SignUpUser.SignUpUserService Checking whether the user can be created… 
+ [2025-12-29 20:40:35 WRN] 0b6c6b3f-0604-4dc0-9e30-f552dc8e45bd UserService.Application.UseCases.UserAggregate.SignUpUser.SignUpUserService User with this email already exists! 
+ [2025-12-29 20:40:35 INF] 0b6c6b3f-0604-4dc0-9e30-f552dc8e45bd UserService.Application.UseCases.UserAggregate.SignUpUser.SignUpUserCommandHandler Request handled successfully. 
+ [2025-12-29 20:40:35 INF] 0b6c6b3f-0604-4dc0-9e30-f552dc8e45bd  Completed request POST /api/user/signup with status code 409. 
+ [2025-12-29 20:41:10 INF] f463fdfe-8de3-4301-a078-a05e211c346d  Incoming request POST /api/user/signup. 
+ [2025-12-29 20:41:10 INF] f463fdfe-8de3-4301-a078-a05e211c346d UserService.Application.UseCases.UserAggregate.SignUpUser.SignUpUserCommandHandler Handling request… 
+ [2025-12-29 20:41:10 INF] f463fdfe-8de3-4301-a078-a05e211c346d UserService.Application.UseCases.UserAggregate.SignUpUser.SignUpUserService Creating user with 'hamed.damaavandi@gmail.com' email address.. 
+ [2025-12-29 20:41:11 INF] f463fdfe-8de3-4301-a078-a05e211c346d UserService.Application.UseCases.UserAggregate.SignUpUser.SignUpUserService User instance created successfully. 
+ [2025-12-29 20:41:11 INF] f463fdfe-8de3-4301-a078-a05e211c346d UserService.Application.UseCases.UserAggregate.SignUpUser.SignUpUserService Checking whether the user can be created… 
+ [2025-12-29 20:41:11 INF] f463fdfe-8de3-4301-a078-a05e211c346d UserService.Application.UseCases.UserAggregate.SignUpUser.SignUpUserService The user is allowed to create. 
+ [2025-12-29 20:41:11 INF] f463fdfe-8de3-4301-a078-a05e211c346d UserService.Application.UseCases.UserAggregate.SignUpUser.SignUpUserService Persisting user data to the database… 
+ [2025-12-29 20:41:11 INF] f463fdfe-8de3-4301-a078-a05e211c346d UserService.Application.UseCases.UserAggregate.SignUpUser.SignUpUserService User data successfully persisted. 
+ [2025-12-29 20:41:11 INF] f463fdfe-8de3-4301-a078-a05e211c346d UserService.Application.UseCases.UserAggregate.SignUpUser.SignUpUserService Dispatching user creation notification… 
+ [2025-12-29 20:41:12 ERR] f463fdfe-8de3-4301-a078-a05e211c346d  Unhandled exception occurred while processing POST /api/user/signup. 
+ RazorLight.RazorLightException: Can't load metadata reference from the entry assembly. Make sure PreserveCompilationContext is set to true in *.csproj file
+   at RazorLight.Compilation.DefaultMetadataReferenceManager.Resolve(Assembly assembly, DependencyContext dependencyContext)
+   at RazorLight.Compilation.DefaultMetadataReferenceManager.Resolve(Assembly assembly)
+   at RazorLight.Compilation.RoslynCompilationService.EnsureOptions()
+   at RazorLight.Compilation.RoslynCompilationService.get_ParseOptions()
+   at RazorLight.Compilation.RoslynCompilationService.CreateSyntaxTree(SourceText sourceText)
+   at RazorLight.Compilation.RoslynCompilationService.CreateCompilation(String compilationContent, String assemblyName)
+   at RazorLight.Compilation.RoslynCompilationService.CompileAndEmit(IGeneratedRazorTemplate razorTemplate)
+   at RazorLight.Compilation.RazorTemplateCompiler.CompileAndEmitAsync(RazorLightProjectItem projectItem)
+   at RazorLight.Compilation.RazorTemplateCompiler.OnCacheMissAsync(String templateKey)
+   at RazorLight.Compilation.RazorTemplateCompiler.OnCacheMissAsync(String templateKey)
+   at RazorLight.EngineHandler.CompileTemplateAsync(String key)
+   at RazorLight.EngineHandler.CompileRenderAsync[T](String key, T model, ExpandoObject viewBag)
+   at UserService.Infrastructure.Services.EmailService.FluentEmailRazorBodyRenderer.RenderAsync(String template, Object model, CancellationToken cancellationToken) in /home/hamed-damavandi/Documents/fault3r.eShop/src/services/UserService/src/UserService.Infrastructure/Services/EmailService/FluentEmailRazorBodyRenderer.cs:line 20
+   at UserService.Application.Messaging.NotificationHandlers.UserAggregate.UserCreatedNotificationHandler.Handle(UserCreatedNotification notification, CancellationToken cancellationToken) in /home/hamed-damavandi/Documents/fault3r.eShop/src/services/UserService/src/UserService.Application/Messaging/NotificationHandlers/UserAggregate/UserCreatedNotificationHandler.cs:line 24
+   at MediatR.Mediator.PublishCore(IEnumerable`1 allHandlers, INotification notification, CancellationToken cancellationToken)
+   at UserService.Infrastructure.Messaging.Notification.MediatorDomainNotification.DispatchAsync(IEnumerable`1 events, CancellationToken cancellationToken) in /home/hamed-damavandi/Documents/fault3r.eShop/src/services/UserService/src/UserService.Infrastructure/Messaging/Notification/MediatorDomainNotification.cs:line 38
+   at UserService.Application.UseCases.UserAggregate.SignUpUser.SignUpUserService.ExecuteAsync(String email, String password, String fullName, CancellationToken cancellationToken) in /home/hamed-damavandi/Documents/fault3r.eShop/src/services/UserService/src/UserService.Application/UseCases/UserAggregate/SignUpUser/SignUpUserService.cs:line 90
+   at UserService.Application.UseCases.UserAggregate.SignUpUser.SignUpUserCommandHandler.Handle(SignUpUserCommand request, CancellationToken cancellationToken) in /home/hamed-damavandi/Documents/fault3r.eShop/src/services/UserService/src/UserService.Application/UseCases/UserAggregate/SignUpUser/SignUpUserCommandHandler.cs:line 41
+   at MediatR.Pipeline.RequestExceptionProcessorBehavior`2.Handle(TRequest request, RequestHandlerDelegate`1 next, CancellationToken cancellationToken)
+   at MediatR.Pipeline.RequestExceptionProcessorBehavior`2.Handle(TRequest request, RequestHandlerDelegate`1 next, CancellationToken cancellationToken)
+   at MediatR.Pipeline.RequestExceptionActionProcessorBehavior`2.Handle(TRequest request, RequestHandlerDelegate`1 next, CancellationToken cancellationToken)
+   at MediatR.Pipeline.RequestExceptionActionProcessorBehavior`2.Handle(TRequest request, RequestHandlerDelegate`1 next, CancellationToken cancellationToken)
+   at MediatR.Pipeline.RequestPostProcessorBehavior`2.Handle(TRequest request, RequestHandlerDelegate`1 next, CancellationToken cancellationToken)
+   at MediatR.Pipeline.RequestPreProcessorBehavior`2.Handle(TRequest request, RequestHandlerDelegate`1 next, CancellationToken cancellationToken)
+   at UserService.Api.Controllers.UserController.SignUp(SignUpUserDto request) in /home/hamed-damavandi/Documents/fault3r.eShop/src/services/UserService/src/UserService.Api/Controllers/UserController.cs:line 28
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ActionMethodExecutor.TaskOfIActionResultExecutor.Execute(ActionContext actionContext, IActionResultTypeMapper mapper, ObjectMethodExecutor executor, Object controller, Object[] arguments)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeActionMethodAsync>g__Awaited|12_0(ControllerActionInvoker invoker, ValueTask`1 actionResultValueTask)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeNextActionFilterAsync>g__Awaited|10_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Rethrow(ActionExecutedContextSealed context)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeInnerFilterAsync>g__Awaited|13_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeFilterPipelineAsync>g__Awaited|20_0(ResourceInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Swashbuckle.AspNetCore.SwaggerUI.SwaggerUIMiddleware.Invoke(HttpContext httpContext)
+   at Swashbuckle.AspNetCore.Swagger.SwaggerMiddleware.Invoke(HttpContext httpContext, ISwaggerProvider swaggerProvider)
+   at UserService.Api.Middlewares.ExceptionHandlingMiddleware.InvokeAsync(HttpContext context) in /home/hamed-damavandi/Documents/fault3r.eShop/src/services/UserService/src/UserService.Api/Middlewares/ExceptionHandlingMiddleware.cs:line 26
+[2025-12-29 20:41:12 INF] f463fdfe-8de3-4301-a078-a05e211c346d  Completed request POST /api/user/signup with status code 500. 
+ [2025-12-29 20:44:46 INF] 2b2f2945-5ca5-4315-a0c9-bfcf508296bd  Incoming request POST /api/user/signup. 
+ [2025-12-29 20:44:47 INF] 2b2f2945-5ca5-4315-a0c9-bfcf508296bd UserService.Application.UseCases.UserAggregate.SignUpUser.SignUpUserCommandHandler Handling request… 
+ [2025-12-29 20:44:47 INF] 2b2f2945-5ca5-4315-a0c9-bfcf508296bd UserService.Application.UseCases.UserAggregate.SignUpUser.SignUpUserService Creating user with 'hamed.damaavandi@gmail.com' email address.. 
+ [2025-12-29 20:44:47 INF] 2b2f2945-5ca5-4315-a0c9-bfcf508296bd UserService.Application.UseCases.UserAggregate.SignUpUser.SignUpUserService User instance created successfully. 
+ [2025-12-29 20:44:47 INF] 2b2f2945-5ca5-4315-a0c9-bfcf508296bd UserService.Application.UseCases.UserAggregate.SignUpUser.SignUpUserService Checking whether the user can be created… 
+ [2025-12-29 20:44:49 INF] 2b2f2945-5ca5-4315-a0c9-bfcf508296bd UserService.Application.UseCases.UserAggregate.SignUpUser.SignUpUserService The user is allowed to create. 
+ [2025-12-29 20:44:49 INF] 2b2f2945-5ca5-4315-a0c9-bfcf508296bd UserService.Application.UseCases.UserAggregate.SignUpUser.SignUpUserService Persisting user data to the database… 
+ [2025-12-29 20:44:50 INF] 2b2f2945-5ca5-4315-a0c9-bfcf508296bd UserService.Application.UseCases.UserAggregate.SignUpUser.SignUpUserService User data successfully persisted. 
+ [2025-12-29 20:44:50 INF] 2b2f2945-5ca5-4315-a0c9-bfcf508296bd UserService.Application.UseCases.UserAggregate.SignUpUser.SignUpUserService Dispatching user creation notification… 
+ [2025-12-29 20:44:50 ERR] 2b2f2945-5ca5-4315-a0c9-bfcf508296bd  Unhandled exception occurred while processing POST /api/user/signup. 
+ RazorLight.RazorLightException: Can't load metadata reference from the entry assembly. Make sure PreserveCompilationContext is set to true in *.csproj file
+   at RazorLight.Compilation.DefaultMetadataReferenceManager.Resolve(Assembly assembly, DependencyContext dependencyContext)
+   at RazorLight.Compilation.DefaultMetadataReferenceManager.Resolve(Assembly assembly)
+   at RazorLight.Compilation.RoslynCompilationService.EnsureOptions()
+   at RazorLight.Compilation.RoslynCompilationService.get_ParseOptions()
+   at RazorLight.Compilation.RoslynCompilationService.CreateSyntaxTree(SourceText sourceText)
+   at RazorLight.Compilation.RoslynCompilationService.CreateCompilation(String compilationContent, String assemblyName)
+   at RazorLight.Compilation.RoslynCompilationService.CompileAndEmit(IGeneratedRazorTemplate razorTemplate)
+   at RazorLight.Compilation.RazorTemplateCompiler.CompileAndEmitAsync(RazorLightProjectItem projectItem)
+   at RazorLight.Compilation.RazorTemplateCompiler.OnCacheMissAsync(String templateKey)
+   at RazorLight.Compilation.RazorTemplateCompiler.OnCacheMissAsync(String templateKey)
+   at RazorLight.EngineHandler.CompileTemplateAsync(String key)
+   at RazorLight.EngineHandler.CompileRenderAsync[T](String key, T model, ExpandoObject viewBag)
+   at UserService.Infrastructure.Services.EmailService.FluentEmailRazorBodyRenderer.RenderAsync(String template, Object model, CancellationToken cancellationToken) in /home/hamed-damavandi/Documents/fault3r.eShop/src/services/UserService/src/UserService.Infrastructure/Services/EmailService/FluentEmailRazorBodyRenderer.cs:line 20
+   at UserService.Application.Messaging.NotificationHandlers.UserAggregate.UserCreatedNotificationHandler.Handle(UserCreatedNotification notification, CancellationToken cancellationToken) in /home/hamed-damavandi/Documents/fault3r.eShop/src/services/UserService/src/UserService.Application/Messaging/NotificationHandlers/UserAggregate/UserCreatedNotificationHandler.cs:line 24
+   at MediatR.Mediator.PublishCore(IEnumerable`1 allHandlers, INotification notification, CancellationToken cancellationToken)
+   at UserService.Infrastructure.Messaging.Notification.MediatorDomainNotification.DispatchAsync(IEnumerable`1 events, CancellationToken cancellationToken) in /home/hamed-damavandi/Documents/fault3r.eShop/src/services/UserService/src/UserService.Infrastructure/Messaging/Notification/MediatorDomainNotification.cs:line 38
+   at UserService.Application.UseCases.UserAggregate.SignUpUser.SignUpUserService.ExecuteAsync(String email, String password, String fullName, CancellationToken cancellationToken) in /home/hamed-damavandi/Documents/fault3r.eShop/src/services/UserService/src/UserService.Application/UseCases/UserAggregate/SignUpUser/SignUpUserService.cs:line 90
+   at UserService.Application.UseCases.UserAggregate.SignUpUser.SignUpUserCommandHandler.Handle(SignUpUserCommand request, CancellationToken cancellationToken) in /home/hamed-damavandi/Documents/fault3r.eShop/src/services/UserService/src/UserService.Application/UseCases/UserAggregate/SignUpUser/SignUpUserCommandHandler.cs:line 41
+   at MediatR.Pipeline.RequestExceptionProcessorBehavior`2.Handle(TRequest request, RequestHandlerDelegate`1 next, CancellationToken cancellationToken)
+   at MediatR.Pipeline.RequestExceptionProcessorBehavior`2.Handle(TRequest request, RequestHandlerDelegate`1 next, CancellationToken cancellationToken)
+   at MediatR.Pipeline.RequestExceptionActionProcessorBehavior`2.Handle(TRequest request, RequestHandlerDelegate`1 next, CancellationToken cancellationToken)
+   at MediatR.Pipeline.RequestExceptionActionProcessorBehavior`2.Handle(TRequest request, RequestHandlerDelegate`1 next, CancellationToken cancellationToken)
+   at MediatR.Pipeline.RequestPostProcessorBehavior`2.Handle(TRequest request, RequestHandlerDelegate`1 next, CancellationToken cancellationToken)
+   at MediatR.Pipeline.RequestPreProcessorBehavior`2.Handle(TRequest request, RequestHandlerDelegate`1 next, CancellationToken cancellationToken)
+   at UserService.Api.Controllers.UserController.SignUp(SignUpUserDto request) in /home/hamed-damavandi/Documents/fault3r.eShop/src/services/UserService/src/UserService.Api/Controllers/UserController.cs:line 28
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ActionMethodExecutor.TaskOfIActionResultExecutor.Execute(ActionContext actionContext, IActionResultTypeMapper mapper, ObjectMethodExecutor executor, Object controller, Object[] arguments)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeActionMethodAsync>g__Awaited|12_0(ControllerActionInvoker invoker, ValueTask`1 actionResultValueTask)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeNextActionFilterAsync>g__Awaited|10_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Rethrow(ActionExecutedContextSealed context)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeInnerFilterAsync>g__Awaited|13_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeFilterPipelineAsync>g__Awaited|20_0(ResourceInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Swashbuckle.AspNetCore.SwaggerUI.SwaggerUIMiddleware.Invoke(HttpContext httpContext)
+   at Swashbuckle.AspNetCore.Swagger.SwaggerMiddleware.Invoke(HttpContext httpContext, ISwaggerProvider swaggerProvider)
+   at UserService.Api.Middlewares.ExceptionHandlingMiddleware.InvokeAsync(HttpContext context) in /home/hamed-damavandi/Documents/fault3r.eShop/src/services/UserService/src/UserService.Api/Middlewares/ExceptionHandlingMiddleware.cs:line 26
+[2025-12-29 20:44:50 INF] 2b2f2945-5ca5-4315-a0c9-bfcf508296bd  Completed request POST /api/user/signup with status code 500. 
+ [2025-12-29 21:00:45 INF] b3892d45-672f-4d3b-aa4b-17a4a2ff2d5e  Incoming request GET /. 
+ [2025-12-29 21:00:45 INF] b3892d45-672f-4d3b-aa4b-17a4a2ff2d5e  Completed request GET / with status code 200. 
+ [2025-12-29 21:00:45 INF] 043a5f64-79db-4ed3-a476-b0ef0c7dd510  Incoming request GET /favicon.ico. 
+ [2025-12-29 21:00:45 INF] 043a5f64-79db-4ed3-a476-b0ef0c7dd510  Completed request GET /favicon.ico with status code 404. 
+ [2025-12-29 21:00:48 INF] 6ae49cc8-86c3-4ac6-8886-03775c44fb20  Incoming request GET /swagger/index.html. 
+ [2025-12-29 21:00:49 INF] 6ae49cc8-86c3-4ac6-8886-03775c44fb20  Completed request GET /swagger/index.html with status code 200. 
+ [2025-12-29 21:00:49 INF] abc11f58-cdd9-465e-8052-e0320a7b0fc5  Incoming request GET /swagger/swagger-ui.css. 
+ [2025-12-29 21:00:49 INF] abc11f58-cdd9-465e-8052-e0320a7b0fc5  Completed request GET /swagger/swagger-ui.css with status code 200. 
+ [2025-12-29 21:00:49 INF] d0fdca8c-28b1-4b6f-9bfd-beec2cb4aacc  Incoming request GET /swagger/favicon-32x32.png. 
+ [2025-12-29 21:00:49 INF] d0fdca8c-28b1-4b6f-9bfd-beec2cb4aacc  Completed request GET /swagger/favicon-32x32.png with status code 200. 
+ [2025-12-29 21:00:49 INF] a5f4d663-5daa-4972-a349-1fd9e0d05ce3  Incoming request GET /swagger/v1/swagger.json. 
+ [2025-12-29 21:00:49 INF] a5f4d663-5daa-4972-a349-1fd9e0d05ce3  Completed request GET /swagger/v1/swagger.json with status code 200. 
+ [2025-12-29 21:01:23 INF] f6a28d39-dc64-4a03-93a9-ff632aee6299  Incoming request POST /api/user/signup. 
+ [2025-12-29 21:01:24 INF] f6a28d39-dc64-4a03-93a9-ff632aee6299 UserService.Application.UseCases.UserAggregate.SignUpUser.SignUpUserCommandHandler Handling request… 
+ [2025-12-29 21:01:24 INF] f6a28d39-dc64-4a03-93a9-ff632aee6299 UserService.Application.UseCases.UserAggregate.SignUpUser.SignUpUserService Creating user with 'hamed.damaavandi@gmail.com' email address.. 
+ [2025-12-29 21:01:25 INF] f6a28d39-dc64-4a03-93a9-ff632aee6299 UserService.Application.UseCases.UserAggregate.SignUpUser.SignUpUserService User instance created successfully. 
+ [2025-12-29 21:01:25 INF] f6a28d39-dc64-4a03-93a9-ff632aee6299 UserService.Application.UseCases.UserAggregate.SignUpUser.SignUpUserService Checking whether the user can be created… 
+ [2025-12-29 21:01:26 INF] f6a28d39-dc64-4a03-93a9-ff632aee6299 UserService.Application.UseCases.UserAggregate.SignUpUser.SignUpUserService The user is allowed to create. 
+ [2025-12-29 21:01:26 INF] f6a28d39-dc64-4a03-93a9-ff632aee6299 UserService.Application.UseCases.UserAggregate.SignUpUser.SignUpUserService Persisting user data to the database… 
+ [2025-12-29 21:01:27 INF] f6a28d39-dc64-4a03-93a9-ff632aee6299 UserService.Application.UseCases.UserAggregate.SignUpUser.SignUpUserService User data successfully persisted. 
+ [2025-12-29 21:01:27 INF] f6a28d39-dc64-4a03-93a9-ff632aee6299 UserService.Application.UseCases.UserAggregate.SignUpUser.SignUpUserService Dispatching user creation notification… 
+ [2025-12-29 21:01:27 ERR] f6a28d39-dc64-4a03-93a9-ff632aee6299  Unhandled exception occurred while processing POST /api/user/signup. 
+ RazorLight.RazorLightException: Can't load metadata reference from the entry assembly. Make sure PreserveCompilationContext is set to true in *.csproj file
+   at RazorLight.Compilation.DefaultMetadataReferenceManager.Resolve(Assembly assembly, DependencyContext dependencyContext)
+   at RazorLight.Compilation.DefaultMetadataReferenceManager.Resolve(Assembly assembly)
+   at RazorLight.Compilation.RoslynCompilationService.EnsureOptions()
+   at RazorLight.Compilation.RoslynCompilationService.get_ParseOptions()
+   at RazorLight.Compilation.RoslynCompilationService.CreateSyntaxTree(SourceText sourceText)
+   at RazorLight.Compilation.RoslynCompilationService.CreateCompilation(String compilationContent, String assemblyName)
+   at RazorLight.Compilation.RoslynCompilationService.CompileAndEmit(IGeneratedRazorTemplate razorTemplate)
+   at RazorLight.Compilation.RazorTemplateCompiler.CompileAndEmit(RazorLightProjectItem projectItem)
+   at RazorLight.Compilation.RazorTemplateCompiler.OnCacheMissAsync(String templateKey)
+--- End of stack trace from previous location ---
+   at RazorLight.EngineHandler.CompileTemplateAsync(String key)
+   at RazorLight.EngineHandler.CompileRenderAsync[T](String key, T model, ExpandoObject viewBag)
+   at UserService.Infrastructure.Services.EmailService.FluentEmailRazorBodyRenderer.RenderAsync(String template, Object model, CancellationToken cancellationToken) in /home/hamed-damavandi/Documents/fault3r.eShop/src/services/UserService/src/UserService.Infrastructure/Services/EmailService/FluentEmailRazorBodyRenderer.cs:line 20
+   at UserService.Application.Messaging.NotificationHandlers.UserAggregate.UserCreatedNotificationHandler.Handle(UserCreatedNotification notification, CancellationToken cancellationToken) in /home/hamed-damavandi/Documents/fault3r.eShop/src/services/UserService/src/UserService.Application/Messaging/NotificationHandlers/UserAggregate/UserCreatedNotificationHandler.cs:line 24
+   at MediatR.Mediator.PublishCore(IEnumerable`1 allHandlers, INotification notification, CancellationToken cancellationToken)
+   at UserService.Infrastructure.Messaging.Notification.MediatorDomainNotification.DispatchAsync(IEnumerable`1 events, CancellationToken cancellationToken) in /home/hamed-damavandi/Documents/fault3r.eShop/src/services/UserService/src/UserService.Infrastructure/Messaging/Notification/MediatorDomainNotification.cs:line 38
+   at UserService.Application.UseCases.UserAggregate.SignUpUser.SignUpUserService.ExecuteAsync(String email, String password, String fullName, CancellationToken cancellationToken) in /home/hamed-damavandi/Documents/fault3r.eShop/src/services/UserService/src/UserService.Application/UseCases/UserAggregate/SignUpUser/SignUpUserService.cs:line 90
+   at UserService.Application.UseCases.UserAggregate.SignUpUser.SignUpUserCommandHandler.Handle(SignUpUserCommand request, CancellationToken cancellationToken) in /home/hamed-damavandi/Documents/fault3r.eShop/src/services/UserService/src/UserService.Application/UseCases/UserAggregate/SignUpUser/SignUpUserCommandHandler.cs:line 41
+   at MediatR.Pipeline.RequestExceptionProcessorBehavior`2.Handle(TRequest request, RequestHandlerDelegate`1 next, CancellationToken cancellationToken)
+   at MediatR.Pipeline.RequestExceptionProcessorBehavior`2.Handle(TRequest request, RequestHandlerDelegate`1 next, CancellationToken cancellationToken)
+   at MediatR.Pipeline.RequestExceptionActionProcessorBehavior`2.Handle(TRequest request, RequestHandlerDelegate`1 next, CancellationToken cancellationToken)
+   at MediatR.Pipeline.RequestExceptionActionProcessorBehavior`2.Handle(TRequest request, RequestHandlerDelegate`1 next, CancellationToken cancellationToken)
+   at MediatR.Pipeline.RequestPostProcessorBehavior`2.Handle(TRequest request, RequestHandlerDelegate`1 next, CancellationToken cancellationToken)
+   at MediatR.Pipeline.RequestPreProcessorBehavior`2.Handle(TRequest request, RequestHandlerDelegate`1 next, CancellationToken cancellationToken)
+   at UserService.Api.Controllers.UserController.SignUp(SignUpUserDto request) in /home/hamed-damavandi/Documents/fault3r.eShop/src/services/UserService/src/UserService.Api/Controllers/UserController.cs:line 28
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ActionMethodExecutor.TaskOfIActionResultExecutor.Execute(ActionContext actionContext, IActionResultTypeMapper mapper, ObjectMethodExecutor executor, Object controller, Object[] arguments)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeActionMethodAsync>g__Awaited|12_0(ControllerActionInvoker invoker, ValueTask`1 actionResultValueTask)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeNextActionFilterAsync>g__Awaited|10_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Rethrow(ActionExecutedContextSealed context)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeInnerFilterAsync>g__Awaited|13_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeFilterPipelineAsync>g__Awaited|20_0(ResourceInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Swashbuckle.AspNetCore.SwaggerUI.SwaggerUIMiddleware.Invoke(HttpContext httpContext)
+   at Swashbuckle.AspNetCore.Swagger.SwaggerMiddleware.Invoke(HttpContext httpContext, ISwaggerProvider swaggerProvider)
+   at UserService.Api.Middlewares.ExceptionHandlingMiddleware.InvokeAsync(HttpContext context) in /home/hamed-damavandi/Documents/fault3r.eShop/src/services/UserService/src/UserService.Api/Middlewares/ExceptionHandlingMiddleware.cs:line 26
+[2025-12-29 21:01:27 INF] f6a28d39-dc64-4a03-93a9-ff632aee6299  Completed request POST /api/user/signup with status code 500. 
+ [2025-12-29 21:03:07 INF] 89ef4c70-183c-4684-b530-e2d7b4020c2c  Incoming request GET /. 
+ [2025-12-29 21:03:08 INF] 89ef4c70-183c-4684-b530-e2d7b4020c2c  Completed request GET / with status code 200. 
+ [2025-12-29 21:03:08 INF] 1c676763-e4dc-47ce-969b-fc5abbb3b348  Incoming request GET /favicon.ico. 
+ [2025-12-29 21:03:08 INF] 1c676763-e4dc-47ce-969b-fc5abbb3b348  Completed request GET /favicon.ico with status code 404. 
+ [2025-12-29 21:03:10 INF] e7839e27-4ea1-465d-936a-0ca0c3165468  Incoming request GET /swagger/index.html. 
+ [2025-12-29 21:03:10 INF] e7839e27-4ea1-465d-936a-0ca0c3165468  Completed request GET /swagger/index.html with status code 200. 
+ [2025-12-29 21:03:10 INF] 2ed15bce-a494-42ce-9e05-e4fad20b6e01  Incoming request GET /swagger/swagger-ui.css. 
+ [2025-12-29 21:03:10 INF] 2ed15bce-a494-42ce-9e05-e4fad20b6e01  Completed request GET /swagger/swagger-ui.css with status code 200. 
+ [2025-12-29 21:03:10 INF] 15f5d959-6d6b-4456-85e5-27cb3beed8a6  Incoming request GET /swagger/v1/swagger.json. 
+ [2025-12-29 21:03:10 INF] 15f5d959-6d6b-4456-85e5-27cb3beed8a6  Completed request GET /swagger/v1/swagger.json with status code 200. 
+ [2025-12-29 21:03:25 INF] 437bb8d7-a98c-4dae-bb6b-fd1742e6c981  Incoming request POST /api/user/signup. 
+ [2025-12-29 21:03:26 INF] 437bb8d7-a98c-4dae-bb6b-fd1742e6c981 UserService.Application.UseCases.UserAggregate.SignUpUser.SignUpUserCommandHandler Handling request… 
+ [2025-12-29 21:03:26 INF] 437bb8d7-a98c-4dae-bb6b-fd1742e6c981 UserService.Application.UseCases.UserAggregate.SignUpUser.SignUpUserService Creating user with 'strin@dfg.co' email address.. 
+ [2025-12-29 21:03:27 INF] 437bb8d7-a98c-4dae-bb6b-fd1742e6c981 UserService.Application.UseCases.UserAggregate.SignUpUser.SignUpUserService User instance created successfully. 
+ [2025-12-29 21:03:27 INF] 437bb8d7-a98c-4dae-bb6b-fd1742e6c981 UserService.Application.UseCases.UserAggregate.SignUpUser.SignUpUserService Checking whether the user can be created… 
+ [2025-12-29 21:03:29 INF] 437bb8d7-a98c-4dae-bb6b-fd1742e6c981 UserService.Application.UseCases.UserAggregate.SignUpUser.SignUpUserService The user is allowed to create. 
+ [2025-12-29 21:03:29 INF] 437bb8d7-a98c-4dae-bb6b-fd1742e6c981 UserService.Application.UseCases.UserAggregate.SignUpUser.SignUpUserService Persisting user data to the database… 
+ [2025-12-29 21:03:29 INF] 437bb8d7-a98c-4dae-bb6b-fd1742e6c981 UserService.Application.UseCases.UserAggregate.SignUpUser.SignUpUserService User data successfully persisted. 
+ [2025-12-29 21:03:29 INF] 437bb8d7-a98c-4dae-bb6b-fd1742e6c981 UserService.Application.UseCases.UserAggregate.SignUpUser.SignUpUserService Dispatching user creation notification… 
+ [2025-12-29 21:03:30 ERR] 437bb8d7-a98c-4dae-bb6b-fd1742e6c981  Unhandled exception occurred while processing POST /api/user/signup. 
+ RazorLight.RazorLightException: Can't load metadata reference from the entry assembly. Make sure PreserveCompilationContext is set to true in *.csproj file
+   at RazorLight.Compilation.DefaultMetadataReferenceManager.Resolve(Assembly assembly, DependencyContext dependencyContext)
+   at RazorLight.Compilation.DefaultMetadataReferenceManager.Resolve(Assembly assembly)
+   at RazorLight.Compilation.RoslynCompilationService.EnsureOptions()
+   at RazorLight.Compilation.RoslynCompilationService.get_ParseOptions()
+   at RazorLight.Compilation.RoslynCompilationService.CreateSyntaxTree(SourceText sourceText)
+   at RazorLight.Compilation.RoslynCompilationService.CreateCompilation(String compilationContent, String assemblyName)
+   at RazorLight.Compilation.RoslynCompilationService.CompileAndEmit(IGeneratedRazorTemplate razorTemplate)
+   at RazorLight.Compilation.RazorTemplateCompiler.CompileAndEmit(RazorLightProjectItem projectItem)
+   at RazorLight.Compilation.RazorTemplateCompiler.OnCacheMissAsync(String templateKey)
+--- End of stack trace from previous location ---
+   at RazorLight.EngineHandler.CompileTemplateAsync(String key)
+   at RazorLight.EngineHandler.CompileRenderAsync[T](String key, T model, ExpandoObject viewBag)
+   at UserService.Infrastructure.Services.EmailService.FluentEmailRazorBodyRenderer.RenderAsync(String template, Object model, CancellationToken cancellationToken) in /home/hamed-damavandi/Documents/fault3r.eShop/src/services/UserService/src/UserService.Infrastructure/Services/EmailService/FluentEmailRazorBodyRenderer.cs:line 20
+   at UserService.Application.Messaging.NotificationHandlers.UserAggregate.UserCreatedNotificationHandler.Handle(UserCreatedNotification notification, CancellationToken cancellationToken) in /home/hamed-damavandi/Documents/fault3r.eShop/src/services/UserService/src/UserService.Application/Messaging/NotificationHandlers/UserAggregate/UserCreatedNotificationHandler.cs:line 24
+   at MediatR.Mediator.PublishCore(IEnumerable`1 allHandlers, INotification notification, CancellationToken cancellationToken)
+   at UserService.Infrastructure.Messaging.Notification.MediatorDomainNotification.DispatchAsync(IEnumerable`1 events, CancellationToken cancellationToken) in /home/hamed-damavandi/Documents/fault3r.eShop/src/services/UserService/src/UserService.Infrastructure/Messaging/Notification/MediatorDomainNotification.cs:line 38
+   at UserService.Application.UseCases.UserAggregate.SignUpUser.SignUpUserService.ExecuteAsync(String email, String password, String fullName, CancellationToken cancellationToken) in /home/hamed-damavandi/Documents/fault3r.eShop/src/services/UserService/src/UserService.Application/UseCases/UserAggregate/SignUpUser/SignUpUserService.cs:line 90
+   at UserService.Application.UseCases.UserAggregate.SignUpUser.SignUpUserCommandHandler.Handle(SignUpUserCommand request, CancellationToken cancellationToken) in /home/hamed-damavandi/Documents/fault3r.eShop/src/services/UserService/src/UserService.Application/UseCases/UserAggregate/SignUpUser/SignUpUserCommandHandler.cs:line 41
+   at MediatR.Pipeline.RequestExceptionProcessorBehavior`2.Handle(TRequest request, RequestHandlerDelegate`1 next, CancellationToken cancellationToken)
+   at MediatR.Pipeline.RequestExceptionProcessorBehavior`2.Handle(TRequest request, RequestHandlerDelegate`1 next, CancellationToken cancellationToken)
+   at MediatR.Pipeline.RequestExceptionActionProcessorBehavior`2.Handle(TRequest request, RequestHandlerDelegate`1 next, CancellationToken cancellationToken)
+   at MediatR.Pipeline.RequestExceptionActionProcessorBehavior`2.Handle(TRequest request, RequestHandlerDelegate`1 next, CancellationToken cancellationToken)
+   at MediatR.Pipeline.RequestPostProcessorBehavior`2.Handle(TRequest request, RequestHandlerDelegate`1 next, CancellationToken cancellationToken)
+   at MediatR.Pipeline.RequestPreProcessorBehavior`2.Handle(TRequest request, RequestHandlerDelegate`1 next, CancellationToken cancellationToken)
+   at UserService.Api.Controllers.UserController.SignUp(SignUpUserDto request) in /home/hamed-damavandi/Documents/fault3r.eShop/src/services/UserService/src/UserService.Api/Controllers/UserController.cs:line 28
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ActionMethodExecutor.TaskOfIActionResultExecutor.Execute(ActionContext actionContext, IActionResultTypeMapper mapper, ObjectMethodExecutor executor, Object controller, Object[] arguments)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeActionMethodAsync>g__Awaited|12_0(ControllerActionInvoker invoker, ValueTask`1 actionResultValueTask)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeNextActionFilterAsync>g__Awaited|10_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Rethrow(ActionExecutedContextSealed context)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeInnerFilterAsync>g__Awaited|13_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeFilterPipelineAsync>g__Awaited|20_0(ResourceInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Swashbuckle.AspNetCore.SwaggerUI.SwaggerUIMiddleware.Invoke(HttpContext httpContext)
+   at Swashbuckle.AspNetCore.Swagger.SwaggerMiddleware.Invoke(HttpContext httpContext, ISwaggerProvider swaggerProvider)
+   at UserService.Api.Middlewares.ExceptionHandlingMiddleware.InvokeAsync(HttpContext context) in /home/hamed-damavandi/Documents/fault3r.eShop/src/services/UserService/src/UserService.Api/Middlewares/ExceptionHandlingMiddleware.cs:line 26
+[2025-12-29 21:03:30 INF] 437bb8d7-a98c-4dae-bb6b-fd1742e6c981  Completed request POST /api/user/signup with status code 500. 
+ [2025-12-29 21:05:20 INF] ac1e40dd-2d59-4f5b-aa5e-a2cc8c8d8cc5  Incoming request GET /. 
+ [2025-12-29 21:05:20 INF] ac1e40dd-2d59-4f5b-aa5e-a2cc8c8d8cc5  Completed request GET / with status code 200. 
+ [2025-12-29 21:05:22 INF] b6f5bb6a-96e9-43ab-813a-228156dbfd16  Incoming request GET /swagger/index.html. 
+ [2025-12-29 21:05:22 INF] b6f5bb6a-96e9-43ab-813a-228156dbfd16  Completed request GET /swagger/index.html with status code 200. 
+ [2025-12-29 21:05:23 INF] a724c122-b3d4-499f-b153-46e5f229ed2f  Incoming request GET /swagger/favicon-32x32.png. 
+ [2025-12-29 21:05:23 INF] a724c122-b3d4-499f-b153-46e5f229ed2f  Completed request GET /swagger/favicon-32x32.png with status code 200. 
+ [2025-12-29 21:05:23 INF] 78ab8447-707d-4abc-947e-5af686d0d40d  Incoming request GET /swagger/v1/swagger.json. 
+ [2025-12-29 21:05:23 INF] 78ab8447-707d-4abc-947e-5af686d0d40d  Completed request GET /swagger/v1/swagger.json with status code 200. 
+ [2025-12-29 21:05:34 INF] 483d4e85-71b8-426d-a8ed-e5267481f83d  Incoming request POST /api/user/signup. 
+ [2025-12-29 21:05:34 INF] 483d4e85-71b8-426d-a8ed-e5267481f83d UserService.Application.UseCases.UserAggregate.SignUpUser.SignUpUserCommandHandler Handling request… 
+ [2025-12-29 21:05:34 INF] 483d4e85-71b8-426d-a8ed-e5267481f83d UserService.Application.UseCases.UserAggregate.SignUpUser.SignUpUserService Creating user with 'str@sdfsdf.voing' email address.. 
+ [2025-12-29 21:05:35 INF] 483d4e85-71b8-426d-a8ed-e5267481f83d UserService.Application.UseCases.UserAggregate.SignUpUser.SignUpUserService User instance created successfully. 
+ [2025-12-29 21:05:35 INF] 483d4e85-71b8-426d-a8ed-e5267481f83d UserService.Application.UseCases.UserAggregate.SignUpUser.SignUpUserService Checking whether the user can be created… 
+ [2025-12-29 21:05:37 INF] 483d4e85-71b8-426d-a8ed-e5267481f83d UserService.Application.UseCases.UserAggregate.SignUpUser.SignUpUserService The user is allowed to create. 
+ [2025-12-29 21:05:37 INF] 483d4e85-71b8-426d-a8ed-e5267481f83d UserService.Application.UseCases.UserAggregate.SignUpUser.SignUpUserService Persisting user data to the database… 
+ [2025-12-29 21:05:37 INF] 483d4e85-71b8-426d-a8ed-e5267481f83d UserService.Application.UseCases.UserAggregate.SignUpUser.SignUpUserService User data successfully persisted. 
+ [2025-12-29 21:05:37 INF] 483d4e85-71b8-426d-a8ed-e5267481f83d UserService.Application.UseCases.UserAggregate.SignUpUser.SignUpUserService Dispatching user creation notification… 
+ [2025-12-29 21:05:38 ERR] 483d4e85-71b8-426d-a8ed-e5267481f83d  Unhandled exception occurred while processing POST /api/user/signup. 
+ RazorLight.RazorLightException: Can't load metadata reference from the entry assembly. Make sure PreserveCompilationContext is set to true in *.csproj file
+   at RazorLight.Compilation.DefaultMetadataReferenceManager.Resolve(Assembly assembly, DependencyContext dependencyContext)
+   at RazorLight.Compilation.DefaultMetadataReferenceManager.Resolve(Assembly assembly)
+   at RazorLight.Compilation.RoslynCompilationService.EnsureOptions()
+   at RazorLight.Compilation.RoslynCompilationService.get_ParseOptions()
+   at RazorLight.Compilation.RoslynCompilationService.CreateSyntaxTree(SourceText sourceText)
+   at RazorLight.Compilation.RoslynCompilationService.CreateCompilation(String compilationContent, String assemblyName)
+   at RazorLight.Compilation.RoslynCompilationService.CompileAndEmit(IGeneratedRazorTemplate razorTemplate)
+   at RazorLight.Compilation.RazorTemplateCompiler.CompileAndEmit(RazorLightProjectItem projectItem)
+   at RazorLight.Compilation.RazorTemplateCompiler.OnCacheMissAsync(String templateKey)
+--- End of stack trace from previous location ---
+   at RazorLight.EngineHandler.CompileTemplateAsync(String key)
+   at RazorLight.EngineHandler.CompileRenderAsync[T](String key, T model, ExpandoObject viewBag)
+   at UserService.Infrastructure.Services.EmailService.FluentEmailRazorBodyRenderer.RenderAsync(String template, Object model, CancellationToken cancellationToken) in /home/hamed-damavandi/Documents/fault3r.eShop/src/services/UserService/src/UserService.Infrastructure/Services/EmailService/FluentEmailRazorBodyRenderer.cs:line 20
+   at UserService.Application.Messaging.NotificationHandlers.UserAggregate.UserCreatedNotificationHandler.Handle(UserCreatedNotification notification, CancellationToken cancellationToken) in /home/hamed-damavandi/Documents/fault3r.eShop/src/services/UserService/src/UserService.Application/Messaging/NotificationHandlers/UserAggregate/UserCreatedNotificationHandler.cs:line 24
+   at MediatR.Mediator.PublishCore(IEnumerable`1 allHandlers, INotification notification, CancellationToken cancellationToken)
+   at UserService.Infrastructure.Messaging.Notification.MediatorDomainNotification.DispatchAsync(IEnumerable`1 events, CancellationToken cancellationToken) in /home/hamed-damavandi/Documents/fault3r.eShop/src/services/UserService/src/UserService.Infrastructure/Messaging/Notification/MediatorDomainNotification.cs:line 38
+   at UserService.Application.UseCases.UserAggregate.SignUpUser.SignUpUserService.ExecuteAsync(String email, String password, String fullName, CancellationToken cancellationToken) in /home/hamed-damavandi/Documents/fault3r.eShop/src/services/UserService/src/UserService.Application/UseCases/UserAggregate/SignUpUser/SignUpUserService.cs:line 90
+   at UserService.Application.UseCases.UserAggregate.SignUpUser.SignUpUserCommandHandler.Handle(SignUpUserCommand request, CancellationToken cancellationToken) in /home/hamed-damavandi/Documents/fault3r.eShop/src/services/UserService/src/UserService.Application/UseCases/UserAggregate/SignUpUser/SignUpUserCommandHandler.cs:line 41
+   at MediatR.Pipeline.RequestExceptionProcessorBehavior`2.Handle(TRequest request, RequestHandlerDelegate`1 next, CancellationToken cancellationToken)
+   at MediatR.Pipeline.RequestExceptionProcessorBehavior`2.Handle(TRequest request, RequestHandlerDelegate`1 next, CancellationToken cancellationToken)
+   at MediatR.Pipeline.RequestExceptionActionProcessorBehavior`2.Handle(TRequest request, RequestHandlerDelegate`1 next, CancellationToken cancellationToken)
+   at MediatR.Pipeline.RequestExceptionActionProcessorBehavior`2.Handle(TRequest request, RequestHandlerDelegate`1 next, CancellationToken cancellationToken)
+   at MediatR.Pipeline.RequestPostProcessorBehavior`2.Handle(TRequest request, RequestHandlerDelegate`1 next, CancellationToken cancellationToken)
+   at MediatR.Pipeline.RequestPreProcessorBehavior`2.Handle(TRequest request, RequestHandlerDelegate`1 next, CancellationToken cancellationToken)
+   at UserService.Api.Controllers.UserController.SignUp(SignUpUserDto request) in /home/hamed-damavandi/Documents/fault3r.eShop/src/services/UserService/src/UserService.Api/Controllers/UserController.cs:line 28
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ActionMethodExecutor.TaskOfIActionResultExecutor.Execute(ActionContext actionContext, IActionResultTypeMapper mapper, ObjectMethodExecutor executor, Object controller, Object[] arguments)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeActionMethodAsync>g__Awaited|12_0(ControllerActionInvoker invoker, ValueTask`1 actionResultValueTask)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeNextActionFilterAsync>g__Awaited|10_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Rethrow(ActionExecutedContextSealed context)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeInnerFilterAsync>g__Awaited|13_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeFilterPipelineAsync>g__Awaited|20_0(ResourceInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Swashbuckle.AspNetCore.SwaggerUI.SwaggerUIMiddleware.Invoke(HttpContext httpContext)
+   at Swashbuckle.AspNetCore.Swagger.SwaggerMiddleware.Invoke(HttpContext httpContext, ISwaggerProvider swaggerProvider)
+   at UserService.Api.Middlewares.ExceptionHandlingMiddleware.InvokeAsync(HttpContext context) in /home/hamed-damavandi/Documents/fault3r.eShop/src/services/UserService/src/UserService.Api/Middlewares/ExceptionHandlingMiddleware.cs:line 26
+[2025-12-29 21:05:38 INF] 483d4e85-71b8-426d-a8ed-e5267481f83d  Completed request POST /api/user/signup with status code 500. 
+ [2025-12-29 21:07:33 INF] e478ee5e-94d6-479c-97bd-ddfe71e3bbe0  Incoming request GET /swagger/index.html. 
+ [2025-12-29 21:07:33 INF] e478ee5e-94d6-479c-97bd-ddfe71e3bbe0  Completed request GET /swagger/index.html with status code 200. 
+ [2025-12-29 21:07:34 INF] dd7f46c5-8248-4595-bae9-8ef80bd1c29c  Incoming request GET /swagger/v1/swagger.json. 
+ [2025-12-29 21:07:34 INF] dd7f46c5-8248-4595-bae9-8ef80bd1c29c  Completed request GET /swagger/v1/swagger.json with status code 200. 
+ [2025-12-29 21:07:36 INF] 297739cb-44e6-4754-a655-26adbae1babd  Incoming request GET /swagger/index.html. 
+ [2025-12-29 21:07:36 INF] 297739cb-44e6-4754-a655-26adbae1babd  Completed request GET /swagger/index.html with status code 200. 
+ [2025-12-29 21:07:37 INF] 293e5704-25ec-4653-b8ed-cacda5b0d92c  Incoming request GET /swagger/v1/swagger.json. 
+ [2025-12-29 21:07:37 INF] 293e5704-25ec-4653-b8ed-cacda5b0d92c  Completed request GET /swagger/v1/swagger.json with status code 200. 
+ [2025-12-29 21:07:48 INF] b31f97bb-8727-41d7-b030-01d15e41d54f  Incoming request POST /api/user/signup. 
+ [2025-12-29 21:07:48 INF] b31f97bb-8727-41d7-b030-01d15e41d54f UserService.Application.UseCases.UserAggregate.SignUpUser.SignUpUserCommandHandler Handling request… 
+ [2025-12-29 21:07:48 INF] b31f97bb-8727-41d7-b030-01d15e41d54f UserService.Application.UseCases.UserAggregate.SignUpUser.SignUpUserService Creating user with 'strin@asdf.vg' email address.. 
+ [2025-12-29 21:07:49 INF] b31f97bb-8727-41d7-b030-01d15e41d54f UserService.Application.UseCases.UserAggregate.SignUpUser.SignUpUserService User instance created successfully. 
+ [2025-12-29 21:07:49 INF] b31f97bb-8727-41d7-b030-01d15e41d54f UserService.Application.UseCases.UserAggregate.SignUpUser.SignUpUserService Checking whether the user can be created… 
+ [2025-12-29 21:07:52 INF] b31f97bb-8727-41d7-b030-01d15e41d54f UserService.Application.UseCases.UserAggregate.SignUpUser.SignUpUserService The user is allowed to create. 
+ [2025-12-29 21:07:52 INF] b31f97bb-8727-41d7-b030-01d15e41d54f UserService.Application.UseCases.UserAggregate.SignUpUser.SignUpUserService Persisting user data to the database… 
+ [2025-12-29 21:07:53 INF] b31f97bb-8727-41d7-b030-01d15e41d54f UserService.Application.UseCases.UserAggregate.SignUpUser.SignUpUserService User data successfully persisted. 
+ [2025-12-29 21:07:53 INF] b31f97bb-8727-41d7-b030-01d15e41d54f UserService.Application.UseCases.UserAggregate.SignUpUser.SignUpUserService Dispatching user creation notification… 
+ [2025-12-29 21:07:53 ERR] b31f97bb-8727-41d7-b030-01d15e41d54f  Unhandled exception occurred while processing POST /api/user/signup. 
+ RazorLight.RazorLightException: Can't load metadata reference from the entry assembly. Make sure PreserveCompilationContext is set to true in *.csproj file
+   at RazorLight.Compilation.DefaultMetadataReferenceManager.Resolve(Assembly assembly, DependencyContext dependencyContext)
+   at RazorLight.Compilation.DefaultMetadataReferenceManager.Resolve(Assembly assembly)
+   at RazorLight.Compilation.RoslynCompilationService.EnsureOptions()
+   at RazorLight.Compilation.RoslynCompilationService.get_ParseOptions()
+   at RazorLight.Compilation.RoslynCompilationService.CreateSyntaxTree(SourceText sourceText)
+   at RazorLight.Compilation.RoslynCompilationService.CreateCompilation(String compilationContent, String assemblyName)
+   at RazorLight.Compilation.RoslynCompilationService.CompileAndEmit(IGeneratedRazorTemplate razorTemplate)
+   at RazorLight.Compilation.RazorTemplateCompiler.CompileAndEmit(RazorLightProjectItem projectItem)
+   at RazorLight.Compilation.RazorTemplateCompiler.OnCacheMissAsync(String templateKey)
+--- End of stack trace from previous location ---
+   at RazorLight.EngineHandler.CompileTemplateAsync(String key)
+   at RazorLight.EngineHandler.CompileRenderAsync[T](String key, T model, ExpandoObject viewBag)
+   at UserService.Infrastructure.Services.EmailService.FluentEmailRazorBodyRenderer.RenderAsync(String template, Object model, CancellationToken cancellationToken) in /home/hamed-damavandi/Documents/fault3r.eShop/src/services/UserService/src/UserService.Infrastructure/Services/EmailService/FluentEmailRazorBodyRenderer.cs:line 20
+   at UserService.Application.Messaging.NotificationHandlers.UserAggregate.UserCreatedNotificationHandler.Handle(UserCreatedNotification notification, CancellationToken cancellationToken) in /home/hamed-damavandi/Documents/fault3r.eShop/src/services/UserService/src/UserService.Application/Messaging/NotificationHandlers/UserAggregate/UserCreatedNotificationHandler.cs:line 24
+   at MediatR.Mediator.PublishCore(IEnumerable`1 allHandlers, INotification notification, CancellationToken cancellationToken)
+   at UserService.Infrastructure.Messaging.Notification.MediatorDomainNotification.DispatchAsync(IEnumerable`1 events, CancellationToken cancellationToken) in /home/hamed-damavandi/Documents/fault3r.eShop/src/services/UserService/src/UserService.Infrastructure/Messaging/Notification/MediatorDomainNotification.cs:line 38
+   at UserService.Application.UseCases.UserAggregate.SignUpUser.SignUpUserService.ExecuteAsync(String email, String password, String fullName, CancellationToken cancellationToken) in /home/hamed-damavandi/Documents/fault3r.eShop/src/services/UserService/src/UserService.Application/UseCases/UserAggregate/SignUpUser/SignUpUserService.cs:line 90
+   at UserService.Application.UseCases.UserAggregate.SignUpUser.SignUpUserCommandHandler.Handle(SignUpUserCommand request, CancellationToken cancellationToken) in /home/hamed-damavandi/Documents/fault3r.eShop/src/services/UserService/src/UserService.Application/UseCases/UserAggregate/SignUpUser/SignUpUserCommandHandler.cs:line 41
+   at MediatR.Pipeline.RequestExceptionProcessorBehavior`2.Handle(TRequest request, RequestHandlerDelegate`1 next, CancellationToken cancellationToken)
+   at MediatR.Pipeline.RequestExceptionProcessorBehavior`2.Handle(TRequest request, RequestHandlerDelegate`1 next, CancellationToken cancellationToken)
+   at MediatR.Pipeline.RequestExceptionActionProcessorBehavior`2.Handle(TRequest request, RequestHandlerDelegate`1 next, CancellationToken cancellationToken)
+   at MediatR.Pipeline.RequestExceptionActionProcessorBehavior`2.Handle(TRequest request, RequestHandlerDelegate`1 next, CancellationToken cancellationToken)
+   at MediatR.Pipeline.RequestPostProcessorBehavior`2.Handle(TRequest request, RequestHandlerDelegate`1 next, CancellationToken cancellationToken)
+   at MediatR.Pipeline.RequestPreProcessorBehavior`2.Handle(TRequest request, RequestHandlerDelegate`1 next, CancellationToken cancellationToken)
+   at UserService.Api.Controllers.UserController.SignUp(SignUpUserDto request) in /home/hamed-damavandi/Documents/fault3r.eShop/src/services/UserService/src/UserService.Api/Controllers/UserController.cs:line 28
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ActionMethodExecutor.TaskOfIActionResultExecutor.Execute(ActionContext actionContext, IActionResultTypeMapper mapper, ObjectMethodExecutor executor, Object controller, Object[] arguments)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeActionMethodAsync>g__Awaited|12_0(ControllerActionInvoker invoker, ValueTask`1 actionResultValueTask)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeNextActionFilterAsync>g__Awaited|10_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Rethrow(ActionExecutedContextSealed context)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeInnerFilterAsync>g__Awaited|13_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeFilterPipelineAsync>g__Awaited|20_0(ResourceInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Swashbuckle.AspNetCore.SwaggerUI.SwaggerUIMiddleware.Invoke(HttpContext httpContext)
+   at Swashbuckle.AspNetCore.Swagger.SwaggerMiddleware.Invoke(HttpContext httpContext, ISwaggerProvider swaggerProvider)
+   at UserService.Api.Middlewares.ExceptionHandlingMiddleware.InvokeAsync(HttpContext context) in /home/hamed-damavandi/Documents/fault3r.eShop/src/services/UserService/src/UserService.Api/Middlewares/ExceptionHandlingMiddleware.cs:line 26
+[2025-12-29 21:07:53 INF] b31f97bb-8727-41d7-b030-01d15e41d54f  Completed request POST /api/user/signup with status code 500. 
+ 

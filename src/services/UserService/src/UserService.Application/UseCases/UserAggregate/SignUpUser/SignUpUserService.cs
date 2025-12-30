@@ -44,7 +44,7 @@ public sealed class SignUpUserService(
         FullName vFullName;
         try
         {
-            _logger.LogInformation("Creating user with '{Email}' email..", email.Trim());
+            _logger.LogInformation("Creating user with '{Email}' email address..", email.Trim());
             
             vEmail = Email.From(email);
 
@@ -93,7 +93,7 @@ public sealed class SignUpUserService(
 
         user.ClearEvents();
 
-        _logger.LogInformation("User successfully created with Id: {Id}.", user.Id.ToString());
+        _logger.LogInformation("User successfully created with '{Id}' identity.", user.Id.ToString());
 
         return Result<User>.Success(user);
     }
