@@ -1,11 +1,10 @@
 
 using System;
-using FluentEmail.Core;
 using UserService.Application.Services.EmailService;
 
 namespace UserService.Infrastructure.Services.EmailService;
 
-public sealed class FluentEmailRazorBodyRenderer : IEmailBodyRenderer
+public sealed class EmailTemplateRenderer : IEmailTemplateRenderer
 {
     public Task<string> RenderAsync<T>(
         string template,

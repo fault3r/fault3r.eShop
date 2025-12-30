@@ -5,11 +5,11 @@ using UserService.Infrastructure.Exceptions.Services.EmailService;
 
 namespace UserService.Infrastructure.Services.EmailService;
 
-public sealed class RazorEmailTemplateResolver : IEmailTemplateResolver
+public sealed class EmailTemplateResolver : IEmailTemplateResolver
 {
     private readonly Dictionary<EmailTemplateType, string> templates = [];
 
-    public RazorEmailTemplateResolver(string templatesPath)
+    public EmailTemplateResolver(string templatesPath)
     {
         ArgumentException.ThrowIfNullOrEmpty(templatesPath);
 

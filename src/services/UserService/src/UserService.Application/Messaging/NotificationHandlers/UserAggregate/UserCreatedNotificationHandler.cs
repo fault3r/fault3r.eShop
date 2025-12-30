@@ -9,12 +9,12 @@ namespace UserService.Application.Messaging.NotificationHandlers.UserAggregate;
 
 public sealed class UserCreatedNotificationHandler(
     IEmailTemplateResolver resolver,
-    IEmailBodyRenderer renderer,
+    IEmailTemplateRenderer renderer,
     IEmailSender sender)
         : INotificationHandler<UserCreatedNotification>
 {
     private readonly IEmailTemplateResolver _resolver = resolver;
-    private readonly IEmailBodyRenderer _renderer = renderer;
+    private readonly IEmailTemplateRenderer _renderer = renderer;
     private readonly IEmailSender _sender = sender;
 
     public async Task Handle(UserCreatedNotification notification, CancellationToken cancellationToken)

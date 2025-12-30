@@ -3,7 +3,7 @@ using System;
 
 namespace UserService.Application.Services.EmailService;
 
-public interface IEmailBodyRenderer
+public interface IEmailTemplateRenderer
 {
     Task<string> RenderAsync<T>(
         string template,
