@@ -42,7 +42,8 @@ public static class FluentEmailExtensions
                         password: setting.Password
                     ),
                 }
-            );
+            )
+            .AddRazorRenderer();
         
         services.AddSingleton<RazorRenderer>();
 

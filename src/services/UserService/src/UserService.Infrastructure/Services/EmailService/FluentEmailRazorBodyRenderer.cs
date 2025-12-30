@@ -6,9 +6,9 @@ using UserService.Application.Services.EmailService;
 
 namespace UserService.Infrastructure.Services.EmailService;
 
-public sealed class FluentEmailRazorBodyRenderer(RazorRenderer razorRenderer) : IEmailBodyRenderer
+public sealed class FluentEmailRazorBodyRenderer() : IEmailBodyRenderer
 {
-    private readonly RazorRenderer _renderer = razorRenderer;
+    private readonly RazorRenderer _renderer = new();
 
     public async Task<string> RenderAsync<T>(
         string template,

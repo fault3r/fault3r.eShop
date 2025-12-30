@@ -18,6 +18,14 @@ public class MainTests
     [Fact]
     public void TestName()
     {
+        string template = @"
+@model UserService.Application.Services.EmailService.EmailTemplateModels.WelcomeModel
+<p>Hello @Model.Name</p>
+<p>Welcome to our service!</p>";
+
+        var mod = new WelcomeModel("hamed");
+        var re = new FluentEmailRazorBodyRenderer();
+        var res = re.RenderAsync(template , mod);
        
     }
 }

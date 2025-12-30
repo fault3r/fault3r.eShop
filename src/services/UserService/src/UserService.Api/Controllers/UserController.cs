@@ -39,4 +39,5 @@ public sealed class UserController(IMediator mediator) : ControllerBase
 
         return Ok(result.Value);
     }
+
 }

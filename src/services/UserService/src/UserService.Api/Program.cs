@@ -28,8 +28,6 @@ builder.Services.AddFluentEmailService(builder.Configuration);
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-var temp = builder.Environment;
-
 var app = builder.Build();
 
 app.UseCrossCuttingMiddleware(settings.CorrelationHeader);
