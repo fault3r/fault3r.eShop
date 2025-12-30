@@ -1,16 +1,13 @@
 
 using System;
 using FluentEmail.Core;
-using FluentEmail.Razor;
 using UserService.Application.Services.EmailService;
 
 namespace UserService.Infrastructure.Services.EmailService;
 
-public sealed class FluentEmailRazorBodyRenderer() : IEmailBodyRenderer
+public sealed class FluentEmailRazorBodyRenderer : IEmailBodyRenderer
 {
-    private readonly RazorRenderer _renderer = new();
-
-    public async Task<string> RenderAsync<T>(
+    public Task<string> RenderAsync<T>(
         string template,
         T model,
         CancellationToken cancellationToken = default)
@@ -18,8 +15,20 @@ public sealed class FluentEmailRazorBodyRenderer() : IEmailBodyRenderer
         ArgumentException.ThrowIfNullOrEmpty(template);
         ArgumentNullException.ThrowIfNull(model);
 
-        var rendered = await _renderer.ParseAsync(template, model, isHtml: true);
+        string rendered = template;
 
-        return rendered;
+        var props = typeof(T)
+            .GetProperties()
+            .Where(p => p.CanRead);
+
+        foreach (var prop in props)
+        {
+            string token = "{{" + prop.Name + "}}";
+            var value = prop.GetValue(model);
+
+            rendered = rendered.Replace(token, value as string);
+        }
+
+        return Task.FromResult(rendered);
     }
 }
