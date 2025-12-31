@@ -41,6 +41,6 @@ if (app.Environment.IsDevelopment())
 
 app.MapControllers();
 
-app.MapGet("/", () => settings.Application);
+app.MapGet("/", () => settings.Service);
 
 app.Run();

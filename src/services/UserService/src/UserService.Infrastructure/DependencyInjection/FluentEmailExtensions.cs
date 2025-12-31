@@ -17,7 +17,7 @@ public static class FluentEmailExtensions
         this IServiceCollection services,
         IConfiguration configuration)
     {
-        var rootPath = configuration[$"{nameof(AppSetting)}:RootPath"]
+        var root = configuration[$"{nameof(AppSetting)}:ContentRoot"]
             ?? throw new MissingAppSettingException();
 
         var setting = configuration
@@ -45,7 +45,7 @@ public static class FluentEmailExtensions
 
         services.AddSingleton<IEmailTemplateResolver>(provider =>
         {
-            var path = Path.Combine(rootPath, setting.TemplatesPath);
+            var path = Path.Combine(root, "src", setting.TemplatesPath);
             return new EmailTemplateResolver(path);
         });
 
