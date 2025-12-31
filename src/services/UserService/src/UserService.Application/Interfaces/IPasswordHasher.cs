@@ -1,7 +1,7 @@
 
 using System;
 
-namespace UserService.Application.Security;
+namespace UserService.Application.Interfaces;
 
 public interface IPasswordHasher
 {

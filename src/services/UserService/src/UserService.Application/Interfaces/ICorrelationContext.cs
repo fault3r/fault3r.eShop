@@ -1,7 +1,7 @@
 
 using System;
 
-namespace UserService.Application.CrossCutting;
+namespace UserService.Application.Interfaces;
 
 public interface ICorrelationContext
 {

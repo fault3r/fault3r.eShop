@@ -3,7 +3,7 @@ using System;
 using MediatR;
 using UserService.Domain.Interfaces;
 
-namespace UserService.Application.Messaging;
+namespace UserService.Application.Interfaces;
 
 public interface IEventNotificationMapper
 {

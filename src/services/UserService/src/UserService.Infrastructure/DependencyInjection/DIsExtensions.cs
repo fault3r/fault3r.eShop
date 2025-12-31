@@ -7,6 +7,7 @@ using UserService.Application.CrossCutting;
 using UserService.Application.Interfaces;
 using UserService.Application.Messaging;
 using UserService.Application.Security;
+using UserService.Application.UseCases.UserAggregate.SignInUser;
 using UserService.Application.UseCases.UserAggregate.SignUpUser;
 using UserService.Domain.DomainServices;
 using UserService.Domain.Interfaces;
@@ -17,7 +18,7 @@ using UserService.Infrastructure.CrossCutting;
 using UserService.Infrastructure.Messaging.Notification;
 using UserService.Infrastructure.Messaging.Outbox;
 using UserService.Infrastructure.Repositories;
-using UserService.Infrastructure.Security;
+using UserService.Infrastructure.Security.PasswordHasher;
 using UserService.Infrastructure.UnitOfWork;
 
 namespace UserService.Infrastructure.DependencyInjection;
@@ -52,6 +53,11 @@ public static class DIsExtensions
         services.AddMediatR(typeof(SignUpUserCommand).Assembly);
         services.AddScoped<ISignUpUserService, SignUpUserService>();
         services.AddScoped<IValidator<SignUpUserCommand>, SignUpUserValidator>();
+
+        services.AddMediatR(typeof(SignInUserCommand).Assembly);
+        services.AddScoped<ISignInUserService, SignInUserService>();
+        services.AddScoped<IValidator<SignInUserCommand>, SignInUserValidator>();
+
         return services;
     }
 }

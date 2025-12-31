@@ -25,17 +25,13 @@ public class SignUpUserCommandHandler(
     {
         ArgumentNullException.ThrowIfNull(request);
         
-        _logger.LogInformation("Handling request…");
-
         var validation = await _validator.ValidateAsync(request, cancellationToken);
 
         if (!validation.IsValid)
         {
             var errors = string.Join(" - ", validation.Errors.Select(e => e.ErrorMessage));
 
-            _logger.LogWarning("Validation failed: {Errors}!", errors);
-
-            return Result<User>.Failure($"Validation failed: {errors}!");
+            return Result<User>.Failure($"Validation failed: {errors}");
         }
 
         var result = await _signUpService.ExecuteAsync(
@@ -44,8 +40,6 @@ public class SignUpUserCommandHandler(
             request.FullName,
             cancellationToken
         );
-
-        _logger.LogInformation("Request handled successfully.");
 
         return result;
     }

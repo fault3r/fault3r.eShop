@@ -16,6 +16,10 @@ public static class JwtExtensions
         this IServiceCollection services,
         IConfiguration configuration)
     {
+        services.Configure<JwtSetting>(
+            configuration.GetSection(nameof(JwtSetting))
+        );
+        
         var setting = configuration
             .GetSection(nameof(JwtSetting))
             .Get<JwtSetting>()
