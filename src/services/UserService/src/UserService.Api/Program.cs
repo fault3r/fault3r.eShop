@@ -12,11 +12,13 @@ var settings = builder.Configuration
     .Get<AppSetting>()
         ?? throw new MissingAppSettingException();
 
+builder.Host.AddSerilogLogging();
+
+builder.Services.AddJwtAuthentication(builder.Configuration);
+
 builder.Services.AddInfrastructure();
 
 builder.Services.AddUseCases();
-
-builder.Host.AddSerilogLogging();
 
 builder.Services.AddPostgresDbContext(builder.Configuration);
 
@@ -29,6 +31,9 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 var app = builder.Build();
+
+app.UseAuthentication();
+app.UseAuthorization();
 
 app.UseCrossCuttingMiddleware(settings.CorrelationHeader);
 app.UseExceptionHandlingMiddleware(settings.CorrelationHeader);
