@@ -23,22 +23,21 @@ public sealed class RedisSessionService(
     {
         ArgumentNullException.ThrowIfNull(session);
 
-        var serialized = JsonSerializer.Serialize(session);
+        var value = JsonSerializer.Serialize(session);
 
         var expiry = session.ExpiresAt - DateTime.UtcNow;
         if (expiry <= TimeSpan.Zero)
             expiry = TimeSpan.FromMinutes(1);
 
-        var batch = _database.CreateBatch();
-
         var sessionKey = GetSessionKey(session.SessionId);
-        _ = batch.StringSetAsync(sessionKey, serialized, expiry);
-
         var userSessionsKey = GetUserSessionsKey(session.UserId);
+        
+        var batch = _database.CreateBatch();
+        _ = batch.StringSetAsync(sessionKey, value, expiry);
         _ = batch.SetAddAsync(userSessionsKey, session.SessionId);
         _ = batch.KeyExpireAsync(userSessionsKey, expiry);
-
         batch.Execute();
+
         return Task.CompletedTask;
     }
 
@@ -49,13 +48,57 @@ public sealed class RedisSessionService(
         var key = GetSessionKey(sessionId);
 
         var value = await _database.StringGetAsync(key);
+
         if (value.IsNullOrEmpty) return null;
-        return JsonSerializer.Deserialize<SessionData>(value!)!;
+
+        var serializes = JsonSerializer.Deserialize<SessionData>(value!);
+        return serializes;
+    }
+
+    public async Task InvalidateSessionAsync(
+        string sessionId,
+        CancellationToken cancellationToken = default)
+    {
+        var key = GetSessionKey(sessionId);
+
+        var value = await _database.StringGetAsync(key);
+
+        if (!value.IsNullOrEmpty)
+        {
+            var session = JsonSerializer.Deserialize<SessionData>(value!)!;
+            var userSessionsKey = GetUserSessionsKey(session.UserId);
+
+            var batch = _database.CreateBatch();
+            _ = batch.KeyDeleteAsync(key);
+            _ = batch.SetRemoveAsync(userSessionsKey, sessionId);
+            batch.Execute();
+        }
+        else
+        {
+            await _database.KeyDeleteAsync(key);
+        }
+    }
+
+    public async Task InvalidateAllUserSessionsAsync(
+        string userId,
+        CancellationToken cancellationToken = default)
+    {
+        var userSessionsKey = GetUserSessionsKey(userId);
+        var sessionIds = await _database.SetMembersAsync(userSessionsKey);
+
+        var batch = _database.CreateBatch();
+        foreach (var sessionId in sessionIds)
+        {
+            var key = GetSessionKey(sessionId!);
+            _ = batch.KeyDeleteAsync(key);
+        }
+        _ = batch.KeyDeleteAsync(userSessionsKey);
+        batch.Execute();
     }
 
     private string GetSessionKey(string sessionId)
-        => _settings.SessionKey + sessionId;
+        => $"{_settings.SessionKey}:{sessionId}";
 
     private string GetUserSessionsKey(string sessionId)
-        => _settings.SessionKey + sessionId;
+        => $"{_settings.UserSessionsKey}:{sessionId}";
 }
