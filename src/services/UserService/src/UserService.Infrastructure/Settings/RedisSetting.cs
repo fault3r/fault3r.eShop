@@ -11,6 +11,8 @@ public class RedisSetting
     public required string SessionKey { get; set; }
     public required string UserSessionsKey { get; set; }
 
+    public required int RefreshTokenLifetimeDays { get; set; }
+
     public string ToConnectionString()
         => $"{Host}:{Port}";
 }

@@ -10,6 +10,10 @@
 **/*.sln.cache
 **/*.csproj.user
 
+# configuration files
+appsettings.json
+appsettings.*.json
+
 # user-specific and IDE files
 **/*.user
 **/*.suo

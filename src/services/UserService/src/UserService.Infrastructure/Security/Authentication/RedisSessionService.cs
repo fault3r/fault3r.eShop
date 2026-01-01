@@ -23,7 +23,7 @@ public sealed class RedisSessionService(
     {
         ArgumentNullException.ThrowIfNull(session);
 
-        var value = JsonSerializer.Serialize(session);
+        var value = JsonSerializer.Serialize(session, jsonOptions);
 
         var expiry = session.ExpiresAt - DateTime.UtcNow;
         if (expiry <= TimeSpan.Zero)
@@ -31,47 +31,75 @@ public sealed class RedisSessionService(
 
         var sessionKey = GetSessionKey(session.SessionId);
         var userSessionsKey = GetUserSessionsKey(session.UserId);
-        
+
         var batch = _database.CreateBatch();
-        _ = batch.StringSetAsync(sessionKey, value, expiry);
-        _ = batch.SetAddAsync(userSessionsKey, session.SessionId);
-        _ = batch.KeyExpireAsync(userSessionsKey, expiry);
+        var tasks = new List<Task>
+        {
+            batch.StringSetAsync(sessionKey, value, expiry),
+            batch.SetAddAsync(userSessionsKey, session.SessionId),
+            batch.KeyExpireAsync(userSessionsKey, expiry),
+        };
         batch.Execute();
 
-        return Task.CompletedTask;
+        return Task.WhenAll(tasks);
     }
 
     public async Task<SessionData?> GetSessionAsync(
         string sessionId,
         CancellationToken cancellationToken = default)
     {
+        ArgumentException.ThrowIfNullOrWhiteSpace(sessionId);
+
         var key = GetSessionKey(sessionId);
 
         var value = await _database.StringGetAsync(key);
 
-        if (value.IsNullOrEmpty) return null;
+        if (value.IsNullOrEmpty)
+            return null;
 
-        var serializes = JsonSerializer.Deserialize<SessionData>(value!);
-        return serializes;
+        var session = JsonSerializer.Deserialize<SessionData>(value!, jsonOptions)!;
+
+        var newExpiry = TimeSpan.FromDays(_settings.RefreshTokenLifetimeDays);
+
+        var userSessionsKey = GetUserSessionsKey(session.UserId);
+
+        var batch = _database.CreateBatch();
+        var tasks = new List<Task>
+        {
+            batch.KeyExpireAsync(key, newExpiry),
+            batch.KeyExpireAsync(userSessionsKey, newExpiry)
+        };
+        batch.Execute();
+
+        await Task.WhenAll(tasks);
+
+        return session;
     }
+
 
     public async Task InvalidateSessionAsync(
         string sessionId,
         CancellationToken cancellationToken = default)
     {
+        ArgumentException.ThrowIfNullOrWhiteSpace(sessionId);
+
         var key = GetSessionKey(sessionId);
 
         var value = await _database.StringGetAsync(key);
 
         if (!value.IsNullOrEmpty)
         {
-            var session = JsonSerializer.Deserialize<SessionData>(value!)!;
+            var session = JsonSerializer.Deserialize<SessionData>(value!, jsonOptions)!;
             var userSessionsKey = GetUserSessionsKey(session.UserId);
 
             var batch = _database.CreateBatch();
-            _ = batch.KeyDeleteAsync(key);
-            _ = batch.SetRemoveAsync(userSessionsKey, sessionId);
+            var tasks = new List<Task>
+            {
+                batch.SetRemoveAsync(userSessionsKey, sessionId),
+                batch.KeyDeleteAsync(key),
+            };
             batch.Execute();
+            await Task.WhenAll(tasks);
         }
         else
         {
@@ -83,22 +111,33 @@ public sealed class RedisSessionService(
         string userId,
         CancellationToken cancellationToken = default)
     {
+        ArgumentException.ThrowIfNullOrWhiteSpace(userId);
+
         var userSessionsKey = GetUserSessionsKey(userId);
         var sessionIds = await _database.SetMembersAsync(userSessionsKey);
 
         var batch = _database.CreateBatch();
+        var tasks = new List<Task>();
         foreach (var sessionId in sessionIds)
         {
             var key = GetSessionKey(sessionId!);
-            _ = batch.KeyDeleteAsync(key);
+            tasks.Add(batch.KeyDeleteAsync(key));
         }
-        _ = batch.KeyDeleteAsync(userSessionsKey);
+        tasks.Add(batch.KeyDeleteAsync(userSessionsKey));
         batch.Execute();
+
+        await Task.WhenAll(tasks);
     }
 
     private string GetSessionKey(string sessionId)
         => $"{_settings.SessionKey}:{sessionId}";
 
-    private string GetUserSessionsKey(string sessionId)
-        => $"{_settings.UserSessionsKey}:{sessionId}";
+    private string GetUserSessionsKey(string userId)
+        => $"{_settings.UserSessionsKey}:{userId}";
+
+    private static readonly JsonSerializerOptions jsonOptions = new()
+    {
+        WriteIndented = false,
+        PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
+    };
 }
