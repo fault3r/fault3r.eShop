@@ -9,8 +9,6 @@ using UserService.Domain.UnitOfWork;
 using UserService.Domain.ValueObjects;
 using Microsoft.Extensions.Logging;
 using UserService.Domain.Interfaces;
-using UserService.Application.Security;
-using UserService.Application.CrossCutting;
 
 namespace UserService.Application.UseCases.UserAggregate.SignUpUser;
 

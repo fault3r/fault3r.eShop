@@ -14,13 +14,15 @@ var settings = builder.Configuration
 
 builder.Host.AddSerilogLogging();
 
-builder.Services.AddJwtAuthentication(builder.Configuration);
-
 builder.Services.AddInfrastructure();
 
 builder.Services.AddUseCases();
 
 builder.Services.AddPostgresDbContext(builder.Configuration);
+
+builder.Services.AddJwtAuthentication(builder.Configuration);
+
+builder.Services.AddRedisCaching(builder.Configuration);
 
 builder.Services.AddControllers(config =>
     config.SuppressAsyncSuffixInActionNames = false);
@@ -33,6 +35,7 @@ builder.Services.AddSwaggerGen();
 var app = builder.Build();
 
 app.UseAuthentication();
+app.UseAuthenticationMiddleware(); 
 app.UseAuthorization();
 
 app.UseCrossCuttingMiddleware(settings.CorrelationHeader);

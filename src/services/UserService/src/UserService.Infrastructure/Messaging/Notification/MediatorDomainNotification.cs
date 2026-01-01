@@ -1,7 +1,7 @@
 
 using System;
 using MediatR;
-using UserService.Application.Messaging;
+using UserService.Application.Interfaces;
 using UserService.Domain.Interfaces;
 using UserService.Domain.Messaging;
 
