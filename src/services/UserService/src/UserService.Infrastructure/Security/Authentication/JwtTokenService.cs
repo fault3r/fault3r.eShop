@@ -20,18 +20,14 @@ public sealed class JwtTokenService(
     private readonly TokenValidationParameters _tokenValidation = tokenValidationParameters.Clone();
     private readonly JwtSetting _settings = options.Value;
 
-    public string GenerateAccessToken(SessionData session)
+    public string GenerateAccessToken(string sessionId, string userId)
     {
         var now = DateTime.UtcNow;
 
         var claims = new List<Claim>
         {
-            new("sessionId", session.SessionId),
-            new(ClaimTypes.Sid, session.UserId),
-            new(ClaimTypes.NameIdentifier, session.Email),
-            new(ClaimTypes.Name, session.FullName),
-            new(ClaimTypes.Role, session.Role),
-            new(ClaimTypes.StateOrProvince, session.Status),
+            new("sessionId", sessionId),
+            new("userId", userId),
         };
 
         var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_settings.SigningKey));
@@ -51,7 +47,7 @@ public sealed class JwtTokenService(
         return new JwtSecurityTokenHandler().WriteToken(token);
     }
 
-    public static string GenerateRefreshToken()
+    public string GenerateRefreshToken()
     {
         var bytes = RandomNumberGenerator.GetBytes(64);
 
