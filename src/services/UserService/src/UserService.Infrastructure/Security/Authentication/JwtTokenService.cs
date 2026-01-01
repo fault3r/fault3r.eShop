@@ -6,12 +6,15 @@ using System.Security.Cryptography;
 using System.Text;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
+using UserService.Application.Interfaces;
 using UserService.Application.Security.Authentication;
 using UserService.Infrastructure.Settings;
 
 namespace UserService.Infrastructure.Security.Authentication;
 
-public sealed class JwtTokenService(IOptions<JwtSetting> options)
+public sealed class JwtTokenService(
+    IOptions<JwtSetting> options)
+        : ITokenService
 {
     private readonly JwtSetting _settings = options.Value;
 
@@ -49,7 +52,7 @@ public sealed class JwtTokenService(IOptions<JwtSetting> options)
     public static string GenerateRefreshToken()
     {
         var bytes = RandomNumberGenerator.GetBytes(64);
-        
+
         return Convert.ToBase64String(bytes);
     }
 }

@@ -15,12 +15,12 @@ public static class PostgresExtensions
         this IServiceCollection services,
         IConfiguration configuration)
     {
-        var setting = configuration
+        var settings = configuration
             .GetSection(nameof(PostgresSetting))
             .Get<PostgresSetting>()
                 ?? throw new MissingPostgresSettingException();
 
-        var connectionString = setting.ToConnectionString();
+        var connectionString = settings.ToConnectionString();
 
         services.AddDbContext<EfDbContext>(config =>
         {

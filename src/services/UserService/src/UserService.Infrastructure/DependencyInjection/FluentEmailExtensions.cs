@@ -20,32 +20,32 @@ public static class FluentEmailExtensions
         var root = configuration[$"{nameof(AppSetting)}:ContentRoot"]
             ?? throw new MissingAppSettingException();
 
-        var setting = configuration
+        var settings = configuration
             .GetSection(nameof(FluentEmailSetting))
             .Get<FluentEmailSetting>()
                 ?? throw new MissingFluentEmailSettingException();
 
         services
             .AddFluentEmail(
-                defaultFromEmail: setting.Email,
-                defaultFromName: setting.Name
+                defaultFromEmail: settings.Email,
+                defaultFromName: settings.Name
             )
             .AddSmtpSender(
                 new SmtpClient
                 {
-                    Host = setting.Host,
-                    Port = setting.Port,
+                    Host = settings.Host,
+                    Port = settings.Port,
                     EnableSsl = true,
                     Credentials = new NetworkCredential(
-                        userName: setting.Email,
-                        password: setting.Password
+                        userName: settings.Email,
+                        password: settings.Password
                     ),
                 }
             );
 
-        services.AddSingleton<IEmailTemplateResolver>(provider =>
+        services.AddSingleton<IEmailTemplateResolver>(_ =>
         {
-            var path = Path.Combine(root, "src", setting.TemplatesPath);
+            var path = Path.Combine(root, "src", settings.TemplatesPath);
             return new EmailTemplateResolver(path);
         });
 

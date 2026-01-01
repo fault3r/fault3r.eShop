@@ -5,7 +5,9 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
+using UserService.Application.Interfaces;
 using UserService.Infrastructure.Exceptions.DependencyInjection;
+using UserService.Infrastructure.Security.Authentication;
 using UserService.Infrastructure.Settings;
 
 namespace UserService.Infrastructure.DependencyInjection;
@@ -20,7 +22,7 @@ public static class JwtExtensions
             configuration.GetSection(nameof(JwtSetting))
         );
         
-        var setting = configuration
+        var settings = configuration
             .GetSection(nameof(JwtSetting))
             .Get<JwtSetting>()
                 ?? throw new MissingJwtSettingException();
@@ -39,10 +41,10 @@ public static class JwtExtensions
                     ValidateAudience = true,
                     ValidateIssuerSigningKey = true,
                     ValidateLifetime = true,
-                    ValidIssuer = setting.Issuer,
-                    ValidAudience = setting.Audience,
+                    ValidIssuer = settings.Issuer,
+                    ValidAudience = settings.Audience,
                     IssuerSigningKey = new SymmetricSecurityKey(
-                        Encoding.UTF8.GetBytes(setting.SigningKey)
+                        Encoding.UTF8.GetBytes(settings.SigningKey)
                     )
                 };
             });
@@ -51,6 +53,8 @@ public static class JwtExtensions
         {
             config.AddPolicy("requiredUser", policy => policy.RequireRole("User"));
         });
+
+        services.AddSingleton<ITokenService, JwtTokenService>();
 
         return services;
     }

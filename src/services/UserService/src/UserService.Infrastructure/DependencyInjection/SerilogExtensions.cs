@@ -17,7 +17,7 @@ public static class SerilogExtensions
     {
         host.UseSerilog((context, config) =>
         {
-            var setting = context.Configuration
+            var settings = context.Configuration
                 .GetSection($"Logging:{nameof(SerilogSetting)}")
                 .Get<SerilogSetting>()
                     ?? throw new MissingSerilogSettingException();
@@ -28,7 +28,7 @@ public static class SerilogExtensions
                 .MinimumLevel.Debug()
                 .Enrich.FromLogContext()
                 .WriteTo.File(
-                    path: setting.Filename,
+                    path: settings.Filename,
                     rollingInterval: RollingInterval.Day,
                     outputTemplate: "[{Timestamp:yyyy-MM-dd HH:mm:ss} {Level:u3}] {CorrelationId} {SourceContext} {Message:lj} {NewLine} {Exception}"
                 );

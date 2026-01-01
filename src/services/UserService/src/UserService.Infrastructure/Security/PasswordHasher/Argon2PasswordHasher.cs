@@ -3,7 +3,7 @@ using System;
 using System.Security.Cryptography;
 using System.Text;
 using Konscious.Security.Cryptography;
-using UserService.Application.Security;
+using UserService.Application.Interfaces;
 
 namespace UserService.Infrastructure.Security.PasswordHasher;
 
