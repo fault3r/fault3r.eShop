@@ -21,11 +21,27 @@ public static class JwtExtensions
         services.Configure<JwtSetting>(
             configuration.GetSection(nameof(JwtSetting))
         );
-        
+
         var settings = configuration
             .GetSection(nameof(JwtSetting))
             .Get<JwtSetting>()
                 ?? throw new MissingJwtSettingException();
+
+        var tokenValidationParameters = new TokenValidationParameters
+        {
+            ValidateIssuer = true,
+            ValidateAudience = true,
+            ValidateIssuerSigningKey = true,
+            ValidateLifetime = true,
+            ValidIssuer = settings.Issuer,
+            ValidAudience = settings.Audience,
+            IssuerSigningKey = new SymmetricSecurityKey(
+                Encoding.UTF8.GetBytes(settings.SigningKey)
+            ),
+            ClockSkew = TimeSpan.Zero
+        };
+
+        services.AddSingleton<TokenValidationParameters>(tokenValidationParameters);
 
         services.AddAuthentication(config =>
         {
@@ -35,18 +51,7 @@ public static class JwtExtensions
             {
                 config.RequireHttpsMetadata = false;
                 config.SaveToken = true;
-                config.TokenValidationParameters = new TokenValidationParameters
-                {
-                    ValidateIssuer = true,
-                    ValidateAudience = true,
-                    ValidateIssuerSigningKey = true,
-                    ValidateLifetime = true,
-                    ValidIssuer = settings.Issuer,
-                    ValidAudience = settings.Audience,
-                    IssuerSigningKey = new SymmetricSecurityKey(
-                        Encoding.UTF8.GetBytes(settings.SigningKey)
-                    )
-                };
+                config.TokenValidationParameters = tokenValidationParameters;
             });
 
         services.AddAuthorization(config =>

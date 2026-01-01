@@ -1,10 +1,10 @@
-
 using System;
 using System.Text.Json;
 using Microsoft.Extensions.Options;
 using StackExchange.Redis;
 using UserService.Application.Interfaces;
 using UserService.Application.Security.Authentication;
+using UserService.Infrastructure.Exceptions.Security.Authentication;
 using UserService.Infrastructure.Settings;
 
 namespace UserService.Infrastructure.Security.Authentication;
@@ -17,13 +17,13 @@ public sealed class RedisSessionService(
     private readonly IDatabase _database = connectionMultiplexer.GetDatabase();
     private readonly RedisSetting _settings = options.Value;
 
-    public Task CreateSessionAsync(
+    public async Task CreateSessionAsync(
         SessionData session,
         CancellationToken cancellationToken = default)
     {
         ArgumentNullException.ThrowIfNull(session);
 
-        var value = JsonSerializer.Serialize(session, jsonOptions);
+        var serialized = JsonSerializer.Serialize(session, jsonOptions);
 
         var expiry = session.ExpiresAt - DateTime.UtcNow;
         if (expiry <= TimeSpan.Zero)
@@ -32,16 +32,14 @@ public sealed class RedisSessionService(
         var sessionKey = GetSessionKey(session.SessionId);
         var userSessionsKey = GetUserSessionsKey(session.UserId);
 
-        var batch = _database.CreateBatch();
-        var tasks = new List<Task>
-        {
-            batch.StringSetAsync(sessionKey, value, expiry),
-            batch.SetAddAsync(userSessionsKey, session.SessionId),
-            batch.KeyExpireAsync(userSessionsKey, expiry),
-        };
-        batch.Execute();
+        var transaction = _database.CreateTransaction();
 
-        return Task.WhenAll(tasks);
+        await transaction.StringSetAsync(sessionKey, serialized, expiry);
+        await transaction.SetAddAsync(userSessionsKey, session.SessionId);
+        await transaction.KeyExpireAsync(userSessionsKey, expiry);
+
+        if (!await transaction.ExecuteAsync())
+            throw new RedisTransactionFailedException();
     }
 
     public async Task<SessionData?> GetSessionAsync(
@@ -54,28 +52,23 @@ public sealed class RedisSessionService(
 
         var value = await _database.StringGetAsync(key);
 
-        if (value.IsNullOrEmpty)
-            return null;
+        if (value.IsNullOrEmpty) return null;
 
         var session = JsonSerializer.Deserialize<SessionData>(value!, jsonOptions)!;
 
         var newExpiry = TimeSpan.FromDays(_settings.RefreshTokenLifetimeDays);
-
         var userSessionsKey = GetUserSessionsKey(session.UserId);
 
-        var batch = _database.CreateBatch();
-        var tasks = new List<Task>
-        {
-            batch.KeyExpireAsync(key, newExpiry),
-            batch.KeyExpireAsync(userSessionsKey, newExpiry)
-        };
-        batch.Execute();
+        var transaction = _database.CreateTransaction();
 
-        await Task.WhenAll(tasks);
+        await transaction.KeyExpireAsync(key, newExpiry);
+        await transaction.KeyExpireAsync(userSessionsKey, newExpiry);
+
+        if (!await transaction.ExecuteAsync())
+            throw new RedisTransactionFailedException();
 
         return session;
     }
-
 
     public async Task InvalidateSessionAsync(
         string sessionId,
@@ -84,27 +77,23 @@ public sealed class RedisSessionService(
         ArgumentException.ThrowIfNullOrWhiteSpace(sessionId);
 
         var key = GetSessionKey(sessionId);
-
         var value = await _database.StringGetAsync(key);
 
-        if (!value.IsNullOrEmpty)
-        {
-            var session = JsonSerializer.Deserialize<SessionData>(value!, jsonOptions)!;
-            var userSessionsKey = GetUserSessionsKey(session.UserId);
-
-            var batch = _database.CreateBatch();
-            var tasks = new List<Task>
-            {
-                batch.SetRemoveAsync(userSessionsKey, sessionId),
-                batch.KeyDeleteAsync(key),
-            };
-            batch.Execute();
-            await Task.WhenAll(tasks);
-        }
-        else
+        if (value.IsNullOrEmpty)
         {
             await _database.KeyDeleteAsync(key);
+            return;
         }
+
+        var session = JsonSerializer.Deserialize<SessionData>(value!, jsonOptions)!;
+        var userSessionsKey = GetUserSessionsKey(session.UserId);
+
+        var tran = _database.CreateTransaction();
+
+        _ = tran.SetRemoveAsync(userSessionsKey, sessionId);
+        _ = tran.KeyDeleteAsync(key);
+
+        await tran.ExecuteAsync();
     }
 
     public async Task InvalidateAllUserSessionsAsync(
@@ -116,17 +105,17 @@ public sealed class RedisSessionService(
         var userSessionsKey = GetUserSessionsKey(userId);
         var sessionIds = await _database.SetMembersAsync(userSessionsKey);
 
-        var batch = _database.CreateBatch();
-        var tasks = new List<Task>();
+        var tran = _database.CreateTransaction();
+
         foreach (var sessionId in sessionIds)
         {
             var key = GetSessionKey(sessionId!);
-            tasks.Add(batch.KeyDeleteAsync(key));
+            _ = tran.KeyDeleteAsync(key);
         }
-        tasks.Add(batch.KeyDeleteAsync(userSessionsKey));
-        batch.Execute();
 
-        await Task.WhenAll(tasks);
+        _ = tran.KeyDeleteAsync(userSessionsKey);
+
+        await tran.ExecuteAsync();
     }
 
     private string GetSessionKey(string sessionId)

@@ -32,6 +32,8 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="Exceptions/Security/" />
+    <Folder Include="Exceptions/Security/Authentication/" />
     <Folder Include="Security/Authentication/" />
   </ItemGroup>
 

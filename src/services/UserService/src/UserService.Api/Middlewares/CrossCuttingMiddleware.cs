@@ -2,7 +2,7 @@
 using System;
 using Serilog;
 using Serilog.Context;
-using UserService.Application.CrossCutting;
+using UserService.Application.Interfaces;
 
 namespace UserService.Api.Middlewares;
 

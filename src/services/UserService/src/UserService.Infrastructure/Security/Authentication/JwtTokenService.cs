@@ -13,9 +13,11 @@ using UserService.Infrastructure.Settings;
 namespace UserService.Infrastructure.Security.Authentication;
 
 public sealed class JwtTokenService(
+    TokenValidationParameters tokenValidationParameters,
     IOptions<JwtSetting> options)
         : ITokenService
 {
+    private readonly TokenValidationParameters _tokenValidation = tokenValidationParameters.Clone();
     private readonly JwtSetting _settings = options.Value;
 
     public string GenerateAccessToken(SessionData session)
@@ -54,5 +56,20 @@ public sealed class JwtTokenService(
         var bytes = RandomNumberGenerator.GetBytes(64);
 
         return Convert.ToBase64String(bytes);
+    }
+
+    public ClaimsPrincipal? ValidateAccessToken(string? token)
+    {
+        if (string.IsNullOrWhiteSpace(token))
+            return null;
+
+        var handler = new JwtSecurityTokenHandler();
+
+        try
+        {
+            return handler.ValidateToken(token, _tokenValidation, out _);
+            
+        }
+        catch { return null; }
     }
 }
