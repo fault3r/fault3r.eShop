@@ -18,8 +18,8 @@ public static class SerilogExtensions
         host.UseSerilog((context, config) =>
         {
             var settings = context.Configuration
-                .GetSection($"Logging:{nameof(SerilogSetting)}")
-                .Get<SerilogSetting>()
+                .GetSection($"Logging:{nameof(SerilogSettings)}")
+                .Get<SerilogSettings>()
                     ?? throw new MissingSerilogSettingsException();
 
             config

@@ -22,5 +22,9 @@ public sealed record UserCreatedNotification : INotification
     }
 
     public static UserCreatedNotification FromEvent(UserCreatedEvent @event)
-        => new(@event.Email, @event.FullName);
+    {
+        ArgumentNullException.ThrowIfNull(@event);
+
+        return new(@event.Email, @event.FullName);
+    }
 }

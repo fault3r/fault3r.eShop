@@ -16,8 +16,8 @@ public static class PostgresExtensions
         IConfiguration configuration)
     {
         var settings = configuration
-            .GetSection(nameof(PostgresSetting))
-            .Get<PostgresSetting>()
+            .GetSection(nameof(PostgresSettings))
+            .Get<PostgresSettings>()
                 ?? throw new MissingPostgresSettingsException();
 
         var connectionString = settings.ToConnectionString();

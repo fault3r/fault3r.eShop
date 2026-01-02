@@ -17,11 +17,16 @@ public static class CryptRefreshToken
 
     public static string ToHash(string raw)
     {
+        ArgumentException.ThrowIfNullOrWhiteSpace(raw);
+
         return BCrypt.Net.BCrypt.HashPassword(raw);
     }
 
     public static bool Verify(string raw, string hash)
     {
-        return BCrypt.Net.BCrypt.Verify(raw,hash);
+        ArgumentException.ThrowIfNullOrWhiteSpace(raw);
+        ArgumentException.ThrowIfNullOrWhiteSpace(hash);
+
+        return BCrypt.Net.BCrypt.Verify(raw, hash);
     }
 }

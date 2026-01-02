@@ -18,13 +18,13 @@ public static class JwtExtensions
         this IServiceCollection services,
         IConfiguration configuration)
     {
-        services.Configure<JwtSetting>(
-            configuration.GetSection(nameof(JwtSetting))
+        services.Configure<JwtSettings>(
+            configuration.GetSection(nameof(JwtSettings))
         );
 
         var settings = configuration
-            .GetSection(nameof(JwtSetting))
-            .Get<JwtSetting>()
+            .GetSection(nameof(JwtSettings))
+            .Get<JwtSettings>()
                 ?? throw new MissingJwtSettingsException();
 
         var tokenValidationParameters = new TokenValidationParameters

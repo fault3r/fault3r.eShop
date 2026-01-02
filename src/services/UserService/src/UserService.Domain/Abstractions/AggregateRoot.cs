@@ -4,8 +4,8 @@ using UserService.Domain.Interfaces;
 
 namespace UserService.Domain.Abstractions;
 
-public abstract class AggregateRoot<T, TId>
-    : Entity<T, TId>, IAggregateRoot, IAggregateRoot<TId>
+public abstract class AggregateRoot<T, TId> : Entity<T, TId>,
+    IAggregateRoot, IAggregateRoot<TId>
     where T : AggregateRoot<T, TId>
 {
     private readonly List<IDomainEvent> events

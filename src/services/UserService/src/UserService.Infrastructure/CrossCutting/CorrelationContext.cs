@@ -7,19 +7,16 @@ namespace UserService.Infrastructure.CrossCutting;
 
 public sealed class CorrelationContext : ICorrelationContext
 {
-    private static readonly AsyncLocal<string> asyncLocalId
-        = new();
+    private static readonly AsyncLocal<string> asyncLocalId = new();
 
     public string CorrelationId
-    {
-        get => asyncLocalId.Value
+        => asyncLocalId.Value
             ?? throw new CorrelationIdUnsetException();
-    }
-    
+
     public void Set(string correlationId)
     {
         ArgumentException.ThrowIfNullOrEmpty(correlationId);
-        
+
         asyncLocalId.Value = correlationId;
     }
 }

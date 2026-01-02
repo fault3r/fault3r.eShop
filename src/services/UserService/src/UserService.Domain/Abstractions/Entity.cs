@@ -4,8 +4,8 @@ using UserService.Domain.Interfaces;
 
 namespace UserService.Domain.Abstractions;
 
-public abstract class Entity<T, TId> 
-    : IEquatable<T>, IEntity, IEntity<TId>
+public abstract class Entity<T, TId> : IEquatable<T>,
+    IEntity, IEntity<TId>
     where T : Entity<T, TId>
 {
     public TId Id { get; }

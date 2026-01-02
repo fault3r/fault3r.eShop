@@ -16,13 +16,13 @@ public static class RedisExtensions
         this IServiceCollection services,
         IConfiguration configuration)
     {
-        services.Configure<RedisSetting>(
-            configuration.GetSection(nameof(RedisSetting))
+        services.Configure<RedisSettings>(
+            configuration.GetSection(nameof(RedisSettings))
         );
 
         var settings = configuration
-            .GetSection(nameof(RedisSetting))
-            .Get<RedisSetting>()
+            .GetSection(nameof(RedisSettings))
+            .Get<RedisSettings>()
                 ?? throw new MissingRedisSettingsException();
 
         services.AddSingleton<IConnectionMultiplexer>(_ =>

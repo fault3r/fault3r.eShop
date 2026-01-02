@@ -3,6 +3,7 @@ using System;
 using FluentEmail.Core;
 using UserService.Application.Services.EmailService;
 using UserService.Domain.Common;
+using UserService.Infrastructure.Exceptions.Services.EmailService;
 
 namespace UserService.Infrastructure.Services.EmailService;
 
@@ -28,8 +29,9 @@ public sealed class FluentEmailSender(
             .Body(body, isHtml: true)
             .SendAsync(ct);
 
-        return !response.Successful
-            ? Result.Failure(string.Join(", ", response.ErrorMessages))
-            : Result.Success();
+        if (!response.Successful)
+            throw new CannotSendEmailException(to);
+        
+        return Result.Success();
     }
 }

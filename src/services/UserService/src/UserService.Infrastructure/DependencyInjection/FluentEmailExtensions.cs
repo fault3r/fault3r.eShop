@@ -17,12 +17,12 @@ public static class FluentEmailExtensions
         this IServiceCollection services,
         IConfiguration configuration)
     {
-        var root = configuration[$"{nameof(AppSetting)}:ContentRoot"]
+        var root = configuration[$"{nameof(AppSettings)}:ContentRoot"]
             ?? throw new MissingAppSettingsException();
 
         var settings = configuration
-            .GetSection(nameof(FluentEmailSetting))
-            .Get<FluentEmailSetting>()
+            .GetSection(nameof(FluentEmailSettings))
+            .Get<FluentEmailSettings>()
                 ?? throw new MissingFluentEmailSettingsException();
 
         services
