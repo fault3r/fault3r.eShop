@@ -25,7 +25,7 @@ public sealed class RedisSessionService(
 
         var serialized = JsonSerializer.Serialize(session, jsonOptions);
 
-        var expiry = session.ExpiresAt - DateTime.UtcNow;
+        var expiry = session.RefreshTokenExpiresAt - DateTimeOffset.UtcNow;
         if (expiry <= TimeSpan.Zero)
             expiry = TimeSpan.FromMinutes(1);
 
@@ -34,40 +34,62 @@ public sealed class RedisSessionService(
 
         var transaction = _database.CreateTransaction();
 
-        await transaction.StringSetAsync(sessionKey, serialized, expiry);
-        await transaction.SetAddAsync(userSessionsKey, session.SessionId);
-        await transaction.KeyExpireAsync(userSessionsKey, expiry);
+        _ = transaction.StringSetAsync(sessionKey, serialized, expiry);
+        _ = transaction.SetAddAsync(userSessionsKey, session.SessionId);
+        _ = transaction.KeyExpireAsync(userSessionsKey, expiry);
 
         if (!await transaction.ExecuteAsync())
             throw new RedisTransactionFailedException();
     }
 
-    public async Task<SessionData?> GetSessionAsync(
+
+    // -----------------------------
+    // 1. Load session WITHOUT sliding expiration
+    // -----------------------------
+    public async Task<SessionData?> GetSessionWithoutSlidingAsync(
         string sessionId,
         CancellationToken cancellationToken = default)
     {
         ArgumentException.ThrowIfNullOrWhiteSpace(sessionId);
 
         var key = GetSessionKey(sessionId);
-
         var value = await _database.StringGetAsync(key);
 
-        if (value.IsNullOrEmpty) return null;
+        if (value.IsNullOrEmpty)
+            return null;
 
-        var session = JsonSerializer.Deserialize<SessionData>(value!, jsonOptions)!;
+        return JsonSerializer.Deserialize<SessionData>(value!, jsonOptions)!;
+    }
 
-        var newExpiry = TimeSpan.FromDays(_settings.RefreshTokenLifetimeDays);
+
+    // -----------------------------
+    // 2. Update session (rotate refresh token + sliding TTL)
+    // -----------------------------
+    public async Task UpdateSessionAsync(
+        SessionData session,
+        CancellationToken cancellationToken = default)
+    {
+        ArgumentNullException.ThrowIfNull(session);
+
+        var serialized = JsonSerializer.Serialize(session, jsonOptions);
+
+        var expiry = session.RefreshTokenExpiresAt - DateTimeOffset.UtcNow;
+        if (expiry <= TimeSpan.Zero)
+            expiry = TimeSpan.FromMinutes(1);
+
+        var sessionKey = GetSessionKey(session.SessionId);
         var userSessionsKey = GetUserSessionsKey(session.UserId);
 
-        var transaction = _database.CreateTransaction();
+        var tran = _database.CreateTransaction();
 
-        await transaction.KeyExpireAsync(key, newExpiry);
-        await transaction.KeyExpireAsync(userSessionsKey, newExpiry);
+        // Update session JSON + TTL
+        _ = tran.StringSetAsync(sessionKey, serialized, expiry);
 
-        if (!await transaction.ExecuteAsync())
+        // Update TTL for userSessions set
+        _ = tran.KeyExpireAsync(userSessionsKey, expiry);
+
+        if (!await tran.ExecuteAsync())
             throw new RedisTransactionFailedException();
-
-        return session;
     }
 
     public async Task InvalidateSessionAsync(

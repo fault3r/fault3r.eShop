@@ -4,16 +4,19 @@ using UserService.Domain.Aggregates.UserAggregate;
 using UserService.Domain.Common;
 using UserService.Domain.Interfaces;
 using UserService.Domain.Repositories;
+using UserService.Domain.Security;
 using UserService.Domain.ValueObjects;
 
 namespace UserService.Domain.DomainServices;
 
 public class UserDomainService(
-    IUserRepository userRepository) : IUserDomainService
+    IUserRepository userRepository,
+    IPasswordHasher passwordHasher) : IUserDomainService
 {
     private readonly IUserRepository _userRepository = userRepository;
+    private readonly IPasswordHasher _passwordHasher = passwordHasher;
 
-    public async Task<bool> CanCreateAsync(
+    public async Task<bool> VerifyCanCreateAsync(
         Email email,
         CancellationToken cancellationToken = default)
     {
@@ -25,13 +28,18 @@ public class UserDomainService(
         return exists is null;
     }
 
-    public async Task<Result<User>> GetUserByIdAsync(string id)
+    public async Task<User?> VerifyCredentialAsync(
+       string identity,
+       string password,
+       CancellationToken cancellationToken = default)
     {
-        var user = await _userRepository.GetByIdAsync(Identity.From(id));
+        var user = await _userRepository.GetByIdAsync(Identity.From(identity), cancellationToken);
 
-        if (user is null)
-            return Result<User>.Failure("user not found");
+        if (user is null) return null;
 
-        return Result<User>.Success(user);
+        if (!_passwordHasher.Verify(password, user.PasswordHash))
+            return null;
+
+        return user;
     }
 }

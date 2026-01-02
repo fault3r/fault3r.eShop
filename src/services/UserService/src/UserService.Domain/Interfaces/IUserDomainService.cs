@@ -8,10 +8,14 @@ namespace UserService.Domain.Interfaces;
 
 public interface IUserDomainService
 {
-    Task<bool> CanCreateAsync(
+    Task<bool> VerifyCanCreateAsync(
         Email email,
         CancellationToken cancellationToken = default
     );
 
-    Task<Result<User>> GetUserByIdAsync(string id);
+    Task<User?> VerifyCredentialAsync(
+        string identity,
+        string password,
+        CancellationToken cancellationToken = default
+    );
 }

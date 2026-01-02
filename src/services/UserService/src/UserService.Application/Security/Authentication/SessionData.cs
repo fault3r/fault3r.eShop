@@ -5,18 +5,19 @@ namespace UserService.Application.Security.Authentication;
 
 public sealed class SessionData
 {
-    public required string SessionId { get; init; }       
-    public required string DeviceId { get; init; }     
-    public required string IpAddress { get; init; }  
-    public DateTimeOffset CreatedAt { get; init; }
-    public DateTimeOffset LastAccessedAt { get; init; } 
+    public required string SessionId { get; init; }
+    public required string DeviceId { get; init; }
+    public required string IpAddress { get; init; }
 
-    public required string UserId { get; init; } 
-    public required string Email { get; init; } 
-    public required string FullName { get; init; } 
-    public required string Role { get; init; } 
-    public required string Status { get; init; } 
-    
-    public required string RefreshToken { get; init; }
+    public DateTimeOffset CreatedAt { get; init; }
+    public DateTimeOffset LastAccessedAt { get; init; }
+
+    public required string UserId { get; init; }
+    public required string Email { get; init; }
+    public required string FullName { get; init; }
+    public required string Role { get; init; }
+    public required string Status { get; init; }
+
+    public required string RefreshTokenHash { get; init; }
     public DateTimeOffset RefreshTokenExpiresAt { get; init; }
 }

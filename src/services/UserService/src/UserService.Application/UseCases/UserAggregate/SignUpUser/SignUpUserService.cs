@@ -9,6 +9,7 @@ using UserService.Domain.UnitOfWork;
 using UserService.Domain.ValueObjects;
 using Microsoft.Extensions.Logging;
 using UserService.Domain.Interfaces;
+using UserService.Domain.Security;
 
 namespace UserService.Application.UseCases.UserAggregate.SignUpUser;
 
@@ -64,7 +65,7 @@ public sealed class SignUpUserService(
 
         _logger.LogInformation("Checking whether the user can be created…");
 
-        var canCreate = await _userService.CanCreateAsync(vEmail, cancellationToken);
+        var canCreate = await _userService.VerifyCanCreateAsync(vEmail, cancellationToken);
 
         if (!canCreate)
         {

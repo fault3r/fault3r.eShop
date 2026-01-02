@@ -15,50 +15,47 @@ public class AuthenticationMiddleware(
     private readonly ITokenService _tokenService = tokenService;
     private readonly ISessionService _sessionService = sessionService;
     private readonly IServiceScopeFactory _scopeFactory = serviceScopeFactory;
-
-    public async Task Invoke(HttpContext context)
+   public async Task InvokeAsync(HttpContext context)
     {
+        var authHeader = context.Request.Headers.Authorization.ToString();
 
-        var accessToken = context.Request.Headers["Authorization"]
-            .FirstOrDefault()?
-            .Split(" ")
-            .Last();
-
-        var refreshToken = context.Request.Headers["X-Refresh-Token"]
-            .FirstOrDefault();
-
-        string? sessionId = null;
-
-        var principal = _tokenService.ValidateAccessToken(accessToken);
-        if (principal != null)
+        if (string.IsNullOrWhiteSpace(authHeader) || !authHeader.StartsWith("Bearer "))
         {
-            sessionId = principal.FindFirst("sessionId")?.Value;
+            await _next(context);
+            return;
         }
 
-        string? sessionKey = sessionId ?? refreshToken;
+        var token = authHeader["Bearer ".Length..].Trim();
 
-        if (!string.IsNullOrWhiteSpace(sessionKey))
+        // 1. Validate access token (must fail if expired)
+        var principal = _tokenService.ValidateAccessToken(token);
+        if (principal is null)
         {
-            var session = await _sessionService.GetSessionAsync(sessionKey);
-
-            if (session != null)
-            {
-                using var scope = _scopeFactory.CreateScope();
-                var userService = scope.ServiceProvider.GetRequiredService<IUserDomainService>();
-                var user = await userService.GetUserByIdAsync(session.UserId);
-
-                var newAccessToken = _tokenService.GenerateAccessToken(
-                    session.SessionId,
-                    session.UserId
-                );
-
-                context.Response.Headers["x-new-access-token"] = newAccessToken;
-                context.User = _tokenService.ValidateAccessToken(newAccessToken)!;
-            }
+            context.Response.StatusCode = StatusCodes.Status401Unauthorized;
+            return;
         }
+
+        // 2. Extract sessionId
+        var sessionId = principal.FindFirst("sessionId")?.Value;
+        if (string.IsNullOrWhiteSpace(sessionId))
+        {
+            context.Response.StatusCode = StatusCodes.Status401Unauthorized;
+            return;
+        }
+
+        // 3. Check session exists in Redis (fast check)
+        var exists = await _sessionService.SessionExistsAsync(sessionId);
+        if (!exists)
+        {
+            context.Response.StatusCode = StatusCodes.Status401Unauthorized;
+            return;
+        }
+
+        // 4. Attach principal to HttpContext
+        context.User = principal;
+
         await _next(context);
     }
-}
 public static class AuthenticationMiddlewareExtensions
 {
     public static IApplicationBuilder UseAuthenticationMiddleware(
