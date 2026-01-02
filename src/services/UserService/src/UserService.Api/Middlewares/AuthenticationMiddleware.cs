@@ -1,21 +1,20 @@
 
 using System;
+using System.IdentityModel.Tokens.Jwt;
 using UserService.Application.Interfaces;
-using UserService.Domain.Interfaces;
 
 namespace UserService.Api.Middlewares;
 
 public class AuthenticationMiddleware(
     RequestDelegate next,
     ITokenService tokenService,
-    ISessionService sessionService,
-    IServiceScopeFactory serviceScopeFactory)
+    ISessionService sessionService)
 {
     private readonly RequestDelegate _next = next;
     private readonly ITokenService _tokenService = tokenService;
     private readonly ISessionService _sessionService = sessionService;
-    private readonly IServiceScopeFactory _scopeFactory = serviceScopeFactory;
-   public async Task InvokeAsync(HttpContext context)
+
+    public async Task InvokeAsync(HttpContext context)
     {
         var authHeader = context.Request.Headers.Authorization.ToString();
 
@@ -27,35 +26,33 @@ public class AuthenticationMiddleware(
 
         var token = authHeader["Bearer ".Length..].Trim();
 
-        // 1. Validate access token (must fail if expired)
-        var principal = _tokenService.ValidateAccessToken(token);
+        var principal = _tokenService.ReadPrincipal(token);
         if (principal is null)
         {
             context.Response.StatusCode = StatusCodes.Status401Unauthorized;
             return;
         }
 
-        // 2. Extract sessionId
-        var sessionId = principal.FindFirst("sessionId")?.Value;
+        var sessionId = principal.FindFirst(JwtRegisteredClaimNames.Jti)?.Value;
         if (string.IsNullOrWhiteSpace(sessionId))
         {
             context.Response.StatusCode = StatusCodes.Status401Unauthorized;
             return;
         }
 
-        // 3. Check session exists in Redis (fast check)
-        var exists = await _sessionService.SessionExistsAsync(sessionId);
+        var exists = await _sessionService.SessionExistAsync(sessionId);
         if (!exists)
         {
             context.Response.StatusCode = StatusCodes.Status401Unauthorized;
             return;
         }
 
-        // 4. Attach principal to HttpContext
         context.User = principal;
 
         await _next(context);
     }
+}
+
 public static class AuthenticationMiddlewareExtensions
 {
     public static IApplicationBuilder UseAuthenticationMiddleware(

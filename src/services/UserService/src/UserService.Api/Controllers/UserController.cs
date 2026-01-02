@@ -1,10 +1,9 @@
 
 using System;
 using MediatR;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using UserService.Api.DTOs.UserAggregate;
-using UserService.Application.UseCases.UserAggregate.SignUpUser;
+using UserService.Api.DTOs;
+using UserService.Application.UseCases.RegisterUserUseCase;
 
 namespace UserService.Api.Controllers;
 
@@ -15,12 +14,12 @@ public sealed class UserController(IMediator mediator) : ControllerBase
     private readonly IMediator _mediator = mediator;
 
     [HttpPost]
-    [Route("signup")]
-    public async Task<IActionResult> SignUp([FromBody] SignUpUserDto request)
+    [Route("register")]
+    public async Task<IActionResult> SignUp([FromBody] RegisterUserDto request)
     {
         ArgumentNullException.ThrowIfNull(request);
 
-        var command = new SignUpUserCommand(
+        var command = new RegisterUserCommand(
             request.Email,
             request.Password,
             request.FullName
@@ -39,20 +38,5 @@ public sealed class UserController(IMediator mediator) : ControllerBase
         }
 
         return Ok(result.Value);
-    }
-
-    [Authorize]
-    [HttpGet]
-    [Route("auth")]
-    public async Task<IActionResult> Auth()
-    {
-        return Ok("ok");
-    }
-
-    [HttpGet]
-    [Route("unauth")]
-    public async Task<IActionResult> UnAuth()
-    {
-        return Ok("ok");
     }
 }

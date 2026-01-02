@@ -7,20 +7,20 @@ using UserService.Application.Interfaces;
 using UserService.Domain.Aggregates.UserAggregate;
 using UserService.Domain.Common;
 
-namespace UserService.Application.UseCases.UserAggregate.SignUpUser;
+namespace UserService.Application.UseCases.RegisterUserUseCase;
 
-public class SignUpUserCommandHandler(
-    ISignUpUserService signUpUserService,
-    IValidator<SignUpUserCommand> validator,
-    ILogger<SignUpUserCommandHandler> logger)
-        : IRequestHandler<SignUpUserCommand, Result<User>>
+public class RegisterUserCommandHandler(
+    IRegisterUserService registerUserService,
+    IValidator<RegisterUserCommand> validator,
+    ILogger<RegisterUserCommandHandler> logger)
+        : IRequestHandler<RegisterUserCommand, Result<User>>
 {
-    private readonly ISignUpUserService _signUpService = signUpUserService;
-    private readonly IValidator<SignUpUserCommand> _validator = validator;
-    private readonly ILogger<SignUpUserCommandHandler> _logger = logger;
+    private readonly IRegisterUserService _registerService = registerUserService;
+    private readonly IValidator<RegisterUserCommand> _validator = validator;
+    private readonly ILogger<RegisterUserCommandHandler> _logger = logger;
 
     public async Task<Result<User>> Handle(
-        SignUpUserCommand request,
+        RegisterUserCommand request,
         CancellationToken cancellationToken = default)
     {
         ArgumentNullException.ThrowIfNull(request);
@@ -34,7 +34,7 @@ public class SignUpUserCommandHandler(
             return Result<User>.Failure($"Validation failed: {errors}");
         }
 
-        var result = await _signUpService.ExecuteAsync(
+        var result = await _registerService.ExecuteAsync(
             request.Email,
             request.Password,
             request.FullName,

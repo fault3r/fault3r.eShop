@@ -2,11 +2,11 @@
 using System;
 using FluentValidation;
 
-namespace UserService.Application.UseCases.UserAggregate.SignUpUser;
+namespace UserService.Application.UseCases.RegisterUserUseCase;
 
-public sealed class SignUpUserValidator : AbstractValidator<SignUpUserCommand>
+public sealed class RegisterUserValidator : AbstractValidator<RegisterUserCommand>
 {
-    public SignUpUserValidator()
+    public RegisterUserValidator()
     {
         RuleFor(p => p.Email)
             .NotEmpty()

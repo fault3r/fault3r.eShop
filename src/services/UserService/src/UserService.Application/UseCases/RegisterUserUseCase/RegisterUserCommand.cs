@@ -4,9 +4,9 @@ using MediatR;
 using UserService.Domain.Aggregates.UserAggregate;
 using UserService.Domain.Common;
 
-namespace UserService.Application.UseCases.UserAggregate.SignUpUser;
+namespace UserService.Application.UseCases.RegisterUserUseCase;
 
-public sealed record SignUpUserCommand(
+public sealed record RegisterUserCommand(
     string Email,
     string Password,
     string FullName

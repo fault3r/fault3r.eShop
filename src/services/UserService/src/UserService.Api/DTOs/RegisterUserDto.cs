@@ -3,7 +3,7 @@ using System;
 
 namespace UserService.Api.DTOs;
 
-public sealed record SignUpUserDto(
+public sealed record RegisterUserDto(
     string Email,
     string Password,
     string FullName

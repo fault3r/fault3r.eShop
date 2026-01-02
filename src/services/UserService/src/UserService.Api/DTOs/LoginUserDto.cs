@@ -3,7 +3,7 @@ using System;
 
 namespace UserService.Api.DTOs;
 
-public sealed record SignInUserDto(
+public sealed record LoginUserDto(
     string Identity,
     string Password
 );

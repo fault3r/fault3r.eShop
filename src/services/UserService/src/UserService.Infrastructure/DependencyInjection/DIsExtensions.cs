@@ -5,12 +5,14 @@ using MediatR;
 using Microsoft.Extensions.DependencyInjection;
 using UserService.Application.Interfaces;
 using UserService.Application.Messaging;
-using UserService.Application.UseCases.UserAggregate.SignInUser;
-using UserService.Application.UseCases.UserAggregate.SignUpUser;
+using UserService.Application.UseCases.LoginUserUseCase;
+using UserService.Application.UseCases.RefreshAuthUseCase;
+using UserService.Application.UseCases.RegisterUserUseCase;
 using UserService.Domain.DomainServices;
 using UserService.Domain.Interfaces;
 using UserService.Domain.Messaging;
 using UserService.Domain.Repositories;
+using UserService.Domain.Security;
 using UserService.Domain.UnitOfWork;
 using UserService.Infrastructure.CrossCutting;
 using UserService.Infrastructure.Messaging.Notification;
@@ -48,13 +50,17 @@ public static class DIsExtensions
     public static IServiceCollection AddUseCases(
         this IServiceCollection services)
     {
-        services.AddMediatR(typeof(SignUpUserCommand).Assembly);
-        services.AddScoped<ISignUpUserService, SignUpUserService>();
-        services.AddScoped<IValidator<SignUpUserCommand>, SignUpUserValidator>();
+        services.AddMediatR(typeof(RegisterUserCommandHandler).Assembly);
+        services.AddScoped<IRegisterUserService, RegisterUserService>();
+        services.AddScoped<IValidator<RegisterUserCommand>, RegisterUserValidator>();
 
-        services.AddMediatR(typeof(SignInUserCommand).Assembly);
-        services.AddScoped<ISignInUserService, SignInUserService>();
-        services.AddScoped<IValidator<SignInUserCommand>, SignInUserValidator>();
+        services.AddMediatR(typeof(LoginUserCommandHandler).Assembly);
+        services.AddScoped<ILoginUserService, LoginUserService>();
+        services.AddScoped<IValidator<LoginUserCommand>, LoginUserValidator>();
+
+        services.AddMediatR(typeof(RefreshAuthCommandHandler).Assembly);
+        services.AddScoped<IRefreshAuthService, RefreshAuthService>();
+        services.AddScoped<IValidator<RefreshAuthCommand>, RefreshAuthValidator>();
 
         return services;
     }

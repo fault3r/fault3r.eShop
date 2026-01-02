@@ -20,8 +20,8 @@ public static class CryptRefreshToken
         return BCrypt.Net.BCrypt.HashPassword(raw);
     }
 
-    public static string Verify(string raw)
+    public static bool Verify(string raw, string hash)
     {
-        return BCrypt.Net.BCrypt.HashPassword(raw);
+        return BCrypt.Net.BCrypt.Verify(raw,hash);
     }
 }

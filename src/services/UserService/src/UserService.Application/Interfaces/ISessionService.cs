@@ -16,6 +16,11 @@ public interface ISessionService
         CancellationToken cancellationToken = default
     );
 
+    Task<bool> SessionExistAsync(
+        string sessionId,
+        CancellationToken cancellationToken = default
+    );
+
     Task UpdateSessionAsync(
         SessionData session,
         CancellationToken cancellationToken = default

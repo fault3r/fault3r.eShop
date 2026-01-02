@@ -1,7 +1,7 @@
 
 using System;
 using MediatR;
-using UserService.Application.Messaging.Notifications.UserAggregate;
+using UserService.Application.Messaging.Notifications;
 using UserService.Application.Services.EmailService;
 using UserService.Application.Services.EmailService.EmailTemplateModels;
 

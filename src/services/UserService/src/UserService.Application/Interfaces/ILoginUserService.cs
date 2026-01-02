@@ -1,16 +1,15 @@
-﻿
+
 using System;
-using UserService.Domain.Aggregates.UserAggregate;
+using UserService.Application.UseCases.LoginUserUseCase;
 using UserService.Domain.Common;
 
 namespace UserService.Application.Interfaces;
 
-public interface ISignUpUserService
+public interface ILoginUserService
 {
-    Task<Result<User>> ExecuteAsync(
-        string email,
+    Task<Result<LoginUserResult>> ExecuteAsync(
+        string identity,
         string password,
-        string fullName,
         CancellationToken cancellationToken = default
     );
 }

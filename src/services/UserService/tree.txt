@@ -1,1288 +1,337 @@
 .
-├── Dockerfile
-├── docs
-│   ├── postgres-docker.txt
-│   └── readme.txt
-├── src
-│   ├── tree.txt
-│   ├── UserService.Api
-│   │   ├── appsettings.Development.json
-│   │   ├── appsettings.json
-│   │   ├── bin
-│   │   │   └── Debug
-│   │   │       └── net8.0
-│   │   │           ├── appsettings.Development.json
-│   │   │           ├── appsettings.json
-│   │   │           ├── cs
-│   │   │           │   ├── Microsoft.CodeAnalysis.CSharp.resources.dll
-│   │   │           │   ├── Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
-│   │   │           │   ├── Microsoft.CodeAnalysis.resources.dll
-│   │   │           │   └── Microsoft.CodeAnalysis.Workspaces.resources.dll
-│   │   │           ├── de
-│   │   │           │   ├── Microsoft.CodeAnalysis.CSharp.resources.dll
-│   │   │           │   ├── Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
-│   │   │           │   ├── Microsoft.CodeAnalysis.resources.dll
-│   │   │           │   └── Microsoft.CodeAnalysis.Workspaces.resources.dll
-│   │   │           ├── es
-│   │   │           │   ├── Microsoft.CodeAnalysis.CSharp.resources.dll
-│   │   │           │   ├── Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
-│   │   │           │   ├── Microsoft.CodeAnalysis.resources.dll
-│   │   │           │   └── Microsoft.CodeAnalysis.Workspaces.resources.dll
-│   │   │           ├── FluentEmail.Core.dll
-│   │   │           ├── FluentEmail.Smtp.dll
-│   │   │           ├── FluentValidation.dll
-│   │   │           ├── fr
-│   │   │           │   ├── Microsoft.CodeAnalysis.CSharp.resources.dll
-│   │   │           │   ├── Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
-│   │   │           │   ├── Microsoft.CodeAnalysis.resources.dll
-│   │   │           │   └── Microsoft.CodeAnalysis.Workspaces.resources.dll
-│   │   │           ├── Humanizer.dll
-│   │   │           ├── it
-│   │   │           │   ├── Microsoft.CodeAnalysis.CSharp.resources.dll
-│   │   │           │   ├── Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
-│   │   │           │   ├── Microsoft.CodeAnalysis.resources.dll
-│   │   │           │   └── Microsoft.CodeAnalysis.Workspaces.resources.dll
-│   │   │           ├── ja
-│   │   │           │   ├── Microsoft.CodeAnalysis.CSharp.resources.dll
-│   │   │           │   ├── Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
-│   │   │           │   ├── Microsoft.CodeAnalysis.resources.dll
-│   │   │           │   └── Microsoft.CodeAnalysis.Workspaces.resources.dll
-│   │   │           ├── ko
-│   │   │           │   ├── Microsoft.CodeAnalysis.CSharp.resources.dll
-│   │   │           │   ├── Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
-│   │   │           │   ├── Microsoft.CodeAnalysis.resources.dll
-│   │   │           │   └── Microsoft.CodeAnalysis.Workspaces.resources.dll
-│   │   │           ├── Konscious.Security.Cryptography.Argon2.dll
-│   │   │           ├── Konscious.Security.Cryptography.Blake2.dll
-│   │   │           ├── MediatR.Contracts.dll
-│   │   │           ├── MediatR.dll
-│   │   │           ├── MediatR.Extensions.Microsoft.DependencyInjection.dll
-│   │   │           ├── Microsoft.AspNetCore.Authentication.JwtBearer.dll
-│   │   │           ├── Microsoft.AspNetCore.OpenApi.dll
-│   │   │           ├── Microsoft.Bcl.AsyncInterfaces.dll
-│   │   │           ├── Microsoft.CodeAnalysis.CSharp.dll
-│   │   │           ├── Microsoft.CodeAnalysis.CSharp.Workspaces.dll
-│   │   │           ├── Microsoft.CodeAnalysis.dll
-│   │   │           ├── Microsoft.CodeAnalysis.Workspaces.dll
-│   │   │           ├── Microsoft.EntityFrameworkCore.Abstractions.dll
-│   │   │           ├── Microsoft.EntityFrameworkCore.Design.dll
-│   │   │           ├── Microsoft.EntityFrameworkCore.dll
-│   │   │           ├── Microsoft.EntityFrameworkCore.Relational.dll
-│   │   │           ├── Microsoft.Extensions.Configuration.Abstractions.dll
-│   │   │           ├── Microsoft.Extensions.Configuration.Binder.dll
-│   │   │           ├── Microsoft.Extensions.Configuration.dll
-│   │   │           ├── Microsoft.Extensions.DependencyInjection.Abstractions.dll
-│   │   │           ├── Microsoft.Extensions.DependencyInjection.dll
-│   │   │           ├── Microsoft.Extensions.DependencyModel.dll
-│   │   │           ├── Microsoft.Extensions.Diagnostics.Abstractions.dll
-│   │   │           ├── Microsoft.Extensions.FileProviders.Abstractions.dll
-│   │   │           ├── Microsoft.Extensions.Hosting.Abstractions.dll
-│   │   │           ├── Microsoft.Extensions.Logging.Abstractions.dll
-│   │   │           ├── Microsoft.Extensions.Logging.dll
-│   │   │           ├── Microsoft.Extensions.Options.dll
-│   │   │           ├── Microsoft.Extensions.Primitives.dll
-│   │   │           ├── Microsoft.IdentityModel.Abstractions.dll
-│   │   │           ├── Microsoft.IdentityModel.JsonWebTokens.dll
-│   │   │           ├── Microsoft.IdentityModel.Logging.dll
-│   │   │           ├── Microsoft.IdentityModel.Protocols.dll
-│   │   │           ├── Microsoft.IdentityModel.Protocols.OpenIdConnect.dll
-│   │   │           ├── Microsoft.IdentityModel.Tokens.dll
-│   │   │           ├── Microsoft.OpenApi.dll
-│   │   │           ├── Mono.TextTemplating.dll
-│   │   │           ├── Npgsql.dll
-│   │   │           ├── Npgsql.EntityFrameworkCore.PostgreSQL.dll
-│   │   │           ├── Pipelines.Sockets.Unofficial.dll
-│   │   │           ├── pl
-│   │   │           │   ├── Microsoft.CodeAnalysis.CSharp.resources.dll
-│   │   │           │   ├── Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
-│   │   │           │   ├── Microsoft.CodeAnalysis.resources.dll
-│   │   │           │   └── Microsoft.CodeAnalysis.Workspaces.resources.dll
-│   │   │           ├── Polly.Core.dll
-│   │   │           ├── Polly.dll
-│   │   │           ├── pt-BR
-│   │   │           │   ├── Microsoft.CodeAnalysis.CSharp.resources.dll
-│   │   │           │   ├── Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
-│   │   │           │   ├── Microsoft.CodeAnalysis.resources.dll
-│   │   │           │   └── Microsoft.CodeAnalysis.Workspaces.resources.dll
-│   │   │           ├── ru
-│   │   │           │   ├── Microsoft.CodeAnalysis.CSharp.resources.dll
-│   │   │           │   ├── Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
-│   │   │           │   ├── Microsoft.CodeAnalysis.resources.dll
-│   │   │           │   └── Microsoft.CodeAnalysis.Workspaces.resources.dll
-│   │   │           ├── runtimes
-│   │   │           │   └── browser
-│   │   │           │       └── lib
-│   │   │           │           └── net8.0
-│   │   │           │               └── System.Text.Encodings.Web.dll
-│   │   │           ├── Serilog.AspNetCore.dll
-│   │   │           ├── Serilog.dll
-│   │   │           ├── Serilog.Extensions.Hosting.dll
-│   │   │           ├── Serilog.Extensions.Logging.dll
-│   │   │           ├── Serilog.Formatting.Compact.dll
-│   │   │           ├── Serilog.Settings.Configuration.dll
-│   │   │           ├── Serilog.Sinks.Console.dll
-│   │   │           ├── Serilog.Sinks.Debug.dll
-│   │   │           ├── Serilog.Sinks.File.dll
-│   │   │           ├── StackExchange.Redis.dll
-│   │   │           ├── Swashbuckle.AspNetCore.Swagger.dll
-│   │   │           ├── Swashbuckle.AspNetCore.SwaggerGen.dll
-│   │   │           ├── Swashbuckle.AspNetCore.SwaggerUI.dll
-│   │   │           ├── System.CodeDom.dll
-│   │   │           ├── System.Composition.AttributedModel.dll
-│   │   │           ├── System.Composition.Convention.dll
-│   │   │           ├── System.Composition.Hosting.dll
-│   │   │           ├── System.Composition.Runtime.dll
-│   │   │           ├── System.Composition.TypedParts.dll
-│   │   │           ├── System.Diagnostics.DiagnosticSource.dll
-│   │   │           ├── System.IdentityModel.Tokens.Jwt.dll
-│   │   │           ├── System.IO.Hashing.dll
-│   │   │           ├── System.IO.Pipelines.dll
-│   │   │           ├── System.Text.Encodings.Web.dll
-│   │   │           ├── System.Text.Json.dll
-│   │   │           ├── tr
-│   │   │           │   ├── Microsoft.CodeAnalysis.CSharp.resources.dll
-│   │   │           │   ├── Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
-│   │   │           │   ├── Microsoft.CodeAnalysis.resources.dll
-│   │   │           │   └── Microsoft.CodeAnalysis.Workspaces.resources.dll
-│   │   │           ├── UserService.Api
-│   │   │           ├── UserService.Api.deps.json
-│   │   │           ├── UserService.Api.dll
-│   │   │           ├── UserService.Api.pdb
-│   │   │           ├── UserService.Api.runtimeconfig.json
-│   │   │           ├── UserService.Api.staticwebassets.endpoints.json
-│   │   │           ├── UserService.Application.dll
-│   │   │           ├── UserService.Application.pdb
-│   │   │           ├── UserService.Domain.dll
-│   │   │           ├── UserService.Domain.pdb
-│   │   │           ├── UserService.Infrastructure.dll
-│   │   │           ├── UserService.Infrastructure.pdb
-│   │   │           ├── zh-Hans
-│   │   │           │   ├── Microsoft.CodeAnalysis.CSharp.resources.dll
-│   │   │           │   ├── Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
-│   │   │           │   ├── Microsoft.CodeAnalysis.resources.dll
-│   │   │           │   └── Microsoft.CodeAnalysis.Workspaces.resources.dll
-│   │   │           └── zh-Hant
-│   │   │               ├── Microsoft.CodeAnalysis.CSharp.resources.dll
-│   │   │               ├── Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
-│   │   │               ├── Microsoft.CodeAnalysis.resources.dll
-│   │   │               └── Microsoft.CodeAnalysis.Workspaces.resources.dll
-│   │   ├── Controllers
-│   │   │   └── UserController.cs
-│   │   ├── DTOs
-│   │   │   └── UserAggregate
-│   │   │       ├── SignInUserDto.cs
-│   │   │       └── SignUpUserDto.cs
-│   │   ├── log20251231.txt
-│   │   ├── log20260101.txt
-│   │   ├── Middlewares
-│   │   │   ├── AuthenticationMiddleware.cs
-│   │   │   ├── CrossCuttingMiddleware.cs
-│   │   │   └── ExceptionHandlingMiddleware.cs
-│   │   ├── obj
-│   │   │   ├── Debug
-│   │   │   │   └── net8.0
-│   │   │   │       ├── apphost
-│   │   │   │       ├── ref
-│   │   │   │       │   └── UserService.Api.dll
-│   │   │   │       ├── refint
-│   │   │   │       │   └── UserService.Api.dll
-│   │   │   │       ├── staticwebassets
-│   │   │   │       │   ├── msbuild.buildMultiTargeting.UserService.Api.props
-│   │   │   │       │   ├── msbuild.buildTransitive.UserService.Api.props
-│   │   │   │       │   └── msbuild.build.UserService.Api.props
-│   │   │   │       ├── staticwebassets.build.endpoints.json
-│   │   │   │       ├── staticwebassets.build.json
-│   │   │   │       ├── UserServ.B5470E7C.Up2Date
-│   │   │   │       ├── UserService.Api.AssemblyInfo.cs
-│   │   │   │       ├── UserService.Api.AssemblyInfoInputs.cache
-│   │   │   │       ├── UserService.Api.assets.cache
-│   │   │   │       ├── UserService.Api.csproj.AssemblyReference.cache
-│   │   │   │       ├── UserService.Api.csproj.CoreCompileInputs.cache
-│   │   │   │       ├── UserService.Api.csproj.FileListAbsolute.txt
-│   │   │   │       ├── UserService.Api.dll
-│   │   │   │       ├── UserService.Api.GeneratedMSBuildEditorConfig.editorconfig
-│   │   │   │       ├── UserService.Api.genruntimeconfig.cache
-│   │   │   │       ├── UserService.Api.GlobalUsings.g.cs
-│   │   │   │       ├── UserService.Api.MvcApplicationPartsAssemblyInfo.cache
-│   │   │   │       ├── UserService.Api.MvcApplicationPartsAssemblyInfo.cs
-│   │   │   │       ├── UserService.Api.pdb
-│   │   │   │       └── UserService.Api.sourcelink.json
-│   │   │   ├── project.assets.json
-│   │   │   ├── project.nuget.cache
-│   │   │   ├── UserService.Api.csproj.EntityFrameworkCore.targets
-│   │   │   ├── UserService.Api.csproj.nuget.dgspec.json
-│   │   │   ├── UserService.Api.csproj.nuget.g.props
-│   │   │   └── UserService.Api.csproj.nuget.g.targets
-│   │   ├── Program.cs
-│   │   ├── Properties
-│   │   │   └── launchSettings.json
-│   │   └── UserService.Api.csproj
-│   ├── UserService.Application
-│   │   ├── bin
-│   │   │   └── Debug
-│   │   │       └── net8.0
-│   │   │           ├── UserService.Application.deps.json
-│   │   │           ├── UserService.Application.dll
-│   │   │           ├── UserService.Application.pdb
-│   │   │           ├── UserService.Domain.dll
-│   │   │           └── UserService.Domain.pdb
-│   │   ├── Interfaces
-│   │   │   ├── ICorrelationContext.cs
-│   │   │   ├── IEventNotificationMapper.cs
-│   │   │   ├── IPasswordHasher.cs
-│   │   │   ├── ISessionService.cs
-│   │   │   ├── ISignInUserService.cs
-│   │   │   ├── ISignUpUserService.cs
-│   │   │   └── ITokenService.cs
-│   │   ├── Messaging
-│   │   │   ├── DomainEventNotificationMapper.cs
-│   │   │   ├── NotificationHandlers
-│   │   │   │   └── UserAggregate
-│   │   │   │       └── UserCreatedNotificationHandler.cs
-│   │   │   └── Notifications
-│   │   │       └── UserAggregate
-│   │   │           └── UserCreatedNotification.cs
-│   │   ├── obj
-│   │   │   ├── Debug
-│   │   │   │   └── net8.0
-│   │   │   │       ├── ref
-│   │   │   │       │   └── UserService.Application.dll
-│   │   │   │       ├── refint
-│   │   │   │       │   └── UserService.Application.dll
-│   │   │   │       ├── UserServ.9A0DA653.Up2Date
-│   │   │   │       ├── UserService.Application.AssemblyInfo.cs
-│   │   │   │       ├── UserService.Application.AssemblyInfoInputs.cache
-│   │   │   │       ├── UserService.Application.assets.cache
-│   │   │   │       ├── UserService.Application.csproj.AssemblyReference.cache
-│   │   │   │       ├── UserService.Application.csproj.CoreCompileInputs.cache
-│   │   │   │       ├── UserService.Application.csproj.FileListAbsolute.txt
-│   │   │   │       ├── UserService.Application.dll
-│   │   │   │       ├── UserService.Application.GeneratedMSBuildEditorConfig.editorconfig
-│   │   │   │       ├── UserService.Application.GlobalUsings.g.cs
-│   │   │   │       ├── UserService.Application.pdb
-│   │   │   │       └── UserService.Application.sourcelink.json
-│   │   │   ├── project.assets.json
-│   │   │   ├── project.nuget.cache
-│   │   │   ├── UserService.Application.csproj.nuget.dgspec.json
-│   │   │   ├── UserService.Application.csproj.nuget.g.props
-│   │   │   └── UserService.Application.csproj.nuget.g.targets
-│   │   ├── Security
-│   │   │   └── Authentication
-│   │   │       └── SessionData.cs
-│   │   ├── Services
-│   │   │   └── EmailService
-│   │   │       ├── EmailTemplateModels
-│   │   │       │   └── WelcomeModel.cs
-│   │   │       ├── EmailTemplateType.cs
-│   │   │       ├── IEmailSender.cs
-│   │   │       ├── IEmailTemplateRenderer.cs
-│   │   │       └── IEmailTemplateResolver.cs
-│   │   ├── UseCases
-│   │   │   └── UserAggregate
-│   │   │       ├── SignInUser
-│   │   │       │   ├── SignInUserCommand.cs
-│   │   │       │   ├── SignInUserCommandHandler.cs
-│   │   │       │   ├── SignInUserResult.cs
-│   │   │       │   ├── SignInUserService.cs
-│   │   │       │   └── SignInUserValidator.cs
-│   │   │       └── SignUpUser
-│   │   │           ├── SignUpUserCommand.cs
-│   │   │           ├── SignUpUserCommandHandler.cs
-│   │   │           ├── SignUpUserService.cs
-│   │   │           └── SignUpUserValidator.cs
-│   │   └── UserService.Application.csproj
-│   ├── UserService.Domain
-│   │   ├── Abstractions
-│   │   │   ├── AggregateRoot.cs
-│   │   │   ├── DomainEvent.cs
-│   │   │   ├── Entity.cs
-│   │   │   └── ValueObject.cs
-│   │   ├── Aggregates
-│   │   │   └── UserAggregate
-│   │   │       ├── Events
-│   │   │       │   ├── UserCreatedEvent.cs
-│   │   │       │   ├── UserEmailChangedEvent.cs
-│   │   │       │   ├── UserFullNameChangedEvent.cs
-│   │   │       │   ├── UserPasswordChangedEvent.cs
-│   │   │       │   ├── UserRoleChangedEvent.cs
-│   │   │       │   └── UserStatusChangedEvent.cs
-│   │   │       └── User.cs
-│   │   ├── bin
-│   │   │   └── Debug
-│   │   │       └── net8.0
-│   │   │           ├── UserService.Domain.deps.json
-│   │   │           ├── UserService.Domain.dll
-│   │   │           └── UserService.Domain.pdb
-│   │   ├── Common
-│   │   │   └── Result.cs
-│   │   ├── DomainServices
-│   │   │   └── UserDomainService.cs
-│   │   ├── Exceptions
-│   │   │   ├── DomainException.cs
-│   │   │   ├── Email
-│   │   │   │   ├── EmailException.cs
-│   │   │   │   ├── InvalidEmailException.cs
-│   │   │   │   └── MissingEmailException.cs
-│   │   │   ├── FullName
-│   │   │   │   ├── FullNameException.cs
-│   │   │   │   ├── InvalidFullNameException.cs
-│   │   │   │   └── MissingFullNameException.cs
-│   │   │   ├── Identity
-│   │   │   │   ├── EmptyIdentityException.cs
-│   │   │   │   ├── IdentityException.cs
-│   │   │   │   └── InvalidIdentityException.cs
-│   │   │   ├── PasswordHash
-│   │   │   │   ├── InvalidPasswordHashException.cs
-│   │   │   │   ├── MissingPasswordHashException.cs
-│   │   │   │   └── PasswordHashException.cs
-│   │   │   ├── Role
-│   │   │   │   ├── MissingRoleException.cs
-│   │   │   │   ├── RoleException.cs
-│   │   │   │   └── UnsupportedRoleException.cs
-│   │   │   └── Status
-│   │   │       ├── MissingStatusException.cs
-│   │   │       ├── StatusException.cs
-│   │   │       └── UnsupportedStatusException.cs
-│   │   ├── Factories
-│   │   │   └── UserFactory.cs
-│   │   ├── Interfaces
-│   │   │   ├── IAggregateRoot.cs
-│   │   │   ├── IDomainEvent.cs
-│   │   │   ├── IEntity.cs
-│   │   │   ├── IUserDomainService.cs
-│   │   │   └── IValueObject.cs
-│   │   ├── Messaging
-│   │   │   ├── IDomainNotification.cs
-│   │   │   └── IDomainOutbox.cs
-│   │   ├── obj
-│   │   │   ├── Debug
-│   │   │   │   └── net8.0
-│   │   │   │       ├── ref
-│   │   │   │       │   └── UserService.Domain.dll
-│   │   │   │       ├── refint
-│   │   │   │       │   └── UserService.Domain.dll
-│   │   │   │       ├── UserService.Domain.AssemblyInfo.cs
-│   │   │   │       ├── UserService.Domain.AssemblyInfoInputs.cache
-│   │   │   │       ├── UserService.Domain.assets.cache
-│   │   │   │       ├── UserService.Domain.csproj.CoreCompileInputs.cache
-│   │   │   │       ├── UserService.Domain.csproj.FileListAbsolute.txt
-│   │   │   │       ├── UserService.Domain.dll
-│   │   │   │       ├── UserService.Domain.GeneratedMSBuildEditorConfig.editorconfig
-│   │   │   │       ├── UserService.Domain.GlobalUsings.g.cs
-│   │   │   │       ├── UserService.Domain.pdb
-│   │   │   │       └── UserService.Domain.sourcelink.json
-│   │   │   ├── project.assets.json
-│   │   │   ├── project.nuget.cache
-│   │   │   ├── UserService.Domain.csproj.nuget.dgspec.json
-│   │   │   ├── UserService.Domain.csproj.nuget.g.props
-│   │   │   └── UserService.Domain.csproj.nuget.g.targets
-│   │   ├── Repositories
-│   │   │   └── IUserRepository.cs
-│   │   ├── UnitOfWork
-│   │   │   └── IUnitOfWork.cs
-│   │   ├── UserService.Domain.csproj
-│   │   └── ValueObjects
-│   │       ├── Email.cs
-│   │       ├── FullName.cs
-│   │       ├── Identity.cs
-│   │       ├── PasswordHash.cs
-│   │       ├── Role.cs
-│   │       └── Status.cs
-│   └── UserService.Infrastructure
-│       ├── bin
-│       │   └── Debug
-│       │       └── net8.0
-│       │           ├── refs
-│       │           │   ├── Microsoft.AspNetCore.Antiforgery.dll
-│       │           │   ├── Microsoft.AspNetCore.Authentication.Abstractions.dll
-│       │           │   ├── Microsoft.AspNetCore.Authentication.BearerToken.dll
-│       │           │   ├── Microsoft.AspNetCore.Authentication.Cookies.dll
-│       │           │   ├── Microsoft.AspNetCore.Authentication.Core.dll
-│       │           │   ├── Microsoft.AspNetCore.Authentication.dll
-│       │           │   ├── Microsoft.AspNetCore.Authentication.OAuth.dll
-│       │           │   ├── Microsoft.AspNetCore.Authorization.dll
-│       │           │   ├── Microsoft.AspNetCore.Authorization.Policy.dll
-│       │           │   ├── Microsoft.AspNetCore.Components.Authorization.dll
-│       │           │   ├── Microsoft.AspNetCore.Components.dll
-│       │           │   ├── Microsoft.AspNetCore.Components.Endpoints.dll
-│       │           │   ├── Microsoft.AspNetCore.Components.Forms.dll
-│       │           │   ├── Microsoft.AspNetCore.Components.Server.dll
-│       │           │   ├── Microsoft.AspNetCore.Components.Web.dll
-│       │           │   ├── Microsoft.AspNetCore.Connections.Abstractions.dll
-│       │           │   ├── Microsoft.AspNetCore.CookiePolicy.dll
-│       │           │   ├── Microsoft.AspNetCore.Cors.dll
-│       │           │   ├── Microsoft.AspNetCore.Cryptography.Internal.dll
-│       │           │   ├── Microsoft.AspNetCore.Cryptography.KeyDerivation.dll
-│       │           │   ├── Microsoft.AspNetCore.DataProtection.Abstractions.dll
-│       │           │   ├── Microsoft.AspNetCore.DataProtection.dll
-│       │           │   ├── Microsoft.AspNetCore.DataProtection.Extensions.dll
-│       │           │   ├── Microsoft.AspNetCore.Diagnostics.Abstractions.dll
-│       │           │   ├── Microsoft.AspNetCore.Diagnostics.dll
-│       │           │   ├── Microsoft.AspNetCore.Diagnostics.HealthChecks.dll
-│       │           │   ├── Microsoft.AspNetCore.dll
-│       │           │   ├── Microsoft.AspNetCore.HostFiltering.dll
-│       │           │   ├── Microsoft.AspNetCore.Hosting.Abstractions.dll
-│       │           │   ├── Microsoft.AspNetCore.Hosting.dll
-│       │           │   ├── Microsoft.AspNetCore.Hosting.Server.Abstractions.dll
-│       │           │   ├── Microsoft.AspNetCore.Html.Abstractions.dll
-│       │           │   ├── Microsoft.AspNetCore.Http.Abstractions.dll
-│       │           │   ├── Microsoft.AspNetCore.Http.Connections.Common.dll
-│       │           │   ├── Microsoft.AspNetCore.Http.Connections.dll
-│       │           │   ├── Microsoft.AspNetCore.Http.dll
-│       │           │   ├── Microsoft.AspNetCore.Http.Extensions.dll
-│       │           │   ├── Microsoft.AspNetCore.Http.Features.dll
-│       │           │   ├── Microsoft.AspNetCore.HttpLogging.dll
-│       │           │   ├── Microsoft.AspNetCore.HttpOverrides.dll
-│       │           │   ├── Microsoft.AspNetCore.Http.Results.dll
-│       │           │   ├── Microsoft.AspNetCore.HttpsPolicy.dll
-│       │           │   ├── Microsoft.AspNetCore.Identity.dll
-│       │           │   ├── Microsoft.AspNetCore.Localization.dll
-│       │           │   ├── Microsoft.AspNetCore.Localization.Routing.dll
-│       │           │   ├── Microsoft.AspNetCore.Metadata.dll
-│       │           │   ├── Microsoft.AspNetCore.Mvc.Abstractions.dll
-│       │           │   ├── Microsoft.AspNetCore.Mvc.ApiExplorer.dll
-│       │           │   ├── Microsoft.AspNetCore.Mvc.Core.dll
-│       │           │   ├── Microsoft.AspNetCore.Mvc.Cors.dll
-│       │           │   ├── Microsoft.AspNetCore.Mvc.DataAnnotations.dll
-│       │           │   ├── Microsoft.AspNetCore.Mvc.dll
-│       │           │   ├── Microsoft.AspNetCore.Mvc.Formatters.Json.dll
-│       │           │   ├── Microsoft.AspNetCore.Mvc.Formatters.Xml.dll
-│       │           │   ├── Microsoft.AspNetCore.Mvc.Localization.dll
-│       │           │   ├── Microsoft.AspNetCore.Mvc.Razor.dll
-│       │           │   ├── Microsoft.AspNetCore.Mvc.RazorPages.dll
-│       │           │   ├── Microsoft.AspNetCore.Mvc.TagHelpers.dll
-│       │           │   ├── Microsoft.AspNetCore.Mvc.ViewFeatures.dll
-│       │           │   ├── Microsoft.AspNetCore.OutputCaching.dll
-│       │           │   ├── Microsoft.AspNetCore.RateLimiting.dll
-│       │           │   ├── Microsoft.AspNetCore.Razor.dll
-│       │           │   ├── Microsoft.AspNetCore.Razor.Runtime.dll
-│       │           │   ├── Microsoft.AspNetCore.RequestDecompression.dll
-│       │           │   ├── Microsoft.AspNetCore.ResponseCaching.Abstractions.dll
-│       │           │   ├── Microsoft.AspNetCore.ResponseCaching.dll
-│       │           │   ├── Microsoft.AspNetCore.ResponseCompression.dll
-│       │           │   ├── Microsoft.AspNetCore.Rewrite.dll
-│       │           │   ├── Microsoft.AspNetCore.Routing.Abstractions.dll
-│       │           │   ├── Microsoft.AspNetCore.Routing.dll
-│       │           │   ├── Microsoft.AspNetCore.Server.HttpSys.dll
-│       │           │   ├── Microsoft.AspNetCore.Server.IIS.dll
-│       │           │   ├── Microsoft.AspNetCore.Server.IISIntegration.dll
-│       │           │   ├── Microsoft.AspNetCore.Server.Kestrel.Core.dll
-│       │           │   ├── Microsoft.AspNetCore.Server.Kestrel.dll
-│       │           │   ├── Microsoft.AspNetCore.Server.Kestrel.Transport.NamedPipes.dll
-│       │           │   ├── Microsoft.AspNetCore.Server.Kestrel.Transport.Quic.dll
-│       │           │   ├── Microsoft.AspNetCore.Server.Kestrel.Transport.Sockets.dll
-│       │           │   ├── Microsoft.AspNetCore.Session.dll
-│       │           │   ├── Microsoft.AspNetCore.SignalR.Common.dll
-│       │           │   ├── Microsoft.AspNetCore.SignalR.Core.dll
-│       │           │   ├── Microsoft.AspNetCore.SignalR.dll
-│       │           │   ├── Microsoft.AspNetCore.SignalR.Protocols.Json.dll
-│       │           │   ├── Microsoft.AspNetCore.StaticFiles.dll
-│       │           │   ├── Microsoft.AspNetCore.WebSockets.dll
-│       │           │   ├── Microsoft.AspNetCore.WebUtilities.dll
-│       │           │   ├── Microsoft.CSharp.dll
-│       │           │   ├── Microsoft.Extensions.Caching.Abstractions.dll
-│       │           │   ├── Microsoft.Extensions.Caching.Memory.dll
-│       │           │   ├── Microsoft.Extensions.Configuration.CommandLine.dll
-│       │           │   ├── Microsoft.Extensions.Configuration.EnvironmentVariables.dll
-│       │           │   ├── Microsoft.Extensions.Configuration.FileExtensions.dll
-│       │           │   ├── Microsoft.Extensions.Configuration.Ini.dll
-│       │           │   ├── Microsoft.Extensions.Configuration.Json.dll
-│       │           │   ├── Microsoft.Extensions.Configuration.KeyPerFile.dll
-│       │           │   ├── Microsoft.Extensions.Configuration.UserSecrets.dll
-│       │           │   ├── Microsoft.Extensions.Configuration.Xml.dll
-│       │           │   ├── Microsoft.Extensions.Diagnostics.dll
-│       │           │   ├── Microsoft.Extensions.Diagnostics.HealthChecks.Abstractions.dll
-│       │           │   ├── Microsoft.Extensions.Diagnostics.HealthChecks.dll
-│       │           │   ├── Microsoft.Extensions.Features.dll
-│       │           │   ├── Microsoft.Extensions.FileProviders.Composite.dll
-│       │           │   ├── Microsoft.Extensions.FileProviders.Embedded.dll
-│       │           │   ├── Microsoft.Extensions.FileProviders.Physical.dll
-│       │           │   ├── Microsoft.Extensions.FileSystemGlobbing.dll
-│       │           │   ├── Microsoft.Extensions.Hosting.dll
-│       │           │   ├── Microsoft.Extensions.Http.dll
-│       │           │   ├── Microsoft.Extensions.Identity.Core.dll
-│       │           │   ├── Microsoft.Extensions.Identity.Stores.dll
-│       │           │   ├── Microsoft.Extensions.Localization.Abstractions.dll
-│       │           │   ├── Microsoft.Extensions.Localization.dll
-│       │           │   ├── Microsoft.Extensions.Logging.Configuration.dll
-│       │           │   ├── Microsoft.Extensions.Logging.Console.dll
-│       │           │   ├── Microsoft.Extensions.Logging.Debug.dll
-│       │           │   ├── Microsoft.Extensions.Logging.EventLog.dll
-│       │           │   ├── Microsoft.Extensions.Logging.EventSource.dll
-│       │           │   ├── Microsoft.Extensions.Logging.TraceSource.dll
-│       │           │   ├── Microsoft.Extensions.ObjectPool.dll
-│       │           │   ├── Microsoft.Extensions.Options.ConfigurationExtensions.dll
-│       │           │   ├── Microsoft.Extensions.Options.DataAnnotations.dll
-│       │           │   ├── Microsoft.Extensions.WebEncoders.dll
-│       │           │   ├── Microsoft.JSInterop.dll
-│       │           │   ├── Microsoft.Net.Http.Headers.dll
-│       │           │   ├── Microsoft.VisualBasic.Core.dll
-│       │           │   ├── Microsoft.VisualBasic.dll
-│       │           │   ├── Microsoft.Win32.Primitives.dll
-│       │           │   ├── Microsoft.Win32.Registry.dll
-│       │           │   ├── mscorlib.dll
-│       │           │   ├── netstandard.dll
-│       │           │   ├── System.AppContext.dll
-│       │           │   ├── System.Buffers.dll
-│       │           │   ├── System.Collections.Concurrent.dll
-│       │           │   ├── System.Collections.dll
-│       │           │   ├── System.Collections.Immutable.dll
-│       │           │   ├── System.Collections.NonGeneric.dll
-│       │           │   ├── System.Collections.Specialized.dll
-│       │           │   ├── System.ComponentModel.Annotations.dll
-│       │           │   ├── System.ComponentModel.DataAnnotations.dll
-│       │           │   ├── System.ComponentModel.dll
-│       │           │   ├── System.ComponentModel.EventBasedAsync.dll
-│       │           │   ├── System.ComponentModel.Primitives.dll
-│       │           │   ├── System.ComponentModel.TypeConverter.dll
-│       │           │   ├── System.Configuration.dll
-│       │           │   ├── System.Console.dll
-│       │           │   ├── System.Core.dll
-│       │           │   ├── System.Data.Common.dll
-│       │           │   ├── System.Data.DataSetExtensions.dll
-│       │           │   ├── System.Data.dll
-│       │           │   ├── System.Diagnostics.Contracts.dll
-│       │           │   ├── System.Diagnostics.Debug.dll
-│       │           │   ├── System.Diagnostics.EventLog.dll
-│       │           │   ├── System.Diagnostics.FileVersionInfo.dll
-│       │           │   ├── System.Diagnostics.Process.dll
-│       │           │   ├── System.Diagnostics.StackTrace.dll
-│       │           │   ├── System.Diagnostics.TextWriterTraceListener.dll
-│       │           │   ├── System.Diagnostics.Tools.dll
-│       │           │   ├── System.Diagnostics.TraceSource.dll
-│       │           │   ├── System.Diagnostics.Tracing.dll
-│       │           │   ├── System.dll
-│       │           │   ├── System.Drawing.dll
-│       │           │   ├── System.Drawing.Primitives.dll
-│       │           │   ├── System.Dynamic.Runtime.dll
-│       │           │   ├── System.Formats.Asn1.dll
-│       │           │   ├── System.Formats.Tar.dll
-│       │           │   ├── System.Globalization.Calendars.dll
-│       │           │   ├── System.Globalization.dll
-│       │           │   ├── System.Globalization.Extensions.dll
-│       │           │   ├── System.IO.Compression.Brotli.dll
-│       │           │   ├── System.IO.Compression.dll
-│       │           │   ├── System.IO.Compression.FileSystem.dll
-│       │           │   ├── System.IO.Compression.ZipFile.dll
-│       │           │   ├── System.IO.dll
-│       │           │   ├── System.IO.FileSystem.AccessControl.dll
-│       │           │   ├── System.IO.FileSystem.dll
-│       │           │   ├── System.IO.FileSystem.DriveInfo.dll
-│       │           │   ├── System.IO.FileSystem.Primitives.dll
-│       │           │   ├── System.IO.FileSystem.Watcher.dll
-│       │           │   ├── System.IO.IsolatedStorage.dll
-│       │           │   ├── System.IO.MemoryMappedFiles.dll
-│       │           │   ├── System.IO.Pipes.AccessControl.dll
-│       │           │   ├── System.IO.Pipes.dll
-│       │           │   ├── System.IO.UnmanagedMemoryStream.dll
-│       │           │   ├── System.Linq.dll
-│       │           │   ├── System.Linq.Expressions.dll
-│       │           │   ├── System.Linq.Parallel.dll
-│       │           │   ├── System.Linq.Queryable.dll
-│       │           │   ├── System.Memory.dll
-│       │           │   ├── System.Net.dll
-│       │           │   ├── System.Net.Http.dll
-│       │           │   ├── System.Net.Http.Json.dll
-│       │           │   ├── System.Net.HttpListener.dll
-│       │           │   ├── System.Net.Mail.dll
-│       │           │   ├── System.Net.NameResolution.dll
-│       │           │   ├── System.Net.NetworkInformation.dll
-│       │           │   ├── System.Net.Ping.dll
-│       │           │   ├── System.Net.Primitives.dll
-│       │           │   ├── System.Net.Quic.dll
-│       │           │   ├── System.Net.Requests.dll
-│       │           │   ├── System.Net.Security.dll
-│       │           │   ├── System.Net.ServicePoint.dll
-│       │           │   ├── System.Net.Sockets.dll
-│       │           │   ├── System.Net.WebClient.dll
-│       │           │   ├── System.Net.WebHeaderCollection.dll
-│       │           │   ├── System.Net.WebProxy.dll
-│       │           │   ├── System.Net.WebSockets.Client.dll
-│       │           │   ├── System.Net.WebSockets.dll
-│       │           │   ├── System.Numerics.dll
-│       │           │   ├── System.Numerics.Vectors.dll
-│       │           │   ├── System.ObjectModel.dll
-│       │           │   ├── System.Reflection.DispatchProxy.dll
-│       │           │   ├── System.Reflection.dll
-│       │           │   ├── System.Reflection.Emit.dll
-│       │           │   ├── System.Reflection.Emit.ILGeneration.dll
-│       │           │   ├── System.Reflection.Emit.Lightweight.dll
-│       │           │   ├── System.Reflection.Extensions.dll
-│       │           │   ├── System.Reflection.Metadata.dll
-│       │           │   ├── System.Reflection.Primitives.dll
-│       │           │   ├── System.Reflection.TypeExtensions.dll
-│       │           │   ├── System.Resources.Reader.dll
-│       │           │   ├── System.Resources.ResourceManager.dll
-│       │           │   ├── System.Resources.Writer.dll
-│       │           │   ├── System.Runtime.CompilerServices.Unsafe.dll
-│       │           │   ├── System.Runtime.CompilerServices.VisualC.dll
-│       │           │   ├── System.Runtime.dll
-│       │           │   ├── System.Runtime.Extensions.dll
-│       │           │   ├── System.Runtime.Handles.dll
-│       │           │   ├── System.Runtime.InteropServices.dll
-│       │           │   ├── System.Runtime.InteropServices.JavaScript.dll
-│       │           │   ├── System.Runtime.InteropServices.RuntimeInformation.dll
-│       │           │   ├── System.Runtime.Intrinsics.dll
-│       │           │   ├── System.Runtime.Loader.dll
-│       │           │   ├── System.Runtime.Numerics.dll
-│       │           │   ├── System.Runtime.Serialization.dll
-│       │           │   ├── System.Runtime.Serialization.Formatters.dll
-│       │           │   ├── System.Runtime.Serialization.Json.dll
-│       │           │   ├── System.Runtime.Serialization.Primitives.dll
-│       │           │   ├── System.Runtime.Serialization.Xml.dll
-│       │           │   ├── System.Security.AccessControl.dll
-│       │           │   ├── System.Security.Claims.dll
-│       │           │   ├── System.Security.Cryptography.Algorithms.dll
-│       │           │   ├── System.Security.Cryptography.Cng.dll
-│       │           │   ├── System.Security.Cryptography.Csp.dll
-│       │           │   ├── System.Security.Cryptography.dll
-│       │           │   ├── System.Security.Cryptography.Encoding.dll
-│       │           │   ├── System.Security.Cryptography.OpenSsl.dll
-│       │           │   ├── System.Security.Cryptography.Primitives.dll
-│       │           │   ├── System.Security.Cryptography.X509Certificates.dll
-│       │           │   ├── System.Security.Cryptography.Xml.dll
-│       │           │   ├── System.Security.dll
-│       │           │   ├── System.Security.Principal.dll
-│       │           │   ├── System.Security.Principal.Windows.dll
-│       │           │   ├── System.Security.SecureString.dll
-│       │           │   ├── System.ServiceModel.Web.dll
-│       │           │   ├── System.ServiceProcess.dll
-│       │           │   ├── System.Text.Encoding.CodePages.dll
-│       │           │   ├── System.Text.Encoding.dll
-│       │           │   ├── System.Text.Encoding.Extensions.dll
-│       │           │   ├── System.Text.RegularExpressions.dll
-│       │           │   ├── System.Threading.Channels.dll
-│       │           │   ├── System.Threading.dll
-│       │           │   ├── System.Threading.Overlapped.dll
-│       │           │   ├── System.Threading.RateLimiting.dll
-│       │           │   ├── System.Threading.Tasks.Dataflow.dll
-│       │           │   ├── System.Threading.Tasks.dll
-│       │           │   ├── System.Threading.Tasks.Extensions.dll
-│       │           │   ├── System.Threading.Tasks.Parallel.dll
-│       │           │   ├── System.Threading.Thread.dll
-│       │           │   ├── System.Threading.ThreadPool.dll
-│       │           │   ├── System.Threading.Timer.dll
-│       │           │   ├── System.Transactions.dll
-│       │           │   ├── System.Transactions.Local.dll
-│       │           │   ├── System.ValueTuple.dll
-│       │           │   ├── System.Web.dll
-│       │           │   ├── System.Web.HttpUtility.dll
-│       │           │   ├── System.Windows.dll
-│       │           │   ├── System.Xml.dll
-│       │           │   ├── System.Xml.Linq.dll
-│       │           │   ├── System.Xml.ReaderWriter.dll
-│       │           │   ├── System.Xml.Serialization.dll
-│       │           │   ├── System.Xml.XDocument.dll
-│       │           │   ├── System.Xml.XmlDocument.dll
-│       │           │   ├── System.Xml.XmlSerializer.dll
-│       │           │   ├── System.Xml.XPath.dll
-│       │           │   ├── System.Xml.XPath.XDocument.dll
-│       │           │   └── WindowsBase.dll
-│       │           ├── UserService.Application.dll
-│       │           ├── UserService.Application.pdb
-│       │           ├── UserService.Domain.dll
-│       │           ├── UserService.Domain.pdb
-│       │           ├── UserService.Infrastructure.deps.json
-│       │           ├── UserService.Infrastructure.dll
-│       │           └── UserService.Infrastructure.pdb
-│       ├── CrossCutting
-│       │   └── CorrelationContext.cs
-│       ├── DependencyInjection
-│       │   ├── DIsExtensions.cs
-│       │   ├── FluentEmailExtensions.cs
-│       │   ├── JwtExtensions.cs
-│       │   ├── PostgresExtensions.cs
-│       │   ├── RedisExtensions.cs
-│       │   └── SerilogExtensions.cs
-│       ├── Exceptions
-│       │   ├── CrossCutting
-│       │   │   └── CorrelationIdUnsetException.cs
-│       │   ├── DependencyInjection
-│       │   │   ├── MissingAppSettingException.cs
-│       │   │   ├── MissingFluentEmailSettingException.cs
-│       │   │   ├── MissingJwtSettingException.cs
-│       │   │   ├── MissingPostgresSettingException.cs
-│       │   │   ├── MissingRedisSettingException.cs
-│       │   │   └── MissingSerilogSettingException.cs
-│       │   ├── InfrastructureException.cs
-│       │   ├── Security
-│       │   │   └── Authentication
-│       │   │       └── RedisTransactionFailedException.cs
-│       │   └── Services
-│       │       └── EmailService
-│       │           ├── CannotRenderEmailTemplateException.cs
-│       │           └── EmailTemplateFileNotFoundException.cs
-│       ├── Messaging
-│       │   ├── Notification
-│       │   │   └── MediatorDomainNotification.cs
-│       │   └── Outbox
-│       │       ├── EfDomainOutbox.cs
-│       │       ├── OutboxMessageConfiguration.cs
-│       │       └── OutboxMessage.cs
-│       ├── obj
-│       │   ├── Debug
-│       │   │   └── net8.0
-│       │   │       ├── ref
-│       │   │       │   └── UserService.Infrastructure.dll
-│       │   │       ├── refint
-│       │   │       │   └── UserService.Infrastructure.dll
-│       │   │       ├── UserServ.28B62BA0.Up2Date
-│       │   │       ├── UserService.Infrastructure.AssemblyInfo.cs
-│       │   │       ├── UserService.Infrastructure.AssemblyInfoInputs.cache
-│       │   │       ├── UserService.Infrastructure.assets.cache
-│       │   │       ├── UserService.Infrastructure.csproj.AssemblyReference.cache
-│       │   │       ├── UserService.Infrastructure.csproj.CoreCompileInputs.cache
-│       │   │       ├── UserService.Infrastructure.csproj.FileListAbsolute.txt
-│       │   │       ├── UserService.Infrastructure.dll
-│       │   │       ├── UserService.Infrastructure.GeneratedMSBuildEditorConfig.editorconfig
-│       │   │       ├── UserService.Infrastructure.GlobalUsings.g.cs
-│       │   │       ├── UserService.Infrastructure.pdb
-│       │   │       └── UserService.Infrastructure.sourcelink.json
-│       │   ├── project.assets.json
-│       │   ├── project.nuget.cache
-│       │   ├── UserService.Infrastructure.csproj.EntityFrameworkCore.targets
-│       │   ├── UserService.Infrastructure.csproj.nuget.dgspec.json
-│       │   ├── UserService.Infrastructure.csproj.nuget.g.props
-│       │   └── UserService.Infrastructure.csproj.nuget.g.targets
-│       ├── Persistence
-│       │   ├── Configurations
-│       │   │   └── UserConfiguration.cs
-│       │   ├── EfDbContext.cs
-│       │   └── Migrations
-│       │       ├── 20251229161908_InitialDatabaseMigration.cs
-│       │       ├── 20251229161908_InitialDatabaseMigration.Designer.cs
-│       │       └── EfDbContextModelSnapshot.cs
-│       ├── Repositories
-│       │   └── EfUserRepository.cs
-│       ├── Security
-│       │   ├── Authentication
-│       │   │   ├── JwtTokenService.cs
-│       │   │   └── RedisSessionService.cs
-│       │   └── PasswordHasher
-│       │       └── Argon2PasswordHasher.cs
-│       ├── Services
-│       │   └── EmailService
-│       │       ├── EmailTemplateRenderer.cs
-│       │       ├── EmailTemplateResolver.cs
-│       │       ├── EmailTemplates
-│       │       │   └── Welcome.cshtml
-│       │       └── FluentEmailSender.cs
-│       ├── Settings
-│       │   ├── AppSetting.cs
-│       │   ├── FluentEmailSetting.cs
-│       │   ├── JwtSetting.cs
-│       │   ├── PostgresSetting.cs
-│       │   ├── RedisSetting.cs
-│       │   └── SerilogSetting.cs
-│       ├── UnitOfWork
-│       │   └── EfUnitOfWork.cs
-│       └── UserService.Infrastructure.csproj
-├── tests
-│   └── UserService.Tests
-│       ├── bin
-│       │   └── Debug
-│       │       └── net8.0
-│       │           ├── CoverletSourceRootsMapping_UserService.Tests
-│       │           ├── cs
-│       │           │   ├── Microsoft.CodeAnalysis.CSharp.resources.dll
-│       │           │   ├── Microsoft.CodeAnalysis.resources.dll
-│       │           │   ├── Microsoft.TestPlatform.CommunicationUtilities.resources.dll
-│       │           │   ├── Microsoft.TestPlatform.CoreUtilities.resources.dll
-│       │           │   ├── Microsoft.TestPlatform.CrossPlatEngine.resources.dll
-│       │           │   ├── Microsoft.VisualStudio.TestPlatform.Common.resources.dll
-│       │           │   └── Microsoft.VisualStudio.TestPlatform.ObjectModel.resources.dll
-│       │           ├── de
-│       │           │   ├── Microsoft.CodeAnalysis.CSharp.resources.dll
-│       │           │   ├── Microsoft.CodeAnalysis.resources.dll
-│       │           │   ├── Microsoft.TestPlatform.CommunicationUtilities.resources.dll
-│       │           │   ├── Microsoft.TestPlatform.CoreUtilities.resources.dll
-│       │           │   ├── Microsoft.TestPlatform.CrossPlatEngine.resources.dll
-│       │           │   ├── Microsoft.VisualStudio.TestPlatform.Common.resources.dll
-│       │           │   └── Microsoft.VisualStudio.TestPlatform.ObjectModel.resources.dll
-│       │           ├── es
-│       │           │   ├── Microsoft.CodeAnalysis.CSharp.resources.dll
-│       │           │   ├── Microsoft.CodeAnalysis.resources.dll
-│       │           │   ├── Microsoft.TestPlatform.CommunicationUtilities.resources.dll
-│       │           │   ├── Microsoft.TestPlatform.CoreUtilities.resources.dll
-│       │           │   ├── Microsoft.TestPlatform.CrossPlatEngine.resources.dll
-│       │           │   ├── Microsoft.VisualStudio.TestPlatform.Common.resources.dll
-│       │           │   └── Microsoft.VisualStudio.TestPlatform.ObjectModel.resources.dll
-│       │           ├── FluentEmail.Core.dll
-│       │           ├── FluentEmail.Razor.dll
-│       │           ├── FluentEmail.Smtp.dll
-│       │           ├── FluentValidation.dll
-│       │           ├── fr
-│       │           │   ├── Microsoft.CodeAnalysis.CSharp.resources.dll
-│       │           │   ├── Microsoft.CodeAnalysis.resources.dll
-│       │           │   ├── Microsoft.TestPlatform.CommunicationUtilities.resources.dll
-│       │           │   ├── Microsoft.TestPlatform.CoreUtilities.resources.dll
-│       │           │   ├── Microsoft.TestPlatform.CrossPlatEngine.resources.dll
-│       │           │   ├── Microsoft.VisualStudio.TestPlatform.Common.resources.dll
-│       │           │   └── Microsoft.VisualStudio.TestPlatform.ObjectModel.resources.dll
-│       │           ├── it
-│       │           │   ├── Microsoft.CodeAnalysis.CSharp.resources.dll
-│       │           │   ├── Microsoft.CodeAnalysis.resources.dll
-│       │           │   ├── Microsoft.TestPlatform.CommunicationUtilities.resources.dll
-│       │           │   ├── Microsoft.TestPlatform.CoreUtilities.resources.dll
-│       │           │   ├── Microsoft.TestPlatform.CrossPlatEngine.resources.dll
-│       │           │   ├── Microsoft.VisualStudio.TestPlatform.Common.resources.dll
-│       │           │   └── Microsoft.VisualStudio.TestPlatform.ObjectModel.resources.dll
-│       │           ├── ja
-│       │           │   ├── Microsoft.CodeAnalysis.CSharp.resources.dll
-│       │           │   ├── Microsoft.CodeAnalysis.resources.dll
-│       │           │   ├── Microsoft.TestPlatform.CommunicationUtilities.resources.dll
-│       │           │   ├── Microsoft.TestPlatform.CoreUtilities.resources.dll
-│       │           │   ├── Microsoft.TestPlatform.CrossPlatEngine.resources.dll
-│       │           │   ├── Microsoft.VisualStudio.TestPlatform.Common.resources.dll
-│       │           │   └── Microsoft.VisualStudio.TestPlatform.ObjectModel.resources.dll
-│       │           ├── ko
-│       │           │   ├── Microsoft.CodeAnalysis.CSharp.resources.dll
-│       │           │   ├── Microsoft.CodeAnalysis.resources.dll
-│       │           │   ├── Microsoft.TestPlatform.CommunicationUtilities.resources.dll
-│       │           │   ├── Microsoft.TestPlatform.CoreUtilities.resources.dll
-│       │           │   ├── Microsoft.TestPlatform.CrossPlatEngine.resources.dll
-│       │           │   ├── Microsoft.VisualStudio.TestPlatform.Common.resources.dll
-│       │           │   └── Microsoft.VisualStudio.TestPlatform.ObjectModel.resources.dll
-│       │           ├── Konscious.Security.Cryptography.Argon2.dll
-│       │           ├── Konscious.Security.Cryptography.Blake2.dll
-│       │           ├── MediatR.Contracts.dll
-│       │           ├── MediatR.dll
-│       │           ├── MediatR.Extensions.Microsoft.DependencyInjection.dll
-│       │           ├── Microsoft.AspNetCore.Mvc.Razor.Extensions.dll
-│       │           ├── Microsoft.AspNetCore.Razor.Language.dll
-│       │           ├── Microsoft.CodeAnalysis.CSharp.dll
-│       │           ├── Microsoft.CodeAnalysis.dll
-│       │           ├── Microsoft.CodeAnalysis.Razor.dll
-│       │           ├── Microsoft.EntityFrameworkCore.Abstractions.dll
-│       │           ├── Microsoft.EntityFrameworkCore.dll
-│       │           ├── Microsoft.EntityFrameworkCore.Relational.dll
-│       │           ├── Microsoft.Extensions.Configuration.Abstractions.dll
-│       │           ├── Microsoft.Extensions.Configuration.Binder.dll
-│       │           ├── Microsoft.Extensions.Configuration.dll
-│       │           ├── Microsoft.Extensions.DependencyInjection.Abstractions.dll
-│       │           ├── Microsoft.Extensions.DependencyInjection.dll
-│       │           ├── Microsoft.Extensions.DependencyModel.dll
-│       │           ├── Microsoft.Extensions.Diagnostics.Abstractions.dll
-│       │           ├── Microsoft.Extensions.FileProviders.Abstractions.dll
-│       │           ├── Microsoft.Extensions.Hosting.Abstractions.dll
-│       │           ├── Microsoft.Extensions.Logging.Abstractions.dll
-│       │           ├── Microsoft.Extensions.Logging.dll
-│       │           ├── Microsoft.Extensions.Options.dll
-│       │           ├── Microsoft.Extensions.Primitives.dll
-│       │           ├── Microsoft.TestPlatform.CommunicationUtilities.dll
-│       │           ├── Microsoft.TestPlatform.CoreUtilities.dll
-│       │           ├── Microsoft.TestPlatform.CrossPlatEngine.dll
-│       │           ├── Microsoft.TestPlatform.PlatformAbstractions.dll
-│       │           ├── Microsoft.TestPlatform.Utilities.dll
-│       │           ├── Microsoft.VisualStudio.CodeCoverage.Shim.dll
-│       │           ├── Microsoft.VisualStudio.TestPlatform.Common.dll
-│       │           ├── Microsoft.VisualStudio.TestPlatform.ObjectModel.dll
-│       │           ├── Newtonsoft.Json.dll
-│       │           ├── Npgsql.dll
-│       │           ├── Npgsql.EntityFrameworkCore.PostgreSQL.dll
-│       │           ├── NuGet.Frameworks.dll
-│       │           ├── pl
-│       │           │   ├── Microsoft.CodeAnalysis.CSharp.resources.dll
-│       │           │   ├── Microsoft.CodeAnalysis.resources.dll
-│       │           │   ├── Microsoft.TestPlatform.CommunicationUtilities.resources.dll
-│       │           │   ├── Microsoft.TestPlatform.CoreUtilities.resources.dll
-│       │           │   ├── Microsoft.TestPlatform.CrossPlatEngine.resources.dll
-│       │           │   ├── Microsoft.VisualStudio.TestPlatform.Common.resources.dll
-│       │           │   └── Microsoft.VisualStudio.TestPlatform.ObjectModel.resources.dll
-│       │           ├── Polly.Core.dll
-│       │           ├── Polly.dll
-│       │           ├── pt-BR
-│       │           │   ├── Microsoft.CodeAnalysis.CSharp.resources.dll
-│       │           │   ├── Microsoft.CodeAnalysis.resources.dll
-│       │           │   ├── Microsoft.TestPlatform.CommunicationUtilities.resources.dll
-│       │           │   ├── Microsoft.TestPlatform.CoreUtilities.resources.dll
-│       │           │   ├── Microsoft.TestPlatform.CrossPlatEngine.resources.dll
-│       │           │   ├── Microsoft.VisualStudio.TestPlatform.Common.resources.dll
-│       │           │   └── Microsoft.VisualStudio.TestPlatform.ObjectModel.resources.dll
-│       │           ├── RazorLight.dll
-│       │           ├── refs
-│       │           │   ├── Microsoft.AspNetCore.Antiforgery.dll
-│       │           │   ├── Microsoft.AspNetCore.Authentication.Abstractions.dll
-│       │           │   ├── Microsoft.AspNetCore.Authentication.BearerToken.dll
-│       │           │   ├── Microsoft.AspNetCore.Authentication.Cookies.dll
-│       │           │   ├── Microsoft.AspNetCore.Authentication.Core.dll
-│       │           │   ├── Microsoft.AspNetCore.Authentication.dll
-│       │           │   ├── Microsoft.AspNetCore.Authentication.OAuth.dll
-│       │           │   ├── Microsoft.AspNetCore.Authorization.dll
-│       │           │   ├── Microsoft.AspNetCore.Authorization.Policy.dll
-│       │           │   ├── Microsoft.AspNetCore.Components.Authorization.dll
-│       │           │   ├── Microsoft.AspNetCore.Components.dll
-│       │           │   ├── Microsoft.AspNetCore.Components.Endpoints.dll
-│       │           │   ├── Microsoft.AspNetCore.Components.Forms.dll
-│       │           │   ├── Microsoft.AspNetCore.Components.Server.dll
-│       │           │   ├── Microsoft.AspNetCore.Components.Web.dll
-│       │           │   ├── Microsoft.AspNetCore.Connections.Abstractions.dll
-│       │           │   ├── Microsoft.AspNetCore.CookiePolicy.dll
-│       │           │   ├── Microsoft.AspNetCore.Cors.dll
-│       │           │   ├── Microsoft.AspNetCore.Cryptography.Internal.dll
-│       │           │   ├── Microsoft.AspNetCore.Cryptography.KeyDerivation.dll
-│       │           │   ├── Microsoft.AspNetCore.DataProtection.Abstractions.dll
-│       │           │   ├── Microsoft.AspNetCore.DataProtection.dll
-│       │           │   ├── Microsoft.AspNetCore.DataProtection.Extensions.dll
-│       │           │   ├── Microsoft.AspNetCore.Diagnostics.Abstractions.dll
-│       │           │   ├── Microsoft.AspNetCore.Diagnostics.dll
-│       │           │   ├── Microsoft.AspNetCore.Diagnostics.HealthChecks.dll
-│       │           │   ├── Microsoft.AspNetCore.dll
-│       │           │   ├── Microsoft.AspNetCore.HostFiltering.dll
-│       │           │   ├── Microsoft.AspNetCore.Hosting.Abstractions.dll
-│       │           │   ├── Microsoft.AspNetCore.Hosting.dll
-│       │           │   ├── Microsoft.AspNetCore.Hosting.Server.Abstractions.dll
-│       │           │   ├── Microsoft.AspNetCore.Html.Abstractions.dll
-│       │           │   ├── Microsoft.AspNetCore.Http.Abstractions.dll
-│       │           │   ├── Microsoft.AspNetCore.Http.Connections.Common.dll
-│       │           │   ├── Microsoft.AspNetCore.Http.Connections.dll
-│       │           │   ├── Microsoft.AspNetCore.Http.dll
-│       │           │   ├── Microsoft.AspNetCore.Http.Extensions.dll
-│       │           │   ├── Microsoft.AspNetCore.Http.Features.dll
-│       │           │   ├── Microsoft.AspNetCore.HttpLogging.dll
-│       │           │   ├── Microsoft.AspNetCore.HttpOverrides.dll
-│       │           │   ├── Microsoft.AspNetCore.Http.Results.dll
-│       │           │   ├── Microsoft.AspNetCore.HttpsPolicy.dll
-│       │           │   ├── Microsoft.AspNetCore.Identity.dll
-│       │           │   ├── Microsoft.AspNetCore.Localization.dll
-│       │           │   ├── Microsoft.AspNetCore.Localization.Routing.dll
-│       │           │   ├── Microsoft.AspNetCore.Metadata.dll
-│       │           │   ├── Microsoft.AspNetCore.Mvc.Abstractions.dll
-│       │           │   ├── Microsoft.AspNetCore.Mvc.ApiExplorer.dll
-│       │           │   ├── Microsoft.AspNetCore.Mvc.Core.dll
-│       │           │   ├── Microsoft.AspNetCore.Mvc.Cors.dll
-│       │           │   ├── Microsoft.AspNetCore.Mvc.DataAnnotations.dll
-│       │           │   ├── Microsoft.AspNetCore.Mvc.dll
-│       │           │   ├── Microsoft.AspNetCore.Mvc.Formatters.Json.dll
-│       │           │   ├── Microsoft.AspNetCore.Mvc.Formatters.Xml.dll
-│       │           │   ├── Microsoft.AspNetCore.Mvc.Localization.dll
-│       │           │   ├── Microsoft.AspNetCore.Mvc.Razor.dll
-│       │           │   ├── Microsoft.AspNetCore.Mvc.RazorPages.dll
-│       │           │   ├── Microsoft.AspNetCore.Mvc.TagHelpers.dll
-│       │           │   ├── Microsoft.AspNetCore.Mvc.ViewFeatures.dll
-│       │           │   ├── Microsoft.AspNetCore.OutputCaching.dll
-│       │           │   ├── Microsoft.AspNetCore.RateLimiting.dll
-│       │           │   ├── Microsoft.AspNetCore.Razor.dll
-│       │           │   ├── Microsoft.AspNetCore.Razor.Runtime.dll
-│       │           │   ├── Microsoft.AspNetCore.RequestDecompression.dll
-│       │           │   ├── Microsoft.AspNetCore.ResponseCaching.Abstractions.dll
-│       │           │   ├── Microsoft.AspNetCore.ResponseCaching.dll
-│       │           │   ├── Microsoft.AspNetCore.ResponseCompression.dll
-│       │           │   ├── Microsoft.AspNetCore.Rewrite.dll
-│       │           │   ├── Microsoft.AspNetCore.Routing.Abstractions.dll
-│       │           │   ├── Microsoft.AspNetCore.Routing.dll
-│       │           │   ├── Microsoft.AspNetCore.Server.HttpSys.dll
-│       │           │   ├── Microsoft.AspNetCore.Server.IIS.dll
-│       │           │   ├── Microsoft.AspNetCore.Server.IISIntegration.dll
-│       │           │   ├── Microsoft.AspNetCore.Server.Kestrel.Core.dll
-│       │           │   ├── Microsoft.AspNetCore.Server.Kestrel.dll
-│       │           │   ├── Microsoft.AspNetCore.Server.Kestrel.Transport.NamedPipes.dll
-│       │           │   ├── Microsoft.AspNetCore.Server.Kestrel.Transport.Quic.dll
-│       │           │   ├── Microsoft.AspNetCore.Server.Kestrel.Transport.Sockets.dll
-│       │           │   ├── Microsoft.AspNetCore.Session.dll
-│       │           │   ├── Microsoft.AspNetCore.SignalR.Common.dll
-│       │           │   ├── Microsoft.AspNetCore.SignalR.Core.dll
-│       │           │   ├── Microsoft.AspNetCore.SignalR.dll
-│       │           │   ├── Microsoft.AspNetCore.SignalR.Protocols.Json.dll
-│       │           │   ├── Microsoft.AspNetCore.StaticFiles.dll
-│       │           │   ├── Microsoft.AspNetCore.WebSockets.dll
-│       │           │   ├── Microsoft.AspNetCore.WebUtilities.dll
-│       │           │   ├── Microsoft.CSharp.dll
-│       │           │   ├── Microsoft.Extensions.Caching.Abstractions.dll
-│       │           │   ├── Microsoft.Extensions.Caching.Memory.dll
-│       │           │   ├── Microsoft.Extensions.Configuration.CommandLine.dll
-│       │           │   ├── Microsoft.Extensions.Configuration.EnvironmentVariables.dll
-│       │           │   ├── Microsoft.Extensions.Configuration.FileExtensions.dll
-│       │           │   ├── Microsoft.Extensions.Configuration.Ini.dll
-│       │           │   ├── Microsoft.Extensions.Configuration.Json.dll
-│       │           │   ├── Microsoft.Extensions.Configuration.KeyPerFile.dll
-│       │           │   ├── Microsoft.Extensions.Configuration.UserSecrets.dll
-│       │           │   ├── Microsoft.Extensions.Configuration.Xml.dll
-│       │           │   ├── Microsoft.Extensions.Diagnostics.dll
-│       │           │   ├── Microsoft.Extensions.Diagnostics.HealthChecks.Abstractions.dll
-│       │           │   ├── Microsoft.Extensions.Diagnostics.HealthChecks.dll
-│       │           │   ├── Microsoft.Extensions.Features.dll
-│       │           │   ├── Microsoft.Extensions.FileProviders.Composite.dll
-│       │           │   ├── Microsoft.Extensions.FileProviders.Embedded.dll
-│       │           │   ├── Microsoft.Extensions.FileProviders.Physical.dll
-│       │           │   ├── Microsoft.Extensions.FileSystemGlobbing.dll
-│       │           │   ├── Microsoft.Extensions.Hosting.dll
-│       │           │   ├── Microsoft.Extensions.Http.dll
-│       │           │   ├── Microsoft.Extensions.Identity.Core.dll
-│       │           │   ├── Microsoft.Extensions.Identity.Stores.dll
-│       │           │   ├── Microsoft.Extensions.Localization.Abstractions.dll
-│       │           │   ├── Microsoft.Extensions.Localization.dll
-│       │           │   ├── Microsoft.Extensions.Logging.Configuration.dll
-│       │           │   ├── Microsoft.Extensions.Logging.Console.dll
-│       │           │   ├── Microsoft.Extensions.Logging.Debug.dll
-│       │           │   ├── Microsoft.Extensions.Logging.EventLog.dll
-│       │           │   ├── Microsoft.Extensions.Logging.EventSource.dll
-│       │           │   ├── Microsoft.Extensions.Logging.TraceSource.dll
-│       │           │   ├── Microsoft.Extensions.ObjectPool.dll
-│       │           │   ├── Microsoft.Extensions.Options.ConfigurationExtensions.dll
-│       │           │   ├── Microsoft.Extensions.Options.DataAnnotations.dll
-│       │           │   ├── Microsoft.Extensions.WebEncoders.dll
-│       │           │   ├── Microsoft.JSInterop.dll
-│       │           │   ├── Microsoft.Net.Http.Headers.dll
-│       │           │   ├── Microsoft.VisualBasic.Core.dll
-│       │           │   ├── Microsoft.VisualBasic.dll
-│       │           │   ├── Microsoft.Win32.Primitives.dll
-│       │           │   ├── Microsoft.Win32.Registry.dll
-│       │           │   ├── mscorlib.dll
-│       │           │   ├── netstandard.dll
-│       │           │   ├── System.AppContext.dll
-│       │           │   ├── System.Buffers.dll
-│       │           │   ├── System.Collections.Concurrent.dll
-│       │           │   ├── System.Collections.dll
-│       │           │   ├── System.Collections.Immutable.dll
-│       │           │   ├── System.Collections.NonGeneric.dll
-│       │           │   ├── System.Collections.Specialized.dll
-│       │           │   ├── System.ComponentModel.Annotations.dll
-│       │           │   ├── System.ComponentModel.DataAnnotations.dll
-│       │           │   ├── System.ComponentModel.dll
-│       │           │   ├── System.ComponentModel.EventBasedAsync.dll
-│       │           │   ├── System.ComponentModel.Primitives.dll
-│       │           │   ├── System.ComponentModel.TypeConverter.dll
-│       │           │   ├── System.Configuration.dll
-│       │           │   ├── System.Console.dll
-│       │           │   ├── System.Core.dll
-│       │           │   ├── System.Data.Common.dll
-│       │           │   ├── System.Data.DataSetExtensions.dll
-│       │           │   ├── System.Data.dll
-│       │           │   ├── System.Diagnostics.Contracts.dll
-│       │           │   ├── System.Diagnostics.Debug.dll
-│       │           │   ├── System.Diagnostics.EventLog.dll
-│       │           │   ├── System.Diagnostics.FileVersionInfo.dll
-│       │           │   ├── System.Diagnostics.Process.dll
-│       │           │   ├── System.Diagnostics.StackTrace.dll
-│       │           │   ├── System.Diagnostics.TextWriterTraceListener.dll
-│       │           │   ├── System.Diagnostics.Tools.dll
-│       │           │   ├── System.Diagnostics.TraceSource.dll
-│       │           │   ├── System.Diagnostics.Tracing.dll
-│       │           │   ├── System.dll
-│       │           │   ├── System.Drawing.dll
-│       │           │   ├── System.Drawing.Primitives.dll
-│       │           │   ├── System.Dynamic.Runtime.dll
-│       │           │   ├── System.Formats.Asn1.dll
-│       │           │   ├── System.Formats.Tar.dll
-│       │           │   ├── System.Globalization.Calendars.dll
-│       │           │   ├── System.Globalization.dll
-│       │           │   ├── System.Globalization.Extensions.dll
-│       │           │   ├── System.IO.Compression.Brotli.dll
-│       │           │   ├── System.IO.Compression.dll
-│       │           │   ├── System.IO.Compression.FileSystem.dll
-│       │           │   ├── System.IO.Compression.ZipFile.dll
-│       │           │   ├── System.IO.dll
-│       │           │   ├── System.IO.FileSystem.AccessControl.dll
-│       │           │   ├── System.IO.FileSystem.dll
-│       │           │   ├── System.IO.FileSystem.DriveInfo.dll
-│       │           │   ├── System.IO.FileSystem.Primitives.dll
-│       │           │   ├── System.IO.FileSystem.Watcher.dll
-│       │           │   ├── System.IO.IsolatedStorage.dll
-│       │           │   ├── System.IO.MemoryMappedFiles.dll
-│       │           │   ├── System.IO.Pipes.AccessControl.dll
-│       │           │   ├── System.IO.Pipes.dll
-│       │           │   ├── System.IO.UnmanagedMemoryStream.dll
-│       │           │   ├── System.Linq.dll
-│       │           │   ├── System.Linq.Expressions.dll
-│       │           │   ├── System.Linq.Parallel.dll
-│       │           │   ├── System.Linq.Queryable.dll
-│       │           │   ├── System.Memory.dll
-│       │           │   ├── System.Net.dll
-│       │           │   ├── System.Net.Http.dll
-│       │           │   ├── System.Net.Http.Json.dll
-│       │           │   ├── System.Net.HttpListener.dll
-│       │           │   ├── System.Net.Mail.dll
-│       │           │   ├── System.Net.NameResolution.dll
-│       │           │   ├── System.Net.NetworkInformation.dll
-│       │           │   ├── System.Net.Ping.dll
-│       │           │   ├── System.Net.Primitives.dll
-│       │           │   ├── System.Net.Quic.dll
-│       │           │   ├── System.Net.Requests.dll
-│       │           │   ├── System.Net.Security.dll
-│       │           │   ├── System.Net.ServicePoint.dll
-│       │           │   ├── System.Net.Sockets.dll
-│       │           │   ├── System.Net.WebClient.dll
-│       │           │   ├── System.Net.WebHeaderCollection.dll
-│       │           │   ├── System.Net.WebProxy.dll
-│       │           │   ├── System.Net.WebSockets.Client.dll
-│       │           │   ├── System.Net.WebSockets.dll
-│       │           │   ├── System.Numerics.dll
-│       │           │   ├── System.Numerics.Vectors.dll
-│       │           │   ├── System.ObjectModel.dll
-│       │           │   ├── System.Reflection.DispatchProxy.dll
-│       │           │   ├── System.Reflection.dll
-│       │           │   ├── System.Reflection.Emit.dll
-│       │           │   ├── System.Reflection.Emit.ILGeneration.dll
-│       │           │   ├── System.Reflection.Emit.Lightweight.dll
-│       │           │   ├── System.Reflection.Extensions.dll
-│       │           │   ├── System.Reflection.Metadata.dll
-│       │           │   ├── System.Reflection.Primitives.dll
-│       │           │   ├── System.Reflection.TypeExtensions.dll
-│       │           │   ├── System.Resources.Reader.dll
-│       │           │   ├── System.Resources.ResourceManager.dll
-│       │           │   ├── System.Resources.Writer.dll
-│       │           │   ├── System.Runtime.CompilerServices.Unsafe.dll
-│       │           │   ├── System.Runtime.CompilerServices.VisualC.dll
-│       │           │   ├── System.Runtime.dll
-│       │           │   ├── System.Runtime.Extensions.dll
-│       │           │   ├── System.Runtime.Handles.dll
-│       │           │   ├── System.Runtime.InteropServices.dll
-│       │           │   ├── System.Runtime.InteropServices.JavaScript.dll
-│       │           │   ├── System.Runtime.InteropServices.RuntimeInformation.dll
-│       │           │   ├── System.Runtime.Intrinsics.dll
-│       │           │   ├── System.Runtime.Loader.dll
-│       │           │   ├── System.Runtime.Numerics.dll
-│       │           │   ├── System.Runtime.Serialization.dll
-│       │           │   ├── System.Runtime.Serialization.Formatters.dll
-│       │           │   ├── System.Runtime.Serialization.Json.dll
-│       │           │   ├── System.Runtime.Serialization.Primitives.dll
-│       │           │   ├── System.Runtime.Serialization.Xml.dll
-│       │           │   ├── System.Security.AccessControl.dll
-│       │           │   ├── System.Security.Claims.dll
-│       │           │   ├── System.Security.Cryptography.Algorithms.dll
-│       │           │   ├── System.Security.Cryptography.Cng.dll
-│       │           │   ├── System.Security.Cryptography.Csp.dll
-│       │           │   ├── System.Security.Cryptography.dll
-│       │           │   ├── System.Security.Cryptography.Encoding.dll
-│       │           │   ├── System.Security.Cryptography.OpenSsl.dll
-│       │           │   ├── System.Security.Cryptography.Primitives.dll
-│       │           │   ├── System.Security.Cryptography.X509Certificates.dll
-│       │           │   ├── System.Security.Cryptography.Xml.dll
-│       │           │   ├── System.Security.dll
-│       │           │   ├── System.Security.Principal.dll
-│       │           │   ├── System.Security.Principal.Windows.dll
-│       │           │   ├── System.Security.SecureString.dll
-│       │           │   ├── System.ServiceModel.Web.dll
-│       │           │   ├── System.ServiceProcess.dll
-│       │           │   ├── System.Text.Encoding.CodePages.dll
-│       │           │   ├── System.Text.Encoding.dll
-│       │           │   ├── System.Text.Encoding.Extensions.dll
-│       │           │   ├── System.Text.RegularExpressions.dll
-│       │           │   ├── System.Threading.Channels.dll
-│       │           │   ├── System.Threading.dll
-│       │           │   ├── System.Threading.Overlapped.dll
-│       │           │   ├── System.Threading.RateLimiting.dll
-│       │           │   ├── System.Threading.Tasks.Dataflow.dll
-│       │           │   ├── System.Threading.Tasks.dll
-│       │           │   ├── System.Threading.Tasks.Extensions.dll
-│       │           │   ├── System.Threading.Tasks.Parallel.dll
-│       │           │   ├── System.Threading.Thread.dll
-│       │           │   ├── System.Threading.ThreadPool.dll
-│       │           │   ├── System.Threading.Timer.dll
-│       │           │   ├── System.Transactions.dll
-│       │           │   ├── System.Transactions.Local.dll
-│       │           │   ├── System.ValueTuple.dll
-│       │           │   ├── System.Web.dll
-│       │           │   ├── System.Web.HttpUtility.dll
-│       │           │   ├── System.Windows.dll
-│       │           │   ├── System.Xml.dll
-│       │           │   ├── System.Xml.Linq.dll
-│       │           │   ├── System.Xml.ReaderWriter.dll
-│       │           │   ├── System.Xml.Serialization.dll
-│       │           │   ├── System.Xml.XDocument.dll
-│       │           │   ├── System.Xml.XmlDocument.dll
-│       │           │   ├── System.Xml.XmlSerializer.dll
-│       │           │   ├── System.Xml.XPath.dll
-│       │           │   ├── System.Xml.XPath.XDocument.dll
-│       │           │   └── WindowsBase.dll
-│       │           ├── ru
-│       │           │   ├── Microsoft.CodeAnalysis.CSharp.resources.dll
-│       │           │   ├── Microsoft.CodeAnalysis.resources.dll
-│       │           │   ├── Microsoft.TestPlatform.CommunicationUtilities.resources.dll
-│       │           │   ├── Microsoft.TestPlatform.CoreUtilities.resources.dll
-│       │           │   ├── Microsoft.TestPlatform.CrossPlatEngine.resources.dll
-│       │           │   ├── Microsoft.VisualStudio.TestPlatform.Common.resources.dll
-│       │           │   └── Microsoft.VisualStudio.TestPlatform.ObjectModel.resources.dll
-│       │           ├── runtimes
-│       │           │   └── browser
-│       │           │       └── lib
-│       │           │           └── net8.0
-│       │           │               └── System.Text.Encodings.Web.dll
-│       │           ├── Serilog.AspNetCore.dll
-│       │           ├── Serilog.dll
-│       │           ├── Serilog.Extensions.Hosting.dll
-│       │           ├── Serilog.Extensions.Logging.dll
-│       │           ├── Serilog.Formatting.Compact.dll
-│       │           ├── Serilog.Settings.Configuration.dll
-│       │           ├── Serilog.Sinks.Console.dll
-│       │           ├── Serilog.Sinks.Debug.dll
-│       │           ├── Serilog.Sinks.File.dll
-│       │           ├── System.Diagnostics.DiagnosticSource.dll
-│       │           ├── System.IO.Pipelines.dll
-│       │           ├── System.Text.Encodings.Web.dll
-│       │           ├── System.Text.Json.dll
-│       │           ├── testhost.dll
-│       │           ├── tr
-│       │           │   ├── Microsoft.CodeAnalysis.CSharp.resources.dll
-│       │           │   ├── Microsoft.CodeAnalysis.resources.dll
-│       │           │   ├── Microsoft.TestPlatform.CommunicationUtilities.resources.dll
-│       │           │   ├── Microsoft.TestPlatform.CoreUtilities.resources.dll
-│       │           │   ├── Microsoft.TestPlatform.CrossPlatEngine.resources.dll
-│       │           │   ├── Microsoft.VisualStudio.TestPlatform.Common.resources.dll
-│       │           │   └── Microsoft.VisualStudio.TestPlatform.ObjectModel.resources.dll
-│       │           ├── UserService.Application.dll
-│       │           ├── UserService.Application.pdb
-│       │           ├── UserService.Domain.dll
-│       │           ├── UserService.Domain.pdb
-│       │           ├── UserService.Infrastructure.dll
-│       │           ├── UserService.Infrastructure.pdb
-│       │           ├── UserService.Tests.deps.json
-│       │           ├── UserService.Tests.dll
-│       │           ├── UserService.Tests.pdb
-│       │           ├── UserService.Tests.runtimeconfig.json
-│       │           ├── xunit.abstractions.dll
-│       │           ├── xunit.assert.dll
-│       │           ├── xunit.core.dll
-│       │           ├── xunit.execution.dotnet.dll
-│       │           ├── xunit.runner.reporters.netcoreapp10.dll
-│       │           ├── xunit.runner.utility.netcoreapp10.dll
-│       │           ├── xunit.runner.visualstudio.dotnetcore.testadapter.dll
-│       │           ├── zh-Hans
-│       │           │   ├── Microsoft.CodeAnalysis.CSharp.resources.dll
-│       │           │   ├── Microsoft.CodeAnalysis.resources.dll
-│       │           │   ├── Microsoft.TestPlatform.CommunicationUtilities.resources.dll
-│       │           │   ├── Microsoft.TestPlatform.CoreUtilities.resources.dll
-│       │           │   ├── Microsoft.TestPlatform.CrossPlatEngine.resources.dll
-│       │           │   ├── Microsoft.VisualStudio.TestPlatform.Common.resources.dll
-│       │           │   └── Microsoft.VisualStudio.TestPlatform.ObjectModel.resources.dll
-│       │           └── zh-Hant
-│       │               ├── Microsoft.CodeAnalysis.CSharp.resources.dll
-│       │               ├── Microsoft.CodeAnalysis.resources.dll
-│       │               ├── Microsoft.TestPlatform.CommunicationUtilities.resources.dll
-│       │               ├── Microsoft.TestPlatform.CoreUtilities.resources.dll
-│       │               ├── Microsoft.TestPlatform.CrossPlatEngine.resources.dll
-│       │               ├── Microsoft.VisualStudio.TestPlatform.Common.resources.dll
-│       │               └── Microsoft.VisualStudio.TestPlatform.ObjectModel.resources.dll
-│       ├── GlobalUsings.cs
-│       ├── MainTests.cs
-│       ├── obj
-│       │   ├── Debug
-│       │   │   └── net8.0
-│       │   │       ├── ref
-│       │   │       │   └── UserService.Tests.dll
-│       │   │       ├── refint
-│       │   │       │   └── UserService.Tests.dll
-│       │   │       ├── UserServ.B7D46667.Up2Date
-│       │   │       ├── UserService.Tests.AssemblyInfo.cs
-│       │   │       ├── UserService.Tests.AssemblyInfoInputs.cache
-│       │   │       ├── UserService.Tests.assets.cache
-│       │   │       ├── UserService.Tests.csproj.AssemblyReference.cache
-│       │   │       ├── UserService.Tests.csproj.CoreCompileInputs.cache
-│       │   │       ├── UserService.Tests.csproj.FileListAbsolute.txt
-│       │   │       ├── UserService.Tests.dll
-│       │   │       ├── UserService.Tests.GeneratedMSBuildEditorConfig.editorconfig
-│       │   │       ├── UserService.Tests.genruntimeconfig.cache
-│       │   │       ├── UserService.Tests.GlobalUsings.g.cs
-│       │   │       ├── UserService.Tests.pdb
-│       │   │       └── UserService.Tests.sourcelink.json
-│       │   ├── project.assets.json
-│       │   ├── project.nuget.cache
-│       │   ├── UserService.Tests.csproj.nuget.dgspec.json
-│       │   ├── UserService.Tests.csproj.nuget.g.props
-│       │   └── UserService.Tests.csproj.nuget.g.targets
-│       └── UserService.Tests.csproj
-├── tree.txt
-└── UserService.sln
+├── ./Dockerfile
+├── ./docs
+│   ├── ./docs/postgres-docker.txt
+│   └── ./docs/readme.txt
+├── ./src
+│   ├── ./src/tree.txt
+│   ├── ./src/UserService.Api
+│   │   ├── ./src/UserService.Api/appsettings.Development.json
+│   │   ├── ./src/UserService.Api/appsettings.json
+│   │   ├── ./src/UserService.Api/bin
+│   │   │   └── ./src/UserService.Api/bin/Debug
+│   │   │       └── ./src/UserService.Api/bin/Debug/net8.0
+│   │   │           ├── ./src/UserService.Api/bin/Debug/net8.0/cs
+│   │   │           ├── ./src/UserService.Api/bin/Debug/net8.0/de
+│   │   │           ├── ./src/UserService.Api/bin/Debug/net8.0/es
+│   │   │           ├── ./src/UserService.Api/bin/Debug/net8.0/fr
+│   │   │           ├── ./src/UserService.Api/bin/Debug/net8.0/it
+│   │   │           ├── ./src/UserService.Api/bin/Debug/net8.0/ja
+│   │   │           ├── ./src/UserService.Api/bin/Debug/net8.0/ko
+│   │   │           ├── ./src/UserService.Api/bin/Debug/net8.0/pl
+│   │   │           ├── ./src/UserService.Api/bin/Debug/net8.0/pt-BR
+│   │   │           ├── ./src/UserService.Api/bin/Debug/net8.0/ru
+│   │   │           ├── ./src/UserService.Api/bin/Debug/net8.0/runtimes
+│   │   │           │   └── ./src/UserService.Api/bin/Debug/net8.0/runtimes/browser
+│   │   │           │       └── ./src/UserService.Api/bin/Debug/net8.0/runtimes/browser/lib
+│   │   │           │           └── ./src/UserService.Api/bin/Debug/net8.0/runtimes/browser/lib/net8.0
+│   │   │           ├── ./src/UserService.Api/bin/Debug/net8.0/tr
+│   │   │           ├── ./src/UserService.Api/bin/Debug/net8.0/zh-Hans
+│   │   │           └── ./src/UserService.Api/bin/Debug/net8.0/zh-Hant
+│   │   ├── ./src/UserService.Api/Controllers
+│   │   │   └── ./src/UserService.Api/Controllers/UserController.cs
+│   │   ├── ./src/UserService.Api/DTOs
+│   │   │   ├── ./src/UserService.Api/DTOs/LoginUserDto.cs
+│   │   │   └── ./src/UserService.Api/DTOs/RegisterUserDto.cs
+│   │   ├── ./src/UserService.Api/Middlewares
+│   │   │   ├── ./src/UserService.Api/Middlewares/AuthenticationMiddleware.cs
+│   │   │   ├── ./src/UserService.Api/Middlewares/CrossCuttingMiddleware.cs
+│   │   │   └── ./src/UserService.Api/Middlewares/ExceptionHandlingMiddleware.cs
+│   │   ├── ./src/UserService.Api/obj
+│   │   │   ├── ./src/UserService.Api/obj/Debug
+│   │   │   │   └── ./src/UserService.Api/obj/Debug/net8.0
+│   │   │   │       ├── ./src/UserService.Api/obj/Debug/net8.0/apphost
+│   │   │   │       ├── ./src/UserService.Api/obj/Debug/net8.0/ref
+│   │   │   │       ├── ./src/UserService.Api/obj/Debug/net8.0/refint
+│   │   │   │       ├── ./src/UserService.Api/obj/Debug/net8.0/staticwebassets
+│   │   │   │       ├── ./src/UserService.Api/obj/Debug/net8.0/UserService.Api.assets.cache
+│   │   │   │       ├── ./src/UserService.Api/obj/Debug/net8.0/UserService.Api.csproj.FileListAbsolute.txt
+│   │   │   │       └── ./src/UserService.Api/obj/Debug/net8.0/UserService.Api.GlobalUsings.g.cs
+│   │   │   ├── ./src/UserService.Api/obj/project.assets.json
+│   │   │   ├── ./src/UserService.Api/obj/project.nuget.cache
+│   │   │   ├── ./src/UserService.Api/obj/UserService.Api.csproj.EntityFrameworkCore.targets
+│   │   │   ├── ./src/UserService.Api/obj/UserService.Api.csproj.nuget.dgspec.json
+│   │   │   ├── ./src/UserService.Api/obj/UserService.Api.csproj.nuget.g.props
+│   │   │   └── ./src/UserService.Api/obj/UserService.Api.csproj.nuget.g.targets
+│   │   ├── ./src/UserService.Api/Program.cs
+│   │   ├── ./src/UserService.Api/Properties
+│   │   │   └── ./src/UserService.Api/Properties/launchSettings.json
+│   │   └── ./src/UserService.Api/UserService.Api.csproj
+│   ├── ./src/UserService.Application
+│   │   ├── ./src/UserService.Application/athref.cs
+│   │   ├── ./src/UserService.Application/bin
+│   │   │   └── ./src/UserService.Application/bin/Debug
+│   │   │       └── ./src/UserService.Application/bin/Debug/net8.0
+│   │   ├── ./src/UserService.Application/Interfaces
+│   │   │   ├── ./src/UserService.Application/Interfaces/ICorrelationContext.cs
+│   │   │   ├── ./src/UserService.Application/Interfaces/IEventNotificationMapper.cs
+│   │   │   ├── ./src/UserService.Application/Interfaces/ILoginUserService.cs
+│   │   │   ├── ./src/UserService.Application/Interfaces/IRegisterUserService.cs
+│   │   │   ├── ./src/UserService.Application/Interfaces/ISessionService.cs
+│   │   │   └── ./src/UserService.Application/Interfaces/ITokenService.cs
+│   │   ├── ./src/UserService.Application/Messaging
+│   │   │   ├── ./src/UserService.Application/Messaging/DomainEventNotificationMapper.cs
+│   │   │   ├── ./src/UserService.Application/Messaging/NotificationHandlers
+│   │   │   │   └── ./src/UserService.Application/Messaging/NotificationHandlers/UserCreatedNotificationHandler.cs
+│   │   │   └── ./src/UserService.Application/Messaging/Notifications
+│   │   │       └── ./src/UserService.Application/Messaging/Notifications/UserCreatedNotification.cs
+│   │   ├── ./src/UserService.Application/obj
+│   │   │   ├── ./src/UserService.Application/obj/Debug
+│   │   │   │   └── ./src/UserService.Application/obj/Debug/net8.0
+│   │   │   │       ├── ./src/UserService.Application/obj/Debug/net8.0/ref
+│   │   │   │       ├── ./src/UserService.Application/obj/Debug/net8.0/refint
+│   │   │   │       ├── ./src/UserService.Application/obj/Debug/net8.0/UserService.Application.assets.cache
+│   │   │   │       ├── ./src/UserService.Application/obj/Debug/net8.0/UserService.Application.csproj.FileListAbsolute.txt
+│   │   │   │       └── ./src/UserService.Application/obj/Debug/net8.0/UserService.Application.GlobalUsings.g.cs
+│   │   │   ├── ./src/UserService.Application/obj/project.assets.json
+│   │   │   ├── ./src/UserService.Application/obj/project.nuget.cache
+│   │   │   ├── ./src/UserService.Application/obj/UserService.Application.csproj.nuget.dgspec.json
+│   │   │   ├── ./src/UserService.Application/obj/UserService.Application.csproj.nuget.g.props
+│   │   │   └── ./src/UserService.Application/obj/UserService.Application.csproj.nuget.g.targets
+│   │   ├── ./src/UserService.Application/Security
+│   │   │   └── ./src/UserService.Application/Security/Authentication
+│   │   │       ├── ./src/UserService.Application/Security/Authentication/CryptRefreshToken.cs
+│   │   │       └── ./src/UserService.Application/Security/Authentication/SessionData.cs
+│   │   ├── ./src/UserService.Application/Services
+│   │   │   └── ./src/UserService.Application/Services/EmailService
+│   │   │       ├── ./src/UserService.Application/Services/EmailService/EmailTemplateModels
+│   │   │       │   └── ./src/UserService.Application/Services/EmailService/EmailTemplateModels/WelcomeModel.cs
+│   │   │       ├── ./src/UserService.Application/Services/EmailService/EmailTemplateType.cs
+│   │   │       ├── ./src/UserService.Application/Services/EmailService/IEmailSender.cs
+│   │   │       ├── ./src/UserService.Application/Services/EmailService/IEmailTemplateRenderer.cs
+│   │   │       └── ./src/UserService.Application/Services/EmailService/IEmailTemplateResolver.cs
+│   │   ├── ./src/UserService.Application/UseCases
+│   │   │   ├── ./src/UserService.Application/UseCases/LoginUserUseCase
+│   │   │   │   ├── ./src/UserService.Application/UseCases/LoginUserUseCase/LoginUserCommand.cs
+│   │   │   │   ├── ./src/UserService.Application/UseCases/LoginUserUseCase/LoginUserCommandHandler.cs
+│   │   │   │   ├── ./src/UserService.Application/UseCases/LoginUserUseCase/LoginUserResult.cs
+│   │   │   │   ├── ./src/UserService.Application/UseCases/LoginUserUseCase/LoginUserService.cs
+│   │   │   │   └── ./src/UserService.Application/UseCases/LoginUserUseCase/LoginUserValidator.cs
+│   │   │   ├── ./src/UserService.Application/UseCases/RefreshAuthUseCase
+│   │   │   │   ├── ./src/UserService.Application/UseCases/RefreshAuthUseCase/RefreshAuthCommand.cs
+│   │   │   │   ├── ./src/UserService.Application/UseCases/RefreshAuthUseCase/RefreshAuthCommandHandler.cs
+│   │   │   │   ├── ./src/UserService.Application/UseCases/RefreshAuthUseCase/RefreshAuthResult.cs
+│   │   │   │   ├── ./src/UserService.Application/UseCases/RefreshAuthUseCase/RefreshAuthService.cs
+│   │   │   │   └── ./src/UserService.Application/UseCases/RefreshAuthUseCase/RefreshAuthValidator.cs
+│   │   │   └── ./src/UserService.Application/UseCases/RegisterUserUseCase
+│   │   │       ├── ./src/UserService.Application/UseCases/RegisterUserUseCase/RegisterUserCommand.cs
+│   │   │       ├── ./src/UserService.Application/UseCases/RegisterUserUseCase/RegisterUserCommandHandler.cs
+│   │   │       ├── ./src/UserService.Application/UseCases/RegisterUserUseCase/RegisterUserService.cs
+│   │   │       └── ./src/UserService.Application/UseCases/RegisterUserUseCase/RegisterUserValidator.cs
+│   │   └── ./src/UserService.Application/UserService.Application.csproj
+│   ├── ./src/UserService.Domain
+│   │   ├── ./src/UserService.Domain/Abstractions
+│   │   │   ├── ./src/UserService.Domain/Abstractions/AggregateRoot.cs
+│   │   │   ├── ./src/UserService.Domain/Abstractions/DomainEvent.cs
+│   │   │   ├── ./src/UserService.Domain/Abstractions/Entity.cs
+│   │   │   └── ./src/UserService.Domain/Abstractions/ValueObject.cs
+│   │   ├── ./src/UserService.Domain/Aggregates
+│   │   │   └── ./src/UserService.Domain/Aggregates/UserAggregate
+│   │   │       ├── ./src/UserService.Domain/Aggregates/UserAggregate/Events
+│   │   │       │   ├── ./src/UserService.Domain/Aggregates/UserAggregate/Events/UserCreatedEvent.cs
+│   │   │       │   ├── ./src/UserService.Domain/Aggregates/UserAggregate/Events/UserEmailChangedEvent.cs
+│   │   │       │   ├── ./src/UserService.Domain/Aggregates/UserAggregate/Events/UserFullNameChangedEvent.cs
+│   │   │       │   ├── ./src/UserService.Domain/Aggregates/UserAggregate/Events/UserPasswordChangedEvent.cs
+│   │   │       │   ├── ./src/UserService.Domain/Aggregates/UserAggregate/Events/UserRoleChangedEvent.cs
+│   │   │       │   └── ./src/UserService.Domain/Aggregates/UserAggregate/Events/UserStatusChangedEvent.cs
+│   │   │       └── ./src/UserService.Domain/Aggregates/UserAggregate/User.cs
+│   │   ├── ./src/UserService.Domain/bin
+│   │   │   └── ./src/UserService.Domain/bin/Debug
+│   │   │       └── ./src/UserService.Domain/bin/Debug/net8.0
+│   │   ├── ./src/UserService.Domain/Common
+│   │   │   └── ./src/UserService.Domain/Common/Result.cs
+│   │   ├── ./src/UserService.Domain/DomainServices
+│   │   │   └── ./src/UserService.Domain/DomainServices/UserDomainService.cs
+│   │   ├── ./src/UserService.Domain/Exceptions
+│   │   │   ├── ./src/UserService.Domain/Exceptions/DomainException.cs
+│   │   │   ├── ./src/UserService.Domain/Exceptions/Email
+│   │   │   │   ├── ./src/UserService.Domain/Exceptions/Email/EmailException.cs
+│   │   │   │   ├── ./src/UserService.Domain/Exceptions/Email/InvalidEmailException.cs
+│   │   │   │   └── ./src/UserService.Domain/Exceptions/Email/MissingEmailException.cs
+│   │   │   ├── ./src/UserService.Domain/Exceptions/FullName
+│   │   │   │   ├── ./src/UserService.Domain/Exceptions/FullName/FullNameException.cs
+│   │   │   │   ├── ./src/UserService.Domain/Exceptions/FullName/InvalidFullNameException.cs
+│   │   │   │   └── ./src/UserService.Domain/Exceptions/FullName/MissingFullNameException.cs
+│   │   │   ├── ./src/UserService.Domain/Exceptions/Identity
+│   │   │   │   ├── ./src/UserService.Domain/Exceptions/Identity/EmptyIdentityException.cs
+│   │   │   │   ├── ./src/UserService.Domain/Exceptions/Identity/IdentityException.cs
+│   │   │   │   └── ./src/UserService.Domain/Exceptions/Identity/InvalidIdentityException.cs
+│   │   │   ├── ./src/UserService.Domain/Exceptions/PasswordHash
+│   │   │   │   ├── ./src/UserService.Domain/Exceptions/PasswordHash/InvalidPasswordHashException.cs
+│   │   │   │   ├── ./src/UserService.Domain/Exceptions/PasswordHash/MissingPasswordHashException.cs
+│   │   │   │   └── ./src/UserService.Domain/Exceptions/PasswordHash/PasswordHashException.cs
+│   │   │   ├── ./src/UserService.Domain/Exceptions/Role
+│   │   │   │   ├── ./src/UserService.Domain/Exceptions/Role/MissingRoleException.cs
+│   │   │   │   ├── ./src/UserService.Domain/Exceptions/Role/RoleException.cs
+│   │   │   │   └── ./src/UserService.Domain/Exceptions/Role/UnsupportedRoleException.cs
+│   │   │   └── ./src/UserService.Domain/Exceptions/Status
+│   │   │       ├── ./src/UserService.Domain/Exceptions/Status/MissingStatusException.cs
+│   │   │       ├── ./src/UserService.Domain/Exceptions/Status/StatusException.cs
+│   │   │       └── ./src/UserService.Domain/Exceptions/Status/UnsupportedStatusException.cs
+│   │   ├── ./src/UserService.Domain/Factories
+│   │   │   └── ./src/UserService.Domain/Factories/UserFactory.cs
+│   │   ├── ./src/UserService.Domain/Interfaces
+│   │   │   ├── ./src/UserService.Domain/Interfaces/IAggregateRoot.cs
+│   │   │   ├── ./src/UserService.Domain/Interfaces/IDomainEvent.cs
+│   │   │   ├── ./src/UserService.Domain/Interfaces/IEntity.cs
+│   │   │   ├── ./src/UserService.Domain/Interfaces/IUserDomainService.cs
+│   │   │   └── ./src/UserService.Domain/Interfaces/IValueObject.cs
+│   │   ├── ./src/UserService.Domain/Messaging
+│   │   │   ├── ./src/UserService.Domain/Messaging/IDomainNotification.cs
+│   │   │   └── ./src/UserService.Domain/Messaging/IDomainOutbox.cs
+│   │   ├── ./src/UserService.Domain/obj
+│   │   │   ├── ./src/UserService.Domain/obj/Debug
+│   │   │   │   └── ./src/UserService.Domain/obj/Debug/net8.0
+│   │   │   │       ├── ./src/UserService.Domain/obj/Debug/net8.0/ref
+│   │   │   │       ├── ./src/UserService.Domain/obj/Debug/net8.0/refint
+│   │   │   │       ├── ./src/UserService.Domain/obj/Debug/net8.0/UserService.Domain.assets.cache
+│   │   │   │       ├── ./src/UserService.Domain/obj/Debug/net8.0/UserService.Domain.csproj.FileListAbsolute.txt
+│   │   │   │       └── ./src/UserService.Domain/obj/Debug/net8.0/UserService.Domain.GlobalUsings.g.cs
+│   │   │   ├── ./src/UserService.Domain/obj/project.assets.json
+│   │   │   ├── ./src/UserService.Domain/obj/project.nuget.cache
+│   │   │   ├── ./src/UserService.Domain/obj/UserService.Domain.csproj.nuget.dgspec.json
+│   │   │   ├── ./src/UserService.Domain/obj/UserService.Domain.csproj.nuget.g.props
+│   │   │   └── ./src/UserService.Domain/obj/UserService.Domain.csproj.nuget.g.targets
+│   │   ├── ./src/UserService.Domain/Repositories
+│   │   │   └── ./src/UserService.Domain/Repositories/IUserRepository.cs
+│   │   ├── ./src/UserService.Domain/Security
+│   │   │   └── ./src/UserService.Domain/Security/IPasswordHasher.cs
+│   │   ├── ./src/UserService.Domain/UnitOfWork
+│   │   │   └── ./src/UserService.Domain/UnitOfWork/IUnitOfWork.cs
+│   │   ├── ./src/UserService.Domain/UserService.Domain.csproj
+│   │   └── ./src/UserService.Domain/ValueObjects
+│   │       ├── ./src/UserService.Domain/ValueObjects/Email.cs
+│   │       ├── ./src/UserService.Domain/ValueObjects/FullName.cs
+│   │       ├── ./src/UserService.Domain/ValueObjects/Identity.cs
+│   │       ├── ./src/UserService.Domain/ValueObjects/PasswordHash.cs
+│   │       ├── ./src/UserService.Domain/ValueObjects/Role.cs
+│   │       └── ./src/UserService.Domain/ValueObjects/Status.cs
+│   └── ./src/UserService.Infrastructure
+│       ├── ./src/UserService.Infrastructure/bin
+│       │   └── ./src/UserService.Infrastructure/bin/Debug
+│       │       └── ./src/UserService.Infrastructure/bin/Debug/net8.0
+│       │           └── ./src/UserService.Infrastructure/bin/Debug/net8.0/refs
+│       ├── ./src/UserService.Infrastructure/CrossCutting
+│       │   └── ./src/UserService.Infrastructure/CrossCutting/CorrelationContext.cs
+│       ├── ./src/UserService.Infrastructure/DependencyInjection
+│       │   ├── ./src/UserService.Infrastructure/DependencyInjection/DIsExtensions.cs
+│       │   ├── ./src/UserService.Infrastructure/DependencyInjection/FluentEmailExtensions.cs
+│       │   ├── ./src/UserService.Infrastructure/DependencyInjection/JwtExtensions.cs
+│       │   ├── ./src/UserService.Infrastructure/DependencyInjection/PostgresExtensions.cs
+│       │   ├── ./src/UserService.Infrastructure/DependencyInjection/RedisExtensions.cs
+│       │   └── ./src/UserService.Infrastructure/DependencyInjection/SerilogExtensions.cs
+│       ├── ./src/UserService.Infrastructure/Exceptions
+│       │   ├── ./src/UserService.Infrastructure/Exceptions/CrossCutting
+│       │   │   └── ./src/UserService.Infrastructure/Exceptions/CrossCutting/CorrelationIdUnsetException.cs
+│       │   ├── ./src/UserService.Infrastructure/Exceptions/DependencyInjection
+│       │   │   ├── ./src/UserService.Infrastructure/Exceptions/DependencyInjection/MissingAppSettingException.cs
+│       │   │   ├── ./src/UserService.Infrastructure/Exceptions/DependencyInjection/MissingFluentEmailSettingException.cs
+│       │   │   ├── ./src/UserService.Infrastructure/Exceptions/DependencyInjection/MissingJwtSettingException.cs
+│       │   │   ├── ./src/UserService.Infrastructure/Exceptions/DependencyInjection/MissingPostgresSettingException.cs
+│       │   │   ├── ./src/UserService.Infrastructure/Exceptions/DependencyInjection/MissingRedisSettingException.cs
+│       │   │   └── ./src/UserService.Infrastructure/Exceptions/DependencyInjection/MissingSerilogSettingException.cs
+│       │   ├── ./src/UserService.Infrastructure/Exceptions/InfrastructureException.cs
+│       │   ├── ./src/UserService.Infrastructure/Exceptions/Security
+│       │   │   └── ./src/UserService.Infrastructure/Exceptions/Security/Authentication
+│       │   │       └── ./src/UserService.Infrastructure/Exceptions/Security/Authentication/RedisTransactionFailedException.cs
+│       │   └── ./src/UserService.Infrastructure/Exceptions/Services
+│       │       └── ./src/UserService.Infrastructure/Exceptions/Services/EmailService
+│       │           ├── ./src/UserService.Infrastructure/Exceptions/Services/EmailService/CannotRenderEmailTemplateException.cs
+│       │           └── ./src/UserService.Infrastructure/Exceptions/Services/EmailService/EmailTemplateFileNotFoundException.cs
+│       ├── ./src/UserService.Infrastructure/Messaging
+│       │   ├── ./src/UserService.Infrastructure/Messaging/Notification
+│       │   │   └── ./src/UserService.Infrastructure/Messaging/Notification/MediatorDomainNotification.cs
+│       │   └── ./src/UserService.Infrastructure/Messaging/Outbox
+│       │       ├── ./src/UserService.Infrastructure/Messaging/Outbox/EfDomainOutbox.cs
+│       │       ├── ./src/UserService.Infrastructure/Messaging/Outbox/OutboxMessageConfiguration.cs
+│       │       └── ./src/UserService.Infrastructure/Messaging/Outbox/OutboxMessage.cs
+│       ├── ./src/UserService.Infrastructure/obj
+│       │   ├── ./src/UserService.Infrastructure/obj/Debug
+│       │   │   └── ./src/UserService.Infrastructure/obj/Debug/net8.0
+│       │   │       ├── ./src/UserService.Infrastructure/obj/Debug/net8.0/ref
+│       │   │       ├── ./src/UserService.Infrastructure/obj/Debug/net8.0/refint
+│       │   │       ├── ./src/UserService.Infrastructure/obj/Debug/net8.0/UserService.Infrastructure.assets.cache
+│       │   │       ├── ./src/UserService.Infrastructure/obj/Debug/net8.0/UserService.Infrastructure.csproj.FileListAbsolute.txt
+│       │   │       └── ./src/UserService.Infrastructure/obj/Debug/net8.0/UserService.Infrastructure.GlobalUsings.g.cs
+│       │   ├── ./src/UserService.Infrastructure/obj/project.assets.json
+│       │   ├── ./src/UserService.Infrastructure/obj/project.nuget.cache
+│       │   ├── ./src/UserService.Infrastructure/obj/UserService.Infrastructure.csproj.EntityFrameworkCore.targets
+│       │   ├── ./src/UserService.Infrastructure/obj/UserService.Infrastructure.csproj.nuget.dgspec.json
+│       │   ├── ./src/UserService.Infrastructure/obj/UserService.Infrastructure.csproj.nuget.g.props
+│       │   └── ./src/UserService.Infrastructure/obj/UserService.Infrastructure.csproj.nuget.g.targets
+│       ├── ./src/UserService.Infrastructure/Persistence
+│       │   ├── ./src/UserService.Infrastructure/Persistence/Configurations
+│       │   │   └── ./src/UserService.Infrastructure/Persistence/Configurations/UserConfiguration.cs
+│       │   ├── ./src/UserService.Infrastructure/Persistence/EfDbContext.cs
+│       │   └── ./src/UserService.Infrastructure/Persistence/Migrations
+│       │       ├── ./src/UserService.Infrastructure/Persistence/Migrations/20251229161908_InitialDatabaseMigration.cs
+│       │       ├── ./src/UserService.Infrastructure/Persistence/Migrations/20251229161908_InitialDatabaseMigration.Designer.cs
+│       │       └── ./src/UserService.Infrastructure/Persistence/Migrations/EfDbContextModelSnapshot.cs
+│       ├── ./src/UserService.Infrastructure/Repositories
+│       │   └── ./src/UserService.Infrastructure/Repositories/EfUserRepository.cs
+│       ├── ./src/UserService.Infrastructure/Security
+│       │   ├── ./src/UserService.Infrastructure/Security/Authentication
+│       │   │   ├── ./src/UserService.Infrastructure/Security/Authentication/JwtTokenService.cs
+│       │   │   └── ./src/UserService.Infrastructure/Security/Authentication/RedisSessionService.cs
+│       │   └── ./src/UserService.Infrastructure/Security/PasswordHasher
+│       │       └── ./src/UserService.Infrastructure/Security/PasswordHasher/Argon2PasswordHasher.cs
+│       ├── ./src/UserService.Infrastructure/Services
+│       │   └── ./src/UserService.Infrastructure/Services/EmailService
+│       │       ├── ./src/UserService.Infrastructure/Services/EmailService/EmailTemplateRenderer.cs
+│       │       ├── ./src/UserService.Infrastructure/Services/EmailService/EmailTemplateResolver.cs
+│       │       ├── ./src/UserService.Infrastructure/Services/EmailService/EmailTemplates
+│       │       │   └── ./src/UserService.Infrastructure/Services/EmailService/EmailTemplates/Welcome.cshtml
+│       │       └── ./src/UserService.Infrastructure/Services/EmailService/FluentEmailSender.cs
+│       ├── ./src/UserService.Infrastructure/Settings
+│       │   ├── ./src/UserService.Infrastructure/Settings/AppSetting.cs
+│       │   ├── ./src/UserService.Infrastructure/Settings/FluentEmailSetting.cs
+│       │   ├── ./src/UserService.Infrastructure/Settings/JwtSetting.cs
+│       │   ├── ./src/UserService.Infrastructure/Settings/PostgresSetting.cs
+│       │   ├── ./src/UserService.Infrastructure/Settings/RedisSetting.cs
+│       │   └── ./src/UserService.Infrastructure/Settings/SerilogSetting.cs
+│       ├── ./src/UserService.Infrastructure/UnitOfWork
+│       │   └── ./src/UserService.Infrastructure/UnitOfWork/EfUnitOfWork.cs
+│       └── ./src/UserService.Infrastructure/UserService.Infrastructure.csproj
+├── ./tests
+│   └── ./tests/UserService.Tests
+│       ├── ./tests/UserService.Tests/bin
+│       │   └── ./tests/UserService.Tests/bin/Debug
+│       │       └── ./tests/UserService.Tests/bin/Debug/net8.0
+│       │           ├── ./tests/UserService.Tests/bin/Debug/net8.0/cs
+│       │           ├── ./tests/UserService.Tests/bin/Debug/net8.0/de
+│       │           ├── ./tests/UserService.Tests/bin/Debug/net8.0/es
+│       │           ├── ./tests/UserService.Tests/bin/Debug/net8.0/fr
+│       │           ├── ./tests/UserService.Tests/bin/Debug/net8.0/it
+│       │           ├── ./tests/UserService.Tests/bin/Debug/net8.0/ja
+│       │           ├── ./tests/UserService.Tests/bin/Debug/net8.0/ko
+│       │           ├── ./tests/UserService.Tests/bin/Debug/net8.0/pl
+│       │           ├── ./tests/UserService.Tests/bin/Debug/net8.0/pt-BR
+│       │           ├── ./tests/UserService.Tests/bin/Debug/net8.0/refs
+│       │           ├── ./tests/UserService.Tests/bin/Debug/net8.0/ru
+│       │           ├── ./tests/UserService.Tests/bin/Debug/net8.0/runtimes
+│       │           │   └── ./tests/UserService.Tests/bin/Debug/net8.0/runtimes/browser
+│       │           │       └── ./tests/UserService.Tests/bin/Debug/net8.0/runtimes/browser/lib
+│       │           │           └── ./tests/UserService.Tests/bin/Debug/net8.0/runtimes/browser/lib/net8.0
+│       │           ├── ./tests/UserService.Tests/bin/Debug/net8.0/tr
+│       │           ├── ./tests/UserService.Tests/bin/Debug/net8.0/zh-Hans
+│       │           └── ./tests/UserService.Tests/bin/Debug/net8.0/zh-Hant
+│       ├── ./tests/UserService.Tests/GlobalUsings.cs
+│       ├── ./tests/UserService.Tests/MainTests.cs
+│       ├── ./tests/UserService.Tests/obj
+│       │   ├── ./tests/UserService.Tests/obj/Debug
+│       │   │   └── ./tests/UserService.Tests/obj/Debug/net8.0
+│       │   │       ├── ./tests/UserService.Tests/obj/Debug/net8.0/ref
+│       │   │       ├── ./tests/UserService.Tests/obj/Debug/net8.0/refint
+│       │   │       ├── ./tests/UserService.Tests/obj/Debug/net8.0/UserService.Tests.assets.cache
+│       │   │       ├── ./tests/UserService.Tests/obj/Debug/net8.0/UserService.Tests.csproj.FileListAbsolute.txt
+│       │   │       └── ./tests/UserService.Tests/obj/Debug/net8.0/UserService.Tests.GlobalUsings.g.cs
+│       │   ├── ./tests/UserService.Tests/obj/project.assets.json
+│       │   ├── ./tests/UserService.Tests/obj/project.nuget.cache
+│       │   ├── ./tests/UserService.Tests/obj/UserService.Tests.csproj.nuget.dgspec.json
+│       │   ├── ./tests/UserService.Tests/obj/UserService.Tests.csproj.nuget.g.props
+│       │   └── ./tests/UserService.Tests/obj/UserService.Tests.csproj.nuget.g.targets
+│       └── ./tests/UserService.Tests/UserService.Tests.csproj
+├── ./tree.txt
+└── ./UserService.sln
 
-149 directories, 1137 files
+147 directories, 188 files

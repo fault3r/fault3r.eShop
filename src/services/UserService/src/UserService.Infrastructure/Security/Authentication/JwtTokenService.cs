@@ -45,7 +45,7 @@ public sealed class JwtTokenService(
         return new JwtSecurityTokenHandler().WriteToken(token);
     }
 
-    public ClaimsPrincipal? ReadExpiredToken(string? token)
+    public ClaimsPrincipal? ReadPrincipal(string? token)
     {
         if (string.IsNullOrWhiteSpace(token))
             return null;

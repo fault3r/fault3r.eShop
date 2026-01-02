@@ -57,6 +57,17 @@ public sealed class RedisSessionService(
         return JsonSerializer.Deserialize<SessionData>(value!, jsonOptions)!;
     }
 
+    public async Task<bool> SessionExistAsync(
+        string sessionId,
+        CancellationToken cancellationToken = default)
+    {
+        ArgumentException.ThrowIfNullOrWhiteSpace(sessionId);
+
+        var key = GetSessionKey(sessionId);
+        
+        return await _database.KeyExistsAsync(key);
+    }
+
     public async Task UpdateSessionAsync(
         SessionData session,
         CancellationToken cancellationToken = default)

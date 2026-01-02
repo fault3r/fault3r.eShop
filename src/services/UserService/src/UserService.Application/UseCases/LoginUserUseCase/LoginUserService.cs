@@ -5,25 +5,25 @@ using UserService.Application.Security.Authentication;
 using UserService.Domain.Common;
 using UserService.Domain.Interfaces;
 
-namespace UserService.Application.UseCases.UserAggregate.SignInUser;
+namespace UserService.Application.UseCases.LoginUserUseCase;
 
-public sealed class SignInUserService(
+public sealed class LoginUserService(
     IUserDomainService userDomainService,
     ISessionService sessionService,
-    ITokenService tokenService) : ISignInUserService
+    ITokenService tokenService) : ILoginUserService
 {
     private readonly IUserDomainService _userDomainService = userDomainService;
     private readonly ISessionService _sessionService = sessionService;
     private readonly ITokenService _tokenService = tokenService;
 
-    public async Task<Result<SignInUserResult>> ExecuteAsync(
+    public async Task<Result<LoginUserResult>> ExecuteAsync(
         string identity,
         string password,
         CancellationToken cancellationToken = default)
     {
         var user = await _userDomainService.VerifyCredentialAsync(identity, password, cancellationToken);
         if (user is null)
-            return Result<SignInUserResult>.Failure("Invalid credentials");
+            return Result<LoginUserResult>.Failure("Invalid credentials");
 
         var sessionId = Guid.NewGuid().ToString("N");
 
@@ -33,7 +33,7 @@ public sealed class SignInUserService(
         var session = new SessionData
         {
             SessionId = sessionId,
-            DeviceId = "unknown", 
+            DeviceId = "unknown",
             IpAddress = "unknown",
             CreatedAt = DateTimeOffset.UtcNow,
             LastAccessedAt = DateTimeOffset.UtcNow,
@@ -52,12 +52,6 @@ public sealed class SignInUserService(
 
         var accessToken = _tokenService.GenerateAccessToken(sessionId, user.Id);
 
-        // 7. Return both tokens
-        return Result<SignInUserResult>.Success(new SignInUserResult
-        {
-            AccessToken = accessToken,
-            RefreshToken = refreshToken
-        });
+        return Result<LoginUserResult>.Success(new LoginUserResult(accessToken, refreshToken));
     }
-
 }

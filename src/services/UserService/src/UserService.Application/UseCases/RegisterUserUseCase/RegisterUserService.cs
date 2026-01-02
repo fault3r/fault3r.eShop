@@ -11,21 +11,21 @@ using Microsoft.Extensions.Logging;
 using UserService.Domain.Interfaces;
 using UserService.Domain.Security;
 
-namespace UserService.Application.UseCases.UserAggregate.SignUpUser;
+namespace UserService.Application.UseCases.RegisterUserUseCase;
 
-public sealed class SignUpUserService(
+public sealed class RegisterUserService(
     IUnitOfWork unitOfWork,
     IUserDomainService userDomainService,
     ICorrelationContext correlation,
     IPasswordHasher passwordHasher,
-    ILogger<SignUpUserService> logger)
-        : ISignUpUserService
+    ILogger<RegisterUserService> logger)
+        : IRegisterUserService
 {
     private readonly IUnitOfWork _uow = unitOfWork;
     private readonly IUserDomainService _userService = userDomainService;
     private readonly ICorrelationContext _correlation = correlation;
     private readonly IPasswordHasher _hasher = passwordHasher;
-    private readonly ILogger<SignUpUserService> _logger = logger;
+    private readonly ILogger<RegisterUserService> _logger = logger;
 
     public async Task<Result<User>> ExecuteAsync(
         string email,
