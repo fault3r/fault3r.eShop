@@ -3,7 +3,7 @@ using System;
 using MediatR;
 using UserService.Domain.Aggregates.UserAggregate.Events;
 
-namespace UserService.Application.Messaging.Notifications.UserAggregate;
+namespace UserService.Application.Messaging.Notifications;
 
 public sealed record UserCreatedNotification : INotification
 {

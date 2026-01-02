@@ -6,7 +6,7 @@ namespace UserService.Application.Security.Authentication;
 
 public static class CryptRefreshToken
 {
-    public static string GenerateToken(int length = 64)
+    public static string Generate(int length = 64)
     {
         var bytes = new byte[length];
 
@@ -15,12 +15,12 @@ public static class CryptRefreshToken
         return Convert.ToBase64String(bytes);
     }
 
-    public static string ToBCryptHash(string raw)
+    public static string ToHash(string raw)
     {
         return BCrypt.Net.BCrypt.HashPassword(raw);
     }
 
-    public static string VerifyBCryptToken(string raw)
+    public static string Verify(string raw)
     {
         return BCrypt.Net.BCrypt.HashPassword(raw);
     }

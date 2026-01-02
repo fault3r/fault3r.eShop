@@ -8,7 +8,6 @@ public sealed class SessionData
     public required string SessionId { get; init; }
     public required string DeviceId { get; init; }
     public required string IpAddress { get; init; }
-
     public DateTimeOffset CreatedAt { get; init; }
     public DateTimeOffset LastAccessedAt { get; init; }
 

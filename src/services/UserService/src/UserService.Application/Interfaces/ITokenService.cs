@@ -7,5 +7,5 @@ namespace UserService.Application.Interfaces;
 public interface ITokenService
 {
     string GenerateAccessToken(string userId, string sessionId);
-    ClaimsPrincipal? ValidateAccessToken(string? token);
+    ClaimsPrincipal? ReadExpiredToken(string? token);
 }

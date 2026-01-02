@@ -42,29 +42,21 @@ public sealed class RedisSessionService(
             throw new RedisTransactionFailedException();
     }
 
-
-    // -----------------------------
-    // 1. Load session WITHOUT sliding expiration
-    // -----------------------------
-    public async Task<SessionData?> GetSessionWithoutSlidingAsync(
+    public async Task<SessionData?> GetSessionAsync(
         string sessionId,
         CancellationToken cancellationToken = default)
     {
         ArgumentException.ThrowIfNullOrWhiteSpace(sessionId);
 
         var key = GetSessionKey(sessionId);
+
         var value = await _database.StringGetAsync(key);
 
-        if (value.IsNullOrEmpty)
-            return null;
+        if (value.IsNullOrEmpty) return null;
 
         return JsonSerializer.Deserialize<SessionData>(value!, jsonOptions)!;
     }
 
-
-    // -----------------------------
-    // 2. Update session (rotate refresh token + sliding TTL)
-    // -----------------------------
     public async Task UpdateSessionAsync(
         SessionData session,
         CancellationToken cancellationToken = default)
@@ -80,42 +72,38 @@ public sealed class RedisSessionService(
         var sessionKey = GetSessionKey(session.SessionId);
         var userSessionsKey = GetUserSessionsKey(session.UserId);
 
-        var tran = _database.CreateTransaction();
+        var transaction = _database.CreateTransaction();
 
-        // Update session JSON + TTL
-        _ = tran.StringSetAsync(sessionKey, serialized, expiry);
+        _ = transaction.StringSetAsync(sessionKey, serialized, expiry);
+        _ = transaction.KeyExpireAsync(userSessionsKey, expiry);
 
-        // Update TTL for userSessions set
-        _ = tran.KeyExpireAsync(userSessionsKey, expiry);
-
-        if (!await tran.ExecuteAsync())
+        if (!await transaction.ExecuteAsync())
             throw new RedisTransactionFailedException();
     }
-
+    
     public async Task InvalidateSessionAsync(
         string sessionId,
         CancellationToken cancellationToken = default)
     {
         ArgumentException.ThrowIfNullOrWhiteSpace(sessionId);
 
-        var key = GetSessionKey(sessionId);
-        var value = await _database.StringGetAsync(key);
+        var sessionKey = GetSessionKey(sessionId);
+
+        var value = await _database.StringGetAsync(sessionKey);
 
         if (value.IsNullOrEmpty)
-        {
-            await _database.KeyDeleteAsync(key);
             return;
-        }
 
         var session = JsonSerializer.Deserialize<SessionData>(value!, jsonOptions)!;
         var userSessionsKey = GetUserSessionsKey(session.UserId);
 
-        var tran = _database.CreateTransaction();
+        var transaction = _database.CreateTransaction();
 
-        _ = tran.SetRemoveAsync(userSessionsKey, sessionId);
-        _ = tran.KeyDeleteAsync(key);
+        _ = transaction.KeyDeleteAsync(sessionKey);
+        _ = transaction.SetRemoveAsync(userSessionsKey, sessionId);
 
-        await tran.ExecuteAsync();
+        if (!await transaction.ExecuteAsync())
+            throw new RedisTransactionFailedException();
     }
 
     public async Task InvalidateAllUserSessionsAsync(
@@ -125,19 +113,26 @@ public sealed class RedisSessionService(
         ArgumentException.ThrowIfNullOrWhiteSpace(userId);
 
         var userSessionsKey = GetUserSessionsKey(userId);
+
         var sessionIds = await _database.SetMembersAsync(userSessionsKey);
-
-        var tran = _database.CreateTransaction();
-
-        foreach (var sessionId in sessionIds)
+        if (sessionIds.Length == 0)
         {
-            var key = GetSessionKey(sessionId!);
-            _ = tran.KeyDeleteAsync(key);
+            await _database.KeyDeleteAsync(userSessionsKey);
+            return;
         }
 
-        _ = tran.KeyDeleteAsync(userSessionsKey);
+        var transaction = _database.CreateTransaction();
 
-        await tran.ExecuteAsync();
+        foreach (var id in sessionIds)
+        {
+            var sessionKey = GetSessionKey(id!);
+            _ = transaction.KeyDeleteAsync(sessionKey);
+        }
+
+        _ = transaction.KeyDeleteAsync(userSessionsKey);
+
+        if (!await transaction.ExecuteAsync())
+            throw new RedisTransactionFailedException();
     }
 
     private string GetSessionKey(string sessionId)

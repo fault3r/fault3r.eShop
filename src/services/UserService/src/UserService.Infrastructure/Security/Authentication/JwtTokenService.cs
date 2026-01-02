@@ -24,14 +24,14 @@ public sealed class JwtTokenService(
 
         var claims = new List<Claim>
         {
-            new("sessionId", sessionId),
-            new("userId", userId),
+            new(JwtRegisteredClaimNames.Sub, userId),
+            new(JwtRegisteredClaimNames.Jti, sessionId), 
         };
 
         var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_settings.SigningKey));
         var credential = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
 
-        var expires = now.AddMinutes(_settings.AccessTokenLifetimeMinutes);
+        var expires = now.AddMinutes(_settings.TokenLifetimeMinutes);
 
         var token = new JwtSecurityToken(
             issuer: _settings.Issuer,
@@ -45,7 +45,7 @@ public sealed class JwtTokenService(
         return new JwtSecurityTokenHandler().WriteToken(token);
     }
 
-    public ClaimsPrincipal? ValidateAccessToken(string? token)
+    public ClaimsPrincipal? ReadExpiredToken(string? token)
     {
         if (string.IsNullOrWhiteSpace(token))
             return null;
@@ -55,7 +55,7 @@ public sealed class JwtTokenService(
         try
         {
             return handler.ValidateToken(token, _tokenValidation, out _);
-            
+
         }
         catch { return null; }
     }

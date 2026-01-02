@@ -5,7 +5,7 @@ using UserService.Application.Messaging.Notifications.UserAggregate;
 using UserService.Application.Services.EmailService;
 using UserService.Application.Services.EmailService.EmailTemplateModels;
 
-namespace UserService.Application.Messaging.NotificationHandlers.UserAggregate;
+namespace UserService.Application.Messaging.NotificationHandlers;
 
 public sealed class UserCreatedNotificationHandler(
     IEmailTemplateResolver resolver,
