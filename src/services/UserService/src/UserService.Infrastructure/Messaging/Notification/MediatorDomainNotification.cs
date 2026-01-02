@@ -7,25 +7,17 @@ using UserService.Domain.Messaging;
 
 namespace UserService.Infrastructure.Messaging.Notification;
 
-public sealed class MediatorDomainNotification : IDomainNotification
+public sealed class MediatorDomainNotification(
+    IMediator mediator,
+    IEventNotificationMapper mapper
+) : IDomainNotification
 {
-    private readonly IMediator _mediator;
-    private readonly IEventNotificationMapper _mapper;
-
-    public MediatorDomainNotification(
-        IMediator mediator,
-        IEventNotificationMapper mapper)
-    {
-        ArgumentNullException.ThrowIfNull(mediator);
-        ArgumentNullException.ThrowIfNull(mapper);
-
-        _mediator = mediator;
-        _mapper = mapper;
-    }
+    private readonly IMediator _mediator = mediator;
+    private readonly IEventNotificationMapper _mapper = mapper;
 
     public async Task DispatchAsync(
         IEnumerable<IDomainEvent> events,
-        CancellationToken cancellationToken = default)
+        CancellationToken ct = default)
     {
         ArgumentNullException.ThrowIfNull(events);
 
@@ -35,7 +27,8 @@ public sealed class MediatorDomainNotification : IDomainNotification
         foreach (var @event in events)
         {
             var notification = _mapper.ToNotification(@event);
-            await _mediator.Publish(notification, cancellationToken);
+            
+            await _mediator.Publish(notification, ct);
         }
     }
 }

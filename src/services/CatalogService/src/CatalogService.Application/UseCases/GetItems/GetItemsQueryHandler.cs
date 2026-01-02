@@ -20,7 +20,7 @@ namespace CatalogService.Application.UseCases.GetItems
             _logger.LogInformation("instance created.");
         }
 
-        public async Task<(int Code, IEnumerable<ItemDto> Items)> Handle(GetItemsQuery request, CancellationToken cancellationToken)
+        public async Task<(int Code, IEnumerable<ItemDto> Items)> Handle(GetItemsQuery request, CancellationToken ct)
         {
             await _logger.LogInformation("forwarding request to service..");
             var (Code, Items) = await _service.ExecuteAsync();

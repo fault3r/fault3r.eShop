@@ -10,12 +10,12 @@ public interface IUserDomainService
 {
     Task<bool> VerifyCanCreateAsync(
         Email email,
-        CancellationToken cancellationToken = default
+        CancellationToken ct = default
     );
 
     Task<User?> VerifyCredentialAsync(
         string identity,
         string password,
-        CancellationToken cancellationToken = default
+        CancellationToken ct = default
     );
 }

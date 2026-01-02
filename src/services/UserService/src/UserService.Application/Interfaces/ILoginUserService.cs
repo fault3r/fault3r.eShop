@@ -10,6 +10,6 @@ public interface ILoginUserService
     Task<Result<LoginUserResult>> ExecuteAsync(
         string identity,
         string password,
-        CancellationToken cancellationToken = default
+        CancellationToken ct = default
     );
 }

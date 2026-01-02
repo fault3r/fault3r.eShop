@@ -23,7 +23,7 @@ public static class RedisExtensions
         var settings = configuration
             .GetSection(nameof(RedisSetting))
             .Get<RedisSetting>()
-                ?? throw new MissingRedisSettingException();
+                ?? throw new MissingRedisSettingsException();
 
         services.AddSingleton<IConnectionMultiplexer>(_ =>
         {

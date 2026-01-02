@@ -31,7 +31,7 @@ public sealed class RegisterUserService(
         string email,
         string password,
         string fullName,
-        CancellationToken cancellationToken = default)
+        CancellationToken ct = default)
     {
         ArgumentNullException.ThrowIfNull(email);
         ArgumentNullException.ThrowIfNull(password);
@@ -65,7 +65,7 @@ public sealed class RegisterUserService(
 
         _logger.LogInformation("Checking whether the user can be created…");
 
-        var canCreate = await _userService.VerifyCanCreateAsync(vEmail, cancellationToken);
+        var canCreate = await _userService.VerifyCanCreateAsync(vEmail, ct);
 
         if (!canCreate)
         {
@@ -78,15 +78,15 @@ public sealed class RegisterUserService(
 
         _logger.LogInformation("Persisting user data to the database…");
 
-        await _uow.UserRepository.CreateAsync(user, cancellationToken);
-        await _uow.Outbox.EnqueueAsync(user.Events, _correlation.CorrelationId, cancellationToken);
-        await _uow.CommitAsync(cancellationToken);
+        await _uow.UserRepository.CreateAsync(user, ct);
+        await _uow.Outbox.EnqueueAsync(user.Events, _correlation.CorrelationId, ct);
+        await _uow.CommitAsync(ct);
 
         _logger.LogInformation("User data successfully persisted.");
         
         _logger.LogInformation("Dispatching user creation notification…");
 
-        await _uow.Notification.DispatchAsync(user.Events, cancellationToken);
+        await _uow.Notification.DispatchAsync(user.Events, ct);
 
         _logger.LogInformation("Notification dispatched successfully.");
 

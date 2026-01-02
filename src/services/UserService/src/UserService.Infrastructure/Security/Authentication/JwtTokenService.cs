@@ -12,26 +12,32 @@ namespace UserService.Infrastructure.Security.Authentication;
 
 public sealed class JwtTokenService(
     TokenValidationParameters tokenValidationParameters,
-    IOptions<JwtSetting> options
+    IOptions<JwtSettings> options
 ) : ITokenService
 {
     private readonly TokenValidationParameters _tokenValidation = tokenValidationParameters.Clone();
-    private readonly JwtSetting _settings = options.Value;
+    private readonly JwtSettings _settings = options.Value;
 
-    public string GenerateAccessToken(string sessionId, string userId)
+    public Task<string> GenerateAccessToken(
+        string sessionId,
+        string userId)
     {
+        ArgumentException.ThrowIfNullOrWhiteSpace(sessionId);
+        ArgumentException.ThrowIfNullOrWhiteSpace(userId);
+
         var now = DateTime.UtcNow;
+
+        var expires = now.AddMinutes(_settings.TokenLifetimeMinutes);
 
         var claims = new List<Claim>
         {
             new(JwtRegisteredClaimNames.Sub, userId),
-            new(JwtRegisteredClaimNames.Jti, sessionId), 
+            new(JwtRegisteredClaimNames.Jti, sessionId),
         };
 
         var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_settings.SigningKey));
-        var credential = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
 
-        var expires = now.AddMinutes(_settings.TokenLifetimeMinutes);
+        var credential = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
 
         var token = new JwtSecurityToken(
             issuer: _settings.Issuer,
@@ -42,21 +48,22 @@ public sealed class JwtTokenService(
             signingCredentials: credential
         );
 
-        return new JwtSecurityTokenHandler().WriteToken(token);
+        return Task.FromResult(
+            new JwtSecurityTokenHandler().WriteToken(token));
     }
 
-    public ClaimsPrincipal? ReadPrincipal(string token)
+    public Task<ClaimsPrincipal?> ReadClaims(string token)
     {
-        if (string.IsNullOrWhiteSpace(token))
-            return null;
+        ArgumentNullException.ThrowIfNull(token);
 
         var handler = new JwtSecurityTokenHandler();
 
         try
         {
-            return handler.ValidateToken(token, _tokenValidation, out _);
-
+            var claims = handler.ValidateToken(token, _tokenValidation, out _);
+            
+            return Task.FromResult<ClaimsPrincipal?>(claims);
         }
-        catch { return null; }
+        catch { return Task.FromResult<ClaimsPrincipal?>(null); }
     }
 }

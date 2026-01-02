@@ -17,12 +17,12 @@ public sealed class UserCreatedNotificationHandler(
     private readonly IEmailTemplateRenderer _renderer = renderer;
     private readonly IEmailSender _sender = sender;
 
-    public async Task Handle(UserCreatedNotification notification, CancellationToken cancellationToken)
+    public async Task Handle(UserCreatedNotification notification, CancellationToken ct)
     {
-        var template = await _resolver.ResolveAsync(EmailTemplateType.Welcome, cancellationToken);
+        var template = await _resolver.ResolveAsync(EmailTemplateType.Welcome, ct);
         var model = new WelcomeModel(notification.FullName);
-        var body = await _renderer.RenderAsync(template, model, cancellationToken);
+        var body = await _renderer.RenderAsync(template, model, ct);
 
-        await _sender.SendAsync(notification.Email, "Wewlcome", body, cancellationToken);
+        await _sender.SendAsync(notification.Email, "Wewlcome", body, ct);
     }
 }

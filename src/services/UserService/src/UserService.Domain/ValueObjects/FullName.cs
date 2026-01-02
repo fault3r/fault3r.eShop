@@ -74,5 +74,9 @@ public sealed class FullName : ValueObject<FullName>
     }
 
     // EFCore
-    private FullName() { }
+    private FullName()
+    {
+        FirstName = null!;
+        LastName = null!;
+    }
 }

@@ -224,12 +224,12 @@
 │       │   ├── ./src/UserService.Infrastructure/Exceptions/CrossCutting
 │       │   │   └── ./src/UserService.Infrastructure/Exceptions/CrossCutting/CorrelationIdUnsetException.cs
 │       │   ├── ./src/UserService.Infrastructure/Exceptions/DependencyInjection
-│       │   │   ├── ./src/UserService.Infrastructure/Exceptions/DependencyInjection/MissingAppSettingException.cs
-│       │   │   ├── ./src/UserService.Infrastructure/Exceptions/DependencyInjection/MissingFluentEmailSettingException.cs
-│       │   │   ├── ./src/UserService.Infrastructure/Exceptions/DependencyInjection/MissingJwtSettingException.cs
-│       │   │   ├── ./src/UserService.Infrastructure/Exceptions/DependencyInjection/MissingPostgresSettingException.cs
-│       │   │   ├── ./src/UserService.Infrastructure/Exceptions/DependencyInjection/MissingRedisSettingException.cs
-│       │   │   └── ./src/UserService.Infrastructure/Exceptions/DependencyInjection/MissingSerilogSettingException.cs
+│       │   │   ├── ./src/UserService.Infrastructure/Exceptions/DependencyInjection/MissingAppSettingsException.cs
+│       │   │   ├── ./src/UserService.Infrastructure/Exceptions/DependencyInjection/MissingFluentEmailSettingsException.cs
+│       │   │   ├── ./src/UserService.Infrastructure/Exceptions/DependencyInjection/MissingJwtSettingsException.cs
+│       │   │   ├── ./src/UserService.Infrastructure/Exceptions/DependencyInjection/MissingPostgresSettingsException.cs
+│       │   │   ├── ./src/UserService.Infrastructure/Exceptions/DependencyInjection/MissingRedisSettingsException.cs
+│       │   │   └── ./src/UserService.Infrastructure/Exceptions/DependencyInjection/MissingSerilogSettingsException.cs
 │       │   ├── ./src/UserService.Infrastructure/Exceptions/InfrastructureException.cs
 │       │   ├── ./src/UserService.Infrastructure/Exceptions/Security
 │       │   │   └── ./src/UserService.Infrastructure/Exceptions/Security/Authentication

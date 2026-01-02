@@ -8,31 +8,31 @@ public interface ISessionService
 {
     Task CreateSessionAsync(
         SessionData session,
-        CancellationToken cancellationToken = default
+        CancellationToken ct = default
     );
 
     Task<SessionData?> GetSessionAsync(
         string sessionId,
-        CancellationToken cancellationToken = default
+        CancellationToken ct = default
     );
 
     Task<bool> SessionExistAsync(
         string sessionId,
-        CancellationToken cancellationToken = default
+        CancellationToken ct = default
     );
 
     Task UpdateSessionAsync(
         SessionData session,
-        CancellationToken cancellationToken = default
+        CancellationToken ct = default
     );
 
     Task InvalidateSessionAsync(
         string sessionId,
-        CancellationToken cancellationToken = default
+        CancellationToken ct = default
     );
 
     Task InvalidateAllUserSessionsAsync(
         string userId,
-        CancellationToken cancellationToken = default
+        CancellationToken ct = default
     );
 }

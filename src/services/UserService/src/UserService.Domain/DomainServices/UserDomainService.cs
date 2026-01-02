@@ -1,7 +1,6 @@
 
 using System;
 using UserService.Domain.Aggregates.UserAggregate;
-using UserService.Domain.Common;
 using UserService.Domain.Interfaces;
 using UserService.Domain.Repositories;
 using UserService.Domain.Security;
@@ -18,12 +17,12 @@ public class UserDomainService(
 
     public async Task<bool> VerifyCanCreateAsync(
         Email email,
-        CancellationToken cancellationToken = default)
+        CancellationToken ct = default)
     {
         ArgumentNullException.ThrowIfNull(email);
 
         var exists = await _userRepository
-            .GetByEmailAsync(email, cancellationToken);
+            .GetByEmailAsync(email, ct);
 
         return exists is null;
     }
@@ -31,15 +30,17 @@ public class UserDomainService(
     public async Task<User?> VerifyCredentialAsync(
        string identity,
        string password,
-       CancellationToken cancellationToken = default)
+       CancellationToken ct = default)
     {
-        var user = await _userRepository.GetByIdAsync(Identity.From(identity), cancellationToken);
+        ArgumentException.ThrowIfNullOrWhiteSpace(identity);
+        ArgumentException.ThrowIfNullOrWhiteSpace(password);
 
-        if (user is null) return null;
+        var email = Email.From(identity);
+        var user = await _userRepository.GetByEmailAsync(email, ct);
 
-        if (!_passwordHasher.Verify(password, user.PasswordHash))
-            return null;
+        string hash = user?.PasswordHash ?? _passwordHasher.DummyHash;
+        bool verified = _passwordHasher.Verify(password, hash);
 
-        return user;
+        return verified ? user : null;
     }
 }

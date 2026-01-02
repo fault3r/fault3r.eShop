@@ -19,7 +19,7 @@ namespace CatalogService.Api.HostedServices
             _logger.LogInformation("instance created.");
         }
         
-        public Task StartAsync(CancellationToken cancellationToken)
+        public Task StartAsync(CancellationToken ct)
         {
             _logger.LogInformation("starting subscriber..");
             _rabbitmqEventSubscriber.StartSubscriberAsync();
@@ -27,7 +27,7 @@ namespace CatalogService.Api.HostedServices
             return Task.CompletedTask;
         }
 
-        public Task StopAsync(CancellationToken cancellationToken)
+        public Task StopAsync(CancellationToken ct)
         {
             throw new NotImplementedException();
         }

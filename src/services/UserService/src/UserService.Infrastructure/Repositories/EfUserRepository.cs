@@ -8,54 +8,46 @@ using UserService.Infrastructure.Persistence;
 
 namespace UserService.Infrastructure.Repositories;
 
-public sealed class EfUserRepository : IUserRepository
+public sealed class EfUserRepository(
+    EfDbContext efDbContext
+) : IUserRepository
 {
-    private readonly EfDbContext _dbContext;
+    private readonly EfDbContext _dbContext = efDbContext;
 
-    public EfUserRepository(EfDbContext efDbContext)
-    {
-        ArgumentNullException.ThrowIfNull(efDbContext);
-
-        _dbContext = efDbContext;
-    }
-
-    public async Task<User?> GetByIdAsync(Identity id, CancellationToken cancellationToken = default)
+    public async Task<User?> GetByIdAsync(Identity id, CancellationToken ct = default)
     {
         ArgumentNullException.ThrowIfNull(id);
 
-        return await _dbContext.Users.FirstOrDefaultAsync(p => p.Id == id, cancellationToken);
+        return await _dbContext.Users.FirstOrDefaultAsync(p => p.Id == id, ct);
     }
 
-    public async Task<User?> GetByEmailAsync(Email email, CancellationToken cancellationToken = default)
+    public async Task<User?> GetByEmailAsync(Email email, CancellationToken ct = default)
     {
         ArgumentNullException.ThrowIfNull(email);
 
-        return await _dbContext.Users.FirstOrDefaultAsync(p => p.Email == email, cancellationToken);
+        return await _dbContext.Users.FirstOrDefaultAsync(p => p.Email == email, ct);
     }
 
-    public async Task CreateAsync(User user, CancellationToken cancellationToken = default)
+    public async Task CreateAsync(User user, CancellationToken ct = default)
     {
         ArgumentNullException.ThrowIfNull(user);
 
-        await _dbContext.Users
-            .AddAsync(user, cancellationToken);
+        await _dbContext.Users.AddAsync(user, ct);
     }
 
-    public Task UpdateAsync(User user, CancellationToken cancellationToken = default)
+    public Task UpdateAsync(User user, CancellationToken ct = default)
     {
         ArgumentNullException.ThrowIfNull(user);
 
-        _dbContext.Users
-            .Update(user);
+        _dbContext.Users.Update(user);
         return Task.CompletedTask;
     }
 
-    public Task DeleteAsync(Identity id, CancellationToken cancellationToken = default)
+    public Task DeleteAsync(Identity id, CancellationToken ct = default)
     {
         ArgumentNullException.ThrowIfNull(id);
 
-        _dbContext.Users
-            .Remove(new User(id));
+        _dbContext.Users.Remove(new User(id));
         return Task.CompletedTask;
     }
 }

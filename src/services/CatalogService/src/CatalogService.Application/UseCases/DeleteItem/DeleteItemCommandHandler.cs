@@ -19,7 +19,7 @@ namespace CatalogService.Application.UseCases.DeleteItem
             _logger.LogInformation("instance created.");
         }
 
-        public async Task<int> Handle(DeleteItemCommand request, CancellationToken cancellationToken)
+        public async Task<int> Handle(DeleteItemCommand request, CancellationToken ct)
         {
             await _logger.LogInformation("forwarding request to service..");
             var result =  await _service.ExecuteAsync(request.Id);

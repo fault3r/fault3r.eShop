@@ -21,11 +21,11 @@ public class RegisterUserCommandHandler(
 
     public async Task<Result<User>> Handle(
         RegisterUserCommand request,
-        CancellationToken cancellationToken = default)
+        CancellationToken ct = default)
     {
         ArgumentNullException.ThrowIfNull(request);
         
-        var validation = await _validator.ValidateAsync(request, cancellationToken);
+        var validation = await _validator.ValidateAsync(request, ct);
 
         if (!validation.IsValid)
         {
@@ -38,7 +38,7 @@ public class RegisterUserCommandHandler(
             request.Email,
             request.Password,
             request.FullName,
-            cancellationToken
+            ct
         );
 
         return result;

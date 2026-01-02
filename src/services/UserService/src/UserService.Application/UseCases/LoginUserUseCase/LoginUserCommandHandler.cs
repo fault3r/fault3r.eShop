@@ -20,11 +20,11 @@ public sealed class LoginUserCommandHandler(
 
     public async Task<Result<LoginUserResult>> Handle(
         LoginUserCommand request,
-        CancellationToken cancellationToken)
+        CancellationToken ct)
     {
         ArgumentNullException.ThrowIfNull(request);
 
-        var validation = await _validator.ValidateAsync(request, cancellationToken);
+        var validation = await _validator.ValidateAsync(request, ct);
 
         if (!validation.IsValid)
         {
@@ -36,7 +36,7 @@ public sealed class LoginUserCommandHandler(
         var result = await _loginService.ExecuteAsync(
             request.Identity,
             request.Password,
-            cancellationToken
+            ct
         );
 
         return result;

@@ -100,17 +100,17 @@ namespace AccountService.Infrastructure.Persistence
         /// (BeginTransaction / ExecuteTransactionalAsync), DbContext will enlist in it. This method
         /// does not start or commit transactions by itself.
         /// </summary>
-        public async Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
+        public async Task<int> SaveChangesAsync(CancellationToken ct = default)
         {
             // Let DbContext handle concurrency/validation exceptions; bubble them up to caller.
-            return await _db.SaveChangesAsync(cancellationToken);
+            return await _db.SaveChangesAsync(ct);
         }
 
         /// <summary>
         /// Execute a delegate inside a database transaction. Ensures action's changes and any
         /// Outbox rows are committed together. Commits on success and rolls back on exception.
         /// </summary>
-        public async Task ExecuteTransactionalAsync(Func<Task> action, CancellationToken cancellationToken = default)
+        public async Task ExecuteTransactionalAsync(Func<Task> action, CancellationToken ct = default)
         {
             if (action == null) throw new ArgumentNullException(nameof(action));
 
@@ -124,19 +124,19 @@ namespace AccountService.Infrastructure.Persistence
             }
 
             // Otherwise start a new transaction with a reasonable isolation level.
-            await using var tx = await _db.Database.BeginTransactionAsync(System.Data.IsolationLevel.ReadCommitted, cancellationToken);
+            await using var tx = await _db.Database.BeginTransactionAsync(System.Data.IsolationLevel.ReadCommitted, ct);
             try
             {
                 await action();
 
                 // Persist changes made by action (including Outbox rows)
-                await _db.SaveChangesAsync(cancellationToken);
+                await _db.SaveChangesAsync(ct);
 
-                await tx.CommitAsync(cancellationToken);
+                await tx.CommitAsync(ct);
             }
             catch
             {
-                try { await tx.RollbackAsync(cancellationToken); } catch { /* swallow rollback failures */ }
+                try { await tx.RollbackAsync(ct); } catch { /* swallow rollback failures */ }
                 throw;
             }
         }

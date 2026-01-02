@@ -19,9 +19,9 @@ public sealed class LoginUserService(
     public async Task<Result<LoginUserResult>> ExecuteAsync(
         string identity,
         string password,
-        CancellationToken cancellationToken = default)
+        CancellationToken ct = default)
     {
-        var user = await _userDomainService.VerifyCredentialAsync(identity, password, cancellationToken);
+        var user = await _userDomainService.VerifyCredentialAsync(identity, password, ct);
         if (user is null)
             return Result<LoginUserResult>.Failure("Invalid credentials");
 
@@ -48,7 +48,7 @@ public sealed class LoginUserService(
             RefreshTokenExpiresAt = DateTimeOffset.UtcNow.AddDays(30) // settings
         };
 
-        await _sessionService.CreateSessionAsync(session, cancellationToken);
+        await _sessionService.CreateSessionAsync(session, ct);
 
         var accessToken = _tokenService.GenerateAccessToken(sessionId, user.Id);
 

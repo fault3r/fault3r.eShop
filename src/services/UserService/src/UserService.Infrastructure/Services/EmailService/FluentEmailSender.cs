@@ -16,7 +16,7 @@ public sealed class FluentEmailSender(
         string to,
         string subject,
         string body,
-        CancellationToken cancellationToken = default)
+        CancellationToken ct = default)
     {
         ArgumentException.ThrowIfNullOrEmpty(to);
         ArgumentException.ThrowIfNullOrEmpty(subject);
@@ -26,7 +26,7 @@ public sealed class FluentEmailSender(
             .To(to)
             .Subject(subject)
             .Body(body, isHtml: true)
-            .SendAsync(cancellationToken);
+            .SendAsync(ct);
 
         return !response.Successful
             ? Result.Failure(string.Join(", ", response.ErrorMessages))

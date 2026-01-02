@@ -6,11 +6,10 @@ using UserService.Infrastructure.Messaging.Outbox;
 
 namespace UserService.Infrastructure.Persistence;
 
-public sealed class EfDbContext : DbContext
+public sealed class EfDbContext(
+    DbContextOptions<EfDbContext> dbcOptions
+) : DbContext(dbcOptions)
 {
-    public EfDbContext(DbContextOptions<EfDbContext> options)
-        : base(options) { }
-
     public DbSet<User> Users => Set<User>();
 
     public DbSet<OutboxMessage> OutboxMessages => Set<OutboxMessage>();

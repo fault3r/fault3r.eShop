@@ -3,8 +3,6 @@ using System;
 
 namespace UserService.Domain.Exceptions.Status;
 
-public class StatusException : DomainException
-{
-    public StatusException(string message)
-        : base(message) { }
-}
+public class StatusException(
+    string message
+) : DomainException(message) { }

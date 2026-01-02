@@ -53,4 +53,7 @@ public sealed class Argon2PasswordHasher : IPasswordHasher
 
         return CryptographicOperations.FixedTimeEquals(computedHash, expectedHash);
     }
+
+    public string DummyHash 
+        => "$argon2id$v=19$m=65536,t=3,p=4$AAAAAAAAAAAAAAAAAAAAAA==$AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=";
 }

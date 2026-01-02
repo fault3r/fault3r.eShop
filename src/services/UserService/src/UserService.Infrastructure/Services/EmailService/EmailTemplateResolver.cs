@@ -28,10 +28,10 @@ public sealed class EmailTemplateResolver : IEmailTemplateResolver
 
     public async Task<string> ResolveAsync(
         EmailTemplateType emailTemplateType,
-        CancellationToken cancellationToken = default)
+        CancellationToken ct = default)
     {
         var path = templates[emailTemplateType];
 
-        return await File.ReadAllTextAsync(path, cancellationToken);
+        return await File.ReadAllTextAsync(path, ct);
     }
 }

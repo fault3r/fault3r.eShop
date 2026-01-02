@@ -10,6 +10,6 @@ public interface IRefreshAuthService
     Task<Result<RefreshAuthResult>> ExecuteAsync(
         string expiredAccessToken,
         string providedRefreshToken,
-        CancellationToken cancellationToken = default
+        CancellationToken ct = default
     );
 }

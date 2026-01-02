@@ -668,10 +668,10 @@
     │   ├── CrossCutting
     │   │   └── CorrelationIdUnsetException.cs
     │   ├── DependencyInjection
-    │   │   ├── MissingAppSettingException.cs
-    │   │   ├── MissingFluentEmailSettingException.cs
-    │   │   ├── MissingPostgresSettingException.cs
-    │   │   └── MissingSerilogSettingException.cs
+    │   │   ├── MissingAppSettingsException.cs
+    │   │   ├── MissingFluentEmailSettingsException.cs
+    │   │   ├── MissingPostgresSettingsException.cs
+    │   │   └── MissingSerilogSettingsException.cs
     │   ├── InfrastructureException.cs
     │   └── Services
     │       └── EmailService

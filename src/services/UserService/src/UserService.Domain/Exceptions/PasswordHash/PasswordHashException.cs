@@ -3,8 +3,6 @@ using System;
 
 namespace UserService.Domain.Exceptions.PasswordHash;
 
-public class PasswordHashException : DomainException
-{
-    public PasswordHashException(string message)
-        : base(message) { }
-}
+public class PasswordHashException(
+    string message
+) : DomainException(message) { }

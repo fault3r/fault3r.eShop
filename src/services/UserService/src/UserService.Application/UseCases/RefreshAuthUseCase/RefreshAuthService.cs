@@ -16,9 +16,9 @@ public sealed class RefreshAuthService(
     public async Task<Result<RefreshAuthResult>> ExecuteAsync(
         string expiredAccessToken,
         string providedRefreshToken,
-        CancellationToken cancellationToken = default)
+        CancellationToken ct = default)
     {
-        var principal = _tokenService.ReadPrincipal(expiredAccessToken)
+        var principal = await _tokenService.ReadClaims(expiredAccessToken)
             ?? throw new UnauthorizedAccessException("Invalid access token");
         
         var userId = principal.FindFirst("sub")?.Value;
@@ -27,13 +27,13 @@ public sealed class RefreshAuthService(
         if (string.IsNullOrWhiteSpace(userId) || string.IsNullOrWhiteSpace(sessionId))
             throw new UnauthorizedAccessException("Invalid token claims");
 
-        var session = await _sessionService.GetSessionAsync(sessionId, cancellationToken)
+        var session = await _sessionService.GetSessionAsync(sessionId, ct)
             ?? throw new UnauthorizedAccessException("Session expired or invalidated");
 
         var valid = CryptRefreshToken.Verify(providedRefreshToken, session.RefreshTokenHash);
         if (!valid)
         {
-            await _sessionService.InvalidateAllUserSessionsAsync(userId, cancellationToken);
+            await _sessionService.InvalidateAllUserSessionsAsync(userId, ct);
             throw new UnauthorizedAccessException("Refresh token invalid");
         }
 
@@ -44,9 +44,9 @@ public sealed class RefreshAuthService(
         session.RefreshTokenExpiresAt = DateTimeOffset.UtcNow.AddDays(30);
         session.LastAccessedAt = DateTimeOffset.UtcNow;
 
-        await _sessionService.UpdateSessionAsync(session, cancellationToken);
+        await _sessionService.UpdateSessionAsync(session, ct);
 
-        var newAccessToken = _tokenService.GenerateAccessToken(userId, sessionId);
+        var newAccessToken = await _tokenService.GenerateAccessToken(userId, sessionId);
 
          return Result<RefreshAuthResult>.Success(new RefreshAuthResult(newAccessToken, newRefreshToken));
     }
