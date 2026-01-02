@@ -6,7 +6,9 @@ using UserService.Domain.Common;
 
 namespace UserService.Infrastructure.Services.EmailService;
 
-public sealed class FluentEmailSender(IFluentEmail fluentEmail) : IEmailSender
+public sealed class FluentEmailSender(
+    IFluentEmail fluentEmail
+) : IEmailSender
 {
     private readonly IFluentEmail _fluentEmail = fluentEmail;
 

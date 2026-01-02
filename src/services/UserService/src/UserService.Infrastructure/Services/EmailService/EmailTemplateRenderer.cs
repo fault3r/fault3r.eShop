@@ -24,9 +24,10 @@ public sealed class EmailTemplateRenderer : IEmailTemplateRenderer
         foreach (var prop in props)
         {
             string token = "{{" + prop.Name + "}}";
+            
             var value = prop.GetValue(model)
                 ?? throw new CannotRenderEmailTemplateException();
-            
+
             rendered = rendered.Replace(token, value as string);
         }
 

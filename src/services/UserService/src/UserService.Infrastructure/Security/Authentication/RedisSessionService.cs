@@ -1,3 +1,4 @@
+
 using System;
 using System.Text.Json;
 using Microsoft.Extensions.Options;
@@ -11,11 +12,11 @@ namespace UserService.Infrastructure.Security.Authentication;
 
 public sealed class RedisSessionService(
     IConnectionMultiplexer connectionMultiplexer,
-    IOptions<RedisSetting> options)
-        : ISessionService
+    IOptions<RedisSettings> options
+) : ISessionService
 {
     private readonly IDatabase _database = connectionMultiplexer.GetDatabase();
-    private readonly RedisSetting _settings = options.Value;
+    private readonly RedisSettings _settings = options.Value;
 
     public async Task CreateSessionAsync(
         SessionData session,
@@ -23,18 +24,17 @@ public sealed class RedisSessionService(
     {
         ArgumentNullException.ThrowIfNull(session);
 
-        var serialized = JsonSerializer.Serialize(session, jsonOptions);
+        var payload = JsonSerializer.Serialize(session, jsonOptions);
 
         var expiry = session.RefreshTokenExpiresAt - DateTimeOffset.UtcNow;
-        if (expiry <= TimeSpan.Zero)
-            expiry = TimeSpan.FromMinutes(1);
+        if (expiry <= TimeSpan.Zero) expiry = TimeSpan.FromMinutes(1);
 
         var sessionKey = GetSessionKey(session.SessionId);
         var userSessionsKey = GetUserSessionsKey(session.UserId);
 
         var transaction = _database.CreateTransaction();
 
-        _ = transaction.StringSetAsync(sessionKey, serialized, expiry);
+        _ = transaction.StringSetAsync(sessionKey, payload, expiry);
         _ = transaction.SetAddAsync(userSessionsKey, session.SessionId);
         _ = transaction.KeyExpireAsync(userSessionsKey, expiry);
 
@@ -50,11 +50,11 @@ public sealed class RedisSessionService(
 
         var key = GetSessionKey(sessionId);
 
-        var value = await _database.StringGetAsync(key);
+        var payload = await _database.StringGetAsync(key);
 
-        if (value.IsNullOrEmpty) return null;
+        if (payload.IsNullOrEmpty) return null;
 
-        return JsonSerializer.Deserialize<SessionData>(value!, jsonOptions)!;
+        return JsonSerializer.Deserialize<SessionData>(payload!, jsonOptions)!;
     }
 
     public async Task<bool> SessionExistAsync(
@@ -64,7 +64,7 @@ public sealed class RedisSessionService(
         ArgumentException.ThrowIfNullOrWhiteSpace(sessionId);
 
         var key = GetSessionKey(sessionId);
-        
+
         return await _database.KeyExistsAsync(key);
     }
 
@@ -74,24 +74,23 @@ public sealed class RedisSessionService(
     {
         ArgumentNullException.ThrowIfNull(session);
 
-        var serialized = JsonSerializer.Serialize(session, jsonOptions);
+        var payload = JsonSerializer.Serialize(session, jsonOptions);
 
         var expiry = session.RefreshTokenExpiresAt - DateTimeOffset.UtcNow;
-        if (expiry <= TimeSpan.Zero)
-            expiry = TimeSpan.FromMinutes(1);
+        if (expiry <= TimeSpan.Zero) expiry = TimeSpan.FromMinutes(1);
 
         var sessionKey = GetSessionKey(session.SessionId);
         var userSessionsKey = GetUserSessionsKey(session.UserId);
 
         var transaction = _database.CreateTransaction();
 
-        _ = transaction.StringSetAsync(sessionKey, serialized, expiry);
+        _ = transaction.StringSetAsync(sessionKey, payload, expiry);
         _ = transaction.KeyExpireAsync(userSessionsKey, expiry);
 
         if (!await transaction.ExecuteAsync())
             throw new RedisTransactionFailedException();
     }
-    
+
     public async Task InvalidateSessionAsync(
         string sessionId,
         CancellationToken cancellationToken = default)
@@ -100,13 +99,13 @@ public sealed class RedisSessionService(
 
         var sessionKey = GetSessionKey(sessionId);
 
-        var value = await _database.StringGetAsync(sessionKey);
+        var payload = await _database.StringGetAsync(sessionKey);
 
-        if (value.IsNullOrEmpty)
-            return;
+        if (payload.IsNullOrEmpty) return;
 
-        var session = JsonSerializer.Deserialize<SessionData>(value!, jsonOptions)!;
-        var userSessionsKey = GetUserSessionsKey(session.UserId);
+        var session = JsonSerializer.Deserialize<SessionData>(payload!, jsonOptions);
+
+        var userSessionsKey = GetUserSessionsKey(session!.UserId);
 
         var transaction = _database.CreateTransaction();
 
@@ -134,9 +133,9 @@ public sealed class RedisSessionService(
 
         var transaction = _database.CreateTransaction();
 
-        foreach (var id in sessionIds)
+        foreach (var sessionId in sessionIds)
         {
-            var sessionKey = GetSessionKey(id!);
+            var sessionKey = GetSessionKey(sessionId!);
             _ = transaction.KeyDeleteAsync(sessionKey);
         }
 

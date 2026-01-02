@@ -12,7 +12,8 @@ public sealed class EfUnitOfWork(
     EfDbContext efDbContext,
     IDomainOutbox outbox,
     IDomainNotification notification,
-    IUserRepository userRepository) : IUnitOfWork
+    IUserRepository userRepository
+) : IUnitOfWork
 {
     private readonly EfDbContext _dbContext = efDbContext;
     public IDomainOutbox Outbox { get; } = outbox;

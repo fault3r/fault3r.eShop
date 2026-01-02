@@ -12,8 +12,8 @@ namespace UserService.Infrastructure.Security.Authentication;
 
 public sealed class JwtTokenService(
     TokenValidationParameters tokenValidationParameters,
-    IOptions<JwtSetting> options)
-        : ITokenService
+    IOptions<JwtSetting> options
+) : ITokenService
 {
     private readonly TokenValidationParameters _tokenValidation = tokenValidationParameters.Clone();
     private readonly JwtSetting _settings = options.Value;
@@ -45,7 +45,7 @@ public sealed class JwtTokenService(
         return new JwtSecurityTokenHandler().WriteToken(token);
     }
 
-    public ClaimsPrincipal? ReadPrincipal(string? token)
+    public ClaimsPrincipal? ReadPrincipal(string token)
     {
         if (string.IsNullOrWhiteSpace(token))
             return null;

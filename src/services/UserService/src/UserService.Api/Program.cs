@@ -12,6 +12,8 @@ var settings = builder.Configuration
     .Get<AppSetting>()
         ?? throw new MissingAppSettingException();
 
+// builder.WebHost.UseUrls(settings.Urls.Http, settings.Urls.Https);
+
 builder.Host.AddSerilogLogging();
 
 builder.Services.AddInfrastructure();

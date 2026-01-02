@@ -22,10 +22,7 @@ public sealed class EmailTemplateResolver : IEmailTemplateResolver
             if (!File.Exists(path))
                 throw new EmailTemplateFileNotFoundException();
 
-            templates.Add(
-                key: template,
-                value: path
-            );
+            templates.Add(template, path);
         }
     }
 
@@ -34,6 +31,7 @@ public sealed class EmailTemplateResolver : IEmailTemplateResolver
         CancellationToken cancellationToken = default)
     {
         var path = templates[emailTemplateType];
+
         return await File.ReadAllTextAsync(path, cancellationToken);
     }
 }
