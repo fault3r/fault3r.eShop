@@ -46,20 +46,20 @@ public sealed class Role : ValueObject<Role>
     public static Role From(RoleType value)
         => new(value);
 
-    public static Role From(string value)
+    public static Role Parse(string value)
         => new(value);
 
-    public static Result<Role> TryFrom(string value, out Role? role)
+    public static bool TryParse(string value, out Role? role)
     {
         try
         {
-            role = From(value);
-            return Result<Role>.Success(role);
+            role = Parse(value);
+            return true;
         }
-        catch (RoleException ex)
+        catch
         {
             role = null;
-            return Result<Role>.Failure(ex.Message);
+            return false;
         }
     }
 
@@ -73,7 +73,7 @@ public sealed class Role : ValueObject<Role>
         => role.ToString();
 
     public static explicit operator Role(string value)
-        => From(value);
+        => Parse(value);
 
     protected override IEnumerable<object> GetEqualityComponents()
     {

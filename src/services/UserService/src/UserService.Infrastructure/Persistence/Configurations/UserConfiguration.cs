@@ -15,6 +15,9 @@ public sealed class UserConfiguration : IEntityTypeConfiguration<User>
 
         builder.HasKey(p => p.Id);
 
+        builder.Property(p => p.Email)
+            .HasColumnType("citext");
+
         builder.HasIndex(p => p.Email)
             .IsUnique();
 
@@ -59,7 +62,7 @@ public sealed class UserConfiguration : IEntityTypeConfiguration<User>
             .HasColumnName("Role")
             .HasConversion(
                 role => role.Value.ToString(),
-                value => Role.From(value)
+                value => Role.Parse(value)
             )
             .IsRequired();                 
 
@@ -67,7 +70,7 @@ public sealed class UserConfiguration : IEntityTypeConfiguration<User>
             .HasColumnName("Status")
             .HasConversion(
                 status => status.Value.ToString(),
-                value => Status.From(value)
+                value => Status.Parse(value)
             )
             .IsRequired();           
 

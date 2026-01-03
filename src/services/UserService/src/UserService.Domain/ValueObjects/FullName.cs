@@ -1,7 +1,6 @@
 
 using System;
 using UserService.Domain.Abstractions;
-using UserService.Domain.Common;
 using UserService.Domain.Exceptions.FullName;
 
 namespace UserService.Domain.ValueObjects;
@@ -43,18 +42,17 @@ public sealed class FullName : ValueObject<FullName>
     public static FullName From(string value)
         => new(value);
 
-    public static Result<FullName> TryFrom(string value, out FullName? fullName)
+    public static bool TryFrom(string value, out FullName? fullName)
     {
         try
         {
-            fullName = new(value);
-            return Result<FullName>.Success(fullName);
-
+            fullName = From(value);
+            return true;
         }
-        catch (FullNameException ex)
+        catch
         {
             fullName = null;
-            return Result<FullName>.Failure(ex.Message);
+            return false;
         }
     }
 

@@ -38,7 +38,7 @@ public sealed class JwtTokenService(
 
         var credential = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
 
-        var token = new JwtSecurityToken(
+        var jwt = new JwtSecurityToken(
             issuer: _settings.Issuer,
             audience: _settings.Audience,
             claims: claims,
@@ -47,15 +47,19 @@ public sealed class JwtTokenService(
             signingCredentials: credential
         );
 
-        return Task.FromResult(
-            new JwtSecurityTokenHandler().WriteToken(token));
+        var token = new JwtSecurityTokenHandler().WriteToken(jwt);
+
+        return Task.FromResult(token);
     }
 
     public Task<ClaimsPrincipal?> ReadClaimsAsync(string token)
     {
         ArgumentNullException.ThrowIfNull(token);
 
-        var handler = new JwtSecurityTokenHandler();
+        var handler = new JwtSecurityTokenHandler
+        {
+            MapInboundClaims = false
+        };
 
         try
         {

@@ -1,7 +1,6 @@
 
 using System;
 using UserService.Domain.Abstractions;
-using UserService.Domain.Common;
 using UserService.Domain.Exceptions.PasswordHash;
 
 namespace UserService.Domain.ValueObjects;
@@ -24,22 +23,22 @@ public sealed class PasswordHash : ValueObject<PasswordHash>
     }
 
     private static bool IsValid(string value)
-        => value.StartsWith("$argon2id$") && value.Length > 60;
+        => value.Length > 50;
 
     public static PasswordHash From(string value)
         => new(value);
 
-    public static Result<PasswordHash> TryFrom(string value, out PasswordHash? passwordHash)
+    public static bool TryFrom(string value, out PasswordHash? passwordHash)
     {
         try
         {
-            passwordHash = new(value);
-            return Result<PasswordHash>.Success(passwordHash);
+            passwordHash = From(value);
+            return true;
         }
-        catch (PasswordHashException ex)
+        catch
         {
             passwordHash = null;
-            return Result<PasswordHash>.Failure(ex.Message);
+            return false;
         }
     }
 

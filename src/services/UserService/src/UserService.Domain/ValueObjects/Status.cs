@@ -50,22 +50,23 @@ public sealed class Status : ValueObject<Status>
     public static Status From(StatusType statusType)
         => new(statusType);
 
-    public static Status From(string value)
+    public static Status Parse(string value)
         => new(value);
 
-    public static Result<Status> TryFrom(string value, out Status? status)
+   public static bool TryParse(string value, out Status? status)
     {
         try
         {
-            status = new(value);
-            return Result<Status>.Success(status);
+            status = Parse(value);
+            return true;
         }
-        catch (StatusException ex)
+        catch
         {
             status = null;
-            return Result<Status>.Failure(ex.Message);
+            return false;
         }
     }
+
 
     public bool IsLocked => Value == StatusType.Locked;
     public bool IsPending => Value == StatusType.Pending;
@@ -78,7 +79,7 @@ public sealed class Status : ValueObject<Status>
         => status.ToString();
 
     public static explicit operator Status(string value)
-        => From(value);
+        => Parse(value);
 
     protected override IEnumerable<object> GetEqualityComponents()
     {

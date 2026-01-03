@@ -20,6 +20,7 @@ namespace UserService.Infrastructure.Persistence.Migrations
                 .HasAnnotation("ProductVersion", "8.0.0")
                 .HasAnnotation("Relational:MaxIdentifierLength", 63);
 
+            NpgsqlModelBuilderExtensions.HasPostgresExtension(modelBuilder, "citext");
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
 
             modelBuilder.Entity("UserService.Domain.Aggregates.UserAggregate.User", b =>
@@ -30,7 +31,7 @@ namespace UserService.Infrastructure.Persistence.Migrations
 
                     b.Property<string>("Email")
                         .IsRequired()
-                        .HasColumnType("text")
+                        .HasColumnType("citext")
                         .HasColumnName("Email");
 
                     b.Property<string>("PasswordHash")

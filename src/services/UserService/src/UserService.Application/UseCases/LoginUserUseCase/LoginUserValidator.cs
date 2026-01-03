@@ -13,6 +13,7 @@ public sealed class LoginUserValidator : AbstractValidator<LoginUserCommand>
             .NotEmpty();
 
         RuleFor(p => p.Password)
+            .Length(8,100)
             .NotEmpty();
     }
 }

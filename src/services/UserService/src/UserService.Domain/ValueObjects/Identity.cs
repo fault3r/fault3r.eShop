@@ -40,20 +40,20 @@ public sealed class Identity : ValueObject<Identity>
     public static Identity From(Guid guid)
         => new(guid);
 
-    public static Identity From(string value)
+    public static Identity Parse(string value)
         => new(value);
 
-    public static Result<Identity> TryFrom(string value, out Identity? identity)
+    public static bool TryParse(string value, out Identity? identity)
     {
         try
         {
-            identity = new(value);
-            return Result<Identity>.Success(identity);
+            identity = Parse(value);
+            return true;
         }
-        catch (IdentityException ex)
+        catch
         {
             identity = null;
-            return Result<Identity>.Failure(ex.Message);
+            return false;
         }
     }
 
@@ -64,7 +64,7 @@ public sealed class Identity : ValueObject<Identity>
         => identity.ToString();
 
     public static explicit operator Identity(string value)
-        => From(value);
+        => Parse(value);
 
     protected override IEnumerable<object> GetEqualityComponents()
     {

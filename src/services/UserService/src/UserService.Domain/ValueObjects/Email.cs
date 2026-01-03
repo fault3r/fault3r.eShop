@@ -2,7 +2,6 @@
 using System;
 using System.Text.RegularExpressions;
 using UserService.Domain.Abstractions;
-using UserService.Domain.Common;
 using UserService.Domain.Exceptions.Email;
 
 namespace UserService.Domain.ValueObjects;
@@ -39,17 +38,17 @@ public sealed partial class Email : ValueObject<Email>
     public static Email From(string value)
         => new(value);
 
-    public static Result<Email> TryFrom(string value, out Email? email)
+    public static bool TryFrom(string value, out Email? email)
     {
         try
         {
-            email = new(value);
-            return Result<Email>.Success(email);
+            email = From(value);
+            return true;
         }
-        catch (EmailException ex)
+        catch
         {
             email = null;
-            return Result<Email>.Failure(ex.Message);
+            return false;
         }
     }
 

@@ -35,8 +35,10 @@ public class UserDomainService(
         ArgumentException.ThrowIfNullOrWhiteSpace(identity);
         ArgumentException.ThrowIfNullOrWhiteSpace(password);
 
-        var email = Email.From(identity);
-        var user = await _userRepository.GetByEmailAsync(email, ct);
+        if (!Email.TryFrom(identity, out var email))
+            return null;
+        
+        var user = await _userRepository.GetByEmailAsync(email!, ct);
 
         string hash = user?.PasswordHash ?? _passwordHasher.DummyHash;
         bool verified = _passwordHasher.Verify(password, hash);

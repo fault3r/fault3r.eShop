@@ -16,14 +16,20 @@ public class AuthenticationMiddleware(
 
     public async Task InvokeAsync(HttpContext context)
     {
-        var authHeader = context.Request.Headers.Authorization.ToString();
+        var authHeader = context.Request.Headers.Authorization.FirstOrDefault();
 
-        if (string.IsNullOrWhiteSpace(authHeader) || !authHeader.StartsWith("Bearer "))
+        if (string.IsNullOrWhiteSpace(authHeader))
         {
             await _next(context);
             return;
         }
 
+        if (!authHeader.StartsWith("Bearer "))
+        {
+            context.Response.StatusCode = StatusCodes.Status401Unauthorized;
+            return;
+        }
+        
         var token = authHeader["Bearer ".Length..].Trim();
 
         var principal = await _tokenService.ReadClaimsAsync(token);
