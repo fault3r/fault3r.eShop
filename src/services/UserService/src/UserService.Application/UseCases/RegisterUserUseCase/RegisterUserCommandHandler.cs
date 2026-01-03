@@ -33,7 +33,7 @@ public sealed class RegisterUserCommandHandler(
 
             _logger.LogWarning("Validation failed: {Error}", errors);
 
-            return Result<RegisterUserResult>.Failure($"Validation failed: {errors}");
+            return Result<RegisterUserResult>.Failure(errors);
         }
 
         var result = await _registerService.ExecuteAsync(

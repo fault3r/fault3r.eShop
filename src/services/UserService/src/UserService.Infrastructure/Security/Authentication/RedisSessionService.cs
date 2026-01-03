@@ -1,7 +1,6 @@
 
 using System;
 using System.Text.Json;
-using Microsoft.Extensions.Options;
 using StackExchange.Redis;
 using UserService.Application.Interfaces;
 using UserService.Application.Security.Authentication;
@@ -12,11 +11,11 @@ namespace UserService.Infrastructure.Security.Authentication;
 
 public sealed class RedisSessionService(
     IConnectionMultiplexer connectionMultiplexer,
-    IOptions<RedisSettings> options
+    RedisSettings settings
 ) : ISessionService
 {
     private readonly IDatabase _database = connectionMultiplexer.GetDatabase();
-    private readonly RedisSettings _settings = options.Value;
+    private readonly RedisSettings _settings = settings;
 
     public async Task CreateSessionAsync(
         SessionData session,

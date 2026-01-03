@@ -1,0 +1,17 @@
+[2026-01-03 15:57:30 INF] e9ae4422-5e44-4235-9d8f-4da598120c85  Incoming request GET /. 
+ [2026-01-03 15:57:31 INF] e9ae4422-5e44-4235-9d8f-4da598120c85  Completed request GET / with status code 200. 
+ [2026-01-03 15:57:43 INF] f78a1608-7a6a-47be-823e-ebc54d226b61  Incoming request GET /swagger/index.html. 
+ [2026-01-03 15:57:44 INF] f78a1608-7a6a-47be-823e-ebc54d226b61  Completed request GET /swagger/index.html with status code 200. 
+ [2026-01-03 15:57:44 INF] 69cf423a-6f4f-49e6-9f3c-dae40a0d95db  Incoming request GET /swagger/swagger-ui.css. 
+ [2026-01-03 15:57:44 INF] 69cf423a-6f4f-49e6-9f3c-dae40a0d95db  Completed request GET /swagger/swagger-ui.css with status code 200. 
+ [2026-01-03 15:57:44 INF] 17fbc98f-c42d-4393-8d5a-06cef5e22551  Incoming request GET /swagger/favicon-32x32.png. 
+ [2026-01-03 15:57:44 INF] 17fbc98f-c42d-4393-8d5a-06cef5e22551  Completed request GET /swagger/favicon-32x32.png with status code 200. 
+ [2026-01-03 15:57:44 INF] 9bd8fc6f-2fe0-42b8-8779-0d3905cc6c87  Incoming request GET /swagger/v1/swagger.json. 
+ [2026-01-03 15:57:44 INF] 9bd8fc6f-2fe0-42b8-8779-0d3905cc6c87  Completed request GET /swagger/v1/swagger.json with status code 200. 
+ [2026-01-03 15:57:53 INF] 786b288b-adb0-471b-b693-14e4eaac1462  Incoming request GET /. 
+ [2026-01-03 15:57:53 INF] 786b288b-adb0-471b-b693-14e4eaac1462  Completed request GET / with status code 200. 
+ [2026-01-03 15:59:06 INF] 4d193c2a-6c54-442b-8a79-4dfac9af6a09  Incoming request POST /api/user/register. 
+ [2026-01-03 15:59:06 INF] 4d193c2a-6c54-442b-8a79-4dfac9af6a09 UserService.Application.UseCases.RegisterUserUseCase.RegisterUserService Registering user with 'Hamed.Damaavandi@GMail.CoM' email address… 
+ [2026-01-03 15:59:24 INF] 4d193c2a-6c54-442b-8a79-4dfac9af6a09 UserService.Application.UseCases.RegisterUserUseCase.RegisterUserService User successfully registered with '29dfe2e4dff945feb581a65946a6c708' identity. 
+ [2026-01-03 15:59:24 INF] 4d193c2a-6c54-442b-8a79-4dfac9af6a09  Completed request POST /api/user/register with status code 200. 
+ 

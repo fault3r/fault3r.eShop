@@ -13,7 +13,6 @@ public sealed class AppSettings
     public required string VersionHeader { get; init; }
     public required string CorrelationHeader { get; init; }
     public required string ContentRoot { get; init; }
-    public required string SessionLifetimeDays { get; init; }
 
     public sealed class AppServiceSettings
     {

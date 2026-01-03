@@ -2,6 +2,7 @@
 using System;
 using FluentValidation;
 using MediatR;
+using Microsoft.Extensions.Logging;
 using UserService.Application.Interfaces;
 using UserService.Domain.Common;
 
@@ -9,11 +10,13 @@ namespace UserService.Application.UseCases.RefreshAuthUseCase;
 
 public sealed class RefreshAuthCommandHandler(
     IRefreshAuthService refreshAuthService,
-     IValidator<RefreshAuthCommand> validator)
-        : IRequestHandler<RefreshAuthCommand, Result<RefreshAuthResult>>
+    IValidator<RefreshAuthCommand> validator,
+    ILogger<RefreshAuthCommandHandler> logger
+) : IRequestHandler<RefreshAuthCommand, Result<RefreshAuthResult>>
 {
-    private readonly IRefreshAuthService _refreshAuthService = refreshAuthService;
+    private readonly IRefreshAuthService _authService = refreshAuthService;
     private readonly IValidator<RefreshAuthCommand> _validator = validator;
+    private readonly ILogger<RefreshAuthCommandHandler> _logger = logger;
 
     public async Task<Result<RefreshAuthResult>> Handle(
         RefreshAuthCommand request,
@@ -27,16 +30,17 @@ public sealed class RefreshAuthCommandHandler(
         {
             var errors = string.Join(" - ", validation.Errors.Select(e => e.ErrorMessage));
 
-            return Result<RefreshAuthResult>.Failure($"Validation failed: {errors}!");
+            _logger.LogWarning("Validation failed: {Error}", errors);
+
+            return Result<RefreshAuthResult>.Failure(errors);
         }
 
-        var result = await _refreshAuthService.ExecuteAsync(
-            request.AccessToken,
-            request.RefreshToken,
-            ct
+        var result = await _authService.ExecuteAsync(
+            expiredAccessToken: request.AccessToken,
+            providedRefreshToken: request.RefreshToken,
+            ct: ct
         );
 
         return result;
     }
-
 }

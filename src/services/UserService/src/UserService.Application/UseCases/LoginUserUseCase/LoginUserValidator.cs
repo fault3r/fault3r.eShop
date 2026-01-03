@@ -9,6 +9,7 @@ public sealed class LoginUserValidator : AbstractValidator<LoginUserCommand>
     public LoginUserValidator()
     {
         RuleFor(p => p.Identity)
+            .EmailAddress()
             .NotEmpty();
 
         RuleFor(p => p.Password)

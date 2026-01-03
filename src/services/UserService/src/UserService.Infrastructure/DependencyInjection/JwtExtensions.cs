@@ -4,6 +4,7 @@ using System.Text;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using UserService.Application.Interfaces;
 using UserService.Infrastructure.Exceptions.DependencyInjection;
@@ -18,10 +19,6 @@ public static class JwtExtensions
         this IServiceCollection services,
         IConfiguration configuration)
     {
-        services.Configure<JwtSettings>(
-            configuration.GetSection(nameof(JwtSettings))
-        );
-
         var settings = configuration
             .GetSection(nameof(JwtSettings))
             .Get<JwtSettings>()
@@ -40,9 +37,7 @@ public static class JwtExtensions
             ),
             ClockSkew = TimeSpan.Zero
         };
-
-        services.AddSingleton<TokenValidationParameters>(tokenValidationParameters);
-
+        
         services.AddAuthentication(config =>
         {
             config.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
@@ -59,7 +54,10 @@ public static class JwtExtensions
             config.AddPolicy("requiredUser", policy => policy.RequireRole("User"));
         });
 
-        services.AddSingleton<ITokenService, JwtTokenService>();
+        services.AddSingleton<ITokenService>(provider =>
+        {
+            return new JwtTokenService(tokenValidationParameters, settings);
+        });
 
         return services;
     }

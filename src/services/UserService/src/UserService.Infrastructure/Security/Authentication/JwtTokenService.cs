@@ -3,7 +3,6 @@ using System;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
-using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using UserService.Application.Interfaces;
 using UserService.Infrastructure.Settings;
@@ -12,11 +11,11 @@ namespace UserService.Infrastructure.Security.Authentication;
 
 public sealed class JwtTokenService(
     TokenValidationParameters tokenValidationParameters,
-    IOptions<JwtSettings> options
+    JwtSettings settings
 ) : ITokenService
 {
-    private readonly TokenValidationParameters _tokenValidation = tokenValidationParameters.Clone();
-    private readonly JwtSettings _settings = options.Value;
+    private readonly TokenValidationParameters _tokenValidation = tokenValidationParameters;
+    private readonly JwtSettings _settings = settings;
 
     public Task<string> GenerateAccessTokenAsync(
         string sessionId,

@@ -58,15 +58,15 @@ public sealed class RegisterUserService(
         {
             _logger.LogWarning("Domain validation failed: {Error}", ex.Message);
 
-            return Result<RegisterUserResult>.Failure($"Domain validation failed: {ex.Message}");
+            return Result<RegisterUserResult>.Failure(ex.Message);
         }
 
         var canCreate = await _userService.VerifyCanCreateAsync(voEmail, ct);
         if (!canCreate)
         {
-            _logger.LogWarning("User with this email already exists!");
+            _logger.LogWarning("Register failed: User with this email address already exists!");
 
-            return Result<RegisterUserResult>.Failure("Register failed: User with this email address already exists!");
+            return Result<RegisterUserResult>.Failure("User with this email address already exists!");
         }
 
         await _uow.UserRepository.CreateAsync(user, ct);

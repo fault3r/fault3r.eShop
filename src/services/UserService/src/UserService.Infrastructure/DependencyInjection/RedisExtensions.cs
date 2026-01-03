@@ -16,10 +16,6 @@ public static class RedisExtensions
         this IServiceCollection services,
         IConfiguration configuration)
     {
-        services.Configure<RedisSettings>(
-            configuration.GetSection(nameof(RedisSettings))
-        );
-
         var settings = configuration
             .GetSection(nameof(RedisSettings))
             .Get<RedisSettings>()
@@ -31,7 +27,11 @@ public static class RedisExtensions
                 settings.ToConnectionString());
         });
 
-        services.AddSingleton<ISessionService, RedisSessionService>();
+        services.AddSingleton<ISessionService>(provider =>
+        {
+            var connection = provider.GetRequiredService<IConnectionMultiplexer>();
+            return new RedisSessionService(connection, settings);
+        });
 
         return services;
     }

@@ -30,7 +30,9 @@ public sealed class LoginUserCommandHandler(
         {
             var errors = string.Join(" - ", validation.Errors.Select(e => e.ErrorMessage));
 
-            return Result<LoginUserResult>.Failure($"Validation failed: {errors}!");
+            _logger.LogWarning("Validation failed: {Error}", errors);
+
+            return Result<LoginUserResult>.Failure(errors);
         }
 
         var result = await _loginService.ExecuteAsync(
