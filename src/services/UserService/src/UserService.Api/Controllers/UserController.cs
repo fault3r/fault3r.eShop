@@ -15,7 +15,7 @@ public sealed class UserController(IMediator mediator) : ControllerBase
 
     [HttpPost]
     [Route("register")]
-    public async Task<IActionResult> SignUp([FromBody] RegisterUserDto request)
+    public async Task<IActionResult> RegisterAsync([FromBody] RegisterUserDto request)
     {
         ArgumentNullException.ThrowIfNull(request);
 

@@ -15,7 +15,7 @@ public static class CryptRefreshToken
         return Convert.ToBase64String(bytes);
     }
 
-    public static string ToHash(string raw)
+    public static string Hash(string raw)
     {
         ArgumentException.ThrowIfNullOrWhiteSpace(raw);
 

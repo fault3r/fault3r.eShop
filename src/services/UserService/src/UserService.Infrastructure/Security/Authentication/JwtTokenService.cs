@@ -18,7 +18,7 @@ public sealed class JwtTokenService(
     private readonly TokenValidationParameters _tokenValidation = tokenValidationParameters.Clone();
     private readonly JwtSettings _settings = options.Value;
 
-    public Task<string> GenerateAccessToken(
+    public Task<string> GenerateAccessTokenAsync(
         string sessionId,
         string userId)
     {
@@ -52,7 +52,7 @@ public sealed class JwtTokenService(
             new JwtSecurityTokenHandler().WriteToken(token));
     }
 
-    public Task<ClaimsPrincipal?> ReadClaims(string token)
+    public Task<ClaimsPrincipal?> ReadClaimsAsync(string token)
     {
         ArgumentNullException.ThrowIfNull(token);
 

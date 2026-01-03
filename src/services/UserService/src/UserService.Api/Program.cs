@@ -8,8 +8,8 @@ using UserService.Infrastructure.Settings;
 var builder = WebApplication.CreateBuilder(args);
 
 var settings = builder.Configuration
-    .GetSection(nameof(AppSetting))
-    .Get<AppSetting>()
+    .GetSection(nameof(AppSettings))
+    .Get<AppSettings>()
         ?? throw new MissingAppSettingsException();
 
 // builder.WebHost.UseUrls(settings.Urls.Http, settings.Urls.Https);

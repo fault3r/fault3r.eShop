@@ -18,7 +18,7 @@ public sealed class RefreshAuthService(
         string providedRefreshToken,
         CancellationToken ct = default)
     {
-        var principal = await _tokenService.ReadClaims(expiredAccessToken)
+        var principal = await _tokenService.ReadClaimsAsync(expiredAccessToken)
             ?? throw new UnauthorizedAccessException("Invalid access token");
         
         var userId = principal.FindFirst("sub")?.Value;
@@ -38,7 +38,7 @@ public sealed class RefreshAuthService(
         }
 
         var newRefreshToken = CryptRefreshToken.Generate();
-        var newRefreshTokenHash = CryptRefreshToken.ToHash(newRefreshToken);
+        var newRefreshTokenHash = CryptRefreshToken.Hash(newRefreshToken);
 
         session.RefreshTokenHash = newRefreshTokenHash;
         session.RefreshTokenExpiresAt = DateTimeOffset.UtcNow.AddDays(30);
@@ -46,7 +46,7 @@ public sealed class RefreshAuthService(
 
         await _sessionService.UpdateSessionAsync(session, ct);
 
-        var newAccessToken = await _tokenService.GenerateAccessToken(userId, sessionId);
+        var newAccessToken = await _tokenService.GenerateAccessTokenAsync(userId, sessionId);
 
          return Result<RefreshAuthResult>.Success(new RefreshAuthResult(newAccessToken, newRefreshToken));
     }

@@ -9,17 +9,17 @@ using UserService.Domain.Common;
 
 namespace UserService.Application.UseCases.RegisterUserUseCase;
 
-public class RegisterUserCommandHandler(
+public sealed class RegisterUserCommandHandler(
     IRegisterUserService registerUserService,
     IValidator<RegisterUserCommand> validator,
-    ILogger<RegisterUserCommandHandler> logger)
-        : IRequestHandler<RegisterUserCommand, Result<User>>
+    ILogger<RegisterUserCommandHandler> logger
+) : IRequestHandler<RegisterUserCommand, Result<RegisterUserResult>>
 {
     private readonly IRegisterUserService _registerService = registerUserService;
     private readonly IValidator<RegisterUserCommand> _validator = validator;
     private readonly ILogger<RegisterUserCommandHandler> _logger = logger;
 
-    public async Task<Result<User>> Handle(
+    public async Task<Result<RegisterUserResult>> Handle(
         RegisterUserCommand request,
         CancellationToken ct = default)
     {
@@ -31,14 +31,16 @@ public class RegisterUserCommandHandler(
         {
             var errors = string.Join(" - ", validation.Errors.Select(e => e.ErrorMessage));
 
-            return Result<User>.Failure($"Validation failed: {errors}");
+            _logger.LogWarning("Validation failed: {Error}", errors);
+
+            return Result<RegisterUserResult>.Failure($"Validation failed: {errors}");
         }
 
         var result = await _registerService.ExecuteAsync(
-            request.Email,
-            request.Password,
-            request.FullName,
-            ct
+            email: request.Email,
+            password: request.Password,
+            fullName: request.FullName,
+            ct: ct
         );
 
         return result;

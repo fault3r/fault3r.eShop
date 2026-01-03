@@ -10,4 +10,4 @@ public sealed record RegisterUserCommand(
     string Email,
     string Password,
     string FullName
-) : IRequest<Result<User>>;
+) : IRequest<Result<RegisterUserResult>>;

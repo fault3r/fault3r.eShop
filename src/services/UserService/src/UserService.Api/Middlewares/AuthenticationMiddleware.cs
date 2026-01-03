@@ -26,7 +26,7 @@ public class AuthenticationMiddleware(
 
         var token = authHeader["Bearer ".Length..].Trim();
 
-        var principal = _tokenService.ReadPrincipal(token);
+        var principal = await _tokenService.ReadClaimsAsync(token);
         if (principal is null)
         {
             context.Response.StatusCode = StatusCodes.Status401Unauthorized;

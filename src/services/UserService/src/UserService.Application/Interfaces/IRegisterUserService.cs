@@ -1,13 +1,13 @@
 ﻿
 using System;
-using UserService.Domain.Aggregates.UserAggregate;
+using UserService.Application.UseCases.RegisterUserUseCase;
 using UserService.Domain.Common;
 
 namespace UserService.Application.Interfaces;
 
 public interface IRegisterUserService
 {
-    Task<Result<User>> ExecuteAsync(
+    Task<Result<RegisterUserResult>> ExecuteAsync(
         string email,
         string password,
         string fullName,

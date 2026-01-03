@@ -6,6 +6,6 @@ namespace UserService.Application.Interfaces;
 
 public interface ITokenService
 {
-    Task<string> GenerateAccessToken(string sessionId, string userId);
-    Task<ClaimsPrincipal?> ReadClaims(string token);
+    Task<string> GenerateAccessTokenAsync(string sessionId, string userId);
+    Task<ClaimsPrincipal?> ReadClaimsAsync(string token);
 }

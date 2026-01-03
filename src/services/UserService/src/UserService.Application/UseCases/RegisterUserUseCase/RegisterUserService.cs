@@ -18,8 +18,8 @@ public sealed class RegisterUserService(
     IUserDomainService userDomainService,
     ICorrelationContext correlation,
     IPasswordHasher passwordHasher,
-    ILogger<RegisterUserService> logger)
-        : IRegisterUserService
+    ILogger<RegisterUserService> logger
+) : IRegisterUserService
 {
     private readonly IUnitOfWork _uow = unitOfWork;
     private readonly IUserDomainService _userService = userDomainService;
@@ -27,73 +27,59 @@ public sealed class RegisterUserService(
     private readonly IPasswordHasher _hasher = passwordHasher;
     private readonly ILogger<RegisterUserService> _logger = logger;
 
-    public async Task<Result<User>> ExecuteAsync(
+    public async Task<Result<RegisterUserResult>> ExecuteAsync(
         string email,
         string password,
         string fullName,
         CancellationToken ct = default)
     {
-        ArgumentNullException.ThrowIfNull(email);
-        ArgumentNullException.ThrowIfNull(password);
-        ArgumentNullException.ThrowIfNull(fullName);
+        ArgumentException.ThrowIfNullOrWhiteSpace(email);
+        ArgumentException.ThrowIfNullOrWhiteSpace(password);
+        ArgumentException.ThrowIfNullOrWhiteSpace(fullName);
+
+        _logger.LogInformation("Registering user with '{Email}' email address…", email.Trim());
 
         User user;
-        Email vEmail;
-        PasswordHash vPasswordHash;
-        FullName vFullName;
+        Email voEmail;
+        PasswordHash voPasswordHash;
+        FullName voFullName;
         try
         {
-            _logger.LogInformation("Creating user with '{Email}' email address..", email.Trim());
-            
-            vEmail = Email.From(email);
+            voEmail = Email.From(email);
 
             string hashed = _hasher.Hash(password);
-            vPasswordHash = PasswordHash.From(hashed);
+            voPasswordHash = PasswordHash.From(hashed);
 
-            vFullName = FullName.From(fullName);
+            voFullName = FullName.From(fullName);
 
-            user = UserFactory.Create(vEmail, vPasswordHash, vFullName);
-
-            _logger.LogInformation("User instance created successfully.");
+            user = UserFactory.Create(voEmail, voPasswordHash, voFullName);
         }
         catch (DomainException ex)
         {
-            _logger.LogWarning("Domain validation failed: {Error}!", ex.Message);
+            _logger.LogWarning("Domain validation failed: {Error}", ex.Message);
 
-            return Result<User>.Failure($"Domain validation failed: {ex.Message}!");
+            return Result<RegisterUserResult>.Failure($"Domain validation failed: {ex.Message}");
         }
 
-        _logger.LogInformation("Checking whether the user can be created…");
-
-        var canCreate = await _userService.VerifyCanCreateAsync(vEmail, ct);
-
+        var canCreate = await _userService.VerifyCanCreateAsync(voEmail, ct);
         if (!canCreate)
         {
             _logger.LogWarning("User with this email already exists!");
 
-            return Result<User>.Failure("Sign up failed: User with this email already exists!");
+            return Result<RegisterUserResult>.Failure("Register failed: User with this email address already exists!");
         }
-
-        _logger.LogInformation("The user is allowed to create.");
-
-        _logger.LogInformation("Persisting user data to the database…");
 
         await _uow.UserRepository.CreateAsync(user, ct);
         await _uow.Outbox.EnqueueAsync(user.Events, _correlation.CorrelationId, ct);
         await _uow.CommitAsync(ct);
 
-        _logger.LogInformation("User data successfully persisted.");
-        
-        _logger.LogInformation("Dispatching user creation notification…");
-
         await _uow.Notification.DispatchAsync(user.Events, ct);
-
-        _logger.LogInformation("Notification dispatched successfully.");
 
         user.ClearEvents();
 
-        _logger.LogInformation("User successfully created with '{Id}' identity.", user.Id.ToString());
+        _logger.LogInformation("User successfully registered with '{Id}' identity.", user.Id.ToString());
 
-        return Result<User>.Success(user);
+        return Result<RegisterUserResult>.Success(
+            new RegisterUserResult(user.Id, user.Email, user.FullName));
     }
 }

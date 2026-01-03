@@ -11,8 +11,8 @@ namespace UserService.Application.UseCases.LoginUserUseCase;
 public sealed class LoginUserCommandHandler(
     ILoginUserService loginUserService,
     IValidator<LoginUserCommand> validator,
-    ILogger<LoginUserCommandHandler> logger)
-        : IRequestHandler<LoginUserCommand, Result<LoginUserResult>>
+    ILogger<LoginUserCommandHandler> logger
+) : IRequestHandler<LoginUserCommand, Result<LoginUserResult>>
 {
     private readonly ILoginUserService _loginService = loginUserService;
     private readonly IValidator<LoginUserCommand> _validator = validator;
@@ -34,9 +34,9 @@ public sealed class LoginUserCommandHandler(
         }
 
         var result = await _loginService.ExecuteAsync(
-            request.Identity,
-            request.Password,
-            ct
+            identity: request.Identity,
+            password: request.Password,
+            ct: ct
         );
 
         return result;

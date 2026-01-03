@@ -10,7 +10,8 @@ namespace UserService.Application.UseCases.LoginUserUseCase;
 public sealed class LoginUserService(
     IUserDomainService userDomainService,
     ISessionService sessionService,
-    ITokenService tokenService) : ILoginUserService
+    ITokenService tokenService
+) : ILoginUserService
 {
     private readonly IUserDomainService _userDomainService = userDomainService;
     private readonly ISessionService _sessionService = sessionService;
@@ -21,6 +22,9 @@ public sealed class LoginUserService(
         string password,
         CancellationToken ct = default)
     {
+        ArgumentException.ThrowIfNullOrWhiteSpace(identity);
+        ArgumentException.ThrowIfNullOrWhiteSpace(password);
+
         var user = await _userDomainService.VerifyCredentialAsync(identity, password, ct);
         if (user is null)
             return Result<LoginUserResult>.Failure("Invalid credentials");
@@ -28,7 +32,7 @@ public sealed class LoginUserService(
         var sessionId = Guid.NewGuid().ToString("N");
 
         var refreshToken = CryptRefreshToken.Generate();
-        var refreshTokenHash = CryptRefreshToken.ToHash(refreshToken);
+        var refreshTokenHash = CryptRefreshToken.Hash(refreshToken);
 
         var session = new SessionData
         {
@@ -50,7 +54,7 @@ public sealed class LoginUserService(
 
         await _sessionService.CreateSessionAsync(session, ct);
 
-        var accessToken = _tokenService.GenerateAccessToken(sessionId, user.Id);
+        var accessToken = await  _tokenService.GenerateAccessTokenAsync(sessionId, user.Id);
 
         return Result<LoginUserResult>.Success(new LoginUserResult(accessToken, refreshToken));
     }
