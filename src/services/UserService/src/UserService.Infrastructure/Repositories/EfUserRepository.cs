@@ -14,6 +14,13 @@ public sealed class EfUserRepository(
 {
     private readonly EfDbContext _dbContext = efDbContext;
 
+    public async Task CreateAsync(User user, CancellationToken ct = default)
+    {
+        ArgumentNullException.ThrowIfNull(user);
+
+        await _dbContext.Users.AddAsync(user, ct);
+    }
+
     public async Task<User?> GetByIdAsync(Identity id, CancellationToken ct = default)
     {
         ArgumentNullException.ThrowIfNull(id);
@@ -26,13 +33,6 @@ public sealed class EfUserRepository(
         ArgumentNullException.ThrowIfNull(email);
 
         return await _dbContext.Users.FirstOrDefaultAsync(p => p.Email == email, ct);
-    }
-
-    public async Task CreateAsync(User user, CancellationToken ct = default)
-    {
-        ArgumentNullException.ThrowIfNull(user);
-
-        await _dbContext.Users.AddAsync(user, ct);
     }
 
     public Task UpdateAsync(User user, CancellationToken ct = default)

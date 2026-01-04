@@ -13,6 +13,7 @@ public class AuthenticationMiddleware(
     private readonly RequestDelegate _next = next;
     private readonly ITokenService _tokenService = tokenService;
     private readonly ISessionService _sessionService = sessionService;
+    private const string TokenPrefix = "Bearer ";
 
     public async Task InvokeAsync(HttpContext context)
     {
@@ -24,13 +25,13 @@ public class AuthenticationMiddleware(
             return;
         }
 
-        if (!authHeader.StartsWith("Bearer "))
+        if (!authHeader.StartsWith(TokenPrefix))
         {
             context.Response.StatusCode = StatusCodes.Status401Unauthorized;
             return;
         }
         
-        var token = authHeader["Bearer ".Length..].Trim();
+        var token = authHeader[TokenPrefix.Length..].Trim();
 
         var principal = await _tokenService.ReadClaimsAsync(token);
         if (principal is null)

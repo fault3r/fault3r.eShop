@@ -17,7 +17,7 @@ public sealed class JwtTokenService(
     private readonly TokenValidationParameters _tokenValidation = tokenValidationParameters;
     private readonly JwtSettings _settings = settings;
 
-    public Task<string> GenerateAccessTokenAsync(
+    public Task<string> GenerateAsync(
         string sessionId,
         string userId)
     {
@@ -38,7 +38,7 @@ public sealed class JwtTokenService(
 
         var credential = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
 
-        var jwt = new JwtSecurityToken(
+        var token = new JwtSecurityToken(
             issuer: _settings.Issuer,
             audience: _settings.Audience,
             claims: claims,
@@ -47,9 +47,8 @@ public sealed class JwtTokenService(
             signingCredentials: credential
         );
 
-        var token = new JwtSecurityTokenHandler().WriteToken(jwt);
-
-        return Task.FromResult(token);
+        return Task.FromResult(
+            new JwtSecurityTokenHandler().WriteToken(token));
     }
 
     public Task<ClaimsPrincipal?> ReadClaimsAsync(string token)
@@ -64,9 +63,12 @@ public sealed class JwtTokenService(
         try
         {
             var claims = handler.ValidateToken(token, _tokenValidation, out _);
-            
+
             return Task.FromResult<ClaimsPrincipal?>(claims);
         }
-        catch { return Task.FromResult<ClaimsPrincipal?>(null); }
+        catch
+        {
+            return Task.FromResult<ClaimsPrincipal?>(null);
+        }
     }
 }

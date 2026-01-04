@@ -23,8 +23,8 @@ case "$operation" in
 esac
 
 solutions=(
-  "AccountService/UserService.sln"
-  "CatalogService/CatalogService.sln"
+  "UserService/UserService.sln"
+#  "CatalogService/CatalogService.sln"
 )
 
 for sln in "${solutions[@]}"; do

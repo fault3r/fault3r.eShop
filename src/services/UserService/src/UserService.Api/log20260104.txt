@@ -1,297 +1,57 @@
-[2026-01-04 19:38:19 INF] bfc281aa-c853-47eb-a884-d4b0425f37d1  Incoming request GET /swagger/index.html. 
- [2026-01-04 19:38:19 INF] bfc281aa-c853-47eb-a884-d4b0425f37d1  Completed request GET /swagger/index.html with status code 200. 
- [2026-01-04 19:38:20 INF] 7764862e-2b19-4903-8c60-fcc57391b74a  Incoming request GET /swagger/favicon-32x32.png. 
- [2026-01-04 19:38:20 INF] 2179b328-a817-4363-8c82-de50c3e11107  Incoming request GET /swagger/v1/swagger.json. 
- [2026-01-04 19:38:20 INF] 7764862e-2b19-4903-8c60-fcc57391b74a  Completed request GET /swagger/favicon-32x32.png with status code 200. 
- [2026-01-04 19:38:20 INF] 2179b328-a817-4363-8c82-de50c3e11107  Completed request GET /swagger/v1/swagger.json with status code 200. 
- [2026-01-04 19:40:05 INF] 968a7c99-ff07-4d7d-a371-0c024bda987b  Incoming request POST /api/user/login. 
- [2026-01-04 19:40:05 INF] 968a7c99-ff07-4d7d-a371-0c024bda987b UserService.Application.UseCases.LoginUserUseCase.LoginUserService Loginning user with 'hamed.damaavandi@gmail.com' identity… 
- [2026-01-04 19:40:08 INF] 968a7c99-ff07-4d7d-a371-0c024bda987b UserService.Application.UseCases.LoginUserUseCase.LoginUserService User successfully logged in with 'cc74c2d3c702456c8b01cc39f7c16110' identity. 
- [2026-01-04 19:40:08 INF] 968a7c99-ff07-4d7d-a371-0c024bda987b  Completed request POST /api/user/login with status code 200. 
- [2026-01-04 19:41:47 INF] a33af07a-6c7a-4e7b-9d5d-bdecee2b5179  Incoming request GET /api/user/profile. 
- [2026-01-04 19:41:47 INF] a33af07a-6c7a-4e7b-9d5d-bdecee2b5179  Completed request GET /api/user/profile with status code 401. 
- [2026-01-04 19:42:52 INF] 5c8d75a1-48bf-42a8-b18f-1e1c950cb305  Incoming request GET /api/user/profile. 
- [2026-01-04 19:42:52 INF] 5c8d75a1-48bf-42a8-b18f-1e1c950cb305  Completed request GET /api/user/profile with status code 200. 
- [2026-01-04 19:43:03 INF] dfc913b9-b1c7-4424-b1ba-a71cd045dfc4  Incoming request GET /api/user/profile. 
- [2026-01-04 19:43:03 INF] dfc913b9-b1c7-4424-b1ba-a71cd045dfc4  Completed request GET /api/user/profile with status code 401. 
- [2026-01-04 19:43:56 INF] b23aea3f-60be-400b-abbb-a71cfee82f2d  Incoming request GET /api/user/profile. 
- [2026-01-04 19:47:37 INF] b23aea3f-60be-400b-abbb-a71cfee82f2d  Completed request GET /api/user/profile with status code 200. 
- [2026-01-04 19:49:14 INF] 62c3183a-cfa1-4400-9d90-255b611c29a5  Incoming request GET /api/user/profile. 
- [2026-01-04 19:49:14 INF] 62c3183a-cfa1-4400-9d90-255b611c29a5  Completed request GET /api/user/profile with status code 401. 
- [2026-01-04 19:49:25 INF] a190e670-f8ce-4471-9a74-df96f23bf256  Incoming request GET /api/user/profile. 
- [2026-01-04 19:49:25 INF] a190e670-f8ce-4471-9a74-df96f23bf256  Completed request GET /api/user/profile with status code 401. 
- [2026-01-04 19:50:26 INF] 767f148d-802d-4a91-b918-8a0a8ba3d441  Incoming request GET /api/user/profile. 
- [2026-01-04 19:50:26 INF] 767f148d-802d-4a91-b918-8a0a8ba3d441  Completed request GET /api/user/profile with status code 401. 
- [2026-01-04 19:50:42 INF] 02f54985-7dff-4215-aa59-927ccba8e4d2  Incoming request GET /api/user/profile. 
- [2026-01-04 19:50:42 INF] 02f54985-7dff-4215-aa59-927ccba8e4d2  Completed request GET /api/user/profile with status code 401. 
- [2026-01-04 19:55:31 INF] 83af745f-d908-46c4-a116-a97b2f0a3f92  Incoming request POST /auth/refresh. 
- [2026-01-04 19:55:31 WRN] 83af745f-d908-46c4-a116-a97b2f0a3f92 UserService.Application.UseCases.RefreshAuthUseCase.RefreshAuthService RefreshAuth failed: invalid access token! 
- [2026-01-04 19:55:31 INF] 83af745f-d908-46c4-a116-a97b2f0a3f92  Completed request POST /auth/refresh with status code 400. 
- [2026-01-04 19:56:43 INF] 8b2b4d88-5bf7-44f0-be2e-8e1079f2ff2b  Incoming request GET /api/user/profile. 
- [2026-01-04 19:56:43 INF] 8b2b4d88-5bf7-44f0-be2e-8e1079f2ff2b  Completed request GET /api/user/profile with status code 401. 
- [2026-01-04 19:56:45 INF] 749e5691-1e20-4e67-a017-450c07e53071  Incoming request GET /api/user/profile. 
- [2026-01-04 19:56:45 INF] 749e5691-1e20-4e67-a017-450c07e53071  Completed request GET /api/user/profile with status code 401. 
- [2026-01-04 19:56:53 INF] 533d82af-f788-49d0-ab80-0e274b07522e  Incoming request POST /api/user/login. 
- [2026-01-04 19:56:53 INF] 533d82af-f788-49d0-ab80-0e274b07522e UserService.Application.UseCases.LoginUserUseCase.LoginUserService Loginning user with 'hamed.damaavandi@gmail.com' identity… 
- [2026-01-04 19:56:56 INF] 533d82af-f788-49d0-ab80-0e274b07522e UserService.Application.UseCases.LoginUserUseCase.LoginUserService User successfully logged in with 'cc74c2d3c702456c8b01cc39f7c16110' identity. 
- [2026-01-04 19:56:56 INF] 533d82af-f788-49d0-ab80-0e274b07522e  Completed request POST /api/user/login with status code 200. 
- [2026-01-04 19:57:32 INF] 4f842455-b58d-4314-a94e-80aaf3be142d  Incoming request POST /auth/refresh. 
- [2026-01-04 19:57:33 INF] 4f842455-b58d-4314-a94e-80aaf3be142d UserService.Application.UseCases.RefreshAuthUseCase.RefreshAuthService User authentication successfully refreshed for user 'cc74c2d3c702456c8b01cc39f7c16110', session '78bd9c3dc1654fc9bd5bc40ce248395a'. 
- [2026-01-04 19:57:33 INF] 4f842455-b58d-4314-a94e-80aaf3be142d  Completed request POST /auth/refresh with status code 200. 
- [2026-01-04 19:58:34 INF] 5fdaa8c5-333a-4039-8d5b-058e540c40d8  Incoming request POST /auth/refresh. 
- [2026-01-04 19:58:34 INF] 5fdaa8c5-333a-4039-8d5b-058e540c40d8 UserService.Application.UseCases.RefreshAuthUseCase.RefreshAuthService RefreshAuth failed: session expired or invalidated for user 'cc74c2d3c702456c8b01cc39f7c16110', session '78bd9c3dc1654fc9bd5bc40ce248395a' 
- [2026-01-04 19:58:34 INF] 5fdaa8c5-333a-4039-8d5b-058e540c40d8  Completed request POST /auth/refresh with status code 400. 
- [2026-01-04 19:58:45 INF] ff36be52-959b-4492-b9b6-8a8ef9c3d34c  Incoming request POST /api/user/login. 
- [2026-01-04 19:58:45 INF] ff36be52-959b-4492-b9b6-8a8ef9c3d34c UserService.Application.UseCases.LoginUserUseCase.LoginUserService Loginning user with 'hamed.damaavandi@gmail.com' identity… 
- [2026-01-04 19:58:46 INF] ff36be52-959b-4492-b9b6-8a8ef9c3d34c UserService.Application.UseCases.LoginUserUseCase.LoginUserService User successfully logged in with 'cc74c2d3c702456c8b01cc39f7c16110' identity. 
- [2026-01-04 19:58:46 INF] ff36be52-959b-4492-b9b6-8a8ef9c3d34c  Completed request POST /api/user/login with status code 200. 
- [2026-01-04 19:59:00 INF] 9ab85f4a-8f34-4db8-8cac-a747e72917fc  Incoming request POST /api/user/login. 
- [2026-01-04 19:59:00 INF] 9ab85f4a-8f34-4db8-8cac-a747e72917fc UserService.Application.UseCases.LoginUserUseCase.LoginUserService Loginning user with 'hamed.damaavandi@gmail.com' identity… 
- [2026-01-04 19:59:00 INF] 9ab85f4a-8f34-4db8-8cac-a747e72917fc UserService.Application.UseCases.LoginUserUseCase.LoginUserService User successfully logged in with 'cc74c2d3c702456c8b01cc39f7c16110' identity. 
- [2026-01-04 19:59:00 INF] 9ab85f4a-8f34-4db8-8cac-a747e72917fc  Completed request POST /api/user/login with status code 200. 
- [2026-01-04 19:59:31 INF] 1b37d439-e3c8-4019-8204-dc775706c89f  Incoming request POST /api/user/login. 
- [2026-01-04 19:59:31 INF] 1b37d439-e3c8-4019-8204-dc775706c89f UserService.Application.UseCases.LoginUserUseCase.LoginUserService Loginning user with 'hamed.damaavandi@gmail.com' identity… 
- [2026-01-04 19:59:32 INF] 1b37d439-e3c8-4019-8204-dc775706c89f UserService.Application.UseCases.LoginUserUseCase.LoginUserService User successfully logged in with 'cc74c2d3c702456c8b01cc39f7c16110' identity. 
- [2026-01-04 19:59:32 INF] 1b37d439-e3c8-4019-8204-dc775706c89f  Completed request POST /api/user/login with status code 200. 
- [2026-01-04 19:59:39 INF] ee1949b5-d9d1-4d2d-8891-a6016d95f848  Incoming request POST /api/user/login. 
- [2026-01-04 19:59:39 INF] ee1949b5-d9d1-4d2d-8891-a6016d95f848 UserService.Application.UseCases.LoginUserUseCase.LoginUserService Loginning user with 'hamed.damaavandi@gmail.com' identity… 
- [2026-01-04 19:59:40 INF] ee1949b5-d9d1-4d2d-8891-a6016d95f848 UserService.Application.UseCases.LoginUserUseCase.LoginUserService User successfully logged in with 'cc74c2d3c702456c8b01cc39f7c16110' identity. 
- [2026-01-04 19:59:40 INF] ee1949b5-d9d1-4d2d-8891-a6016d95f848  Completed request POST /api/user/login with status code 200. 
- [2026-01-04 19:59:53 INF] acda6fd3-56a5-4d71-a1ff-ec26183ce3a6  Incoming request POST /api/user/login. 
- [2026-01-04 19:59:53 INF] acda6fd3-56a5-4d71-a1ff-ec26183ce3a6 UserService.Application.UseCases.LoginUserUseCase.LoginUserService Loginning user with 'hamed.damaavandi@gmail.com' identity… 
- [2026-01-04 19:59:54 INF] acda6fd3-56a5-4d71-a1ff-ec26183ce3a6 UserService.Application.UseCases.LoginUserUseCase.LoginUserService User successfully logged in with 'cc74c2d3c702456c8b01cc39f7c16110' identity. 
- [2026-01-04 19:59:54 INF] acda6fd3-56a5-4d71-a1ff-ec26183ce3a6  Completed request POST /api/user/login with status code 200. 
- [2026-01-04 20:00:14 INF] e5509939-c006-46f2-99b2-9a3ec1bc068d  Incoming request POST /api/user/login. 
- [2026-01-04 20:00:14 INF] e5509939-c006-46f2-99b2-9a3ec1bc068d UserService.Application.UseCases.LoginUserUseCase.LoginUserService Loginning user with 'hamed.damaavandi@gmail.com' identity… 
- [2026-01-04 20:00:14 INF] e5509939-c006-46f2-99b2-9a3ec1bc068d UserService.Application.UseCases.LoginUserUseCase.LoginUserService User successfully logged in with 'cc74c2d3c702456c8b01cc39f7c16110' identity. 
- [2026-01-04 20:00:14 INF] e5509939-c006-46f2-99b2-9a3ec1bc068d  Completed request POST /api/user/login with status code 200. 
- [2026-01-04 20:00:27 INF] 4492b8e8-d815-4798-a50c-5b6f59ae2839  Incoming request POST /api/user/login. 
- [2026-01-04 20:00:27 INF] 4492b8e8-d815-4798-a50c-5b6f59ae2839 UserService.Application.UseCases.LoginUserUseCase.LoginUserService Loginning user with 'hamed.damaavandi@gmail.com' identity… 
- [2026-01-04 20:00:27 INF] 4492b8e8-d815-4798-a50c-5b6f59ae2839 UserService.Application.UseCases.LoginUserUseCase.LoginUserService User successfully logged in with 'cc74c2d3c702456c8b01cc39f7c16110' identity. 
- [2026-01-04 20:00:27 INF] 4492b8e8-d815-4798-a50c-5b6f59ae2839  Completed request POST /api/user/login with status code 200. 
- [2026-01-04 20:00:36 INF] 79efef68-869f-49a1-a458-1130f0660aab  Incoming request POST /api/user/login. 
- [2026-01-04 20:00:36 INF] 79efef68-869f-49a1-a458-1130f0660aab UserService.Application.UseCases.LoginUserUseCase.LoginUserService Loginning user with 'hamed.damaavandi@gmail.com' identity… 
- [2026-01-04 20:00:36 INF] 79efef68-869f-49a1-a458-1130f0660aab UserService.Application.UseCases.LoginUserUseCase.LoginUserService User successfully logged in with 'cc74c2d3c702456c8b01cc39f7c16110' identity. 
- [2026-01-04 20:00:36 INF] 79efef68-869f-49a1-a458-1130f0660aab  Completed request POST /api/user/login with status code 200. 
- [2026-01-04 20:01:14 INF] 936c7909-d64d-43ac-a72e-ec9fcf5aa187  Incoming request POST /api/user/login. 
- [2026-01-04 20:01:14 INF] 936c7909-d64d-43ac-a72e-ec9fcf5aa187 UserService.Application.UseCases.LoginUserUseCase.LoginUserService Loginning user with 'hamed.damaavandi@gmail.com' identity… 
- [2026-01-04 20:01:14 INF] 936c7909-d64d-43ac-a72e-ec9fcf5aa187 UserService.Application.UseCases.LoginUserUseCase.LoginUserService User successfully logged in with 'cc74c2d3c702456c8b01cc39f7c16110' identity. 
- [2026-01-04 20:01:14 INF] 936c7909-d64d-43ac-a72e-ec9fcf5aa187  Completed request POST /api/user/login with status code 200. 
- [2026-01-04 20:02:30 INF] 64b78d10-bc04-436a-942a-84e97c0e9d43  Incoming request POST /api/user/login. 
- [2026-01-04 20:02:36 INF] 64b78d10-bc04-436a-942a-84e97c0e9d43 UserService.Application.UseCases.LoginUserUseCase.LoginUserService Loginning user with 'hamed.damaavandi@gmail.com' identity… 
- [2026-01-04 20:05:35 INF] 64b78d10-bc04-436a-942a-84e97c0e9d43 UserService.Application.UseCases.LoginUserUseCase.LoginUserService User successfully logged in with 'cc74c2d3c702456c8b01cc39f7c16110' identity. 
- [2026-01-04 20:05:35 INF] 64b78d10-bc04-436a-942a-84e97c0e9d43  Completed request POST /api/user/login with status code 200. 
- [2026-01-04 20:06:21 INF] 5ba4e722-25b8-4571-8a26-7457a31786cf  Incoming request POST /api/user/login. 
- [2026-01-04 20:06:21 INF] 5ba4e722-25b8-4571-8a26-7457a31786cf UserService.Application.UseCases.LoginUserUseCase.LoginUserService Loginning user with 'hamed.damaavandi@gmail.com' identity… 
- [2026-01-04 20:07:14 INF] 5ba4e722-25b8-4571-8a26-7457a31786cf UserService.Application.UseCases.LoginUserUseCase.LoginUserService User successfully logged in with 'cc74c2d3c702456c8b01cc39f7c16110' identity. 
- [2026-01-04 20:07:14 INF] 5ba4e722-25b8-4571-8a26-7457a31786cf  Completed request POST /api/user/login with status code 200. 
- [2026-01-04 20:08:21 INF] 221cbfe6-5e9b-4500-81d4-6aabbec7a64e  Incoming request POST /api/user/login. 
- [2026-01-04 20:08:22 INF] 221cbfe6-5e9b-4500-81d4-6aabbec7a64e UserService.Application.UseCases.LoginUserUseCase.LoginUserService Loginning user with 'hamed.damaavandi@gmail.com' identity… 
- [2026-01-04 20:08:25 INF] 221cbfe6-5e9b-4500-81d4-6aabbec7a64e UserService.Application.UseCases.LoginUserUseCase.LoginUserService User successfully logged in with 'cc74c2d3c702456c8b01cc39f7c16110' identity. 
- [2026-01-04 20:08:25 INF] 221cbfe6-5e9b-4500-81d4-6aabbec7a64e  Completed request POST /api/user/login with status code 200. 
- [2026-01-04 20:09:16 INF] 2ed13ece-9638-4781-9836-aca72235779e  Incoming request POST /auth/refresh. 
- [2026-01-04 20:09:16 INF] 2ed13ece-9638-4781-9836-aca72235779e  Completed request POST /auth/refresh with status code 400. 
- [2026-01-04 20:10:10 INF] 01f278a2-418c-4d86-bd19-a3de1256d5e3  Incoming request POST /auth/refresh. 
- [2026-01-04 20:10:11 INF] 01f278a2-418c-4d86-bd19-a3de1256d5e3 UserService.Application.UseCases.RefreshAuthUseCase.RefreshAuthService User authentication successfully refreshed for user 'cc74c2d3c702456c8b01cc39f7c16110', session '31994fc5060548e1a11aa2f16b09f0a5'. 
- [2026-01-04 20:10:11 INF] 01f278a2-418c-4d86-bd19-a3de1256d5e3  Completed request POST /auth/refresh with status code 200. 
- [2026-01-04 20:11:20 INF] d193fb46-d10c-4444-b3f1-a92b9a639e08  Incoming request POST /auth/refresh. 
- [2026-01-04 20:11:21 INF] d193fb46-d10c-4444-b3f1-a92b9a639e08 UserService.Application.UseCases.RefreshAuthUseCase.RefreshAuthService User authentication successfully refreshed for user 'cc74c2d3c702456c8b01cc39f7c16110', session '31994fc5060548e1a11aa2f16b09f0a5'. 
- [2026-01-04 20:11:21 INF] d193fb46-d10c-4444-b3f1-a92b9a639e08  Completed request POST /auth/refresh with status code 200. 
- [2026-01-04 20:18:08 INF] 06ad3e3d-f0a3-4bc0-b614-aa1d85b96700  Incoming request GET /swagger/index.html. 
- [2026-01-04 20:18:09 INF] 06ad3e3d-f0a3-4bc0-b614-aa1d85b96700  Completed request GET /swagger/index.html with status code 200. 
- [2026-01-04 20:18:10 INF] 8f186265-44b6-4330-82f6-3eb0a3f6cb8c  Incoming request GET /swagger/favicon-32x32.png. 
- [2026-01-04 20:18:10 INF] 60dd35da-aaaa-4995-ba5a-76f036058db4  Incoming request GET /swagger/v1/swagger.json. 
- [2026-01-04 20:18:10 INF] 8f186265-44b6-4330-82f6-3eb0a3f6cb8c  Completed request GET /swagger/favicon-32x32.png with status code 200. 
- [2026-01-04 20:18:10 INF] 60dd35da-aaaa-4995-ba5a-76f036058db4  Completed request GET /swagger/v1/swagger.json with status code 200. 
- [2026-01-04 20:18:19 INF] c7c98da4-27bb-4b5e-9f87-fcd174d53755  Incoming request POST /api/user/login. 
- [2026-01-04 20:18:20 INF] c7c98da4-27bb-4b5e-9f87-fcd174d53755 UserService.Application.UseCases.LoginUserUseCase.LoginUserService Loginning user with 'hamed.damaavandi@gmail.com' identity… 
- [2026-01-04 20:18:24 INF] c7c98da4-27bb-4b5e-9f87-fcd174d53755 UserService.Application.UseCases.LoginUserUseCase.LoginUserService User successfully logged in with 'cc74c2d3c702456c8b01cc39f7c16110' identity. 
- [2026-01-04 20:18:24 INF] c7c98da4-27bb-4b5e-9f87-fcd174d53755  Completed request POST /api/user/login with status code 200. 
- [2026-01-04 20:18:44 INF] 12a08c36-d014-406e-b3e4-9fa65b343a10  Incoming request POST /auth/refresh. 
- [2026-01-04 20:18:44 INF] 12a08c36-d014-406e-b3e4-9fa65b343a10  Completed request POST /auth/refresh with status code 400. 
- [2026-01-04 20:23:13 INF] 97287f6f-0ad7-459c-bea3-b52543240893  Incoming request GET /swagger/index.html. 
- [2026-01-04 20:23:13 INF] 97287f6f-0ad7-459c-bea3-b52543240893  Completed request GET /swagger/index.html with status code 200. 
- [2026-01-04 20:23:13 INF] 8268aac3-ec40-4ae8-91c2-a514e51f235d  Incoming request GET /swagger/swagger-ui.css. 
- [2026-01-04 20:23:13 INF] 8268aac3-ec40-4ae8-91c2-a514e51f235d  Completed request GET /swagger/swagger-ui.css with status code 200. 
- [2026-01-04 20:23:14 INF] 8bbb3654-30b2-4327-a844-2f50d8b89438  Incoming request GET /swagger/favicon-32x32.png. 
- [2026-01-04 20:23:14 INF] 8bbb3654-30b2-4327-a844-2f50d8b89438  Completed request GET /swagger/favicon-32x32.png with status code 200. 
- [2026-01-04 20:23:14 INF] 202c40e4-a00d-40f6-adb3-e61987c16496  Incoming request GET /swagger/v1/swagger.json. 
- [2026-01-04 20:23:14 INF] 202c40e4-a00d-40f6-adb3-e61987c16496  Completed request GET /swagger/v1/swagger.json with status code 200. 
- [2026-01-04 20:24:35 INF] 15e4bb64-f31e-4de5-8bdd-e2d83fe13b35  Incoming request POST /api/user/login. 
- [2026-01-04 20:24:36 INF] 15e4bb64-f31e-4de5-8bdd-e2d83fe13b35 UserService.Application.UseCases.LoginUserUseCase.LoginUserService Loginning user with 'hamed.damaavandi@gmail.com' identity… 
- [2026-01-04 20:24:40 INF] 15e4bb64-f31e-4de5-8bdd-e2d83fe13b35 UserService.Application.UseCases.LoginUserUseCase.LoginUserService User successfully logged in with 'cc74c2d3c702456c8b01cc39f7c16110' identity. 
- [2026-01-04 20:24:40 INF] 15e4bb64-f31e-4de5-8bdd-e2d83fe13b35  Completed request POST /api/user/login with status code 200. 
- [2026-01-04 20:25:17 INF] f774a1aa-ab62-40b6-a019-6dcee5fa66e6  Incoming request POST /auth/refresh. 
- [2026-01-04 20:31:50 INF] f774a1aa-ab62-40b6-a019-6dcee5fa66e6 UserService.Application.UseCases.RefreshAuthUseCase.RefreshAuthService User authentication successfully refreshed for user 'cc74c2d3c702456c8b01cc39f7c16110', session '06724ba8ddeb40d6b412cf58608cc9f1'. 
- [2026-01-04 20:31:50 INF] f774a1aa-ab62-40b6-a019-6dcee5fa66e6  Completed request POST /auth/refresh with status code 200. 
- [2026-01-04 20:32:29 INF] d73730fe-ef29-4fc8-8884-fa98d1f75394  Incoming request POST /auth/refresh. 
- [2026-01-04 20:32:34 INF] d73730fe-ef29-4fc8-8884-fa98d1f75394 UserService.Application.UseCases.RefreshAuthUseCase.RefreshAuthService User authentication successfully refreshed for user 'cc74c2d3c702456c8b01cc39f7c16110', session '06724ba8ddeb40d6b412cf58608cc9f1'. 
- [2026-01-04 20:32:34 INF] d73730fe-ef29-4fc8-8884-fa98d1f75394  Completed request POST /auth/refresh with status code 200. 
- [2026-01-04 20:32:47 INF] 859f92bb-e655-4bc8-949b-be19aaee7aa7  Incoming request POST /auth/refresh. 
- [2026-01-04 20:32:48 WRN] 859f92bb-e655-4bc8-949b-be19aaee7aa7 UserService.Application.UseCases.RefreshAuthUseCase.RefreshAuthService RefreshAuth failed: refresh token mismatch for user 'cc74c2d3c702456c8b01cc39f7c16110', session '06724ba8ddeb40d6b412cf58608cc9f1'. Invalidating all sessions. 
- [2026-01-04 20:32:48 INF] 859f92bb-e655-4bc8-949b-be19aaee7aa7  Completed request POST /auth/refresh with status code 400. 
- [2026-01-04 20:39:17 INF] ebf4138a-9fe8-4e98-b078-2f048c40a502  Incoming request GET /. 
- [2026-01-04 20:39:17 INF] ebf4138a-9fe8-4e98-b078-2f048c40a502  Completed request GET / with status code 200. 
- [2026-01-04 20:39:17 INF] d4a2afc7-75a7-4054-b6d0-49793598e576  Incoming request GET /favicon.ico. 
- [2026-01-04 20:39:17 INF] d4a2afc7-75a7-4054-b6d0-49793598e576  Completed request GET /favicon.ico with status code 404. 
- [2026-01-04 20:39:19 INF] ab93d114-efab-4004-a590-0b1ba05b9deb  Incoming request GET /swagger/index.html. 
- [2026-01-04 20:39:19 INF] ab93d114-efab-4004-a590-0b1ba05b9deb  Completed request GET /swagger/index.html with status code 200. 
- [2026-01-04 20:39:19 INF] 1c88c6a9-3c80-44a2-832a-9639d453750d  Incoming request GET /swagger/favicon-32x32.png. 
- [2026-01-04 20:39:19 INF] 1c88c6a9-3c80-44a2-832a-9639d453750d  Completed request GET /swagger/favicon-32x32.png with status code 200. 
- [2026-01-04 20:39:19 INF] 49c795bb-2d31-48bc-82e4-75c684802cc0  Incoming request GET /swagger/v1/swagger.json. 
- [2026-01-04 20:39:19 INF] 49c795bb-2d31-48bc-82e4-75c684802cc0  Completed request GET /swagger/v1/swagger.json with status code 200. 
- [2026-01-04 20:39:44 INF] eafe20c2-6b45-4751-8c11-2034efb8c8d9  Incoming request POST /api/user/login. 
- [2026-01-04 20:39:44 INF] eafe20c2-6b45-4751-8c11-2034efb8c8d9 UserService.Application.UseCases.LoginUserUseCase.LoginUserService Loginning user with 'hamed.damaavandi@gmail.com' identity… 
- [2026-01-04 20:39:48 WRN] eafe20c2-6b45-4751-8c11-2034efb8c8d9 UserService.Application.UseCases.LoginUserUseCase.LoginUserService Login failed: identity or password is incorrect! 
- [2026-01-04 20:39:48 INF] eafe20c2-6b45-4751-8c11-2034efb8c8d9  Completed request POST /api/user/login with status code 400. 
- [2026-01-04 20:39:56 INF] 8f58c171-3308-4e4f-9fa9-f0a2b8d085ed  Incoming request POST /api/user/login. 
- [2026-01-04 20:39:56 INF] 8f58c171-3308-4e4f-9fa9-f0a2b8d085ed UserService.Application.UseCases.LoginUserUseCase.LoginUserService Loginning user with 'hamed.damaavandi@gmail.com' identity… 
- [2026-01-04 20:39:57 INF] 8f58c171-3308-4e4f-9fa9-f0a2b8d085ed UserService.Application.UseCases.LoginUserUseCase.LoginUserService User successfully logged in with 'cc74c2d3c702456c8b01cc39f7c16110' identity. 
- [2026-01-04 20:39:57 INF] 8f58c171-3308-4e4f-9fa9-f0a2b8d085ed  Completed request POST /api/user/login with status code 200. 
- [2026-01-04 20:40:23 INF] d96cbd2b-afdd-4e3e-98bd-5d8cc2bfa015  Incoming request POST /auth/refresh. 
- [2026-01-04 20:40:24 INF] d96cbd2b-afdd-4e3e-98bd-5d8cc2bfa015 UserService.Application.UseCases.RefreshAuthUseCase.RefreshAuthService User authentication successfully refreshed for user 'cc74c2d3c702456c8b01cc39f7c16110', session '0a9cdfcb6dc84ed9849636e7b9656dde'. 
- [2026-01-04 20:40:24 INF] d96cbd2b-afdd-4e3e-98bd-5d8cc2bfa015  Completed request POST /auth/refresh with status code 200. 
- [2026-01-04 20:40:45 INF] 3e10123b-a2fd-4b77-9044-8cc5e30b9d5e  Incoming request POST /auth/refresh. 
- [2026-01-04 20:40:45 WRN] 3e10123b-a2fd-4b77-9044-8cc5e30b9d5e UserService.Application.UseCases.RefreshAuthUseCase.RefreshAuthService RefreshAuth failed: invalid access token! 
- [2026-01-04 20:40:45 INF] 3e10123b-a2fd-4b77-9044-8cc5e30b9d5e  Completed request POST /auth/refresh with status code 400. 
- [2026-01-04 20:41:49 INF] 3ae1f64d-f61a-4440-b220-ad231ade0601  Incoming request POST /auth/refresh. 
- [2026-01-04 20:41:49 WRN] 3ae1f64d-f61a-4440-b220-ad231ade0601 UserService.Application.UseCases.RefreshAuthUseCase.RefreshAuthService RefreshAuth failed: refresh token mismatch for user 'cc74c2d3c702456c8b01cc39f7c16110', session '0a9cdfcb6dc84ed9849636e7b9656dde'. Invalidating all sessions. 
- [2026-01-04 20:41:49 INF] 3ae1f64d-f61a-4440-b220-ad231ade0601  Completed request POST /auth/refresh with status code 400. 
- [2026-01-04 20:42:28 INF] 3701eeae-b171-4634-8a9a-cd83382e84bf  Incoming request POST /api/user/login. 
- [2026-01-04 20:42:28 INF] 3701eeae-b171-4634-8a9a-cd83382e84bf UserService.Application.UseCases.LoginUserUseCase.LoginUserService Loginning user with 'hamed.damaavandi@gmail.com' identity… 
- [2026-01-04 20:42:29 INF] 3701eeae-b171-4634-8a9a-cd83382e84bf UserService.Application.UseCases.LoginUserUseCase.LoginUserService User successfully logged in with 'cc74c2d3c702456c8b01cc39f7c16110' identity. 
- [2026-01-04 20:42:29 INF] 3701eeae-b171-4634-8a9a-cd83382e84bf  Completed request POST /api/user/login with status code 200. 
- [2026-01-04 20:42:45 INF] f22fceca-fdfd-41bd-b979-45c2e5f883fb  Incoming request POST /auth/refresh. 
- [2026-01-04 20:42:46 INF] f22fceca-fdfd-41bd-b979-45c2e5f883fb UserService.Application.UseCases.RefreshAuthUseCase.RefreshAuthService User authentication successfully refreshed for user 'cc74c2d3c702456c8b01cc39f7c16110', session 'bf630db641944ae594abb2d11a51e745'. 
- [2026-01-04 20:42:46 INF] f22fceca-fdfd-41bd-b979-45c2e5f883fb  Completed request POST /auth/refresh with status code 200. 
- [2026-01-04 20:43:39 INF] d2ba01d5-d639-4bd5-8ccc-ebac776e2d48  Incoming request POST /auth/refresh. 
- [2026-01-04 20:43:39 INF] d2ba01d5-d639-4bd5-8ccc-ebac776e2d48 UserService.Application.UseCases.RefreshAuthUseCase.RefreshAuthService User authentication successfully refreshed for user 'cc74c2d3c702456c8b01cc39f7c16110', session 'bf630db641944ae594abb2d11a51e745'. 
- [2026-01-04 20:43:39 INF] d2ba01d5-d639-4bd5-8ccc-ebac776e2d48  Completed request POST /auth/refresh with status code 200. 
- [2026-01-04 20:43:48 INF] a3ce5128-55b0-487a-aed0-e745af49faaa  Incoming request POST /auth/refresh. 
- [2026-01-04 20:43:48 INF] a3ce5128-55b0-487a-aed0-e745af49faaa UserService.Application.UseCases.RefreshAuthUseCase.RefreshAuthService User authentication successfully refreshed for user 'cc74c2d3c702456c8b01cc39f7c16110', session 'bf630db641944ae594abb2d11a51e745'. 
- [2026-01-04 20:43:48 INF] a3ce5128-55b0-487a-aed0-e745af49faaa  Completed request POST /auth/refresh with status code 200. 
- [2026-01-04 20:44:35 INF] d50f0612-b1b6-45d7-aeb9-1f5b6df9b875  Incoming request POST /auth/refresh. 
- [2026-01-04 20:44:35 WRN] d50f0612-b1b6-45d7-aeb9-1f5b6df9b875 UserService.Application.UseCases.RefreshAuthUseCase.RefreshAuthService RefreshAuth failed: refresh token mismatch for user 'cc74c2d3c702456c8b01cc39f7c16110', session 'bf630db641944ae594abb2d11a51e745'. Invalidating all sessions. 
- [2026-01-04 20:44:35 INF] d50f0612-b1b6-45d7-aeb9-1f5b6df9b875  Completed request POST /auth/refresh with status code 400. 
- [2026-01-04 21:00:54 FTL]  Microsoft.AspNetCore.Hosting.Diagnostics Application startup exception 
- StackExchange.Redis.RedisConnectionException: It was not possible to connect to the redis server(s). Error connecting right now. To allow this multiplexer to continue retrying until it's able to connect, use abortConnect=false in your connection string or AbortOnConnectFail=false; in your code.
-   at StackExchange.Redis.ConnectionMultiplexer.ConnectImpl(ConfigurationOptions configuration, TextWriter writer, Nullable`1 serverType, EndPointCollection endpoints) in /_/src/StackExchange.Redis/ConnectionMultiplexer.cs:line 689
-   at StackExchange.Redis.ConnectionMultiplexer.Connect(ConfigurationOptions configuration, TextWriter log) in /_/src/StackExchange.Redis/ConnectionMultiplexer.cs:line 661
-   at StackExchange.Redis.ConnectionMultiplexer.Connect(String configuration, TextWriter log) in /_/src/StackExchange.Redis/ConnectionMultiplexer.cs:line 639
-   at UserService.Infrastructure.DependencyInjection.RedisExtensions.<>c__DisplayClass0_0.<AddRedisCaching>b__0(IServiceProvider _) in /home/hamed-damavandi/Documents/fault3r.eShop/src/services/UserService/src/UserService.Infrastructure/DependencyInjection/RedisExtensions.cs:line 26
-   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteRuntimeResolver.VisitFactory(FactoryCallSite factoryCallSite, RuntimeResolverContext context)
-   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteVisitor`2.VisitCallSiteMain(ServiceCallSite callSite, TArgument argument)
-   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteRuntimeResolver.VisitRootCache(ServiceCallSite callSite, RuntimeResolverContext context)
-   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteVisitor`2.VisitCallSite(ServiceCallSite callSite, TArgument argument)
-   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteRuntimeResolver.Resolve(ServiceCallSite callSite, ServiceProviderEngineScope scope)
-   at Microsoft.Extensions.DependencyInjection.ServiceProvider.CreateServiceAccessor(ServiceIdentifier serviceIdentifier)
-   at System.Collections.Concurrent.ConcurrentDictionary`2.GetOrAdd(TKey key, Func`2 valueFactory)
-   at Microsoft.Extensions.DependencyInjection.ServiceProvider.GetService(ServiceIdentifier serviceIdentifier, ServiceProviderEngineScope serviceProviderEngineScope)
-   at Microsoft.Extensions.DependencyInjection.ServiceLookup.ServiceProviderEngineScope.GetService(Type serviceType)
-   at Microsoft.Extensions.DependencyInjection.ServiceProviderServiceExtensions.GetRequiredService(IServiceProvider provider, Type serviceType)
-   at Microsoft.Extensions.DependencyInjection.ServiceProviderServiceExtensions.GetRequiredService[T](IServiceProvider provider)
-   at UserService.Infrastructure.DependencyInjection.RedisExtensions.<>c__DisplayClass0_0.<AddRedisCaching>b__1(IServiceProvider provider) in /home/hamed-damavandi/Documents/fault3r.eShop/src/services/UserService/src/UserService.Infrastructure/DependencyInjection/RedisExtensions.cs:line 32
-   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteRuntimeResolver.VisitFactory(FactoryCallSite factoryCallSite, RuntimeResolverContext context)
-   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteVisitor`2.VisitCallSiteMain(ServiceCallSite callSite, TArgument argument)
-   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteRuntimeResolver.VisitRootCache(ServiceCallSite callSite, RuntimeResolverContext context)
-   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteVisitor`2.VisitCallSite(ServiceCallSite callSite, TArgument argument)
-   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteRuntimeResolver.Resolve(ServiceCallSite callSite, ServiceProviderEngineScope scope)
-   at Microsoft.Extensions.DependencyInjection.ServiceProvider.CreateServiceAccessor(ServiceIdentifier serviceIdentifier)
-   at System.Collections.Concurrent.ConcurrentDictionary`2.GetOrAdd(TKey key, Func`2 valueFactory)
-   at Microsoft.Extensions.DependencyInjection.ServiceProvider.GetService(ServiceIdentifier serviceIdentifier, ServiceProviderEngineScope serviceProviderEngineScope)
-   at Microsoft.Extensions.DependencyInjection.ServiceProvider.GetService(Type serviceType)
-   at Microsoft.Extensions.Internal.ActivatorUtilities.ConstructorMatcher.CreateInstance(IServiceProvider provider)
-   at Microsoft.Extensions.Internal.ActivatorUtilities.CreateInstance(IServiceProvider provider, Type instanceType, Object[] parameters)
-   at Microsoft.AspNetCore.Builder.UseMiddlewareExtensions.ReflectionMiddlewareBinder.CreateMiddleware(RequestDelegate next)
-   at Microsoft.AspNetCore.Builder.ApplicationBuilder.Build()
-   at Microsoft.AspNetCore.Builder.ApplicationBuilder.Build()
-   at Microsoft.AspNetCore.Hosting.GenericWebHostService.StartAsync(CancellationToken cancellationToken)
-[2026-01-04 21:02:52 INF] 11fbaa2c-329b-4b41-bbec-40083641b480  Incoming request GET /swagger/index.html. 
- [2026-01-04 21:02:53 INF] 11fbaa2c-329b-4b41-bbec-40083641b480  Completed request GET /swagger/index.html with status code 200. 
- [2026-01-04 21:02:53 INF] 9612337c-9a49-41ac-b8c3-93a12cfef335  Incoming request GET /swagger/swagger-ui.css. 
- [2026-01-04 21:02:53 INF] 9612337c-9a49-41ac-b8c3-93a12cfef335  Completed request GET /swagger/swagger-ui.css with status code 200. 
- [2026-01-04 21:02:53 INF] 9360b5f1-59a0-4b8e-908e-a2874f62d5b7  Incoming request GET /swagger/v1/swagger.json. 
- [2026-01-04 21:02:53 INF] 9360b5f1-59a0-4b8e-908e-a2874f62d5b7  Completed request GET /swagger/v1/swagger.json with status code 200. 
- [2026-01-04 21:02:57 INF] 36cfda50-9b27-4b61-8b07-cf90ab439ecb  Incoming request GET /. 
- [2026-01-04 21:02:57 INF] 36cfda50-9b27-4b61-8b07-cf90ab439ecb  Completed request GET / with status code 200. 
- [2026-01-04 21:03:07 INF] 4888269d-3507-4ee3-9ca6-fbdd56b17e1f  Incoming request GET /api/user/profile. 
- [2026-01-04 21:03:07 INF] 4888269d-3507-4ee3-9ca6-fbdd56b17e1f  Completed request GET /api/user/profile with status code 401. 
- [2026-01-04 21:08:02 INF] c0d3c3b7-b475-4753-bca9-69618b439884  Incoming request GET /. 
- [2026-01-04 21:08:02 INF] c0d3c3b7-b475-4753-bca9-69618b439884  Completed request GET / with status code 200. 
- [2026-01-04 21:08:02 INF] 55e5ee9c-9d0e-4a1b-a8c8-ef1d19d69407  Incoming request GET /favicon.ico. 
- [2026-01-04 21:08:02 INF] 55e5ee9c-9d0e-4a1b-a8c8-ef1d19d69407  Completed request GET /favicon.ico with status code 404. 
- [2026-01-04 21:08:08 INF] 9190657d-750a-4d2b-a4dc-4ece10edea7c  Incoming request GET /swagger/index.html. 
- [2026-01-04 21:08:08 INF] 9190657d-750a-4d2b-a4dc-4ece10edea7c  Completed request GET /swagger/index.html with status code 200. 
- [2026-01-04 21:08:08 INF] 61de1e13-3c40-4fa8-94fa-0d7910c77112  Incoming request GET /swagger/swagger-ui.css. 
- [2026-01-04 21:08:08 INF] 61de1e13-3c40-4fa8-94fa-0d7910c77112  Completed request GET /swagger/swagger-ui.css with status code 200. 
- [2026-01-04 21:08:09 INF] 78cb71f0-21c6-415e-869b-0cca68c16d12  Incoming request GET /swagger/favicon-32x32.png. 
- [2026-01-04 21:08:09 INF] 78cb71f0-21c6-415e-869b-0cca68c16d12  Completed request GET /swagger/favicon-32x32.png with status code 200. 
- [2026-01-04 21:08:09 INF] ebdcfdae-05df-4d75-8fb8-3a3f2091fa32  Incoming request GET /swagger/v1/swagger.json. 
- [2026-01-04 21:08:09 INF] ebdcfdae-05df-4d75-8fb8-3a3f2091fa32  Completed request GET /swagger/v1/swagger.json with status code 200. 
- [2026-01-04 21:18:09 INF] 4089c47f-4adc-40e5-9ea1-14f334770078  Incoming request GET /swagger/index.html. 
- [2026-01-04 21:18:09 INF] 4089c47f-4adc-40e5-9ea1-14f334770078  Completed request GET /swagger/index.html with status code 200. 
- [2026-01-04 21:18:09 INF] 954ba15f-1afe-4dee-b9cb-823d691e3d17  Incoming request GET /swagger/swagger-ui.css. 
- [2026-01-04 21:18:09 INF] 954ba15f-1afe-4dee-b9cb-823d691e3d17  Completed request GET /swagger/swagger-ui.css with status code 200. 
- [2026-01-04 21:18:09 INF] 3b723393-3176-4d5a-95be-e3a4f381bd21  Incoming request GET /swagger/v1/swagger.json. 
- [2026-01-04 21:18:10 INF] 3b723393-3176-4d5a-95be-e3a4f381bd21  Completed request GET /swagger/v1/swagger.json with status code 200. 
- [2026-01-04 21:19:20 INF] 1e84bb2a-2a0d-47b6-81e6-24d8f69582a4  Incoming request POST /api/user/register. 
- [2026-01-04 21:19:20 INF] 1e84bb2a-2a0d-47b6-81e6-24d8f69582a4 UserService.Application.UseCases.RegisterUserUseCase.RegisterUserService Registering user with 'Hamed.Damaavandi@GMAIL.com' email address… 
- [2026-01-04 21:19:35 INF] 1e84bb2a-2a0d-47b6-81e6-24d8f69582a4 UserService.Application.UseCases.RegisterUserUseCase.RegisterUserService User successfully registered with '8fb6f3ba622143f99cd99250c6151d99' identity. 
- [2026-01-04 21:19:35 INF] 1e84bb2a-2a0d-47b6-81e6-24d8f69582a4  Completed request POST /api/user/register with status code 200. 
- [2026-01-04 21:21:45 INF] 20180296-c43a-4f9a-b92d-4b72175c1599  Incoming request POST /api/user/login. 
- [2026-01-04 21:21:45 INF] 20180296-c43a-4f9a-b92d-4b72175c1599 UserService.Application.UseCases.LoginUserUseCase.LoginUserService Loginning user with 'Hamed.Damaavandi@gmail.com' identity… 
- [2026-01-04 21:21:46 INF] 20180296-c43a-4f9a-b92d-4b72175c1599 UserService.Application.UseCases.LoginUserUseCase.LoginUserService User successfully logged in with '8fb6f3ba622143f99cd99250c6151d99' identity. 
- [2026-01-04 21:21:46 INF] 20180296-c43a-4f9a-b92d-4b72175c1599  Completed request POST /api/user/login with status code 200. 
- [2026-01-04 21:22:17 INF] 76d09e6d-0b62-422c-b436-7555ed0770f4  Incoming request POST /api/user/login. 
- [2026-01-04 21:22:17 INF] 76d09e6d-0b62-422c-b436-7555ed0770f4 UserService.Application.UseCases.LoginUserUseCase.LoginUserService Loginning user with 'Hamed.Damaavandi@gmail.com' identity… 
- [2026-01-04 21:22:18 INF] 76d09e6d-0b62-422c-b436-7555ed0770f4 UserService.Application.UseCases.LoginUserUseCase.LoginUserService User successfully logged in with '8fb6f3ba622143f99cd99250c6151d99' identity. 
- [2026-01-04 21:22:18 INF] 76d09e6d-0b62-422c-b436-7555ed0770f4  Completed request POST /api/user/login with status code 200. 
- [2026-01-04 21:22:18 INF] b9c5c2b1-0db5-4def-b97f-ca42367ecdce  Incoming request POST /api/user/login. 
- [2026-01-04 21:22:18 INF] b9c5c2b1-0db5-4def-b97f-ca42367ecdce UserService.Application.UseCases.LoginUserUseCase.LoginUserService Loginning user with 'Hamed.Damaavandi@gmail.com' identity… 
- [2026-01-04 21:22:19 INF] b9c5c2b1-0db5-4def-b97f-ca42367ecdce UserService.Application.UseCases.LoginUserUseCase.LoginUserService User successfully logged in with '8fb6f3ba622143f99cd99250c6151d99' identity. 
- [2026-01-04 21:22:19 INF] b9c5c2b1-0db5-4def-b97f-ca42367ecdce  Completed request POST /api/user/login with status code 200. 
- [2026-01-04 21:22:19 INF] 1fe0baa6-9bed-4b79-8aca-f6e01e0d4887  Incoming request POST /api/user/login. 
- [2026-01-04 21:22:19 INF] 1fe0baa6-9bed-4b79-8aca-f6e01e0d4887 UserService.Application.UseCases.LoginUserUseCase.LoginUserService Loginning user with 'Hamed.Damaavandi@gmail.com' identity… 
- [2026-01-04 21:22:19 INF] 1fe0baa6-9bed-4b79-8aca-f6e01e0d4887 UserService.Application.UseCases.LoginUserUseCase.LoginUserService User successfully logged in with '8fb6f3ba622143f99cd99250c6151d99' identity. 
- [2026-01-04 21:22:19 INF] 1fe0baa6-9bed-4b79-8aca-f6e01e0d4887  Completed request POST /api/user/login with status code 200. 
- [2026-01-04 21:22:28 INF] 14106faf-b4ef-40ff-b124-42096e07b4e7  Incoming request POST /api/user/login. 
- [2026-01-04 21:22:28 INF] 14106faf-b4ef-40ff-b124-42096e07b4e7 UserService.Application.UseCases.LoginUserUseCase.LoginUserService Loginning user with 'Hamed.Damaavandi@gmail.com' identity… 
- [2026-01-04 21:22:28 INF] 14106faf-b4ef-40ff-b124-42096e07b4e7 UserService.Application.UseCases.LoginUserUseCase.LoginUserService User successfully logged in with '8fb6f3ba622143f99cd99250c6151d99' identity. 
- [2026-01-04 21:22:28 INF] 14106faf-b4ef-40ff-b124-42096e07b4e7  Completed request POST /api/user/login with status code 200. 
- [2026-01-04 21:22:42 INF] 302fac73-d73e-499f-a5d4-1491c19b205c  Incoming request POST /api/user/login. 
- [2026-01-04 21:22:42 INF] 302fac73-d73e-499f-a5d4-1491c19b205c UserService.Application.UseCases.LoginUserUseCase.LoginUserService Loginning user with 'Hamed.Damaavandi@gmail.com' identity… 
- [2026-01-04 21:22:43 INF] 302fac73-d73e-499f-a5d4-1491c19b205c UserService.Application.UseCases.LoginUserUseCase.LoginUserService User successfully logged in with '8fb6f3ba622143f99cd99250c6151d99' identity. 
- [2026-01-04 21:22:43 INF] 302fac73-d73e-499f-a5d4-1491c19b205c  Completed request POST /api/user/login with status code 200. 
- [2026-01-04 21:23:06 INF] 7e643929-1cb4-4036-938c-e29a7f56756f  Incoming request POST /api/user/login. 
- [2026-01-04 21:23:06 INF] 7e643929-1cb4-4036-938c-e29a7f56756f UserService.Application.UseCases.LoginUserUseCase.LoginUserService Loginning user with 'Hamed.Damaavandi@gmail.com' identity… 
- [2026-01-04 21:23:06 INF] 7e643929-1cb4-4036-938c-e29a7f56756f UserService.Application.UseCases.LoginUserUseCase.LoginUserService User successfully logged in with '8fb6f3ba622143f99cd99250c6151d99' identity. 
- [2026-01-04 21:23:06 INF] 7e643929-1cb4-4036-938c-e29a7f56756f  Completed request POST /api/user/login with status code 200. 
- [2026-01-04 21:24:00 INF] 72e52dad-5258-4e92-94ba-fc8574cf0c73  Incoming request POST /api/user/login. 
- [2026-01-04 21:24:00 INF] 72e52dad-5258-4e92-94ba-fc8574cf0c73 UserService.Application.UseCases.LoginUserUseCase.LoginUserService Loginning user with 'Hamed.Damaavandi@gmail.com' identity… 
- [2026-01-04 21:24:01 INF] 72e52dad-5258-4e92-94ba-fc8574cf0c73 UserService.Application.UseCases.LoginUserUseCase.LoginUserService User successfully logged in with '8fb6f3ba622143f99cd99250c6151d99' identity. 
- [2026-01-04 21:24:01 INF] 72e52dad-5258-4e92-94ba-fc8574cf0c73  Completed request POST /api/user/login with status code 200. 
- [2026-01-04 21:25:08 INF] cb5000f6-a6a3-464b-b00e-6d08450db3f6  Incoming request POST /api/user/login. 
- [2026-01-04 21:25:08 INF] cb5000f6-a6a3-464b-b00e-6d08450db3f6 UserService.Application.UseCases.LoginUserUseCase.LoginUserService Loginning user with 'Hamed.Damaavandi@gmail.com' identity… 
- [2026-01-04 21:25:08 INF] cb5000f6-a6a3-464b-b00e-6d08450db3f6 UserService.Application.UseCases.LoginUserUseCase.LoginUserService User successfully logged in with '8fb6f3ba622143f99cd99250c6151d99' identity. 
- [2026-01-04 21:25:08 INF] cb5000f6-a6a3-464b-b00e-6d08450db3f6  Completed request POST /api/user/login with status code 200. 
- [2026-01-04 21:25:25 INF] a135a6dc-a740-43f2-b0ba-0d7ef5309a4f  Incoming request POST /api/user/login. 
- [2026-01-04 21:25:25 INF] a135a6dc-a740-43f2-b0ba-0d7ef5309a4f UserService.Application.UseCases.LoginUserUseCase.LoginUserService Loginning user with 'Hamed.Damaavandi@gmail.com' identity… 
- [2026-01-04 21:25:25 INF] a135a6dc-a740-43f2-b0ba-0d7ef5309a4f UserService.Application.UseCases.LoginUserUseCase.LoginUserService User successfully logged in with '8fb6f3ba622143f99cd99250c6151d99' identity. 
- [2026-01-04 21:25:25 INF] a135a6dc-a740-43f2-b0ba-0d7ef5309a4f  Completed request POST /api/user/login with status code 200. 
- [2026-01-04 21:25:26 INF] ab6b060e-4e1d-4bd7-b702-685b7b2854b4  Incoming request POST /api/user/login. 
- [2026-01-04 21:25:26 INF] ab6b060e-4e1d-4bd7-b702-685b7b2854b4 UserService.Application.UseCases.LoginUserUseCase.LoginUserService Loginning user with 'Hamed.Damaavandi@gmail.com' identity… 
- [2026-01-04 21:25:26 INF] ab6b060e-4e1d-4bd7-b702-685b7b2854b4 UserService.Application.UseCases.LoginUserUseCase.LoginUserService User successfully logged in with '8fb6f3ba622143f99cd99250c6151d99' identity. 
- [2026-01-04 21:25:26 INF] ab6b060e-4e1d-4bd7-b702-685b7b2854b4  Completed request POST /api/user/login with status code 200. 
- [2026-01-04 21:25:27 INF] f4e52f58-6fee-496a-91a4-1e7b0c05dbab  Incoming request POST /api/user/login. 
- [2026-01-04 21:25:27 INF] f4e52f58-6fee-496a-91a4-1e7b0c05dbab UserService.Application.UseCases.LoginUserUseCase.LoginUserService Loginning user with 'Hamed.Damaavandi@gmail.com' identity… 
- [2026-01-04 21:25:27 INF] f4e52f58-6fee-496a-91a4-1e7b0c05dbab UserService.Application.UseCases.LoginUserUseCase.LoginUserService User successfully logged in with '8fb6f3ba622143f99cd99250c6151d99' identity. 
- [2026-01-04 21:25:27 INF] f4e52f58-6fee-496a-91a4-1e7b0c05dbab  Completed request POST /api/user/login with status code 200. 
- [2026-01-04 21:25:28 INF] 15d9f2fc-3433-4e34-9319-e359b4eb5439  Incoming request POST /api/user/login. 
- [2026-01-04 21:25:28 INF] 15d9f2fc-3433-4e34-9319-e359b4eb5439 UserService.Application.UseCases.LoginUserUseCase.LoginUserService Loginning user with 'Hamed.Damaavandi@gmail.com' identity… 
- [2026-01-04 21:25:28 INF] 15d9f2fc-3433-4e34-9319-e359b4eb5439 UserService.Application.UseCases.LoginUserUseCase.LoginUserService User successfully logged in with '8fb6f3ba622143f99cd99250c6151d99' identity. 
- [2026-01-04 21:25:28 INF] 15d9f2fc-3433-4e34-9319-e359b4eb5439  Completed request POST /api/user/login with status code 200. 
- [2026-01-04 21:25:40 INF] 740272d0-6055-4f15-b0b9-70caba83f700  Incoming request POST /api/user/login. 
- [2026-01-04 21:25:40 INF] 740272d0-6055-4f15-b0b9-70caba83f700 UserService.Application.UseCases.LoginUserUseCase.LoginUserService Loginning user with 'Hamed.Damaavandi@gmail.com' identity… 
- [2026-01-04 21:25:40 INF] 740272d0-6055-4f15-b0b9-70caba83f700 UserService.Application.UseCases.LoginUserUseCase.LoginUserService User successfully logged in with '8fb6f3ba622143f99cd99250c6151d99' identity. 
- [2026-01-04 21:25:40 INF] 740272d0-6055-4f15-b0b9-70caba83f700  Completed request POST /api/user/login with status code 200. 
+[2026-01-04 23:21:19 INF] e79d639d-66c3-45c3-b11f-203942098701  Incoming request GET /api/user/normal. 
+ [2026-01-04 23:21:19 INF] e79d639d-66c3-45c3-b11f-203942098701  Completed request GET /api/user/normal with status code 200. 
+ [2026-01-04 23:21:30 INF] 0e57c4bb-586a-4750-9e65-bc464154b844  Incoming request GET /api/user/profile. 
+ [2026-01-04 23:21:30 INF] 0e57c4bb-586a-4750-9e65-bc464154b844  Completed request GET /api/user/profile with status code 401. 
+ [2026-01-04 23:22:21 INF] ea1b9988-609a-4eb4-822e-06503417dd9b  Incoming request GET /api/user/profile. 
+ [2026-01-04 23:22:48 INF] ea1b9988-609a-4eb4-822e-06503417dd9b  Completed request GET /api/user/profile with status code 401. 
+ [2026-01-04 23:25:05 INF] 84ad8595-26c2-43de-930e-8eb5c44ecf8e  Incoming request POST /api/user/login. 
+ [2026-01-04 23:25:11 INF] 84ad8595-26c2-43de-930e-8eb5c44ecf8e  Completed request POST /api/user/login with status code 415. 
+ [2026-01-04 23:25:25 INF] fa98aaf2-a41b-469d-9855-3d5b337ed2cf  Incoming request POST /api/user/login. 
+ [2026-01-04 23:25:25 INF] fa98aaf2-a41b-469d-9855-3d5b337ed2cf  Completed request POST /api/user/login with status code 415. 
+ [2026-01-04 23:25:39 INF] 989c44be-6fb6-4c82-a89f-73b55296b04f  Incoming request POST /api/user/login. 
+ [2026-01-04 23:25:40 INF] 989c44be-6fb6-4c82-a89f-73b55296b04f UserService.Application.UseCases.LoginUserUseCase.LoginUserService Loginning user with 'Hamed.damavandi@gmail.COM' identity… 
+ [2026-01-04 23:25:44 WRN] 989c44be-6fb6-4c82-a89f-73b55296b04f UserService.Application.UseCases.LoginUserUseCase.LoginUserService Login failed: identity or password is incorrect! 
+ [2026-01-04 23:25:44 INF] 989c44be-6fb6-4c82-a89f-73b55296b04f  Completed request POST /api/user/login with status code 400. 
+ [2026-01-04 23:26:06 INF] 9836be87-5410-42ce-bb98-3544e0f70348  Incoming request GET /swagger/index.html. 
+ [2026-01-04 23:26:06 INF] 9836be87-5410-42ce-bb98-3544e0f70348  Completed request GET /swagger/index.html with status code 200. 
+ [2026-01-04 23:26:06 INF] 92ebd3e8-ddf5-4839-af00-c972de4e4cae  Incoming request GET /swagger/favicon-32x32.png. 
+ [2026-01-04 23:26:06 INF] 92ebd3e8-ddf5-4839-af00-c972de4e4cae  Completed request GET /swagger/favicon-32x32.png with status code 200. 
+ [2026-01-04 23:26:06 INF] f2441a50-25d6-4965-ad04-2d432514c46f  Incoming request GET /swagger/v1/swagger.json. 
+ [2026-01-04 23:26:06 INF] f2441a50-25d6-4965-ad04-2d432514c46f  Completed request GET /swagger/v1/swagger.json with status code 200. 
+ [2026-01-04 23:26:47 INF] f4ed2ef5-2273-44cb-9eac-56c692a3b11a  Incoming request POST /api/user/login. 
+ [2026-01-04 23:26:47 INF] f4ed2ef5-2273-44cb-9eac-56c692a3b11a UserService.Application.UseCases.LoginUserUseCase.LoginUserService Loginning user with 'Hamed.damavandi@gmail.COM' identity… 
+ [2026-01-04 23:26:48 WRN] f4ed2ef5-2273-44cb-9eac-56c692a3b11a UserService.Application.UseCases.LoginUserUseCase.LoginUserService Login failed: identity or password is incorrect! 
+ [2026-01-04 23:26:48 INF] f4ed2ef5-2273-44cb-9eac-56c692a3b11a  Completed request POST /api/user/login with status code 400. 
+ [2026-01-04 23:26:57 INF] 96313c74-e8ec-44bc-853c-88654f3bb94f  Incoming request POST /api/user/login. 
+ [2026-01-04 23:26:57 INF] 96313c74-e8ec-44bc-853c-88654f3bb94f UserService.Application.UseCases.LoginUserUseCase.LoginUserService Loginning user with 'Hamed.damavandi@gmail.COM' identity… 
+ [2026-01-04 23:26:58 WRN] 96313c74-e8ec-44bc-853c-88654f3bb94f UserService.Application.UseCases.LoginUserUseCase.LoginUserService Login failed: identity or password is incorrect! 
+ [2026-01-04 23:26:58 INF] 96313c74-e8ec-44bc-853c-88654f3bb94f  Completed request POST /api/user/login with status code 400. 
+ [2026-01-04 23:27:13 INF] 9e9535c3-be84-42ec-a6fa-146b9b921e31  Incoming request POST /api/user/login. 
+ [2026-01-04 23:27:13 INF] 9e9535c3-be84-42ec-a6fa-146b9b921e31 UserService.Application.UseCases.LoginUserUseCase.LoginUserService Loginning user with 'hamed.damavandi@gmail.com' identity… 
+ [2026-01-04 23:27:14 WRN] 9e9535c3-be84-42ec-a6fa-146b9b921e31 UserService.Application.UseCases.LoginUserUseCase.LoginUserService Login failed: identity or password is incorrect! 
+ [2026-01-04 23:27:14 INF] 9e9535c3-be84-42ec-a6fa-146b9b921e31  Completed request POST /api/user/login with status code 400. 
+ [2026-01-04 23:27:50 INF] 11f71c48-8584-4a9f-82ed-e439b4867778  Incoming request POST /api/user/login. 
+ [2026-01-04 23:27:50 INF] 11f71c48-8584-4a9f-82ed-e439b4867778 UserService.Application.UseCases.LoginUserUseCase.LoginUserService Loginning user with 'Hamed.Damaavandi@gmail.com' identity… 
+ [2026-01-04 23:27:57 INF] 11f71c48-8584-4a9f-82ed-e439b4867778 UserService.Application.UseCases.LoginUserUseCase.LoginUserService User successfully logged in with '8fb6f3ba622143f99cd99250c6151d99' identity. 
+ [2026-01-04 23:27:57 INF] 11f71c48-8584-4a9f-82ed-e439b4867778  Completed request POST /api/user/login with status code 200. 
+ [2026-01-04 23:30:54 INF] 9c27b217-8123-4c5b-b693-65866c51f464  Incoming request POST /api/user/login. 
+ [2026-01-04 23:30:54 INF] 9c27b217-8123-4c5b-b693-65866c51f464 UserService.Application.UseCases.LoginUserUseCase.LoginUserService Loginning user with 'Hamed.Damaavandi@gmail.com' identity… 
+ [2026-01-04 23:30:57 INF] 9c27b217-8123-4c5b-b693-65866c51f464 UserService.Application.UseCases.LoginUserUseCase.LoginUserService User successfully logged in with '8fb6f3ba622143f99cd99250c6151d99' identity. 
+ [2026-01-04 23:30:57 INF] 9c27b217-8123-4c5b-b693-65866c51f464  Completed request POST /api/user/login with status code 200. 
+ [2026-01-04 23:31:05 INF] df983076-c110-4715-9391-f225938015ee  Incoming request POST /api/user/login. 
+ [2026-01-04 23:31:05 INF] df983076-c110-4715-9391-f225938015ee UserService.Application.UseCases.LoginUserUseCase.LoginUserService Loginning user with 'hamed.Damaavandi@gmail.com' identity… 
+ [2026-01-04 23:31:06 INF] df983076-c110-4715-9391-f225938015ee UserService.Application.UseCases.LoginUserUseCase.LoginUserService User successfully logged in with '8fb6f3ba622143f99cd99250c6151d99' identity. 
+ [2026-01-04 23:31:06 INF] df983076-c110-4715-9391-f225938015ee  Completed request POST /api/user/login with status code 200. 
+ [2026-01-04 23:31:16 INF] 07418457-f675-4e91-af26-17da96f425af  Incoming request POST /api/user/login. 
+ [2026-01-04 23:31:16 INF] 07418457-f675-4e91-af26-17da96f425af UserService.Application.UseCases.LoginUserUseCase.LoginUserService Loginning user with 'hamed.damaavandi@gmail.com' identity… 
+ [2026-01-04 23:31:16 INF] 07418457-f675-4e91-af26-17da96f425af UserService.Application.UseCases.LoginUserUseCase.LoginUserService User successfully logged in with '8fb6f3ba622143f99cd99250c6151d99' identity. 
+ [2026-01-04 23:31:16 INF] 07418457-f675-4e91-af26-17da96f425af  Completed request POST /api/user/login with status code 200. 
+ [2026-01-04 23:31:30 INF] 783a3c10-f132-4798-a577-194dd7b36139  Incoming request POST /api/user/login. 
+ [2026-01-04 23:31:30 INF] 783a3c10-f132-4798-a577-194dd7b36139 UserService.Application.UseCases.LoginUserUseCase.LoginUserService Loginning user with 'hamed.damaavandi@gmail.com' identity… 
+ [2026-01-04 23:31:30 INF] 783a3c10-f132-4798-a577-194dd7b36139 UserService.Application.UseCases.LoginUserUseCase.LoginUserService User successfully logged in with '8fb6f3ba622143f99cd99250c6151d99' identity. 
+ [2026-01-04 23:31:30 INF] 783a3c10-f132-4798-a577-194dd7b36139  Completed request POST /api/user/login with status code 200. 
+ [2026-01-04 23:32:23 INF] 77007f00-b54c-45b2-97a4-72ef186a7833  Incoming request POST /api/user/login. 
+ [2026-01-04 23:32:23 INF] 77007f00-b54c-45b2-97a4-72ef186a7833 UserService.Application.UseCases.LoginUserUseCase.LoginUserService Loginning user with 'hamed.damaavandi@gmail.Com' identity… 
+ [2026-01-04 23:32:24 INF] 77007f00-b54c-45b2-97a4-72ef186a7833 UserService.Application.UseCases.LoginUserUseCase.LoginUserService User successfully logged in with '8fb6f3ba622143f99cd99250c6151d99' identity. 
+ [2026-01-04 23:32:24 INF] 77007f00-b54c-45b2-97a4-72ef186a7833  Completed request POST /api/user/login with status code 200. 
  

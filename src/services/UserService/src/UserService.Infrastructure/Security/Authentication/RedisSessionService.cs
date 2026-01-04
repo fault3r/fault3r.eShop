@@ -83,29 +83,6 @@ public sealed class RedisSessionService(
             throw new RedisTransactionFailedException();
     }
 
-    public async Task UpdateAsync(
-        SessionData session,
-        CancellationToken ct = default)
-    {
-        ArgumentNullException.ThrowIfNull(session);
-
-        var payload = JsonSerializer.Serialize(session, jsonSerializerOptions);
-
-        var expiry = session.RefreshTokenExpiresAt - DateTimeOffset.UtcNow;
-        if (expiry <= TimeSpan.Zero) expiry = TimeSpan.FromMinutes(1);
-
-        var sessionKey = GetSessionKey(session.SessionId);
-        var userSessionsKey = GetUserSessionsKey(session.UserId);
-
-        var transaction = _database.CreateTransaction();
-
-        _ = transaction.StringSetAsync(sessionKey, payload, expiry);
-        _ = transaction.KeyExpireAsync(userSessionsKey, expiry);
-
-        if (!await transaction.ExecuteAsync())
-            throw new RedisTransactionFailedException();
-    }
-
     public async Task<SessionData?> GetAsync(
         string sessionId,
         CancellationToken ct = default)
@@ -132,6 +109,29 @@ public sealed class RedisSessionService(
         return await _database.KeyExistsAsync(key);
     }
 
+    public async Task UpdateAsync(
+        SessionData session,
+        CancellationToken ct = default)
+    {
+        ArgumentNullException.ThrowIfNull(session);
+
+        var payload = JsonSerializer.Serialize(session, jsonSerializerOptions);
+
+        var expiry = session.RefreshTokenExpiresAt - DateTimeOffset.UtcNow;
+        if (expiry <= TimeSpan.Zero) expiry = TimeSpan.FromMinutes(1);
+
+        var sessionKey = GetSessionKey(session.SessionId);
+        var userSessionsKey = GetUserSessionsKey(session.UserId);
+
+        var transaction = _database.CreateTransaction();
+
+        _ = transaction.StringSetAsync(sessionKey, payload, expiry);
+        _ = transaction.KeyExpireAsync(userSessionsKey, expiry);
+
+        if (!await transaction.ExecuteAsync())
+            throw new RedisTransactionFailedException();
+    }
+    
     public async Task InvalidateAsync(
         string sessionId,
         CancellationToken ct = default)

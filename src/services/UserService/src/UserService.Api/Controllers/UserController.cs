@@ -88,4 +88,12 @@ public sealed class UserController(IMediator mediator) : ControllerBase
     {
         return Ok("Welcome, User!");
     }
+
+    [AllowAnonymous]
+    [HttpGet]
+    [Route("normal")]
+    public async Task<IActionResult> NormalAsync()
+    {
+        return Ok("Normal Page!");
+    }
 }

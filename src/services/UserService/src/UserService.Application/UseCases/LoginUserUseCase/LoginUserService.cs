@@ -66,7 +66,7 @@ public sealed class LoginUserService(
 
         await _sessionService.CreateAsync(session, ct);
 
-        var accessToken = await  _tokenService.GenerateAccessTokenAsync(sessionId, user.Id);
+        var accessToken = await  _tokenService.GenerateAsync(sessionId, user.Id);
 
         _logger.LogInformation("User successfully logged in with '{Id}' identity.", user.Id.ToString());
 

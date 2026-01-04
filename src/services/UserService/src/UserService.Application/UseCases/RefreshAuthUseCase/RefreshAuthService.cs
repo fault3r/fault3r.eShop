@@ -13,10 +13,10 @@ public sealed class RefreshAuthService(
     ILogger<RefreshAuthService> logger
 ) : IRefreshAuthService
 {
-    private const int SessionLifetimeDays = 3;
     private readonly ITokenService _tokenService = tokenService;
     private readonly ISessionService _sessionService = sessionService;
     private readonly ILogger<RefreshAuthService> _logger = logger;
+    private const int SessionLifetimeDays = 3;
 
     public async Task<Result<RefreshAuthResult>> ExecuteAsync(
         string accessToken,
@@ -71,7 +71,7 @@ public sealed class RefreshAuthService(
 
         await _sessionService.UpdateAsync(session, ct);
 
-        var newAccessToken = await _tokenService.GenerateAccessTokenAsync(sessionId, userId);
+        var newAccessToken = await _tokenService.GenerateAsync(sessionId, userId);
 
         _logger.LogInformation( "User authentication successfully refreshed for user '{UserId}', session '{SessionId}'.", userId, sessionId );
 
