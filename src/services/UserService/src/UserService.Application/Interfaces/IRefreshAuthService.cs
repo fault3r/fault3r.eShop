@@ -8,8 +8,8 @@ namespace UserService.Application.Interfaces;
 public interface IRefreshAuthService
 {
     Task<Result<RefreshAuthResult>> ExecuteAsync(
-        string expiredAccessToken,
-        string providedRefreshToken,
+        string accessToken,
+        string refreshToken,
         CancellationToken ct = default
     );
 }

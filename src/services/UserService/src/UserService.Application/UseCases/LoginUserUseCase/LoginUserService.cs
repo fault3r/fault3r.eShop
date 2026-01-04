@@ -63,7 +63,7 @@ public sealed class LoginUserService(
             Status = user.Status,
         };
 
-        await _sessionService.CreateSessionAsync(session, ct);
+        await _sessionService.CreateAsync(session, ct);
 
         var accessToken = await  _tokenService.GenerateAccessTokenAsync(sessionId, user.Id);
 

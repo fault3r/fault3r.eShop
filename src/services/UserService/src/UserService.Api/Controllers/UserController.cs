@@ -69,8 +69,8 @@ public sealed class UserController(IMediator mediator) : ControllerBase
         ArgumentNullException.ThrowIfNull(request);
 
         var command = new RefreshAuthCommand(
-            AccessToken: request.ExpiredAccessToken,
-            RefreshToken: request.ProvidedRefreshToken
+            AccessToken: request.AccessToken,
+            RefreshToken: request.RefreshToken
         );
 
         var result = await _mediator.Send(command);

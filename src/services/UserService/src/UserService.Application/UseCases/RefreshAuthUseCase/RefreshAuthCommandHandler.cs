@@ -36,8 +36,8 @@ public sealed class RefreshAuthCommandHandler(
         }
 
         var result = await _authService.ExecuteAsync(
-            expiredAccessToken: request.AccessToken,
-            providedRefreshToken: request.RefreshToken,
+            accessToken: request.AccessToken,
+            refreshToken: request.RefreshToken,
             ct: ct
         );
 

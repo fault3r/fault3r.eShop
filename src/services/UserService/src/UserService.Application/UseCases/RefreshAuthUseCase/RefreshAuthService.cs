@@ -18,14 +18,14 @@ public sealed class RefreshAuthService(
     private readonly ILogger<RefreshAuthService> _logger = logger;
 
     public async Task<Result<RefreshAuthResult>> ExecuteAsync(
-        string expiredAccessToken,
-        string providedRefreshToken,
+        string accessToken,
+        string refreshToken,
         CancellationToken ct = default)
     {
-        ArgumentException.ThrowIfNullOrWhiteSpace(expiredAccessToken);
-        ArgumentException.ThrowIfNullOrWhiteSpace(providedRefreshToken);
+        ArgumentException.ThrowIfNullOrWhiteSpace(accessToken);
+        ArgumentException.ThrowIfNullOrWhiteSpace(refreshToken);
 
-        var principal = await _tokenService.ReadClaimsAsync(expiredAccessToken);
+        var principal = await _tokenService.ReadClaimsAsync(accessToken);
         if (principal is null)
         {
             _logger.LogWarning("RefreshAuth failed: invalid access token!");
@@ -43,19 +43,19 @@ public sealed class RefreshAuthService(
             return Result<RefreshAuthResult>.Failure("Invalid token claims!");
         }
 
-        var session = await _sessionService.GetSessionAsync(sessionId, ct);
+        var session = await _sessionService.GetAsync(sessionId, ct);
         if (session is null)
         {
             _logger.LogInformation("RefreshAuth failed: session expired or invalidated for user '{UserId}', session '{SessionId}'", userId, sessionId);
             return Result<RefreshAuthResult>.Failure("Session expired or invalidated!");
         }
 
-        var valid = CryptRefreshToken.Verify(providedRefreshToken, session.RefreshTokenHash);
+        var valid = CryptRefreshToken.Verify(refreshToken, session.RefreshTokenHash);
         if (!valid)
         {
             _logger.LogWarning("RefreshAuth failed: refresh token mismatch for user '{UserId}', session '{SessionId}'. Invalidating all sessions.", userId, sessionId);
 
-            await _sessionService.InvalidateAllUserSessionsAsync(userId, ct);
+            await _sessionService.InvalidateAllAsync(userId, ct);
 
             return Result<RefreshAuthResult>.Failure("Invalid refresh token!");
         }
@@ -68,7 +68,7 @@ public sealed class RefreshAuthService(
         session.RefreshTokenExpiresAt = now.AddDays(3);
         session.LastAccessedAt = now;
 
-        await _sessionService.UpdateSessionAsync(session, ct);
+        await _sessionService.UpdateAsync(session, ct);
 
         var newAccessToken = await _tokenService.GenerateAccessTokenAsync(sessionId, userId);
 

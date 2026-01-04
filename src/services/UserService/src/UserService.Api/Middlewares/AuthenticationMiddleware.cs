@@ -46,7 +46,7 @@ public class AuthenticationMiddleware(
             return;
         }
 
-        var exists = await _sessionService.SessionExistAsync(sessionId);
+        var exists = await _sessionService.ExistAsync(sessionId);
         if (!exists)
         {
             context.Response.StatusCode = StatusCodes.Status401Unauthorized;

@@ -36,12 +36,15 @@ builder.Services.AddSwaggerGen();
 
 var app = builder.Build();
 
+app.UseCrossCuttingMiddleware(settings.CorrelationHeader);
+
+app.UseExceptionHandlingMiddleware(settings.CorrelationHeader);
+
 app.UseAuthentication();
 app.UseAuthenticationMiddleware(); 
 app.UseAuthorization();
 
-app.UseCrossCuttingMiddleware(settings.CorrelationHeader);
-app.UseExceptionHandlingMiddleware(settings.CorrelationHeader);
+
 
 if (app.Environment.IsDevelopment())
 {
