@@ -11,7 +11,7 @@ public sealed class RedisSettings
     public required string SessionKey { get; init; }
     public required string UserSessionsKey { get; init; }
 
-    
+    public required int MaxSessionsPerUser { get; init; }
 
     public string ToConnectionString()
         => $"{Host}:{Port}";

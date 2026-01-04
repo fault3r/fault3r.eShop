@@ -17,8 +17,6 @@ public sealed class RedisSessionService(
     private readonly IDatabase _database = connectionMultiplexer.GetDatabase();
     private readonly RedisSettings _settings = settings;
 
-    private const int MaxSessionsPerUser = 5;
-
     public async Task CreateAsync(
         SessionData session,
         CancellationToken ct = default)
@@ -27,7 +25,7 @@ public sealed class RedisSessionService(
 
         await EnforceSessionLimitAsync(session.UserId, ct);
 
-        var payload = JsonSerializer.Serialize(session, jsonOptions);
+        var payload = JsonSerializer.Serialize(session, jsonSerializerOptions);
 
         var expiry = session.RefreshTokenExpiresAt - DateTimeOffset.UtcNow;
         if (expiry <= TimeSpan.Zero) expiry = TimeSpan.FromMinutes(1);
@@ -51,34 +49,33 @@ public sealed class RedisSessionService(
 
         var sessionIds = await _database.SetMembersAsync(userSessionsKey);
 
-        if (sessionIds.Length < MaxSessionsPerUser)
+        if (sessionIds.Length < _settings.MaxSessionsPerUser)
             return;
 
         var sessions = new List<(string SessionId, SessionData Data)>();
-
         foreach (var id in sessionIds)
         {
-            var sessionKey = GetSessionKey(id!);
-            var payload = await _database.StringGetAsync(sessionKey);
+            var key = GetSessionKey(id!);
+            var payload = await _database.StringGetAsync(key);
 
             if (payload.IsNullOrEmpty)
                 continue;
 
-            var data = JsonSerializer.Deserialize<SessionData>(payload!, jsonOptions);
-            if (data != null)
-                sessions.Add((id!, data));
+            var session = JsonSerializer.Deserialize<SessionData>(payload!, jsonSerializerOptions);
+            if (session != null)
+                sessions.Add((id!, session));
         }
 
-        if (sessions.Count < MaxSessionsPerUser)
+        if (sessions.Count < _settings.MaxSessionsPerUser)
             return;
 
         var (SessionId, Data) = sessions
             .OrderBy(s => s.Data.LastAccessedAt)
             .First();
-
         var oldestSessionKey = GetSessionKey(SessionId);
 
         var transaction = _database.CreateTransaction();
+
         _ = transaction.KeyDeleteAsync(oldestSessionKey);
         _ = transaction.SetRemoveAsync(userSessionsKey, SessionId);
 
@@ -92,7 +89,7 @@ public sealed class RedisSessionService(
     {
         ArgumentNullException.ThrowIfNull(session);
 
-        var payload = JsonSerializer.Serialize(session, jsonOptions);
+        var payload = JsonSerializer.Serialize(session, jsonSerializerOptions);
 
         var expiry = session.RefreshTokenExpiresAt - DateTimeOffset.UtcNow;
         if (expiry <= TimeSpan.Zero) expiry = TimeSpan.FromMinutes(1);
@@ -121,7 +118,7 @@ public sealed class RedisSessionService(
 
         if (payload.IsNullOrEmpty) return null;
 
-        return JsonSerializer.Deserialize<SessionData>(payload!, jsonOptions)!;
+        return JsonSerializer.Deserialize<SessionData>(payload!, jsonSerializerOptions)!;
     }
 
     public async Task<bool> ExistAsync(
@@ -147,7 +144,7 @@ public sealed class RedisSessionService(
 
         if (payload.IsNullOrEmpty) return;
 
-        var session = JsonSerializer.Deserialize<SessionData>(payload!, jsonOptions);
+        var session = JsonSerializer.Deserialize<SessionData>(payload!, jsonSerializerOptions);
 
         var userSessionsKey = GetUserSessionsKey(session!.UserId);
 
@@ -177,10 +174,10 @@ public sealed class RedisSessionService(
 
         var transaction = _database.CreateTransaction();
 
-        foreach (var sessionId in sessionIds)
+        foreach (var id in sessionIds)
         {
-            var sessionKey = GetSessionKey(sessionId!);
-            _ = transaction.KeyDeleteAsync(sessionKey);
+            var key = GetSessionKey(id!);
+            _ = transaction.KeyDeleteAsync(key);
         }
 
         _ = transaction.KeyDeleteAsync(userSessionsKey);
@@ -195,7 +192,7 @@ public sealed class RedisSessionService(
     private string GetUserSessionsKey(string userId)
         => $"{_settings.UserSessionsKey}:{userId}";
 
-    private static readonly JsonSerializerOptions jsonOptions = new()
+    private static readonly JsonSerializerOptions jsonSerializerOptions = new()
     {
         WriteIndented = false,
         PropertyNamingPolicy = JsonNamingPolicy.CamelCase,

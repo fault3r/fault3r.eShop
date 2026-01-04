@@ -15,6 +15,7 @@ public sealed class LoginUserService(
     ILogger<LoginUserService> logger
 ) : ILoginUserService
 {
+    private const int SessionLifetimeDays = 3;
     private readonly IUserDomainService _userDomainService = userDomainService;
     private readonly ISessionService _sessionService = sessionService;
     private readonly ITokenService _tokenService = tokenService;
@@ -53,7 +54,7 @@ public sealed class LoginUserService(
             CreatedAt = now,
 
             RefreshTokenHash = refreshTokenHash,
-            RefreshTokenExpiresAt = now.AddDays(3),  
+            RefreshTokenExpiresAt = now.AddDays(SessionLifetimeDays),  
             LastAccessedAt = now,
 
             UserId = user.Id,

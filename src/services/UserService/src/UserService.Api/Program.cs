@@ -12,7 +12,7 @@ var settings = builder.Configuration
     .Get<AppSettings>()
         ?? throw new MissingAppSettingsException();
 
-// builder.WebHost.UseUrls(settings.Urls.Http, settings.Urls.Https);
+builder.WebHost.UseUrls(settings.Urls.Http);
 
 builder.Host.AddSerilogLogging();
 
@@ -43,8 +43,6 @@ app.UseExceptionHandlingMiddleware(settings.CorrelationHeader);
 app.UseAuthentication();
 app.UseAuthenticationMiddleware(); 
 app.UseAuthorization();
-
-
 
 if (app.Environment.IsDevelopment())
 {

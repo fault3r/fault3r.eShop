@@ -17,7 +17,7 @@ public static class FluentEmailExtensions
         this IServiceCollection services,
         IConfiguration configuration)
     {
-        var root = configuration[$"{nameof(AppSettings)}:ContentRoot"]
+        var root = configuration["ContentRoot"]
             ?? throw new MissingAppSettingsException();
 
         var settings = configuration

@@ -13,6 +13,7 @@ public sealed class RefreshAuthService(
     ILogger<RefreshAuthService> logger
 ) : IRefreshAuthService
 {
+    private const int SessionLifetimeDays = 3;
     private readonly ITokenService _tokenService = tokenService;
     private readonly ISessionService _sessionService = sessionService;
     private readonly ILogger<RefreshAuthService> _logger = logger;
@@ -65,7 +66,7 @@ public sealed class RefreshAuthService(
         var now = DateTimeOffset.UtcNow;
 
         session.RefreshTokenHash = newRefreshTokenHash;
-        session.RefreshTokenExpiresAt = now.AddDays(3);
+        session.RefreshTokenExpiresAt = now.AddDays(SessionLifetimeDays);
         session.LastAccessedAt = now;
 
         await _sessionService.UpdateAsync(session, ct);
