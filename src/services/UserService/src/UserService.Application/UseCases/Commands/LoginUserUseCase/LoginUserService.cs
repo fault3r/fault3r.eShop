@@ -6,7 +6,7 @@ using UserService.Application.Security.Authentication;
 using UserService.Domain.Common;
 using UserService.Domain.Interfaces;
 
-namespace UserService.Application.UseCases.LoginUserUseCase;
+namespace UserService.Application.UseCases.Commands.LoginUserUseCase;
 
 public sealed class LoginUserService(
     IUserDomainService userDomainService,
@@ -16,7 +16,7 @@ public sealed class LoginUserService(
 ) : ILoginUserService
 {
     private const int SessionLifetimeDays = 3;
-    private readonly IUserDomainService _userDomainService = userDomainService;
+    private readonly IUserDomainService _userService = userDomainService;
     private readonly ISessionService _sessionService = sessionService;
     private readonly ITokenService _tokenService = tokenService;
     private readonly ILogger<LoginUserService> _logger = logger;
@@ -31,10 +31,10 @@ public sealed class LoginUserService(
 
         _logger.LogInformation("Loginning user with '{Identity}' identity…", identity.Trim());
 
-        var user = await _userDomainService.VerifyCredentialAsync(identity, password, ct);
+        var user = await _userService.VerifyCredentialAsync(identity, password, ct);
         if (user is null)
         {
-            _logger.LogWarning("Login failed: identity or password is incorrect!");
+            _logger.LogWarning("Identity or password is incorrect!");
 
             return Result<LoginUserResult>.Failure("Identity or password is incorrect!");
         }
@@ -68,7 +68,8 @@ public sealed class LoginUserService(
 
         var accessToken = await  _tokenService.GenerateAsync(sessionId, user.Id);
 
-        _logger.LogInformation("User successfully logged in with '{Id}' identity.", user.Id.ToString());
+        _logger.LogInformation("User successfully logged in with '{Id}' identity, session '{SessionId}'",
+            user.Id.ToString(), sessionId);
 
         return Result<LoginUserResult>.Success(
             new LoginUserResult(accessToken, refreshToken));

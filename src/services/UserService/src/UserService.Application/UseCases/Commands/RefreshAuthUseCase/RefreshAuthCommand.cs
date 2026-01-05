@@ -3,7 +3,7 @@ using System;
 using MediatR;
 using UserService.Domain.Common;
 
-namespace UserService.Application.UseCases.RefreshAuthUseCase;
+namespace UserService.Application.UseCases.Commands.RefreshAuthUseCase;
 
 public sealed record RefreshAuthCommand(
     string AccessToken,

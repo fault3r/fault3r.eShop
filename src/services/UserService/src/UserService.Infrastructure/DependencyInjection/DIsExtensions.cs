@@ -5,9 +5,10 @@ using MediatR;
 using Microsoft.Extensions.DependencyInjection;
 using UserService.Application.Interfaces;
 using UserService.Application.Messaging;
-using UserService.Application.UseCases.LoginUserUseCase;
-using UserService.Application.UseCases.RefreshAuthUseCase;
-using UserService.Application.UseCases.RegisterUserUseCase;
+using UserService.Application.UseCases.Commands.LoginUserUseCase;
+using UserService.Application.UseCases.Commands.RefreshAuthUseCase;
+using UserService.Application.UseCases.Commands.RegisterUserUseCase;
+using UserService.Application.UseCases.Queries.UserProfileUseCase;
 using UserService.Domain.DomainServices;
 using UserService.Domain.Interfaces;
 using UserService.Domain.Messaging;
@@ -61,6 +62,10 @@ public static class DIsExtensions
         services.AddMediatR(typeof(RefreshAuthCommandHandler).Assembly);
         services.AddScoped<IRefreshAuthService, RefreshAuthService>();
         services.AddScoped<IValidator<RefreshAuthCommand>, RefreshAuthValidator>();
+
+        services.AddMediatR(typeof(UserProfileQueryHandler).Assembly);
+        services.AddScoped<IUserProfileService, UserProfileService>();
+        services.AddScoped<IValidator<UserProfileQuery>, UserProfileValidator>();
 
         return services;
     }

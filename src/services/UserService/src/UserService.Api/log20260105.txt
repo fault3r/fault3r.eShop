@@ -1,0 +1,13 @@
+[2026-01-05 22:51:48 INF] 41304d66-8afd-4022-bfda-536a5aad8aa9  Incoming request GET /swagger/index.html. 
+ [2026-01-05 22:51:48 INF] 41304d66-8afd-4022-bfda-536a5aad8aa9  Completed request GET /swagger/index.html with status code 200. 
+ [2026-01-05 22:51:48 INF] 6fd9b6a7-cd0c-4afe-8e9c-464b0e6512bc  Incoming request GET /swagger/swagger-ui.css. 
+ [2026-01-05 22:51:48 INF] 7dfdd34d-bc5a-484c-9dc3-e13f106ed657  Incoming request GET /swagger/swagger-ui-bundle.js. 
+ [2026-01-05 22:51:48 INF] 7dfdd34d-bc5a-484c-9dc3-e13f106ed657  Completed request GET /swagger/swagger-ui-bundle.js with status code 304. 
+ [2026-01-05 22:51:48 INF] 6fd9b6a7-cd0c-4afe-8e9c-464b0e6512bc  Completed request GET /swagger/swagger-ui.css with status code 200. 
+ [2026-01-05 22:51:48 INF] 146933a7-7d38-4a78-8a0b-25e228778464  Incoming request GET /swagger/swagger-ui-standalone-preset.js. 
+ [2026-01-05 22:51:48 INF] 146933a7-7d38-4a78-8a0b-25e228778464  Completed request GET /swagger/swagger-ui-standalone-preset.js with status code 304. 
+ [2026-01-05 22:51:49 INF] 3a9a96f6-fa00-4a6f-ad02-ba740a95cefa  Incoming request GET /swagger/favicon-32x32.png. 
+ [2026-01-05 22:51:49 INF] 3a9a96f6-fa00-4a6f-ad02-ba740a95cefa  Completed request GET /swagger/favicon-32x32.png with status code 200. 
+ [2026-01-05 22:51:49 INF] f0007585-7625-4b1f-93df-a103971576db  Incoming request GET /swagger/v1/swagger.json. 
+ [2026-01-05 22:51:50 INF] f0007585-7625-4b1f-93df-a103971576db  Completed request GET /swagger/v1/swagger.json with status code 200. 
+ 

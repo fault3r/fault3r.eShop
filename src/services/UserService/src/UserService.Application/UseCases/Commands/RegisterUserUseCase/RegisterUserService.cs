@@ -11,7 +11,7 @@ using Microsoft.Extensions.Logging;
 using UserService.Domain.Interfaces;
 using UserService.Domain.Security;
 
-namespace UserService.Application.UseCases.RegisterUserUseCase;
+namespace UserService.Application.UseCases.Commands.RegisterUserUseCase;
 
 public sealed class RegisterUserService(
     IUnitOfWork unitOfWork,
@@ -64,7 +64,7 @@ public sealed class RegisterUserService(
         var canCreate = await _userService.VerifyCanCreateAsync(voEmail, ct);
         if (!canCreate)
         {
-            _logger.LogWarning("Register failed: User with this email address already exists!");
+            _logger.LogWarning("User with this email address already exists!");
 
             return Result<RegisterUserResult>.Failure("User with this email address already exists!");
         }

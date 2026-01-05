@@ -1,7 +1,7 @@
 
 using System;
 
-namespace UserService.Application.UseCases.RegisterUserUseCase;
+namespace UserService.Application.UseCases.Commands.RegisterUserUseCase;
 
 public sealed record RegisterUserResult(
     string UserId,

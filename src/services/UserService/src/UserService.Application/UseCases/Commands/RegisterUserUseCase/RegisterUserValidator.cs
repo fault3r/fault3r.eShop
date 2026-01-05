@@ -2,7 +2,7 @@
 using System;
 using FluentValidation;
 
-namespace UserService.Application.UseCases.RegisterUserUseCase;
+namespace UserService.Application.UseCases.Commands.RegisterUserUseCase;
 
 public sealed class RegisterUserValidator : AbstractValidator<RegisterUserCommand>
 {

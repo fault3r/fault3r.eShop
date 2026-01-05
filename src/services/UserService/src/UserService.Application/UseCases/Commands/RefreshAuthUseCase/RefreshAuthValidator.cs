@@ -2,7 +2,7 @@
 using System;
 using FluentValidation;
 
-namespace UserService.Application.UseCases.RefreshAuthUseCase;
+namespace UserService.Application.UseCases.Commands.RefreshAuthUseCase;
 
 public sealed class RefreshAuthValidator : AbstractValidator<RefreshAuthCommand>
 {

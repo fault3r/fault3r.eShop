@@ -39,7 +39,7 @@ public static class RateLimiterExtensions
                 )
             );
 
-            config.AddFixedWindowLimiter("LoginRateLimit", options =>
+            config.AddFixedWindowLimiter("AuthRateLimit", options =>
             {
                 options.PermitLimit = settings.LoginRateLimit.PermitLimit;
                 options.Window = TimeSpan.FromMinutes(settings.LoginRateLimit.Window);

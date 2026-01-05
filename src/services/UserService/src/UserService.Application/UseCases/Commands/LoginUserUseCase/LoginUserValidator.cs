@@ -2,7 +2,7 @@
 using System;
 using FluentValidation;
 
-namespace UserService.Application.UseCases.LoginUserUseCase;
+namespace UserService.Application.UseCases.Commands.LoginUserUseCase;
 
 public sealed class LoginUserValidator : AbstractValidator<LoginUserCommand>
 {

@@ -5,7 +5,7 @@ using UserService.Application.Interfaces;
 using UserService.Application.Security.Authentication;
 using UserService.Domain.Common;
 
-namespace UserService.Application.UseCases.RefreshAuthUseCase;
+namespace UserService.Application.UseCases.Commands.RefreshAuthUseCase;
 
 public sealed class RefreshAuthService(
     ITokenService tokenService,
@@ -29,7 +29,7 @@ public sealed class RefreshAuthService(
         var principal = await _tokenService.ReadClaimsAsync(accessToken);
         if (principal is null)
         {
-            _logger.LogWarning("RefreshAuth failed: invalid access token!");
+            _logger.LogWarning("Invalid access token!");
 
             return Result<RefreshAuthResult>.Failure("Invalid access token!");
         }
@@ -39,7 +39,7 @@ public sealed class RefreshAuthService(
 
         if (string.IsNullOrWhiteSpace(userId) || string.IsNullOrWhiteSpace(sessionId))
         {
-            _logger.LogWarning("RefreshAuth failed: missing token claims (sub or jti)!");
+            _logger.LogWarning("Missing token claims (sub or jti)!");
 
             return Result<RefreshAuthResult>.Failure("Invalid token claims!");
         }
@@ -47,14 +47,14 @@ public sealed class RefreshAuthService(
         var session = await _sessionService.GetAsync(sessionId, ct);
         if (session is null)
         {
-            _logger.LogInformation("RefreshAuth failed: session expired or invalidated for user '{UserId}', session '{SessionId}'", userId, sessionId);
+            _logger.LogInformation("Session expired or invalidated for user '{UserId}', session '{SessionId}'", userId, sessionId);
             return Result<RefreshAuthResult>.Failure("Session expired or invalidated!");
         }
 
         var valid = CryptRefreshToken.Verify(refreshToken, session.RefreshTokenHash);
         if (!valid)
         {
-            _logger.LogWarning("RefreshAuth failed: refresh token mismatch for user '{UserId}', session '{SessionId}'. Invalidating all sessions.", userId, sessionId);
+            _logger.LogWarning("Refresh token mismatch for user '{UserId}', session '{SessionId}'. Invalidating all sessions.", userId, sessionId);
 
             // -session hijacking!
             await _sessionService.InvalidateAllAsync(userId, ct);

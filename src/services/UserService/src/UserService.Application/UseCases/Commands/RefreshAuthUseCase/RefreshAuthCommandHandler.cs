@@ -6,7 +6,7 @@ using Microsoft.Extensions.Logging;
 using UserService.Application.Interfaces;
 using UserService.Domain.Common;
 
-namespace UserService.Application.UseCases.RefreshAuthUseCase;
+namespace UserService.Application.UseCases.Commands.RefreshAuthUseCase;
 
 public sealed class RefreshAuthCommandHandler(
     IRefreshAuthService refreshAuthService,

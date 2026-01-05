@@ -19,7 +19,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="UseCases/RefreshAuthUseCase/" />
+    <Folder Include="UseCases/Queries/" />
+    <Folder Include="UseCases/Queries/UserProfileUseCase/" />
   </ItemGroup>
 
 </Project>

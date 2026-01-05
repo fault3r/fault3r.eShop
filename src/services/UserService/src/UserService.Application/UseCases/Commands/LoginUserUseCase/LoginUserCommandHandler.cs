@@ -5,8 +5,9 @@ using MediatR;
 using Microsoft.Extensions.Logging;
 using UserService.Application.Interfaces;
 using UserService.Domain.Common;
+using System.Linq;
 
-namespace UserService.Application.UseCases.LoginUserUseCase;
+namespace UserService.Application.UseCases.Commands.LoginUserUseCase;
 
 public sealed class LoginUserCommandHandler(
     ILoginUserService loginUserService,

@@ -1,6 +1,6 @@
 
 using System;
-using UserService.Application.UseCases.RefreshAuthUseCase;
+using UserService.Application.UseCases.Commands.RefreshAuthUseCase;
 using UserService.Domain.Common;
 
 namespace UserService.Application.Interfaces;

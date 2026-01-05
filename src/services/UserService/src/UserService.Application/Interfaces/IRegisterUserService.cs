@@ -1,6 +1,6 @@
 ﻿
 using System;
-using UserService.Application.UseCases.RegisterUserUseCase;
+using UserService.Application.UseCases.Commands.RegisterUserUseCase;
 using UserService.Domain.Common;
 
 namespace UserService.Application.Interfaces;

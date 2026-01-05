@@ -7,7 +7,7 @@ using UserService.Application.Interfaces;
 using UserService.Domain.Aggregates.UserAggregate;
 using UserService.Domain.Common;
 
-namespace UserService.Application.UseCases.RegisterUserUseCase;
+namespace UserService.Application.UseCases.Commands.RegisterUserUseCase;
 
 public sealed class RegisterUserCommandHandler(
     IRegisterUserService registerUserService,
