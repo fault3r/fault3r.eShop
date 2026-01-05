@@ -6,7 +6,7 @@ using UserService.Application.Interfaces;
 
 namespace UserService.Api.Middlewares;
 
-public class CrossCuttingMiddleware
+public sealed class CrossCuttingMiddleware
 {
     private readonly RequestDelegate _next;
     private readonly string correlationHeader;

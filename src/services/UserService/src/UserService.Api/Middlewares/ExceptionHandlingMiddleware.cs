@@ -4,7 +4,7 @@ using Serilog;
 
 namespace UserService.Api.Middlewares;
 
-public class ExceptionHandlingMiddleware
+public sealed class ExceptionHandlingMiddleware
 {
     private readonly RequestDelegate _next;
     private readonly string correlationHeader;

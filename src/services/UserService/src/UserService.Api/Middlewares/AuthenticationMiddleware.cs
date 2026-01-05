@@ -5,7 +5,7 @@ using UserService.Application.Interfaces;
 
 namespace UserService.Api.Middlewares;
 
-public class AuthenticationMiddleware(
+public sealed class AuthenticationMiddleware(
     RequestDelegate next,
     ITokenService tokenService,
     ISessionService sessionService)
@@ -29,8 +29,7 @@ public class AuthenticationMiddleware(
         {
             context.Response.StatusCode = StatusCodes.Status401Unauthorized;
             return;
-        }
-        
+        }        
         var token = authHeader[TokenPrefix.Length..].Trim();
 
         var principal = await _tokenService.ReadClaimsAsync(token);
@@ -40,7 +39,7 @@ public class AuthenticationMiddleware(
             return;
         }
 
-        var sessionId = principal.FindFirst(JwtRegisteredClaimNames.Jti)?.Value;
+        var sessionId = principal.FindFirst("jti")?.Value;
         if (string.IsNullOrWhiteSpace(sessionId))
         {
             context.Response.StatusCode = StatusCodes.Status401Unauthorized;

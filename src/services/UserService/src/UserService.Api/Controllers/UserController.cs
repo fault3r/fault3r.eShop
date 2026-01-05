@@ -3,10 +3,12 @@ using System;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Polly;
 using UserService.Api.DTOs;
 using UserService.Application.UseCases.LoginUserUseCase;
 using UserService.Application.UseCases.RefreshAuthUseCase;
 using UserService.Application.UseCases.RegisterUserUseCase;
+using UserService.Infrastructure.DependencyInjection;
 
 namespace UserService.Api.Controllers;
 
@@ -83,17 +85,12 @@ public sealed class UserController(IMediator mediator) : ControllerBase
 
     [Authorize]
     [HttpGet]
-    [Route("profile")]
     public async Task<IActionResult> ProfileAsync()
     {
-        return Ok("Welcome, User!");
+        var id = HttpContext.UserId();
+        var session = HttpContext.SessionId();
+        
+        return Ok($"sid:{session} - uid:{id}  - Welcome, User!");
     }
 
-    [AllowAnonymous]
-    [HttpGet]
-    [Route("normal")]
-    public async Task<IActionResult> NormalAsync()
-    {
-        return Ok("Normal Page!");
-    }
 }
