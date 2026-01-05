@@ -59,10 +59,9 @@ public sealed class UserController(IMediator mediator) : ControllerBase
 
         var result = await _mediator.Send(command);
 
-        if (result.IsFailure)
-            return BadRequest(new { errorMessage = result.Error });
-
-        return Ok(result.Value);
+        return result.IsFailure
+            ? BadRequest(new { errorMessage = result.Error })
+            : Ok(result.Value);
     }
 
     [HttpPost]
@@ -78,11 +77,10 @@ public sealed class UserController(IMediator mediator) : ControllerBase
         );
 
         var result = await _mediator.Send(command);
-
-        if (result.IsFailure)
-            return BadRequest(new { errorMessage = result.Error });
-
-        return Ok(result.Value);
+     
+        return result.IsFailure
+            ? BadRequest(new { errorMessage = result.Error })
+            : Ok(result.Value);
     }
 
     [Authorize]
@@ -98,10 +96,8 @@ public sealed class UserController(IMediator mediator) : ControllerBase
 
         var result = await _mediator.Send(query);
 
-        if (result.IsFailure)
-            return BadRequest(new { errorMessage = result.Error });
-
-        return Ok(result.Value);
+        return result.IsFailure
+            ? Unauthorized(new { errorMessage = result.Error })
+            : Ok(result.Value);
     }
-
 }
