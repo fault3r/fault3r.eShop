@@ -56,6 +56,7 @@ public sealed class RefreshAuthService(
         {
             _logger.LogWarning("RefreshAuth failed: refresh token mismatch for user '{UserId}', session '{SessionId}'. Invalidating all sessions.", userId, sessionId);
 
+            // -session hijacking!
             await _sessionService.InvalidateAllAsync(userId, ct);
 
             return Result<RefreshAuthResult>.Failure("Invalid refresh token!");

@@ -37,10 +37,12 @@ public class UserDomainService(
 
         if (!Email.TryFrom(identity, out var email))
             return null;
-        
-        var user = await _userRepository.GetByEmailAsync(email!, ct);
 
-        string hash = user?.PasswordHash ?? _passwordHasher.DummyHash;
+        var user = await _userRepository!.GetByEmailAsync(email!, ct);
+
+        // -timing attack!
+        string hash = user is null ? _passwordHasher.DummyHash : user.PasswordHash;
+
         bool verified = _passwordHasher.Verify(password, hash);
 
         return verified ? user : null;

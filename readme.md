@@ -1,7 +1,9 @@
-# 🏗️ Service Architecture
+# C# .NET Microservices Architecture - DDD+Layered
+---
+
+## 🏗️ User Service Architecture (Coding..)
 
 ## 📦 UserService.Api
-- 📄 appsettings.Development.json  
 - 📄 appsettings.json  
 - 📂 Controllers  
   - 🎛️ UserController.cs  
@@ -9,8 +11,6 @@
   - 📝 LoginUserDto.cs  
   - 📝 RefreshAuthDto.cs  
   - 📝 RegisterUserDto.cs  
-- 📄 log20260103.txt  
-- 📄 log20260104.txt  
 - 📂 Middlewares  
   - 🔑 AuthenticationMiddleware.cs  
   - ⚙️ CrossCuttingMiddleware.cs  

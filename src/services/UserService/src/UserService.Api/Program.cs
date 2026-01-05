@@ -16,6 +16,8 @@ builder.WebHost.UseUrls(settings.Urls.Http);
 
 builder.Host.AddSerilogLogging();
 
+builder.Services.AddRateLimiting(builder.Configuration);
+
 builder.Services.AddInfrastructure();
 
 builder.Services.AddUseCases();
