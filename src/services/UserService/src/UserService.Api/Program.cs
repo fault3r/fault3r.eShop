@@ -36,6 +36,7 @@ builder.Services.AddControllers(config =>
 
 builder.Services.AddFluentEmailService(builder.Configuration);
 
+#region ⤚Swagger
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(options =>
 {
@@ -43,7 +44,7 @@ builder.Services.AddSwaggerGen(options =>
     {
         Title = "User Service API",
         Version = "v1",
-        Description = "API with versioning support"
+        Description = "User Service API",
     });
 });
 builder.Services.AddVersionedApiExplorer(config =>
@@ -51,9 +52,11 @@ builder.Services.AddVersionedApiExplorer(config =>
     config.GroupNameFormat = $"'v'V";
     config.SubstituteApiVersionInUrl = true;
 });
+#endregion
 
-var app = builder.Build(); // - run!
+var app = builder.Build();
 
+#region ⤚Swagger
 var provider = app.Services.GetRequiredService<IApiVersionDescriptionProvider>();
 if (app.Environment.IsDevelopment())
 {
@@ -69,6 +72,7 @@ if (app.Environment.IsDevelopment())
         }
     });
 }
+#endregion
 
 app.UseRateLimiter();
 

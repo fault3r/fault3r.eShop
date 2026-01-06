@@ -71,10 +71,11 @@ public sealed class FullName : ValueObject<FullName>
         yield return LastName;
     }
 
-    // EFCore
+    #region ⤚EFCore
     private FullName()
     {
         FirstName = null!;
         LastName = null!;
     }
+    #endregion
 }

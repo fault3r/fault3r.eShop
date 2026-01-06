@@ -40,7 +40,7 @@ public class UserDomainService(
 
         var user = await _userRepository!.GetByEmailAsync(email!, ct);
 
-        // -timing attack!
+        // ⟶timing attack!
         string hash = user is null ? _passwordHasher.DummyHash : user.PasswordHash;
 
         bool verified = _passwordHasher.Verify(password, hash);

@@ -101,7 +101,7 @@ public sealed class User : AggregateRoot<User, Identity>
         RaiseEvent(new UserStatusChangedEvent(Id, Email, FullName, Status));
     }
 
-    // EFCore
+    #region ⤚EFCore
     public User(Identity id) : base(id)
     {
         Email = null!;
@@ -110,4 +110,5 @@ public sealed class User : AggregateRoot<User, Identity>
         Role = null!;
         Status = null!;
     }
+    #endregion
 }

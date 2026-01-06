@@ -41,11 +41,12 @@ public sealed class OutboxMessage
         PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
     };
 
-    // EFCore
+    #region ⤚EFCore
     public OutboxMessage()
     {
         Type = null!;
         Payload = null!;
         CorrelationId = null!;
     }
+    #endregion
 }
