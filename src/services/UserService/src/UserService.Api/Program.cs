@@ -1,5 +1,6 @@
 
 using System;
+using Microsoft.AspNetCore.Mvc.ApiExplorer;
 using UserService.Api.Middlewares;
 using UserService.Infrastructure.DependencyInjection;
 using UserService.Infrastructure.Exceptions.DependencyInjection;
@@ -28,29 +29,56 @@ builder.Services.AddJwtAuthentication(builder.Configuration);
 
 builder.Services.AddRedisCaching(builder.Configuration);
 
+builder.Services.AddApiVersioning(settings);
+
 builder.Services.AddControllers(config =>
     config.SuppressAsyncSuffixInActionNames = false);
 
 builder.Services.AddFluentEmailService(builder.Configuration);
 
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
+builder.Services.AddSwaggerGen(options =>
+{
+    options.SwaggerDoc("v1", new Microsoft.OpenApi.Models.OpenApiInfo
+    {
+        Title = "User Service API",
+        Version = "v1",
+        Description = "API with versioning support"
+    });
+});
+builder.Services.AddVersionedApiExplorer(config =>
+{
+    config.GroupNameFormat = $"'v'V";
+    config.SubstituteApiVersionInUrl = true;
+});
 
-var app = builder.Build();
+var app = builder.Build(); // - run!
+
+var provider = app.Services.GetRequiredService<IApiVersionDescriptionProvider>();
+if (app.Environment.IsDevelopment())
+{
+    app.UseSwagger();
+    app.UseSwaggerUI(options =>
+    {
+        foreach (var description in provider.ApiVersionDescriptions)
+        {
+            options.SwaggerEndpoint(
+                url: $"/swagger/{description.GroupName}/swagger.json",
+                name: description.GroupName.ToUpperInvariant()
+            );
+        }
+    });
+}
+
+app.UseRateLimiter();
 
 app.UseCrossCuttingMiddleware(settings.CorrelationHeader);
 
 app.UseExceptionHandlingMiddleware(settings.CorrelationHeader);
 
 app.UseAuthentication();
-app.UseAuthenticationMiddleware(); 
+app.UseAuthenticationMiddleware();
 app.UseAuthorization();
-
-if (app.Environment.IsDevelopment())
-{
-    app.UseSwagger();
-    app.UseSwaggerUI();
-}
 
 app.MapControllers();
 

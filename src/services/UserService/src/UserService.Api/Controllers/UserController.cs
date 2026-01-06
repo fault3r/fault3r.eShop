@@ -14,7 +14,8 @@ using UserService.Infrastructure.DependencyInjection;
 namespace UserService.Api.Controllers;
 
 [ApiController]
-[Route("api/user")]
+[ApiVersion("1.0")]
+[Route("api/v{version:apiVersion}/user")]
 public sealed class UserController(
     IMediator mediator
 ) : ControllerBase

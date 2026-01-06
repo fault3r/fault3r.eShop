@@ -10,4 +10,3 @@ public interface IPasswordHasher
     
     string DummyHash { get; }
 }
-// test
