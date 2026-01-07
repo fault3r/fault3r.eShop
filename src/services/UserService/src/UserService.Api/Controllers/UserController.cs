@@ -50,21 +50,10 @@ public sealed class UserController(
     }
 
     [HttpPost]
-    [Route("login")]
+    //[Route("login")]
     public async Task<IActionResult> LoginAsync([FromBody] LoginUserDto request)
     {
-        ArgumentNullException.ThrowIfNull(request);
 
-        var command = new LoginUserCommand(
-            Identity: request.Identity,
-            Password: request.Password
-        );
-
-        var result = await _mediator.Send(command);
-
-        return result.IsFailure
-            ? BadRequest(new { errorMessage = result.Error })
-            : Ok(result.Value);
     }
 
     [HttpPost]

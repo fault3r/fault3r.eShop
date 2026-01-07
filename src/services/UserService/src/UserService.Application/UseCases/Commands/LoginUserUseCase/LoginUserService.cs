@@ -39,6 +39,13 @@ public sealed class LoginUserService(
             return Result<LoginUserResult>.Failure("Identity or password is incorrect!");
         }
 
+        if(user.Status.IsLocked)
+        {
+            _logger.LogWarning("Login failed, User is locked!");
+
+            return Result<LoginUserResult>.Failure("Login failed, User is locked!");
+        }
+
         var sessionId = Guid.NewGuid().ToString("N");
 
         var refreshToken = CryptRefreshToken.Generate();
