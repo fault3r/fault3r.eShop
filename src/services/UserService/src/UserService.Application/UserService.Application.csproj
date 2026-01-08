@@ -19,6 +19,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="UseCases/Commands/LogoutUserUseCase/" />
     <Folder Include="UseCases/Queries/" />
     <Folder Include="UseCases/Queries/UserProfileUseCase/" />
   </ItemGroup>
