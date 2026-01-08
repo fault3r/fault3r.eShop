@@ -20,18 +20,17 @@ public sealed class UserProfileService(
     {
         ArgumentException.ThrowIfNullOrWhiteSpace(sessionId);
 
-        _logger.LogInformation("Fetching profile from session '{SessionId}'…", sessionId);
+        _logger.LogInformation("Fetching profile from '{SessionId}' session…", sessionId.Trim());
 
         var session = await _sessionService.GetAsync(sessionId, cancellationToken);
         if (session is null)
         {
-            _logger.LogWarning("Session '{SessionId}' not found or expired!", sessionId);
+            _logger.LogWarning("Session expired or invalidated!");
 
-            return Result<UserProfileResult>.Failure("Session not found or expired!");
+            return Result<UserProfileResult>.Failure("Session expired or invalidated!");
         }
 
-        _logger.LogInformation("User profile successfully retrieved for user '{UserId}', session '{SessionId}'.",
-            session.UserId, session.SessionId);
+        _logger.LogInformation("profile successfully retrieved for '{UserId}' user.", session.UserId);
 
         return Result<UserProfileResult>.Success(new UserProfileResult(
             session.UserId,

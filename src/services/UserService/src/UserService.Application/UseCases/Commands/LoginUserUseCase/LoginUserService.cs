@@ -75,8 +75,7 @@ public sealed class LoginUserService(
 
         var accessToken = await  _tokenService.GenerateAsync(sessionId, user.Id);
 
-        _logger.LogInformation("User successfully logged in with '{Id}' identity, session '{SessionId}'",
-            user.Id.ToString(), sessionId);
+        _logger.LogInformation("User successfully logged in with '{SessionId}' session.", sessionId);
 
         return Result<LoginUserResult>.Success(
             new LoginUserResult(accessToken, refreshToken));

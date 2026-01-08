@@ -37,8 +37,7 @@ public sealed class LogoutUserCommandHandler(
         }
 
         var result = await _logoutService.ExecuteAsync(
-            accessToken: request.AccessToken,
-            refreshToken: request.RefreshToken,
+            sessionId: request.SessionId,
             cancellationToken: cancellationToken
         );
 
