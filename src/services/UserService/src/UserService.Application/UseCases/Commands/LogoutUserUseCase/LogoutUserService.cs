@@ -24,9 +24,9 @@ public class LogoutUserService(
         var session = await _sessionService.GetAsync(sessionId, cancellationToken);
         if (session is null)
         {
-            _logger.LogInformation("Session expired or invalidated!");
+            _logger.LogInformation("Session already expired or invalidated!");
 
-            return Result.Failure("Session expired or invalidated!");
+            return Result.Failure("Session already expired or invalidated!");
         }
 
         await _sessionService.InvalidateAsync(sessionId, cancellationToken);

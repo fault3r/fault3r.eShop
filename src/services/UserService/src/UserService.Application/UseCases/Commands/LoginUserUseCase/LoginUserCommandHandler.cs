@@ -21,7 +21,7 @@ public sealed class LoginUserCommandHandler(
 
     public async Task<Result<LoginUserResult>> Handle(
         LoginUserCommand request,
-        CancellationToken ct)
+        CancellationToken cancellationToken)
     {
         ArgumentNullException.ThrowIfNull(request);
 

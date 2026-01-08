@@ -30,7 +30,7 @@ public sealed class UserProfileService(
             return Result<UserProfileResult>.Failure("Session expired or invalidated!");
         }
 
-        _logger.LogInformation("profile successfully retrieved for '{UserId}' user.", session.UserId);
+        _logger.LogInformation("Profile successfully retrieved for '{UserId}' user.", session.UserId);
 
         return Result<UserProfileResult>.Success(new UserProfileResult(
             session.UserId,

@@ -6,14 +6,16 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.RateLimiting;
 using UserService.Api.DTOs;
 using UserService.Application.UseCases.Commands.LoginUserUseCase;
+using UserService.Application.UseCases.Commands.LogoutUserUseCase;
 using UserService.Application.UseCases.Commands.RefreshAuthUseCase;
 using UserService.Application.UseCases.Commands.RegisterUserUseCase;
+using UserService.Infrastructure.DependencyInjection;
 
 namespace UserService.Api.Controllers;
 
 [ApiController]
-[Route("api/v{version:apiVersion}/auth")]
 [ApiVersion("1.0")]
+[Route("api/v{version:apiVersion}/auth")]
 public sealed class AuthController(
     IMediator mediator
 ) : ControllerBase
@@ -21,8 +23,8 @@ public sealed class AuthController(
     private readonly IMediator _mediator = mediator;
 
     [HttpPost]
-    [Route("register")]
     [MapToApiVersion("1.0")]
+    [Route("register")]
     public async Task<IActionResult> RegisterAsync([FromBody] RegisterUserDto request)
     {
         ArgumentNullException.ThrowIfNull(request);
@@ -49,8 +51,8 @@ public sealed class AuthController(
     }
 
     [HttpPost]
-    [Route("login")]
     [MapToApiVersion("1.0")]
+    [Route("login")]
     public async Task<IActionResult> LoginAsync([FromBody] LoginUserDto request)
     {
         ArgumentNullException.ThrowIfNull(request);
@@ -71,16 +73,16 @@ public sealed class AuthController(
 
             if (error.Contains("locked"))
                 return StatusCode(StatusCodes.Status403Forbidden, new { errorMessage = error });
-            
+
             return BadRequest(new { errorMessage = error });
         }
 
         return Ok(result.Value);
     }
 
-    [HttpPost]
-    [Route("refresh")]
+    [HttpPut]
     [MapToApiVersion("1.0")]
+    [Route("refresh")]
     [EnableRateLimiting("RefAuthRateLimit")]
     public async Task<IActionResult> RefreshAsync([FromBody] RefreshAuthDto request)
     {
@@ -102,18 +104,32 @@ public sealed class AuthController(
 
             return BadRequest(new { errorMessage = error });
         }
-        
+
         return Ok(result.Value);
     }
-
+    
     [Authorize]
-    [HttpPost]
-    [Route("logout")]
+    [HttpDelete]
     [MapToApiVersion("1.0")]
+    [Route("logout")]
     public async Task<IActionResult> LogoutAsync()
     {
+        string sessionId = HttpContext.SessionId() ?? string.Empty;
 
-        return Ok();
+        var command = new LogoutUserCommand(
+            SessionId: sessionId
+        );
+
+        var result = await _mediator.Send(command);
+
+        if (result.IsFailure)
+        {
+            string error = result.Error ?? "unknown error";
+
+            return Unauthorized(new { errorMessage = error });
+        }
+
+        return NoContent();
     }
 }
 

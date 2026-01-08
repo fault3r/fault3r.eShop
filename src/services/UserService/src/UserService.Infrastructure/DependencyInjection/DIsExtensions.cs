@@ -6,6 +6,7 @@ using Microsoft.Extensions.DependencyInjection;
 using UserService.Application.Interfaces;
 using UserService.Application.Messaging;
 using UserService.Application.UseCases.Commands.LoginUserUseCase;
+using UserService.Application.UseCases.Commands.LogoutUserUseCase;
 using UserService.Application.UseCases.Commands.RefreshAuthUseCase;
 using UserService.Application.UseCases.Commands.RegisterUserUseCase;
 using UserService.Application.UseCases.Queries.UserProfileUseCase;
@@ -62,6 +63,10 @@ public static class DIsExtensions
         services.AddMediatR(typeof(RefreshAuthCommandHandler).Assembly);
         services.AddScoped<IRefreshAuthService, RefreshAuthService>();
         services.AddScoped<IValidator<RefreshAuthCommand>, RefreshAuthValidator>();
+    
+        services.AddMediatR(typeof(LogoutUserCommandHandler).Assembly);
+        services.AddScoped<ILogoutUserService, LogoutUserService>();
+        services.AddScoped<IValidator<LogoutUserCommand>, LogoutUserValidator>();
 
         services.AddMediatR(typeof(UserProfileQueryHandler).Assembly);
         services.AddScoped<IUserProfileService, UserProfileService>();

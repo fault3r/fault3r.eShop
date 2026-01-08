@@ -1,0 +1,67 @@
+[2026-01-08 22:50:48 INF] 5d164cb4-2e8c-4f64-a4ef-1b205eb08d72  Incoming request POST /api/v1/auth/login. 
+ [2026-01-08 22:50:49 INF] 5d164cb4-2e8c-4f64-a4ef-1b205eb08d72 UserService.Application.UseCases.Commands.LoginUserUseCase.LoginUserService Loginning user with 'Hamed.Damaavandi@gmail.com' identity… 
+ [2026-01-08 22:50:53 INF] 5d164cb4-2e8c-4f64-a4ef-1b205eb08d72 UserService.Application.UseCases.Commands.LoginUserUseCase.LoginUserService User successfully logged in with '5c12e3b8f6e4410da702eb63f1dae5f3' session. 
+ [2026-01-08 22:50:53 INF] 5d164cb4-2e8c-4f64-a4ef-1b205eb08d72  Completed request POST /api/v1/auth/login with status code 200. 
+ [2026-01-08 22:51:32 INF] 5f7678cf-9718-4da8-a9f2-2edee52e63e1  Incoming request PUT /api/v1/auth/refresh. 
+ [2026-01-08 22:51:32 INF] 5f7678cf-9718-4da8-a9f2-2edee52e63e1 UserService.Application.UseCases.Commands.RefreshAuthUseCase.RefreshAuthService Refreshing authentication with 'LMXJNjTxaw/B1XPr+yZPyylvjCneaVoPMFxnTyVESH9dH0c/x0qWOcp5cDSSTHMghIvY6vbDy0GAKFHomTkuzQ==' refresh token… 
+ [2026-01-08 22:51:33 INF] 5f7678cf-9718-4da8-a9f2-2edee52e63e1 UserService.Application.UseCases.Commands.RefreshAuthUseCase.RefreshAuthService Athentication successfully refreshed for user '8fb6f3ba622143f99cd99250c6151d99' with '5c12e3b8f6e4410da702eb63f1dae5f3' session. 
+ [2026-01-08 22:51:33 INF] 5f7678cf-9718-4da8-a9f2-2edee52e63e1  Completed request PUT /api/v1/auth/refresh with status code 200. 
+ [2026-01-08 22:51:55 INF] 435f914f-7e16-41ad-b428-37eb8c90effd  Incoming request PUT /api/v1/auth/refresh. 
+ [2026-01-08 22:51:55 INF] 435f914f-7e16-41ad-b428-37eb8c90effd UserService.Application.UseCases.Commands.RefreshAuthUseCase.RefreshAuthService Refreshing authentication with '9ytdtaDtTHogwLWJUhhGUZCh/2olKqoIVz8pr91ba4C6cK8/1lCDfl6xIC6/Vv7olJ9l9KyMmEafzpLKw6M6NQ==' refresh token… 
+ [2026-01-08 22:51:56 INF] 435f914f-7e16-41ad-b428-37eb8c90effd UserService.Application.UseCases.Commands.RefreshAuthUseCase.RefreshAuthService Athentication successfully refreshed for user '8fb6f3ba622143f99cd99250c6151d99' with '5c12e3b8f6e4410da702eb63f1dae5f3' session. 
+ [2026-01-08 22:51:56 INF] 435f914f-7e16-41ad-b428-37eb8c90effd  Completed request PUT /api/v1/auth/refresh with status code 200. 
+ [2026-01-08 22:52:15 INF] 8fdebd31-712c-49b9-9686-2487746436b7  Incoming request PUT /api/v1/auth/refresh. 
+ [2026-01-08 22:52:15 INF] 8fdebd31-712c-49b9-9686-2487746436b7 UserService.Application.UseCases.Commands.RefreshAuthUseCase.RefreshAuthService Refreshing authentication with '9ytdtaDtTHogwLWJUhhGUZCh/2olKqoIVz8pr91bal4C6cK8/1lCDfl6xIC6/Vv7olJ9l9KyMmEafzpLKw6M6NQ==' refresh token… 
+ [2026-01-08 22:52:16 WRN] 8fdebd31-712c-49b9-9686-2487746436b7 UserService.Application.UseCases.Commands.RefreshAuthUseCase.RefreshAuthService Refresh token mismatch, All user sessions invalidated. User '8fb6f3ba622143f99cd99250c6151d99', session '5c12e3b8f6e4410da702eb63f1dae5f3'! 
+ [2026-01-08 22:52:16 INF] 8fdebd31-712c-49b9-9686-2487746436b7  Completed request PUT /api/v1/auth/refresh with status code 401. 
+ [2026-01-08 22:52:35 INF] 66689544-b718-4a96-98ff-09d42c110112  Incoming request POST /api/v1/auth/login. 
+ [2026-01-08 22:52:35 WRN] 66689544-b718-4a96-98ff-09d42c110112 UserService.Application.UseCases.Commands.LoginUserUseCase.LoginUserCommandHandler Validation failed: 'Identity' is not a valid email address. - 'Identity' must not be empty. 
+ [2026-01-08 22:52:35 INF] 66689544-b718-4a96-98ff-09d42c110112  Completed request POST /api/v1/auth/login with status code 400. 
+ [2026-01-08 22:52:53 INF] ef15e52c-9430-4f7f-bcb7-e6d1a4306bf8  Incoming request POST /api/v1/auth/login. 
+ [2026-01-08 22:52:53 WRN] ef15e52c-9430-4f7f-bcb7-e6d1a4306bf8 UserService.Application.UseCases.Commands.LoginUserUseCase.LoginUserCommandHandler Validation failed: 'Identity' is not a valid email address. 
+ [2026-01-08 22:52:53 INF] ef15e52c-9430-4f7f-bcb7-e6d1a4306bf8  Completed request POST /api/v1/auth/login with status code 400. 
+ [2026-01-08 22:53:06 INF] eca41be9-53fe-4272-94be-f1431b1140c3  Incoming request POST /api/v1/auth/login. 
+ [2026-01-08 22:53:06 WRN] eca41be9-53fe-4272-94be-f1431b1140c3 UserService.Application.UseCases.Commands.LoginUserUseCase.LoginUserCommandHandler Validation failed: 'Password' must be between 8 and 100 characters. You entered 5 characters. 
+ [2026-01-08 22:53:06 INF] eca41be9-53fe-4272-94be-f1431b1140c3  Completed request POST /api/v1/auth/login with status code 400. 
+ [2026-01-08 22:53:22 INF] cf9e8b5d-c59d-4920-92a7-9ccad020745b  Incoming request POST /api/v1/auth/login. 
+ [2026-01-08 22:53:22 INF] cf9e8b5d-c59d-4920-92a7-9ccad020745b UserService.Application.UseCases.Commands.LoginUserUseCase.LoginUserService Loginning user with 'Hamed.Damaavandi@gmail.com' identity… 
+ [2026-01-08 22:53:22 WRN] cf9e8b5d-c59d-4920-92a7-9ccad020745b UserService.Application.UseCases.Commands.LoginUserUseCase.LoginUserService Wrong credentials! 
+ [2026-01-08 22:53:22 INF] cf9e8b5d-c59d-4920-92a7-9ccad020745b  Completed request POST /api/v1/auth/login with status code 401. 
+ [2026-01-08 22:53:45 INF] e2d2b52a-bac8-426b-8dbc-f17a31e9375d  Incoming request POST /api/v1/auth/login. 
+ [2026-01-08 22:53:45 INF] e2d2b52a-bac8-426b-8dbc-f17a31e9375d UserService.Application.UseCases.Commands.LoginUserUseCase.LoginUserService Loginning user with 'Hamed.Damaavandi@gmail.com' identity… 
+ [2026-01-08 22:53:45 WRN] e2d2b52a-bac8-426b-8dbc-f17a31e9375d UserService.Application.UseCases.Commands.LoginUserUseCase.LoginUserService Wrong credentials! 
+ [2026-01-08 22:53:45 INF] e2d2b52a-bac8-426b-8dbc-f17a31e9375d  Completed request POST /api/v1/auth/login with status code 401. 
+ [2026-01-08 22:53:53 INF] 26c2f7a1-1e01-425c-9965-611aac71f911  Incoming request POST /api/v1/auth/login. 
+ [2026-01-08 22:53:53 INF] 26c2f7a1-1e01-425c-9965-611aac71f911 UserService.Application.UseCases.Commands.LoginUserUseCase.LoginUserService Loginning user with 'Hamed.Damaavandi@gmail.com' identity… 
+ [2026-01-08 22:53:53 INF] 26c2f7a1-1e01-425c-9965-611aac71f911 UserService.Application.UseCases.Commands.LoginUserUseCase.LoginUserService User successfully logged in with 'c86539ba226c4ef7b684fef59698b3d4' session. 
+ [2026-01-08 22:53:53 INF] 26c2f7a1-1e01-425c-9965-611aac71f911  Completed request POST /api/v1/auth/login with status code 200. 
+ [2026-01-08 23:00:41 INF] c23e7b9e-fbd8-4300-afe4-515434d3a4a5  Incoming request PUT /api/v1/auth/refresh. 
+ [2026-01-08 23:00:41 INF] c23e7b9e-fbd8-4300-afe4-515434d3a4a5 UserService.Application.UseCases.Commands.RefreshAuthUseCase.RefreshAuthService Refreshing authentication with '9ytdtaDtTHogwLWJUhhGUZCh/2olKqoIVz8pr91bal4C6cK8/1lCDfl6xIC6/Vv7olJ9l9KyMmEafzpLKw6M6NQ==' refresh token… 
+ [2026-01-08 23:00:41 INF] c23e7b9e-fbd8-4300-afe4-515434d3a4a5 UserService.Application.UseCases.Commands.RefreshAuthUseCase.RefreshAuthService Session expired or invalidated. User '8fb6f3ba622143f99cd99250c6151d99', session '5c12e3b8f6e4410da702eb63f1dae5f3'! 
+ [2026-01-08 23:00:41 INF] c23e7b9e-fbd8-4300-afe4-515434d3a4a5  Completed request PUT /api/v1/auth/refresh with status code 401. 
+ [2026-01-08 23:01:24 INF] 97600868-82ce-4ba5-9ba8-f851d5ae276f  Incoming request POST /api/v1/auth/login. 
+ [2026-01-08 23:01:24 INF] 97600868-82ce-4ba5-9ba8-f851d5ae276f UserService.Application.UseCases.Commands.LoginUserUseCase.LoginUserService Loginning user with 'Hamed.Damaavandi@gmail.com' identity… 
+ [2026-01-08 23:01:27 INF] 97600868-82ce-4ba5-9ba8-f851d5ae276f UserService.Application.UseCases.Commands.LoginUserUseCase.LoginUserService User successfully logged in with 'f297ac9c8b4d4a60847724a78a5c3b90' session. 
+ [2026-01-08 23:01:27 INF] 97600868-82ce-4ba5-9ba8-f851d5ae276f  Completed request POST /api/v1/auth/login with status code 200. 
+ [2026-01-08 23:01:42 INF] 1b506506-a84e-4884-901a-f93ceff76626  Incoming request DELETE /api/v1/auth/logout. 
+ [2026-01-08 23:01:42 INF] 1b506506-a84e-4884-901a-f93ceff76626  Completed request DELETE /api/v1/auth/logout with status code 401. 
+ [2026-01-08 23:02:59 INF] 8cbb4780-e810-49d6-8259-f167791d3367  Incoming request DELETE /api/v1/auth/logout. 
+ [2026-01-08 23:02:59 WRN] 8cbb4780-e810-49d6-8259-f167791d3367 UserService.Application.UseCases.Commands.LogoutUserUseCase.LogoutUserCommandHandler Validation failed: 'Session Id' must not be empty. 
+ [2026-01-08 23:02:59 INF] 8cbb4780-e810-49d6-8259-f167791d3367  Completed request DELETE /api/v1/auth/logout with status code 400. 
+ [2026-01-08 23:06:34 INF] 41986106-fe63-4c3f-9520-7bae9f59d24f  Incoming request DELETE /api/v1/auth/logout. 
+ [2026-01-08 23:06:34 WRN] 41986106-fe63-4c3f-9520-7bae9f59d24f UserService.Application.UseCases.Commands.LogoutUserUseCase.LogoutUserCommandHandler Validation failed: 'Session Id' must not be empty. 
+ [2026-01-08 23:06:34 INF] 41986106-fe63-4c3f-9520-7bae9f59d24f  Completed request DELETE /api/v1/auth/logout with status code 400. 
+ [2026-01-08 23:07:30 INF] 34f47349-8d79-4807-af80-0508530f72ac  Incoming request DELETE /api/v1/auth/logout. 
+ [2026-01-08 23:21:23 INF] b99e71f1-acb9-43b5-8cab-2121fc9f7d18  Incoming request DELETE /api/v1/auth/logout. 
+ [2026-01-08 23:21:23 INF] b99e71f1-acb9-43b5-8cab-2121fc9f7d18  Completed request DELETE /api/v1/auth/logout with status code 401. 
+ [2026-01-08 23:22:18 INF] 326e3329-6c8f-4d24-9824-8a16701e1203  Incoming request POST /api/v1/auth/login. 
+ [2026-01-08 23:22:18 INF] 326e3329-6c8f-4d24-9824-8a16701e1203 UserService.Application.UseCases.Commands.LoginUserUseCase.LoginUserService Loginning user with 'Hamed.Damaavandi@gmail.com' identity… 
+ [2026-01-08 23:22:20 INF] 326e3329-6c8f-4d24-9824-8a16701e1203 UserService.Application.UseCases.Commands.LoginUserUseCase.LoginUserService User successfully logged in with '000bde91c8bf491fb69beadb2ebe229f' session. 
+ [2026-01-08 23:22:21 INF] 326e3329-6c8f-4d24-9824-8a16701e1203  Completed request POST /api/v1/auth/login with status code 200. 
+ [2026-01-08 23:23:10 INF] 3501a48e-2a3d-4a0c-b121-5e6902997ce6  Incoming request DELETE /api/v1/auth/logout. 
+ [2026-01-08 23:23:10 INF] 3501a48e-2a3d-4a0c-b121-5e6902997ce6  Completed request DELETE /api/v1/auth/logout with status code 401. 
+ [2026-01-08 23:25:43 INF] 3e79ecf3-92e9-444f-9f02-903a543e0772  Incoming request DELETE /api/v1/auth/logout. 
+ [2026-01-08 23:25:43 INF] 3e79ecf3-92e9-444f-9f02-903a543e0772 UserService.Application.UseCases.Commands.LogoutUserUseCase.LogoutUserService Invalidating '000bde91c8bf491fb69beadb2ebe229f' session… 
+ [2026-01-08 23:25:43 INF] 3e79ecf3-92e9-444f-9f02-903a543e0772 UserService.Application.UseCases.Commands.LogoutUserUseCase.LogoutUserService User '8fb6f3ba622143f99cd99250c6151d99' successfully logged out. 
+ [2026-01-08 23:25:43 INF] 3e79ecf3-92e9-444f-9f02-903a543e0772  Completed request DELETE /api/v1/auth/logout with status code 204. 
+ 
