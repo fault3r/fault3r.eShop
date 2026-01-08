@@ -19,11 +19,11 @@ public sealed class RedisSessionService(
 
     public async Task CreateAsync(
         SessionData session,
-        CancellationToken ct = default)
+        CancellationToken cancellationToken = default)
     {
         ArgumentNullException.ThrowIfNull(session);
 
-        await EnforceSessionLimitAsync(session.UserId, ct);
+        await EnforceSessionLimitAsync(session.UserId, cancellationToken);
 
         var payload = JsonSerializer.Serialize(session, jsonSerializerOptions);
 
@@ -85,7 +85,7 @@ public sealed class RedisSessionService(
 
     public async Task<SessionData?> GetAsync(
         string sessionId,
-        CancellationToken ct = default)
+        CancellationToken cancellationToken = default)
     {
         ArgumentException.ThrowIfNullOrWhiteSpace(sessionId);
 
@@ -100,7 +100,7 @@ public sealed class RedisSessionService(
 
     public async Task<bool> ExistAsync(
         string sessionId,
-        CancellationToken ct = default)
+        CancellationToken cancellationToken = default)
     {
         ArgumentException.ThrowIfNullOrWhiteSpace(sessionId);
 
@@ -111,7 +111,7 @@ public sealed class RedisSessionService(
 
     public async Task UpdateAsync(
         SessionData session,
-        CancellationToken ct = default)
+        CancellationToken cancellationToken = default)
     {
         ArgumentNullException.ThrowIfNull(session);
 
@@ -134,7 +134,7 @@ public sealed class RedisSessionService(
     
     public async Task InvalidateAsync(
         string sessionId,
-        CancellationToken ct = default)
+        CancellationToken cancellationToken = default)
     {
         ArgumentException.ThrowIfNullOrWhiteSpace(sessionId);
 
@@ -159,7 +159,7 @@ public sealed class RedisSessionService(
 
     public async Task InvalidateAllAsync(
         string userId,
-        CancellationToken ct = default)
+        CancellationToken cancellationToken = default)
     {
         ArgumentException.ThrowIfNullOrWhiteSpace(userId);
 

@@ -8,6 +8,6 @@ public interface IEmailTemplateRenderer
     Task<string> RenderAsync<T>(
         string template,
         T model,
-        CancellationToken ct = default
+        CancellationToken cancellationToken = default
     );
 }

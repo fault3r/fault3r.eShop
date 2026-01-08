@@ -10,6 +10,6 @@ public interface IEmailSender
         string to,
         string subject,
         string body,
-        CancellationToken ct = default
+        CancellationToken cancellationToken = default
     );
 }

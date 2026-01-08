@@ -7,6 +7,6 @@ public interface IEmailTemplateResolver
 {
    Task<string> ResolveAsync(
       EmailTemplateType emailTemplateType,
-      CancellationToken ct = default
+      CancellationToken cancellationToken = default
    );
 }

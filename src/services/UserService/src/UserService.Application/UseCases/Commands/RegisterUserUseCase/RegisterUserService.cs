@@ -31,7 +31,7 @@ public sealed class RegisterUserService(
         string email,
         string password,
         string fullName,
-        CancellationToken ct = default)
+        CancellationToken cancellationToken = default)
     {
         ArgumentException.ThrowIfNullOrWhiteSpace(email);
         ArgumentException.ThrowIfNullOrWhiteSpace(password);
@@ -61,7 +61,7 @@ public sealed class RegisterUserService(
             return Result<RegisterUserResult>.Failure(ex.Message);
         }
 
-        var canCreate = await _userService.VerifyCanCreateAsync(voEmail, ct);
+        var canCreate = await _userService.VerifyCanCreateAsync(voEmail, cancellationToken);
         if (!canCreate)
         {
             _logger.LogWarning("User with this email address already exists!");
@@ -69,11 +69,11 @@ public sealed class RegisterUserService(
             return Result<RegisterUserResult>.Failure("User with this email address already exists!");
         }
 
-        await _uow.UserRepository.CreateAsync(user, ct);
-        await _uow.Outbox.EnqueueAsync(user.Events, _correlation.CorrelationId, ct);
-        await _uow.CommitAsync(ct);
+        await _uow.UserRepository.CreateAsync(user, cancellationToken);
+        await _uow.Outbox.EnqueueAsync(user.Events, _correlation.CorrelationId, cancellationToken);
+        await _uow.CommitAsync(cancellationToken);
 
-        await _uow.Notification.DispatchAsync(user.Events, ct);
+        await _uow.Notification.DispatchAsync(user.Events, cancellationToken);
 
         user.ClearEvents();
 

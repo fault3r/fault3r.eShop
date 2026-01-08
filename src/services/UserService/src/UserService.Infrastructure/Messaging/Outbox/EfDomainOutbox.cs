@@ -15,7 +15,7 @@ public sealed class EfDomainOutbox(
     public async Task EnqueueAsync(
         IEnumerable<IDomainEvent> events,
         string correlationId,
-        CancellationToken ct = default)
+        CancellationToken cancellationToken = default)
     {
         ArgumentNullException.ThrowIfNull(events);
         ArgumentException.ThrowIfNullOrWhiteSpace(correlationId);
@@ -30,6 +30,6 @@ public sealed class EfDomainOutbox(
             .ToList();
 
         await _dbContext.OutboxMessages
-            .AddRangeAsync(messages, ct);
+            .AddRangeAsync(messages, cancellationToken);
     }
 }

@@ -8,6 +8,6 @@ public interface IDomainNotification
 {
     Task DispatchAsync(
         IEnumerable<IDomainEvent> events,
-        CancellationToken ct = default
+        CancellationToken cancellationToken = default
     );
 }

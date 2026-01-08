@@ -19,20 +19,20 @@ public sealed class UserCreatedNotificationHandler(
 
     public async Task Handle(
         UserCreatedNotification notification,
-        CancellationToken ct = default)
+        CancellationToken cancellationToken = default)
     {
         ArgumentNullException.ThrowIfNull(notification);
 
-        var template = await _resolver.ResolveAsync(EmailTemplateType.Welcome, ct);
+        var template = await _resolver.ResolveAsync(EmailTemplateType.Welcome, cancellationToken);
         var model = new WelcomeModel(notification.FullName);
 
-        var body = await _renderer.RenderAsync(template, model, ct);
+        var body = await _renderer.RenderAsync(template, model, cancellationToken);
 
         await _sender.SendAsync(
             to: notification.Email,
             subject: "Wewlcome",
             body: body,
-            ct: ct
+            cancellationToken: cancellationToken
         );
     }
 }

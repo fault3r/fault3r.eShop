@@ -7,7 +7,7 @@ namespace UserService.Domain.UnitOfWork;
 
 public interface IUnitOfWork
 {
-    Task<int> CommitAsync(CancellationToken ct = default);
+    Task<int> CommitAsync(CancellationToken cancellationToken = default);
     
     IDomainOutbox Outbox { get; }
     IDomainNotification Notification { get; }

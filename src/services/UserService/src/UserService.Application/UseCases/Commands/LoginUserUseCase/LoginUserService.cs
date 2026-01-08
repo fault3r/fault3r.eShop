@@ -24,26 +24,26 @@ public sealed class LoginUserService(
     public async Task<Result<LoginUserResult>> ExecuteAsync(
         string identity,
         string password,
-        CancellationToken ct = default)
+        CancellationToken cancellationToken = default)
     {
         ArgumentException.ThrowIfNullOrWhiteSpace(identity);
         ArgumentException.ThrowIfNullOrWhiteSpace(password);
 
         _logger.LogInformation("Loginning user with '{Identity}' identity…", identity.Trim());
 
-        var user = await _userService.VerifyCredentialAsync(identity, password, ct);
+        var user = await _userService.VerifyCredentialsAsync(identity, password, cancellationToken);
         if (user is null)
         {
-            _logger.LogWarning("Identity or password is incorrect!");
+            _logger.LogWarning("Wrong credentials!");
 
-            return Result<LoginUserResult>.Failure("Identity or password is incorrect!");
+            return Result<LoginUserResult>.Failure("Wrong credentials!");
         }
 
         if(user.Status.IsLocked)
         {
-            _logger.LogWarning("Login failed, User is locked!");
+            _logger.LogWarning("User is locked!");
 
-            return Result<LoginUserResult>.Failure("Login failed, User is locked!");
+            return Result<LoginUserResult>.Failure("User is locked!");
         }
 
         var sessionId = Guid.NewGuid().ToString("N");
@@ -71,7 +71,7 @@ public sealed class LoginUserService(
             Status = user.Status,
         };
 
-        await _sessionService.CreateAsync(session, ct);
+        await _sessionService.CreateAsync(session, cancellationToken);
 
         var accessToken = await  _tokenService.GenerateAsync(sessionId, user.Id);
 

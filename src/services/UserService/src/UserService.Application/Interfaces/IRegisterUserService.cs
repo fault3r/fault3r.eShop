@@ -11,6 +11,6 @@ public interface IRegisterUserService
         string email,
         string password,
         string fullName,
-        CancellationToken ct = default
+        CancellationToken cancellationToken = default
     );
 }

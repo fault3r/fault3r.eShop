@@ -20,11 +20,11 @@ public sealed class UserProfileQueryHandler(
 
     public async Task<Result<UserProfileResult>> Handle(
         UserProfileQuery request,
-        CancellationToken ct = default)
+        CancellationToken cancellationToken = default)
     {
         ArgumentNullException.ThrowIfNull(request);
 
-        var validation = await _validator.ValidateAsync(request, ct);
+        var validation = await _validator.ValidateAsync(request, cancellationToken);
 
         if (!validation.IsValid)
         {
@@ -37,7 +37,7 @@ public sealed class UserProfileQueryHandler(
 
         var result = await _profileService.ExecuteAsync(
             sessionId: request.SessionId,
-            ct: ct
+            cancellationToken: cancellationToken
         );
 
         return result;

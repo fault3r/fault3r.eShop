@@ -17,20 +17,20 @@ public class UserDomainService(
 
     public async Task<bool> VerifyCanCreateAsync(
         Email email,
-        CancellationToken ct = default)
+        CancellationToken cancellationToken = default)
     {
         ArgumentNullException.ThrowIfNull(email);
 
         var exists = await _userRepository
-            .GetByEmailAsync(email, ct);
+            .GetByEmailAsync(email, cancellationToken);
 
         return exists is null;
     }
 
-    public async Task<User?> VerifyCredentialAsync(
+    public async Task<User?> VerifyCredentialsAsync(
        string identity,
        string password,
-       CancellationToken ct = default)
+       CancellationToken cancellationToken = default)
     {
         ArgumentException.ThrowIfNullOrWhiteSpace(identity);
         ArgumentException.ThrowIfNullOrWhiteSpace(password);
@@ -38,7 +38,7 @@ public class UserDomainService(
         if (!Email.TryFrom(identity, out var email))
             return null;
 
-        var user = await _userRepository!.GetByEmailAsync(email!, ct);
+        var user = await _userRepository!.GetByEmailAsync(email!, cancellationToken);
 
         // ⟶timing attack!
         string hash = user is null ? _passwordHasher.DummyHash : user.PasswordHash;

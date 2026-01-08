@@ -22,58 +22,7 @@ public sealed class UserController(
 {
     private readonly IMediator _mediator = mediator;
 
-    [HttpPost]
-    [Route("register")]
-    public async Task<IActionResult> RegisterAsync([FromBody] RegisterUserDto request)
-    {
-        ArgumentNullException.ThrowIfNull(request);
 
-        var command = new RegisterUserCommand(
-            Email: request.Email,
-            Password: request.Password,
-            FullName: request.FullName
-        );
-
-        var result = await _mediator.Send(command);
-
-        if (result.IsFailure)
-        {
-            string error = result.Error ?? "unknown error";
-
-            if (error.Contains("already exists"))
-                return Conflict(new { errorMessage = error });
-
-            return BadRequest(new { errorMessage = error });
-        }
-
-        return Ok(result.Value);
-    }
-
-    [HttpPost]
-    //[Route("login")]
-    public async Task<IActionResult> LoginAsync([FromBody] LoginUserDto request)
-    {
-
-    }
-
-    [HttpPost]
-    [Route("/auth/refresh")]
-    [EnableRateLimiting("AuthRateLimit")]
-    public async Task<IActionResult> RefreshAuth([FromBody] RefreshAuthDto request)
-    {
-        ArgumentNullException.ThrowIfNull(request);
-
-        var command = new RefreshAuthCommand(
-            AccessToken: request.AccessToken,
-            RefreshToken: request.RefreshToken
-        );
-
-        var result = await _mediator.Send(command);
-     
-        return result.IsFailure
-            ? BadRequest(new { errorMessage = result.Error })
-            : Ok(result.Value);
-    }
 
     [Authorize]
     [HttpGet]
@@ -93,3 +42,16 @@ public sealed class UserController(
             : Ok(result.Value);
     }
 }
+
+
+//   [ApiController]
+//     [ApiVersion("1.0")]
+//     [Route("api/v{version:apiVersion}/users")]
+//     public sealed class UsersController(IMediator mediator) : ControllerBase
+//     {
+//         [Authorize][HttpGet("me")] public async Task<IActionResult> GetProfileAsync() { ... }
+//         [Authorize][HttpPut("me/email")] public async Task<IActionResult> ChangeEmailAsync(ChangeEmailDto dto) { ... }
+//         [Authorize][HttpPut("me/fullname")] public async Task<IActionResult> ChangeFullNameAsync(ChangeFullNameDto dto) { ... }
+//         [Authorize][HttpPut("me/password")] public async Task<IActionResult> ChangePasswordAsync(ChangePasswordDto dto) { ... }
+//         [HttpPost("reset-password")] public async Task<IActionResult> ResetPasswordAsync(ResetPasswordDto dto) { ... }
+//     }

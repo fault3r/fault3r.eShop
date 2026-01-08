@@ -25,7 +25,7 @@ public sealed class LoginUserCommandHandler(
     {
         ArgumentNullException.ThrowIfNull(request);
 
-        var validation = await _validator.ValidateAsync(request, ct);
+        var validation = await _validator.ValidateAsync(request, cancellationToken);
 
         if (!validation.IsValid)
         {
@@ -39,7 +39,7 @@ public sealed class LoginUserCommandHandler(
         var result = await _loginService.ExecuteAsync(
             identity: request.Identity,
             password: request.Password,
-            ct: ct
+            cancellationToken: cancellationToken
         );
 
         return result;

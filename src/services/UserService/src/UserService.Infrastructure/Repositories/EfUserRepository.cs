@@ -14,28 +14,28 @@ public sealed class EfUserRepository(
 {
     private readonly EfDbContext _dbContext = efDbContext;
 
-    public async Task CreateAsync(User user, CancellationToken ct = default)
+    public async Task CreateAsync(User user, CancellationToken cancellationToken = default)
     {
         ArgumentNullException.ThrowIfNull(user);
 
-        await _dbContext.Users.AddAsync(user, ct);
+        await _dbContext.Users.AddAsync(user, cancellationToken);
     }
 
-    public async Task<User?> GetByIdAsync(Identity id, CancellationToken ct = default)
+    public async Task<User?> GetByIdAsync(Identity id, CancellationToken cancellationToken = default)
     {
         ArgumentNullException.ThrowIfNull(id);
 
-        return await _dbContext.Users.FirstOrDefaultAsync(p => p.Id == id, ct);
+        return await _dbContext.Users.FirstOrDefaultAsync(p => p.Id == id, cancellationToken);
     }
 
-    public async Task<User?> GetByEmailAsync(Email email, CancellationToken ct = default)
+    public async Task<User?> GetByEmailAsync(Email email, CancellationToken cancellationToken = default)
     {
         ArgumentNullException.ThrowIfNull(email);
 
-        return await _dbContext.Users.FirstOrDefaultAsync(p => p.Email == email, ct);
+        return await _dbContext.Users.FirstOrDefaultAsync(p => p.Email == email, cancellationToken);
     }
 
-    public Task UpdateAsync(User user, CancellationToken ct = default)
+    public Task UpdateAsync(User user, CancellationToken cancellationToken = default)
     {
         ArgumentNullException.ThrowIfNull(user);
 
@@ -43,7 +43,7 @@ public sealed class EfUserRepository(
         return Task.CompletedTask;
     }
 
-    public Task DeleteAsync(Identity id, CancellationToken ct = default)
+    public Task DeleteAsync(Identity id, CancellationToken cancellationToken = default)
     {
         ArgumentNullException.ThrowIfNull(id);
 

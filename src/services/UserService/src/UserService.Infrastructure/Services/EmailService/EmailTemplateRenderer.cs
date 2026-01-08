@@ -10,7 +10,7 @@ public sealed class EmailTemplateRenderer : IEmailTemplateRenderer
     public Task<string> RenderAsync<T>(
         string template,
         T model,
-        CancellationToken ct = default)
+        CancellationToken cancellationToken = default)
     {
         ArgumentException.ThrowIfNullOrEmpty(template);
         ArgumentNullException.ThrowIfNull(model);

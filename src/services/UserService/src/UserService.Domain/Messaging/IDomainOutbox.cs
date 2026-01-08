@@ -9,6 +9,6 @@ public interface IDomainOutbox
     Task EnqueueAsync(
         IEnumerable<IDomainEvent> events,
         string correlationId,
-        CancellationToken ct = default
+        CancellationToken cancellationToken = default
     );    
 }

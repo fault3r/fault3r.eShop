@@ -16,13 +16,13 @@ public sealed class UserProfileService(
 
     public async Task<Result<UserProfileResult>> ExecuteAsync(
         string sessionId,
-        CancellationToken ct = default)
+        CancellationToken cancellationToken = default)
     {
         ArgumentException.ThrowIfNullOrWhiteSpace(sessionId);
 
         _logger.LogInformation("Fetching profile from session '{SessionId}'…", sessionId);
 
-        var session = await _sessionService.GetAsync(sessionId, ct);
+        var session = await _sessionService.GetAsync(sessionId, cancellationToken);
         if (session is null)
         {
             _logger.LogWarning("Session '{SessionId}' not found or expired!", sessionId);

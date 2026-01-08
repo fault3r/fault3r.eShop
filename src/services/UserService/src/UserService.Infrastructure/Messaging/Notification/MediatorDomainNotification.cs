@@ -17,7 +17,7 @@ public sealed class MediatorDomainNotification(
 
     public async Task DispatchAsync(
         IEnumerable<IDomainEvent> events,
-        CancellationToken ct = default)
+        CancellationToken cancellationToken = default)
     {
         ArgumentNullException.ThrowIfNull(events);
 
@@ -28,7 +28,7 @@ public sealed class MediatorDomainNotification(
         {
             var notification = _mapper.ToNotification(@event);
             
-            await _mediator.Publish(notification, ct);
+            await _mediator.Publish(notification, cancellationToken);
         }
     }
 }

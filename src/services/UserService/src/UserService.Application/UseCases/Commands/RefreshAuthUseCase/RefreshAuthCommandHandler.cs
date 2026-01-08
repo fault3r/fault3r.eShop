@@ -20,11 +20,11 @@ public sealed class RefreshAuthCommandHandler(
 
     public async Task<Result<RefreshAuthResult>> Handle(
         RefreshAuthCommand request,
-        CancellationToken ct = default)
+        CancellationToken cancellationToken = default)
     {
         ArgumentNullException.ThrowIfNull(request);
 
-        var validation = await _validator.ValidateAsync(request, ct);
+        var validation = await _validator.ValidateAsync(request, cancellationToken);
 
         if (!validation.IsValid)
         {
@@ -38,7 +38,7 @@ public sealed class RefreshAuthCommandHandler(
         var result = await _authService.ExecuteAsync(
             accessToken: request.AccessToken,
             refreshToken: request.RefreshToken,
-            ct: ct
+            cancellationToken: cancellationToken
         );
 
         return result;

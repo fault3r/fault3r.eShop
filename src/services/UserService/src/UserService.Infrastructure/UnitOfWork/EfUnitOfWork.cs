@@ -20,7 +20,7 @@ public sealed class EfUnitOfWork(
     public IDomainNotification Notification { get; } = notification;
     public IUserRepository UserRepository { get; } = userRepository;
 
-    public async Task<int> CommitAsync(CancellationToken ct = default)
+    public async Task<int> CommitAsync(CancellationToken cancellationToken = default)
     {
         if (!_dbContext.ChangeTracker.HasChanges())
             return 0;
@@ -30,17 +30,17 @@ public sealed class EfUnitOfWork(
         return await strategy.ExecuteAsync(async () =>
         {
             await using var transaction = await _dbContext.Database
-                .BeginTransactionAsync(ct);
+                .BeginTransactionAsync(cancellationToken);
 
             try
             {
-                var result = await _dbContext.SaveChangesAsync(ct);
-                await transaction.CommitAsync(ct);
+                var result = await _dbContext.SaveChangesAsync(cancellationToken);
+                await transaction.CommitAsync(cancellationToken);
                 return result;
             }
             catch
             {
-                await transaction.RollbackAsync(ct);
+                await transaction.RollbackAsync(cancellationToken);
                 throw;
             }
         });
