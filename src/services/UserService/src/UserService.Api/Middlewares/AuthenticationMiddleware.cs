@@ -14,17 +14,6 @@ public sealed class AuthenticationMiddleware(
     private readonly ISessionService _sessionService = sessionService;
     private const string TokenPrefix = "Bearer ";
 
-    private static Task WriteError(ref HttpContext context, string errorMessage)
-    {
-        var response = new { errorMessage };
-
-        context.Response.ContentType = "application/json";
-        context.Response.WriteAsJsonAsync(response);
-        context.Response.StatusCode = StatusCodes.Status401Unauthorized;
-
-        return Task.CompletedTask;
-    }
-
     public async Task InvokeAsync(HttpContext context)
     {
         var authHeader = context.Request.Headers.Authorization.FirstOrDefault();
@@ -37,35 +26,45 @@ public sealed class AuthenticationMiddleware(
 
         if (!authHeader.StartsWith(TokenPrefix))
         {
-            await WriteError(ref context, "Invalid authorization!");
+            await WriteResponseError(ref context, "Invalid authorization!");
             return;
-        }        
+        }
         var token = authHeader[TokenPrefix.Length..].Trim();
 
         var claims = await _tokenService.ReadClaimsAsync(token);
         if (claims is null)
         {
-            await WriteError(ref context, "Invalid token!");
+            await WriteResponseError(ref context, "Invalid token!");
             return;
         }
 
         var sessionId = claims.FindFirst("jti")?.Value;
         if (string.IsNullOrWhiteSpace(sessionId))
         {
-            await WriteError(ref context, "Invalid token claims!");
+            await WriteResponseError(ref context, "Invalid token claims!");
             return;
         }
 
         var session = await _sessionService.ExistAsync(sessionId);
         if (!session)
         {
-            await WriteError(ref context, "Session expired or invalidated!");
+            await WriteResponseError(ref context, "Invalidated session!");
             return;
         }
 
         context.User = claims;
-
         await _next(context);
+    }
+
+    private static Task WriteResponseError(ref HttpContext context, string errorMessage)
+    {
+        var response = new { errorMessage };
+
+        context.Response.ContentType = "application/json";
+        context.Response.WriteAsJsonAsync(response);
+        context.Response.StatusCode = StatusCodes.Status401Unauthorized;
+
+        return Task.CompletedTask;
     }
 }
 

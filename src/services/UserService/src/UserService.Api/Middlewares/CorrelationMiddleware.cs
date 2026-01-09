@@ -6,12 +6,12 @@ using UserService.Application.Interfaces;
 
 namespace UserService.Api.Middlewares;
 
-public sealed class CrossCuttingMiddleware
+public sealed class CorrelationMiddleware
 {
     private readonly RequestDelegate _next;
     private readonly string correlationHeader;
 
-    public CrossCuttingMiddleware(
+    public CorrelationMiddleware(
         RequestDelegate next,
         string correlationHeader)
     {
@@ -47,12 +47,12 @@ public sealed class CrossCuttingMiddleware
     }
 }
 
-public static class CrossCuttingMiddlewareExtensions
+public static class CorrelationMiddlewareExtensions
 {
-    public static IApplicationBuilder UseCrossCuttingMiddleware(
+    public static IApplicationBuilder UseCorrelationMiddleware(
         this IApplicationBuilder builder,
         string correlationHeader
     )
-       => builder.UseMiddleware<CrossCuttingMiddleware>(correlationHeader);
+       => builder.UseMiddleware<CorrelationMiddleware>(correlationHeader);
 }
 

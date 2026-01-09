@@ -13,7 +13,7 @@
   - 📝 RegisterUserDto.cs  
 - 📂 Middlewares  
   - 🔑 AuthenticationMiddleware.cs  
-  - ⚙️ CrossCuttingMiddleware.cs  
+  - ⚙️ CorrelationMiddleware.cs  
   - 🛡️ ExceptionHandlingMiddleware.cs  
 - 📄 Program.cs  
 - 📂 Properties  

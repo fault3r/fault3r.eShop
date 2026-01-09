@@ -76,7 +76,7 @@ if (app.Environment.IsDevelopment())
 
 app.UseRateLimiter();
 
-app.UseCrossCuttingMiddleware(settings.CorrelationHeader);
+app.UseCorrelationMiddleware(settings.CorrelationHeader);
 
 app.UseExceptionHandlingMiddleware(settings.CorrelationHeader);
 

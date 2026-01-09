@@ -135,3 +135,20 @@
    at UserService.Api.Middlewares.AuthenticationMiddleware.InvokeAsync(HttpContext context) in /home/hamed-damavandi/Documents/fault3r.eShop/src/services/UserService/src/UserService.Api/Middlewares/AuthenticationMiddleware.cs:line 62
    at Microsoft.AspNetCore.Authentication.AuthenticationMiddleware.Invoke(HttpContext context)
    at UserService.Api.Middlewares.ExceptionHandlingMiddleware.InvokeAsync(HttpContext context) in /home/hamed-damavandi/Documents/fault3r.eShop/src/services/UserService/src/UserService.Api/Middlewares/ExceptionHandlingMiddleware.cs:line 26
+[2026-01-09 11:18:52 INF] ce1081ff-fa87-4c1d-ab62-079246c72dbb  Incoming request PUT /api/v1/auth/refresh. 
+ [2026-01-09 11:18:53 INF] ce1081ff-fa87-4c1d-ab62-079246c72dbb UserService.Application.UseCases.Commands.RefreshAuthUseCase.RefreshAuthService Refreshing authentication with 'slND48ooZXGuP1SC18eLGZtBK7s5Gov85OqjAxtrJBvZiuuhTzyRHFG5UHsMlViLovi/Bzr1QDJOQ5A4ppWThQ==' refresh token… 
+ [2026-01-09 11:18:53 INF] ce1081ff-fa87-4c1d-ab62-079246c72dbb UserService.Application.UseCases.Commands.RefreshAuthUseCase.RefreshAuthService Session expired or invalidated. User '8fb6f3ba622143f99cd99250c6151d99', session '2dfe62ae31404c1ba9e35dc38a22bce0'! 
+ [2026-01-09 11:18:53 INF] ce1081ff-fa87-4c1d-ab62-079246c72dbb  Completed request PUT /api/v1/auth/refresh with status code 401. 
+ [2026-01-09 11:18:58 INF] 73865e1c-da60-45ef-b873-89c460fe4701  Incoming request PUT /api/v1/auth/refresh. 
+ [2026-01-09 11:18:58 INF] 73865e1c-da60-45ef-b873-89c460fe4701 UserService.Application.UseCases.Commands.RefreshAuthUseCase.RefreshAuthService Refreshing authentication with 'slND48ooZXGuP1SC18eLGZtBK7s5Gov85OqjAxtrJBvZiuuhTzyRHFG5UHsMlViLovi/Bzr1QDJOQ5A4ppWThQ==' refresh token… 
+ [2026-01-09 11:18:58 INF] 73865e1c-da60-45ef-b873-89c460fe4701 UserService.Application.UseCases.Commands.RefreshAuthUseCase.RefreshAuthService Session expired or invalidated. User '8fb6f3ba622143f99cd99250c6151d99', session '2dfe62ae31404c1ba9e35dc38a22bce0'! 
+ [2026-01-09 11:18:58 INF] 73865e1c-da60-45ef-b873-89c460fe4701  Completed request PUT /api/v1/auth/refresh with status code 401. 
+ [2026-01-09 11:19:06 INF] 5507e43c-66ee-4de4-9ea1-ac9b479f138a  Incoming request PUT /api/v1/auth/refresh. 
+ [2026-01-09 11:19:06 INF] 5507e43c-66ee-4de4-9ea1-ac9b479f138a UserService.Application.UseCases.Commands.RefreshAuthUseCase.RefreshAuthService Refreshing authentication with 'slND48ooZXGudP1SC18eLGZtBK7s5Gov85OqjAxtrJBvZiuuhTzyRHFG5UHsMlViLovi/Bzr1QDJOQ5A4ppWThQ==' refresh token… 
+ [2026-01-09 11:19:06 INF] 5507e43c-66ee-4de4-9ea1-ac9b479f138a UserService.Application.UseCases.Commands.RefreshAuthUseCase.RefreshAuthService Session expired or invalidated. User '8fb6f3ba622143f99cd99250c6151d99', session '2dfe62ae31404c1ba9e35dc38a22bce0'! 
+ [2026-01-09 11:19:06 INF] 5507e43c-66ee-4de4-9ea1-ac9b479f138a  Completed request PUT /api/v1/auth/refresh with status code 401. 
+ [2026-01-09 11:21:53 INF] 28e2affa-3a3a-476d-9cf6-bf8641ead5b1  Incoming request DELETE /api/v1/auth/logout. 
+ [2026-01-09 11:21:53 INF] 28e2affa-3a3a-476d-9cf6-bf8641ead5b1  Completed request DELETE /api/v1/auth/logout with status code 401. 
+ [2026-01-09 11:22:02 INF] 5d1f3440-b698-4c19-a7cc-386eba8c9b4d  Incoming request GET /api/v1/users/me. 
+ [2026-01-09 11:22:02 INF] 5d1f3440-b698-4c19-a7cc-386eba8c9b4d  Completed request GET /api/v1/users/me with status code 401. 
+ 
