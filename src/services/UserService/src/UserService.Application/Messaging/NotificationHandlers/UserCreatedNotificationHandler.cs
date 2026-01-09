@@ -7,18 +7,18 @@ using UserService.Application.Services.EmailService.EmailTemplateModels;
 
 namespace UserService.Application.Messaging.NotificationHandlers;
 
-public sealed class UserCreatedNotificationHandler(
+public sealed class UserRegisteredNotificationHandler(
     IEmailTemplateResolver resolver,
     IEmailTemplateRenderer renderer,
     IEmailSender sender
-) : INotificationHandler<UserCreatedNotification>
+) : INotificationHandler<UserRegisteredNotification>
 {
     private readonly IEmailTemplateResolver _resolver = resolver;
     private readonly IEmailTemplateRenderer _renderer = renderer;
     private readonly IEmailSender _sender = sender;
 
     public async Task Handle(
-        UserCreatedNotification notification,
+        UserRegisteredNotification notification,
         CancellationToken cancellationToken = default)
     {
         ArgumentNullException.ThrowIfNull(notification);

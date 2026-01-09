@@ -5,12 +5,12 @@ using UserService.Domain.Aggregates.UserAggregate.Events;
 
 namespace UserService.Application.Messaging.Notifications;
 
-public sealed record UserCreatedNotification : INotification
+public sealed record UserRegisteredNotification : INotification
 {
     public string Email { get; }
     public string FullName { get; }
 
-    public UserCreatedNotification(
+    public UserRegisteredNotification(
         string email,
         string fullName)
     {
@@ -21,7 +21,7 @@ public sealed record UserCreatedNotification : INotification
         FullName = fullName;
     }
 
-    public static UserCreatedNotification FromEvent(UserCreatedEvent @event)
+    public static UserRegisteredNotification FromEvent(UserCreatedEvent @event)
     {
         ArgumentNullException.ThrowIfNull(@event);
 

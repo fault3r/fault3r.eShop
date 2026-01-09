@@ -27,8 +27,7 @@ public sealed class ExceptionHandlingMiddleware
         }
         catch (Exception exception)
         {
-            Log.Error(
-                exception, "Unhandled exception occurred while processing {Method} {Path}.", context.Request.Method, context.Request.Path);
+            Log.Error(exception, "Unhandled exception occurred!");
 
             var response = new
             {

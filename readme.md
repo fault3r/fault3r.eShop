@@ -34,9 +34,9 @@
 - 📂 Messaging  
   - 🔄 DomainEventNotificationMapper.cs  
   - 📂 NotificationHandlers  
-    - 📢 UserCreatedNotificationHandler.cs  
+    - 📢 UserRegisteredNotificationHandler.cs  
   - 📂 Notifications  
-    - 📢 UserCreatedNotification.cs  
+    - 📢 UserRegisteredNotification.cs  
 - 📂 Security / Authentication  
   - 🔐 CryptRefreshToken.cs  
   - 🗂️ SessionData.cs  

@@ -36,13 +36,13 @@ public sealed class CorrelationMiddleware
 
         using (LogContext.PushProperty("CorrelationId", correlationContext.CorrelationId))
         {
-            Log.Information(
-                "Incoming request {Method} {Path}.", context.Request.Method, context.Request.Path);
+            Log.Information("Incoming request {Method} {Path}.",
+                context.Request.Method, context.Request.Path);
 
             await _next(context);
 
-            Log.Information(
-                "Completed request {Method} {Path} with status code {StatusCode}.", context.Request.Method, context.Request.Path, context.Response.StatusCode);
+            Log.Information("Completed request {Method} {Path} with status code {StatusCode}.",
+                context.Request.Method, context.Request.Path, context.Response.StatusCode);
         }
     }
 }
