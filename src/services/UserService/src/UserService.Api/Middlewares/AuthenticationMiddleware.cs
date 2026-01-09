@@ -1,6 +1,5 @@
 
 using System;
-using System.IdentityModel.Tokens.Jwt;
 using UserService.Application.Interfaces;
 
 namespace UserService.Api.Middlewares;
@@ -15,6 +14,17 @@ public sealed class AuthenticationMiddleware(
     private readonly ISessionService _sessionService = sessionService;
     private const string TokenPrefix = "Bearer ";
 
+    private static Task WriteError(ref HttpContext context, string errorMessage)
+    {
+        var response = new { errorMessage };
+
+        context.Response.ContentType = "application/json";
+        context.Response.WriteAsJsonAsync(response);
+        context.Response.StatusCode = StatusCodes.Status401Unauthorized;
+
+        return Task.CompletedTask;
+    }
+
     public async Task InvokeAsync(HttpContext context)
     {
         var authHeader = context.Request.Headers.Authorization.FirstOrDefault();
@@ -27,33 +37,33 @@ public sealed class AuthenticationMiddleware(
 
         if (!authHeader.StartsWith(TokenPrefix))
         {
-            context.Response.StatusCode = StatusCodes.Status401Unauthorized;
+            await WriteError(ref context, "Invalid authorization!");
             return;
         }        
         var token = authHeader[TokenPrefix.Length..].Trim();
 
-        var principal = await _tokenService.ReadClaimsAsync(token);
-        if (principal is null)
+        var claims = await _tokenService.ReadClaimsAsync(token);
+        if (claims is null)
         {
-            context.Response.StatusCode = StatusCodes.Status401Unauthorized;
+            await WriteError(ref context, "Invalid token!");
             return;
         }
 
-        var sessionId = principal.FindFirst("jti")?.Value;
+        var sessionId = claims.FindFirst("jti")?.Value;
         if (string.IsNullOrWhiteSpace(sessionId))
         {
-            context.Response.StatusCode = StatusCodes.Status401Unauthorized;
+            await WriteError(ref context, "Invalid token claims!");
             return;
         }
 
-        var exists = await _sessionService.ExistAsync(sessionId);
-        if (!exists)
+        var session = await _sessionService.ExistAsync(sessionId);
+        if (!session)
         {
-            context.Response.StatusCode = StatusCodes.Status401Unauthorized;
+            await WriteError(ref context, "Session expired or invalidated!");
             return;
         }
 
-        context.User = principal;
+        context.User = claims;
 
         await _next(context);
     }

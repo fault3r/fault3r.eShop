@@ -30,15 +30,15 @@ public sealed class ExceptionHandlingMiddleware
             Log.Error(
                 exception, "Unhandled exception occurred while processing {Method} {Path}.", context.Request.Method, context.Request.Path);
 
-            context.Response.ContentType = "application/json";
             var response = new
             {
-                error = "Internal Server Error",
+                errorMessage = "Internal Server Error",
                 correlationId = context.Items[correlationHeader],
             };
-            context.Response.StatusCode = StatusCodes.Status500InternalServerError;
-
+            
+            context.Response.ContentType = "application/json";
             await context.Response.WriteAsJsonAsync(response);
+            context.Response.StatusCode = StatusCodes.Status500InternalServerError;
         }
     }
 }
