@@ -23,9 +23,6 @@ public sealed class UserController(
     public async Task<IActionResult> ProfileAsync()
     {
         string sessionId = HttpContext.SessionId() ?? string.Empty;
-        
-        if (string.IsNullOrWhiteSpace(sessionId))
-            Unauthorized(new { errorMessage = "Session not found!" });
 
         var query = new UserProfileQuery(
             SessionId: sessionId
@@ -41,7 +38,6 @@ public sealed class UserController(
 
 
 
-//         [Authorize][HttpGet("me")] public async Task<IActionResult> GetProfileAsync() { ... }
 //         [Authorize][HttpPut("me/email")] public async Task<IActionResult> ChangeEmailAsync(ChangeEmailDto dto) { ... }
 //         [Authorize][HttpPut("me/fullname")] public async Task<IActionResult> ChangeFullNameAsync(ChangeFullNameDto dto) { ... }
 //         [Authorize][HttpPut("me/password")] public async Task<IActionResult> ChangePasswordAsync(ChangePasswordDto dto) { ... }
