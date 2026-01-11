@@ -10,7 +10,8 @@ namespace UserService.Domain.DomainServices;
 
 public class UserDomainService(
     IUserRepository userRepository,
-    IPasswordHasher passwordHasher) : IUserDomainService
+    IPasswordHasher passwordHasher
+) : IUserDomainService
 {
     private readonly IUserRepository _userRepository = userRepository;
     private readonly IPasswordHasher _passwordHasher = passwordHasher;
@@ -21,8 +22,7 @@ public class UserDomainService(
     {
         ArgumentNullException.ThrowIfNull(email);
 
-        var exists = await _userRepository
-            .GetByEmailAsync(email, cancellationToken);
+        var exists = await _userRepository.GetByEmailAsync(email, cancellationToken);
 
         return exists is null;
     }
@@ -38,10 +38,12 @@ public class UserDomainService(
         if (!Email.TryFrom(identity, out var email))
             return null;
 
-        var user = await _userRepository!.GetByEmailAsync(email!, cancellationToken);
+        var user = await _userRepository.GetByEmailAsync(email!, cancellationToken);
 
         // ⟶timing attack!
-        string hash = user is null ? _passwordHasher.DummyHash : user.PasswordHash;
+        string hash = user is null
+            ? _passwordHasher.DummyHash
+            : user.PasswordHash;
 
         bool verified = _passwordHasher.Verify(password, hash);
 
