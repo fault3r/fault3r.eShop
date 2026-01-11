@@ -26,8 +26,7 @@ public sealed class EfDomainOutbox(
             throw new ArgumentException($"{nameof(events)} contains null element");
 
         var messages = events
-            .Select(e => OutboxMessage.FromEvent(e, correlationId))
-            .ToList();
+            .Select(e => OutboxMessage.FromEvent(e, correlationId));
 
         await _dbContext.OutboxMessages
             .AddRangeAsync(messages, cancellationToken);

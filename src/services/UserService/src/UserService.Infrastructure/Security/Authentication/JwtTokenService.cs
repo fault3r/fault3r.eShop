@@ -53,11 +53,11 @@ public sealed class JwtTokenService(
 
     public Task<ClaimsPrincipal?> ReadClaimsAsync(string token)
     {
-        ArgumentNullException.ThrowIfNull(token);
+        ArgumentException.ThrowIfNullOrWhiteSpace(token);
 
         var handler = new JwtSecurityTokenHandler
         {
-            MapInboundClaims = false
+            MapInboundClaims = false,
         };
 
         try

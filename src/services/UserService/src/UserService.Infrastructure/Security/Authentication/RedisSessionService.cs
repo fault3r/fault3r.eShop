@@ -27,17 +27,17 @@ public sealed class RedisSessionService(
 
         var payload = JsonSerializer.Serialize(session, jsonSerializerOptions);
 
-        var expiry = session.RefreshTokenExpiresAt - DateTimeOffset.UtcNow;
-        if (expiry <= TimeSpan.Zero) expiry = TimeSpan.FromMinutes(1);
+        var expires = session.RefreshTokenExpiresAt - DateTimeOffset.UtcNow;
+        if (expires <= TimeSpan.Zero) expires = TimeSpan.FromMinutes(1);
 
         var sessionKey = GetSessionKey(session.SessionId);
         var userSessionsKey = GetUserSessionsKey(session.UserId);
 
         var transaction = _database.CreateTransaction();
 
-        _ = transaction.StringSetAsync(sessionKey, payload, expiry);
+        _ = transaction.StringSetAsync(sessionKey, payload, expires);
         _ = transaction.SetAddAsync(userSessionsKey, session.SessionId);
-        _ = transaction.KeyExpireAsync(userSessionsKey, expiry);
+        _ = transaction.KeyExpireAsync(userSessionsKey, expires);
 
         if (!await transaction.ExecuteAsync())
             throw new RedisTransactionFailedException();
@@ -117,16 +117,16 @@ public sealed class RedisSessionService(
 
         var payload = JsonSerializer.Serialize(session, jsonSerializerOptions);
 
-        var expiry = session.RefreshTokenExpiresAt - DateTimeOffset.UtcNow;
-        if (expiry <= TimeSpan.Zero) expiry = TimeSpan.FromMinutes(1);
+        var expires = session.RefreshTokenExpiresAt - DateTimeOffset.UtcNow;
+        if (expires <= TimeSpan.Zero) expires = TimeSpan.FromMinutes(1);
 
         var sessionKey = GetSessionKey(session.SessionId);
         var userSessionsKey = GetUserSessionsKey(session.UserId);
 
         var transaction = _database.CreateTransaction();
 
-        _ = transaction.StringSetAsync(sessionKey, payload, expiry);
-        _ = transaction.KeyExpireAsync(userSessionsKey, expiry);
+        _ = transaction.StringSetAsync(sessionKey, payload, expires);
+        _ = transaction.KeyExpireAsync(userSessionsKey, expires);
 
         if (!await transaction.ExecuteAsync())
             throw new RedisTransactionFailedException();

@@ -49,28 +49,6 @@ public sealed class User : AggregateRoot<User, Identity>
         return user;
     }
 
-    public void ChangeEmail(Email newEmail)
-    {
-        ArgumentNullException.ThrowIfNull(newEmail);
-
-        if (newEmail == Email)
-            return;
-
-        Email = newEmail;
-        RaiseEvent(new UserEmailChangedEvent(Id, Email, FullName));
-    }
-
-    public void ChangePassword(PasswordHash newPasswordHash)
-    {
-        ArgumentNullException.ThrowIfNull(newPasswordHash);
-
-        if (newPasswordHash == PasswordHash)
-            return;
-
-        PasswordHash = newPasswordHash;
-        RaiseEvent(new UserPasswordChangedEvent(Id, Email, FullName));
-    }
-
     public void ChangeFullName(FullName newFullName)
     {
         ArgumentNullException.ThrowIfNull(newFullName);
@@ -82,23 +60,15 @@ public sealed class User : AggregateRoot<User, Identity>
         RaiseEvent(new UserFullNameChangedEvent(Id, Email, FullName));
     }
 
-    public void ChangeRole(Role newRole)
+    public void ChangePassword(PasswordHash newPasswordHash)
     {
-        ArgumentNullException.ThrowIfNull(newRole);
+        ArgumentNullException.ThrowIfNull(newPasswordHash);
 
-        if (newRole == Role)
+        if (newPasswordHash == PasswordHash)
             return;
 
-        Role = newRole;
-        RaiseEvent(new UserRoleChangedEvent(Id, Email, FullName, Role));
-    }
-
-    public void ChangeStatus(Status newStatus)
-    {
-        ArgumentNullException.ThrowIfNull(newStatus);
-
-        Status = newStatus;
-        RaiseEvent(new UserStatusChangedEvent(Id, Email, FullName, Status));
+        PasswordHash = newPasswordHash;
+        RaiseEvent(new UserPasswordChangedEvent(Id, Email, FullName));
     }
 
     #region ⤚EFCore
