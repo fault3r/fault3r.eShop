@@ -12,7 +12,7 @@ public abstract class AggregateRoot<T, TId> : Entity<T, TId>,
         = [];
 
     public IReadOnlyCollection<IDomainEvent> Events
-        => [.. events];      
+        => [..events];      
 
     protected AggregateRoot(TId id) : base(id) { }
 
