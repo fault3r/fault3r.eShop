@@ -26,6 +26,8 @@ public sealed class LoginUserService(
         string password,
         CancellationToken cancellationToken = default)
     {
+        Thread.Sleep(10000);
+
         ArgumentException.ThrowIfNullOrWhiteSpace(identity);
         ArgumentException.ThrowIfNullOrWhiteSpace(password);
 
@@ -34,9 +36,9 @@ public sealed class LoginUserService(
         var user = await _userService.VerifyCredentialsAsync(identity, password, cancellationToken);
         if (user is null)
         {
-            _logger.LogWarning("Wrong credentials!");
+            _logger.LogWarning("Invalid credentials!");
 
-            return Result<LoginUserResult>.Failure("Wrong credentials!");
+            return Result<LoginUserResult>.Failure("Invalid credentials!");
         }
 
         if(user.Status.IsLocked)

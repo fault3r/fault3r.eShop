@@ -25,6 +25,11 @@ public sealed class ExceptionHandlingMiddleware
         {
             await _next(context);
         }
+        catch (OperationCanceledException)
+        {
+            Log.Warning("Operation was canceled!");
+            throw;
+        }
         catch (Exception exception)
         {
             Log.Error(exception, "Unhandled exception occurred!");
@@ -34,7 +39,7 @@ public sealed class ExceptionHandlingMiddleware
                 errorMessage = "Internal Server Error",
                 correlationId = context.Items[correlationHeader],
             };
-            
+
             context.Response.ContentType = "application/json";
             await context.Response.WriteAsJsonAsync(response);
             context.Response.StatusCode = StatusCodes.Status500InternalServerError;
