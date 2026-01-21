@@ -22,13 +22,15 @@ public sealed class UserController(
     [Route("me")]
     public async Task<IActionResult> ProfileAsync()
     {
+        var cancellationToken = HttpContext.RequestAborted;
+
         string sessionId = HttpContext.SessionId() ?? string.Empty;
 
         var query = new UserProfileQuery(
             SessionId: sessionId
         );
 
-        var result = await _mediator.Send(query);
+        var result = await _mediator.Send(query, cancellationToken);
 
         return result.IsFailure
             ? Unauthorized(new { errorMessage = result.Error })

@@ -29,13 +29,15 @@ public sealed class AuthController(
     {
         ArgumentNullException.ThrowIfNull(request);
 
+        var cancellationToken = HttpContext.RequestAborted;
+
         var command = new RegisterUserCommand(
             Email: request.Email,
             Password: request.Password,
             FullName: request.FullName
         );
 
-        var result = await _mediator.Send(command);
+        var result = await _mediator.Send(command, cancellationToken);
 
         if (result.IsFailure)
         {
@@ -57,12 +59,14 @@ public sealed class AuthController(
     {
         ArgumentNullException.ThrowIfNull(request);
 
+        var cancellationToken = HttpContext.RequestAborted;
+
         var command = new LoginUserCommand(
             Identity: request.Identity,
             Password: request.Password
         );
 
-        var result = await _mediator.Send(command);
+        var result = await _mediator.Send(command, cancellationToken);
 
         if (result.IsFailure)
         {
@@ -88,12 +92,14 @@ public sealed class AuthController(
     {
         ArgumentNullException.ThrowIfNull(request);
 
+        var cancellationToken = HttpContext.RequestAborted;
+
         var command = new RefreshAuthCommand(
             AccessToken: request.AccessToken,
             RefreshToken: request.RefreshToken
         );
 
-        var result = await _mediator.Send(command);
+        var result = await _mediator.Send(command, cancellationToken);
 
         if (result.IsFailure)
         {
@@ -114,13 +120,15 @@ public sealed class AuthController(
     [Route("logout")]
     public async Task<IActionResult> LogoutAsync()
     {
+        var cancellationToken = HttpContext.RequestAborted;
+
         string sessionId = HttpContext.SessionId() ?? string.Empty;
 
         var command = new LogoutUserCommand(
             SessionId: sessionId
         );
 
-        var result = await _mediator.Send(command);
+        var result = await _mediator.Send(command, cancellationToken);
 
         if (result.IsFailure)
         {
