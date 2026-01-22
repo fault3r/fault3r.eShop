@@ -29,15 +29,16 @@ public sealed class AuthController(
     {
         ArgumentNullException.ThrowIfNull(request);
 
-        var cancellationToken = HttpContext.RequestAborted;
-
         var command = new RegisterUserCommand(
             Email: request.Email,
             Password: request.Password,
             FullName: request.FullName
         );
 
-        var result = await _mediator.Send(command, cancellationToken);
+        var result = await _mediator.Send(
+            request: command,
+            cancellationToken: HttpContext.RequestAborted
+        );
 
         if (result.IsFailure)
         {
@@ -66,7 +67,10 @@ public sealed class AuthController(
             Password: request.Password
         );
 
-        var result = await _mediator.Send(command, cancellationToken);
+        var result = await _mediator.Send(
+            request: command,
+            cancellationToken: HttpContext.RequestAborted
+        );
 
         if (result.IsFailure)
         {
@@ -99,7 +103,10 @@ public sealed class AuthController(
             RefreshToken: request.RefreshToken
         );
 
-        var result = await _mediator.Send(command, cancellationToken);
+        var result = await _mediator.Send(
+            request: command,
+            cancellationToken: HttpContext.RequestAborted
+        );
 
         if (result.IsFailure)
         {
@@ -128,7 +135,10 @@ public sealed class AuthController(
             SessionId: sessionId
         );
 
-        var result = await _mediator.Send(command, cancellationToken);
+        var result = await _mediator.Send(
+            request: command,
+            cancellationToken: HttpContext.RequestAborted
+        );
 
         if (result.IsFailure)
         {

@@ -28,7 +28,7 @@ public sealed class ExceptionHandlingMiddleware
         catch (OperationCanceledException)
         {
             Log.Warning("Operation was canceled!");
-            throw;
+            throw; // 🛈/dev/null
         }
         catch (Exception exception)
         {
@@ -41,7 +41,7 @@ public sealed class ExceptionHandlingMiddleware
             };
 
             context.Response.ContentType = "application/json";
-            await context.Response.WriteAsJsonAsync(response);
+            await context.Response.WriteAsJsonAsync(response, context.RequestAborted);
             context.Response.StatusCode = StatusCodes.Status500InternalServerError;
         }
     }
