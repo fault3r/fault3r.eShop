@@ -4,7 +4,7 @@ using UserService.Domain.Interfaces;
 
 namespace UserService.Domain.Messaging;
 
-public interface IDomainNotification
+public interface INotificationOutbox
 {
     Task DispatchAsync(
         IEnumerable<IDomainEvent> events,

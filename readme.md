@@ -124,8 +124,8 @@
   - 👥 IUserDomainService.cs  
   - 🧱 IValueObject.cs  
 - 📂 Messaging  
-  - 🔔 IDomainNotification.cs  
-  - 📦 IDomainOutbox.cs  
+  - 🔔 INotificationOutbox.cs  
+  - 📦 IEventOutbox.cs  
 - 📂 Repositories  
   - 📚 IUserRepository.cs  
 - 📂 Security  

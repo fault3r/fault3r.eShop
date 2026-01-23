@@ -4,7 +4,7 @@ using UserService.Domain.Interfaces;
 
 namespace UserService.Domain.Messaging;
 
-public interface IDomainOutbox
+public interface IEventOutbox
 {
     Task EnqueueAsync(
         IEnumerable<IDomainEvent> events,

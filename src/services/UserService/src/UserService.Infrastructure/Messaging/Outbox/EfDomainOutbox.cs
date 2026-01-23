@@ -8,7 +8,7 @@ namespace UserService.Infrastructure.Messaging.Outbox;
 
 public sealed class EfDomainOutbox(
     EfDbContext efDbContext
-) : IDomainOutbox
+) : IEventOutbox
 {
     private readonly EfDbContext _dbContext = efDbContext;
 

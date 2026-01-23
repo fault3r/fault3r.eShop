@@ -10,7 +10,7 @@ namespace UserService.Infrastructure.Messaging.Notification;
 public sealed class MediatorDomainNotification(
     IMediator mediator,
     IEventNotificationMapper mapper
-) : IDomainNotification
+) : INotificationOutbox
 {
     private readonly IMediator _mediator = mediator;
     private readonly IEventNotificationMapper _mapper = mapper;
