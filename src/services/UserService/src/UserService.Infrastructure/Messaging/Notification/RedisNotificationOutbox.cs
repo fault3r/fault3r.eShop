@@ -1,21 +1,18 @@
 
 using System;
-using MediatR;
 using UserService.Application.Interfaces;
 using UserService.Domain.Interfaces;
 using UserService.Domain.Messaging;
 
 namespace UserService.Infrastructure.Messaging.Notification;
 
-public sealed class MediatorDomainNotification(
-    IMediator mediator,
+public sealed class RedisNotificationOutbox(
     IEventNotificationMapper mapper
 ) : INotificationOutbox
 {
-    private readonly IMediator _mediator = mediator;
     private readonly IEventNotificationMapper _mapper = mapper;
 
-    public async Task DispatchAsync(
+    public async Task EnqueueAsync(
         IEnumerable<IDomainEvent> events,
         CancellationToken cancellationToken = default)
     {
@@ -28,7 +25,7 @@ public sealed class MediatorDomainNotification(
         {
             var notification = _mapper.ToNotification(@event);
             
-            await _mediator.Publish(notification, cancellationToken);
+            //await _mediator.Publish(notification, cancellationToken);
         }
     }
 }

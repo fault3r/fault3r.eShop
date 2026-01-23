@@ -174,7 +174,7 @@
   - 🔔 Notification  
     - 📢 MediatorDomainNotification.cs  
   - 📦 Outbox  
-    - 🗄️ EfDomainOutbox.cs  
+    - 🗄️ EfEventOutbox.cs  
     - ⚙️ OutboxMessageConfiguration.cs  
     - 📦 OutboxMessage.cs  
 - 📂 Persistence  

@@ -6,7 +6,7 @@ namespace UserService.Domain.Messaging;
 
 public interface INotificationOutbox
 {
-    Task DispatchAsync(
+    Task EnqueueAsync(
         IEnumerable<IDomainEvent> events,
         CancellationToken cancellationToken = default
     );

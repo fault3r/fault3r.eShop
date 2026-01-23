@@ -32,7 +32,7 @@ public static class DIsExtensions
     {
         services.AddScoped<IUnitOfWork, EfUnitOfWork>();
 
-        services.AddScoped<IEventOutbox, EfDomainOutbox>();
+        services.AddScoped<IEventOutbox, EfEventOutbox>();
 
         services.AddScoped<INotificationOutbox, MediatorDomainNotification>();
 

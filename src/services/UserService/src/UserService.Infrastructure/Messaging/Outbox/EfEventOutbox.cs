@@ -6,7 +6,7 @@ using UserService.Infrastructure.Persistence;
 
 namespace UserService.Infrastructure.Messaging.Outbox;
 
-public sealed class EfDomainOutbox(
+public sealed class EfEventOutbox(
     EfDbContext efDbContext
 ) : IEventOutbox
 {
