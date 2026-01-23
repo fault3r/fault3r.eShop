@@ -40,13 +40,4 @@ public sealed class OutboxMessage
         WriteIndented = false,
         PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
     };
-
-    #region ⤚EFCore
-    public OutboxMessage()
-    {
-        Type = null!;
-        Payload = null!;
-        CorrelationId = null!;
-    }
-    #endregion
 }

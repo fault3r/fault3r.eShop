@@ -44,7 +44,7 @@ public static class DIsExtensions
 
         services.AddSingleton<IPasswordHasher, Argon2PasswordHasher>();
 
-        services.AddSingleton<IEventNotificationMapper, DomainEventNotificationMapper>();
+        services.AddSingleton<IEventNotificationMapper, EventNotificationMapper>();
 
         return services;
     }

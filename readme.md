@@ -32,7 +32,7 @@
   - 🗝️ ISessionService.cs  
   - 🎟️ ITokenService.cs  
 - 📂 Messaging  
-  - 🔄 DomainEventNotificationMapper.cs  
+  - 🔄 EventNotificationMapper.cs  
   - 📂 NotificationHandlers  
     - 📢 UserRegisteredNotificationHandler.cs  
   - 📂 Notifications  

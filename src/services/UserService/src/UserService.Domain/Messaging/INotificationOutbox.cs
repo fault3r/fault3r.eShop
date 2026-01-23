@@ -7,7 +7,8 @@ namespace UserService.Domain.Messaging;
 public interface INotificationOutbox
 {
     Task EnqueueAsync(
-        IEnumerable<IDomainEvent> events,
+        IDomainEvent @event,
+        string correlationId,
         CancellationToken cancellationToken = default
     );
 }
