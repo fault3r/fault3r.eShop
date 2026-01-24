@@ -2,9 +2,10 @@
 using System;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
+using System.Security.Cryptography;
 using System.Text;
 using Microsoft.IdentityModel.Tokens;
-using UserService.Application.Interfaces;
+using UserService.Domain.Security.Authentication;
 using UserService.Infrastructure.Settings;
 
 namespace UserService.Infrastructure.Security.Authentication;
@@ -17,7 +18,7 @@ public sealed class JwtTokenService(
     private readonly TokenValidationParameters _tokenValidation = tokenValidationParameters;
     private readonly JwtSettings _settings = settings;
 
-    public Task<string> GenerateAsync(
+    public string GenerateAccessTokenAsync(
         string sessionId,
         string userId)
     {
@@ -47,11 +48,10 @@ public sealed class JwtTokenService(
             signingCredentials: credential
         );
 
-        return Task.FromResult(
-            new JwtSecurityTokenHandler().WriteToken(token));
+        return new JwtSecurityTokenHandler().WriteToken(token);
     }
 
-    public Task<ClaimsPrincipal?> ReadClaimsAsync(string token)
+    public ClaimsPrincipal? ReadAccessTokenClaimsAsync(string token)
     {
         ArgumentException.ThrowIfNullOrWhiteSpace(token);
 
@@ -64,11 +64,33 @@ public sealed class JwtTokenService(
         {
             var claims = handler.ValidateToken(token, _tokenValidation, out _);
 
-            return Task.FromResult<ClaimsPrincipal?>(claims);
+            return claims;
         }
-        catch
-        {
-            return Task.FromResult<ClaimsPrincipal?>(null);
-        }
+        catch { return null; }
+    }
+
+    public string GenerateRefreshToken()
+    {
+        int length = 64;
+        var bytes = new byte[length];
+
+        RandomNumberGenerator.Fill(bytes);
+
+        return Convert.ToBase64String(bytes);
+    }
+
+    public string HashRefreshToken(string raw)
+    {
+        ArgumentException.ThrowIfNullOrWhiteSpace(raw);
+
+        return BCrypt.Net.BCrypt.HashPassword(raw);
+    }
+
+    public bool VerifyRefreshToken(string raw, string hash)
+    {
+        ArgumentException.ThrowIfNullOrWhiteSpace(raw);
+        ArgumentException.ThrowIfNullOrWhiteSpace(hash);
+
+        return BCrypt.Net.BCrypt.Verify(raw, hash);
     }
 }

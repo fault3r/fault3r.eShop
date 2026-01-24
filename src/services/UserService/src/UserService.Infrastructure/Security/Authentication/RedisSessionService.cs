@@ -2,8 +2,7 @@
 using System;
 using System.Text.Json;
 using StackExchange.Redis;
-using UserService.Application.Interfaces;
-using UserService.Application.Security.Authentication;
+using UserService.Domain.Security.Authentication;
 using UserService.Infrastructure.Exceptions.Security.Authentication;
 using UserService.Infrastructure.Settings;
 

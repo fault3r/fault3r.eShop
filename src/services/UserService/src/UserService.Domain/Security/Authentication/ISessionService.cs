@@ -1,8 +1,7 @@
 
 using System;
-using UserService.Application.Security.Authentication;
 
-namespace UserService.Application.Interfaces;
+namespace UserService.Domain.Security.Authentication;
 
 public interface ISessionService
 {

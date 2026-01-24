@@ -1,7 +1,7 @@
 
 using System;
 
-namespace UserService.Application.Security.Authentication;
+namespace UserService.Domain.Security.Authentication;
 
 public sealed class SessionData
 {

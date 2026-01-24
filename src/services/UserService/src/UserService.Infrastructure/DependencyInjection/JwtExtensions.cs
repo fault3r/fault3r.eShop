@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
-using UserService.Application.Interfaces;
+using UserService.Domain.Security.Authentication;
 using UserService.Infrastructure.Exceptions.DependencyInjection;
 using UserService.Infrastructure.Security.Authentication;
 using UserService.Infrastructure.Settings;

@@ -34,7 +34,7 @@ public static class RateLimiterExtensions
                         QueueLimit = settings.QueueLimit,
                         QueueProcessingOrder = settings.IsOldestFirst 
                             ? QueueProcessingOrder.OldestFirst
-                            : QueueProcessingOrder.NewestFirst
+                            : QueueProcessingOrder.NewestFirst,
                     }
                 )
             );
