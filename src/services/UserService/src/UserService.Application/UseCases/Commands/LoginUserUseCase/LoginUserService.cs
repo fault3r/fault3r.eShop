@@ -2,7 +2,6 @@
 using System;
 using Microsoft.Extensions.Logging;
 using UserService.Application.Interfaces;
-using UserService.Application.Security.Authentication;
 using UserService.Domain.Common;
 using UserService.Domain.Interfaces;
 using UserService.Domain.Security.Authentication;
@@ -42,7 +41,7 @@ public sealed class LoginUserService(
             return Result<LoginUserResult>.Failure("Invalid credentials!");
         }
 
-        if(user.Status.IsLocked)
+        if (user.Status.IsLocked)
         {
             _logger.LogWarning("User is locked!");
 
@@ -51,8 +50,8 @@ public sealed class LoginUserService(
 
         var sessionId = Guid.NewGuid().ToString("N");
 
-        var refreshToken = CryptRefreshToken.Generate();
-        var refreshTokenHash = CryptRefreshToken.Hash(refreshToken);
+        var refreshToken = _tokenService.GenerateRefreshToken();
+        var refreshTokenHash = _tokenService.HashRefreshToken(refreshToken);
 
         var now = DateTimeOffset.UtcNow;
 
@@ -64,7 +63,7 @@ public sealed class LoginUserService(
             CreatedAt = now,
 
             RefreshTokenHash = refreshTokenHash,
-            RefreshTokenExpiresAt = now.AddDays(SessionLifetimeDays),  
+            RefreshTokenExpiresAt = now.AddDays(SessionLifetimeDays),
             LastAccessedAt = now,
 
             UserId = user.Id,
@@ -76,7 +75,7 @@ public sealed class LoginUserService(
 
         await _sessionService.CreateAsync(session, cancellationToken);
 
-        var accessToken = await  _tokenService.GenerateAsync(sessionId, user.Id);
+        var accessToken = _tokenService.GenerateAccessToken(sessionId, user.Id);
 
         _logger.LogInformation("User successfully logged in with '{SessionId}' session.", sessionId);
 

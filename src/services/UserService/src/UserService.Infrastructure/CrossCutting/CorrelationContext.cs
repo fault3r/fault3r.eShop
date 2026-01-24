@@ -1,6 +1,6 @@
 
 using System;
-using UserService.Application.Interfaces;
+using UserService.Application.CrossCutting;
 using UserService.Infrastructure.Exceptions.CrossCutting;
 
 namespace UserService.Infrastructure.CrossCutting;

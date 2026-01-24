@@ -6,8 +6,8 @@ namespace UserService.Domain.Security.Authentication;
 
 public interface ITokenService
 {
-    string GenerateAccessTokenAsync(string sessionId,string userId);
-    ClaimsPrincipal? ReadAccessTokenClaimsAsync(string token);
+    string GenerateAccessToken(string sessionId, string userId);
+    ClaimsPrincipal? ReadAccessTokenClaims(string token);
 
     string GenerateRefreshToken();
     string HashRefreshToken(string raw);

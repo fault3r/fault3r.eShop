@@ -2,7 +2,6 @@
 using System;
 using Microsoft.Extensions.Logging;
 using UserService.Application.Interfaces;
-using UserService.Application.Security.Authentication;
 using UserService.Domain.Common;
 using UserService.Domain.Security.Authentication;
 
@@ -29,7 +28,7 @@ public sealed class RefreshAuthService(
 
         _logger.LogInformation("Refreshing authentication with '{Token}' refresh token…", refreshToken.Trim());
 
-        var claims = await _tokenService.ReadClaimsAsync(accessToken);
+        var claims = _tokenService.ReadAccessTokenClaims(accessToken);
         if (claims is null)
         {
             _logger.LogWarning("Invalid access token!");
@@ -56,7 +55,7 @@ public sealed class RefreshAuthService(
             return Result<RefreshAuthResult>.Failure("Session expired or invalidated!");
         }
 
-        var valid = CryptRefreshToken.Verify(refreshToken, session.RefreshTokenHash);
+        var valid = _tokenService.VerifyRefreshToken(refreshToken, session.RefreshTokenHash);
         if (!valid)
         {
             // ⟶session hijacking!
@@ -68,8 +67,8 @@ public sealed class RefreshAuthService(
             return Result<RefreshAuthResult>.Failure("Invalid refresh token!");
         }
 
-        var newRefreshToken = CryptRefreshToken.Generate();
-        var newRefreshTokenHash = CryptRefreshToken.Hash(newRefreshToken);
+        var newRefreshToken = _tokenService.GenerateRefreshToken();
+        var newRefreshTokenHash = _tokenService.HashRefreshToken(newRefreshToken);
         var now = DateTimeOffset.UtcNow;
 
         session.RefreshTokenHash = newRefreshTokenHash;
@@ -78,7 +77,7 @@ public sealed class RefreshAuthService(
 
         await _sessionService.UpdateAsync(session, cancellationToken);
 
-        var newAccessToken = await _tokenService.GenerateAsync(sessionId, userId);
+        var newAccessToken = _tokenService.GenerateAccessToken(sessionId, userId);
 
         _logger.LogInformation("Athentication successfully refreshed for user '{UserId}' with '{SessionId}' session.", userId, sessionId);
 
