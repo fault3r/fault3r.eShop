@@ -11,13 +11,11 @@ namespace UserService.Infrastructure.UnitOfWork;
 public sealed class EfUnitOfWork(
     EfDbContext efDbContext,
     IEventOutbox outbox,
-    INotificationOutbox notification,
     IUserRepository userRepository
 ) : IUnitOfWork
 {
     private readonly EfDbContext _dbContext = efDbContext;
     public IEventOutbox EventOutbox { get; } = outbox;
-    public INotificationOutbox NotificationOutbox { get; } = notification;
     public IUserRepository UserRepository { get; } = userRepository;
 
     public async Task<int> CommitAsync(CancellationToken cancellationToken = default)

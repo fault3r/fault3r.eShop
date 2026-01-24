@@ -16,7 +16,7 @@ public sealed class EventNotificationMapper : IEventNotificationMapper
 
         return @event switch
         {
-            UserCreatedEvent e => UserRegisteredNotification.FromEvent(e),
+            UserRegisteredEvent e => UserRegisteredNotification.FromEvent(e),
             _ => throw new InvalidOperationException("unsupported domain event")
         };
     }

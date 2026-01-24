@@ -10,21 +10,21 @@ using UserService.Infrastructure.Settings;
 
 namespace UserService.Infrastructure.DependencyInjection;
 
-public static class RedisExtensions
+public static class SessionExtensions
 {
-    public static IServiceCollection AddRedisCaching(
+    public static IServiceCollection AddApplicationSession(
         this IServiceCollection services,
         IConfiguration configuration)
     {
         var settings = configuration
-            .GetSection(nameof(RedisSettings))
-            .Get<RedisSettings>()
-                ?? throw new MissingRedisSettingsException();    
+            .GetSection(nameof(SessionSettings))
+            .Get<SessionSettings>()
+                ?? throw new MissingSessionSettingsException();    
 
-        services.AddSingleton<IConnectionMultiplexer>(_ =>
+        services.AddSingleton<ISessionService>(provider =>
         {
-            return ConnectionMultiplexer.Connect(
-                settings.ToConnectionString());
+            var connection = provider.GetRequiredService<IConnectionMultiplexer>();
+            return new RedisSessionService(connection, settings);
         });
 
         return services;

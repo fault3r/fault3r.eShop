@@ -1,10 +1,9 @@
+
 using System;
-using System.Text.Json;
-using UserService.Domain.Interfaces;
 
-namespace UserService.Infrastructure.Messaging.Notification;
+namespace UserService.Domain.Messaging.Notification;
 
-public class NotificationMessage
+public sealed record NotificationMessage
 {
     public Guid Id { get; init; }
     public DateTime EnqueuedOn { get; init; }

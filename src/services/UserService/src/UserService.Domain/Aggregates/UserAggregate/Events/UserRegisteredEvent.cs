@@ -5,13 +5,13 @@ using UserService.Domain.ValueObjects;
 
 namespace UserService.Domain.Aggregates.UserAggregate.Events;
 
-public sealed record UserCreatedEvent : DomainEvent
+public sealed record UserRegisteredEvent : DomainEvent
 {
     public Identity UserId { get; }
     public Email Email { get; }
     public FullName FullName { get; }
 
-    public UserCreatedEvent(
+    public UserRegisteredEvent(
         Identity userId,
         Email email,
         FullName fullName)

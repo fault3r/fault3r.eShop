@@ -78,7 +78,7 @@
   - 🧱 ValueObject.cs  
 - 📂 Aggregates / UserAggregate  
   - 📂 Events  
-    - 🎉 UserCreatedEvent.cs  
+    - 🎉 UserRegisteredEvent.cs  
     - ✉️ UserEmailChangedEvent.cs  
     - 📝 UserFullNameChangedEvent.cs  
     - 🔑 UserPasswordChangedEvent.cs  

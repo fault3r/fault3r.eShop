@@ -1,13 +1,12 @@
 
 using System;
-using UserService.Domain.Interfaces;
 
-namespace UserService.Domain.Messaging;
+namespace UserService.Domain.Messaging.Notification;
 
 public interface INotificationOutbox
 {
     Task EnqueueAsync(
-        IDomainEvent @event,
+        NotificationMessage notification,
         string correlationId,
         CancellationToken cancellationToken = default
     );

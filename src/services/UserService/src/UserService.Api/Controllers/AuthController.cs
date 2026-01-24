@@ -60,8 +60,6 @@ public sealed class AuthController(
     {
         ArgumentNullException.ThrowIfNull(request);
 
-        var cancellationToken = HttpContext.RequestAborted;
-
         var command = new LoginUserCommand(
             Identity: request.Identity,
             Password: request.Password
@@ -96,8 +94,6 @@ public sealed class AuthController(
     {
         ArgumentNullException.ThrowIfNull(request);
 
-        var cancellationToken = HttpContext.RequestAborted;
-
         var command = new RefreshAuthCommand(
             AccessToken: request.AccessToken,
             RefreshToken: request.RefreshToken
@@ -127,8 +123,6 @@ public sealed class AuthController(
     [Route("logout")]
     public async Task<IActionResult> LogoutAsync()
     {
-        var cancellationToken = HttpContext.RequestAborted;
-
         string sessionId = HttpContext.SessionId() ?? string.Empty;
 
         var command = new LogoutUserCommand(
@@ -150,6 +144,3 @@ public sealed class AuthController(
         return NoContent();
     }
 }
-
-
-

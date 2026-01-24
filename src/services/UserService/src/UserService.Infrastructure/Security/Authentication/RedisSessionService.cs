@@ -10,11 +10,11 @@ namespace UserService.Infrastructure.Security.Authentication;
 
 public sealed class RedisSessionService(
     IConnectionMultiplexer redisConnection,
-    RedisSettings settings
+    SessionSettings settings
 ) : ISessionService
 {
     private readonly IDatabase _database = redisConnection.GetDatabase();
-    private readonly RedisSettings _settings = settings;
+    private readonly SessionSettings _settings = settings;
 
     public async Task CreateAsync(
         SessionData session,

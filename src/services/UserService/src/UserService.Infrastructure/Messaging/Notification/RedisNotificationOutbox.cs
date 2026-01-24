@@ -3,8 +3,7 @@ using System;
 using System.Text.Json;
 using StackExchange.Redis;
 using UserService.Application.Interfaces;
-using UserService.Domain.Interfaces;
-using UserService.Domain.Messaging;
+using UserService.Domain.Messaging.Notification;
 
 namespace UserService.Infrastructure.Messaging.Notification;
 
@@ -17,23 +16,21 @@ public sealed class RedisNotificationOutbox(
     private readonly IEventNotificationMapper _mapper = mapper;
 
     public async Task EnqueueAsync(
-        IDomainEvent @event,
+        NotificationMessage notification,
         string correlationId,
         CancellationToken cancellationToken = default)
     {
-        ArgumentNullException.ThrowIfNull(@event);
+        ArgumentNullException.ThrowIfNull(notification);
 
-        var notification = _mapper.ToNotification(@event);
-
-        var message = new NotificationMessage
-        {
-            Id = @event.EventId,
-            EnqueuedOn = @event.OccurredOn,
-            Type = notification.GetType().Name,
-            Payload = JsonSerializer.Serialize(
-                notification, notification.GetType(), jsonSerializerOptions),
-            CorrelationId = correlationId,
-        };
+        // var message = new NotificationMessage
+        // {
+        //     Id = @event.EventId,
+        //     EnqueuedOn = @event.OccurredOn,
+        //     Type = notification.GetType().Name,
+        //     Payload = JsonSerializer.Serialize(
+        //         notification, notification.GetType(), jsonSerializerOptions),
+        //     CorrelationId = correlationId,
+        // };
 
         var key = $"notification:{message.Id}";
         var payload = JsonSerializer.Serialize(message, jsonSerializerOptions);

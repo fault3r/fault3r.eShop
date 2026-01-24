@@ -74,7 +74,7 @@ public sealed class RegisterUserService(
         await _uow.EventOutbox.EnqueueAsync(user.Events, _correlation.CorrelationId, cancellationToken);
         await _uow.CommitAsync(cancellationToken);
 
-        await _uow.NotificationOutbox.EnqueueAsync(user.Events.FirstOrDefault()!, cancellationToken);
+        //await _uow.NotificationOutbox.EnqueueAsync(user.Events.FirstOrDefault()!, cancellationToken);
 
         user.ClearEvents();
 

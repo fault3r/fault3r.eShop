@@ -10,7 +10,6 @@ public interface IUnitOfWork
     Task<int> CommitAsync(CancellationToken cancellationToken = default);
     
     IEventOutbox EventOutbox { get; }
-    INotificationOutbox NotificationOutbox { get; }
 
     IUserRepository UserRepository { get; }
 }

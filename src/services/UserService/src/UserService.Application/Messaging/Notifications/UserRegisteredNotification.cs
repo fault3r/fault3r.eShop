@@ -21,7 +21,7 @@ public sealed record UserRegisteredNotification : INotification
         FullName = fullName;
     }
 
-    public static UserRegisteredNotification FromEvent(UserCreatedEvent @event)
+    public static UserRegisteredNotification FromEvent(UserRegisteredEvent @event)
     {
         ArgumentNullException.ThrowIfNull(@event);
 

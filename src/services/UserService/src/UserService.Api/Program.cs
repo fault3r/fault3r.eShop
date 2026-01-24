@@ -29,6 +29,8 @@ builder.Services.AddJwtAuthentication(builder.Configuration);
 
 builder.Services.AddRedisCaching(builder.Configuration);
 
+builder.Services.AddApplicationSession(builder.Configuration);
+
 builder.Services.AddApiVersioning(settings);
 
 builder.Services.AddControllers(config =>
