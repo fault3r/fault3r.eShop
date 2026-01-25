@@ -6,7 +6,7 @@ using UserService.Domain.Messaging.Notification;
 
 namespace UserService.Application.Interfaces;
 
-public interface IEventNotificationMapper
+public interface INotificationMapper
 {
     INotification FromEvent(IDomainEvent domainEvent);
     INotification FromNotificationMessage(NotificationMessage notificationMessage);

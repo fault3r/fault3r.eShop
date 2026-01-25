@@ -3,41 +3,52 @@ using System;
 using System.Text.Json;
 using StackExchange.Redis;
 using UserService.Application.Interfaces;
+using UserService.Domain.Interfaces;
 using UserService.Domain.Messaging.Notification;
 
 namespace UserService.Infrastructure.Messaging.Notification;
 
 public sealed class RedisNotificationOutbox(
     IConnectionMultiplexer redisConnection,
-    IEventNotificationMapper mapper
+    INotificationMapper mapper
 ) : INotificationOutbox
 {
     private readonly IDatabase _database = redisConnection.GetDatabase();
-    private readonly IEventNotificationMapper _mapper = mapper;
+    private readonly INotificationMapper _mapper = mapper;
+
+    private const string queue = "notification";
 
     public async Task EnqueueAsync(
-        NotificationMessage notification,
+        IDomainEvent @event,
         string correlationId,
         CancellationToken cancellationToken = default)
     {
-        ArgumentNullException.ThrowIfNull(notification);
+        ArgumentNullException.ThrowIfNull(@event);
 
-        // var message = new NotificationMessage
-        // {
-        //     Id = @event.EventId,
-        //     EnqueuedOn = @event.OccurredOn,
-        //     Type = notification.GetType().Name,
-        //     Payload = JsonSerializer.Serialize(
-        //         notification, notification.GetType(), jsonSerializerOptions),
-        //     CorrelationId = correlationId,
-        // };
-        // var key = $"notification:{message.Id}";
-        // var payload = JsonSerializer.Serialize(message, jsonSerializerOptions);
+        var notification = _mapper.FromEvent(@event);
 
-        // await _database.ListLeftPushAsync(key, payload);
-        var nm = new NotificationMessage { CorrelationId = null, Payload = null, Type = null };
-        var aa = _mapper.FromNotificationMessage(nm);
+        var message = new NotificationMessage
+        {
+            Id = @event.EventId,
+            EnqueuedOn = @event.OccurredOn,
+            Type = notification.GetType().Name,
+            Payload = JsonSerializer.Serialize(
+                notification, notification.GetType(), jsonSerializerOptions),
+            CorrelationId = correlationId,
+        };
 
+        var payload = JsonSerializer.Serialize(message, jsonSerializerOptions);
+
+        await _database.ListLeftPushAsync(queue, payload);
+    }
+
+    public async Task<NotificationMessage?> DequeueAsync(CancellationToken cancellationToken = default)
+    {
+        var payload = await _database.ListRightPopAsync(queue);
+
+        if (payload.IsNullOrEmpty) return null;
+
+        return JsonSerializer.Deserialize<NotificationMessage>(payload!);
     }
 
     private readonly JsonSerializerOptions jsonSerializerOptions = new()
