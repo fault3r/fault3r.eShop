@@ -31,11 +31,12 @@ public sealed class RedisNotificationOutbox(
         //         notification, notification.GetType(), jsonSerializerOptions),
         //     CorrelationId = correlationId,
         // };
+        // var key = $"notification:{message.Id}";
+        // var payload = JsonSerializer.Serialize(message, jsonSerializerOptions);
 
-        var key = $"notification:{message.Id}";
-        var payload = JsonSerializer.Serialize(message, jsonSerializerOptions);
-
-        await _database.ListLeftPushAsync(key, payload);
+        // await _database.ListLeftPushAsync(key, payload);
+        var nm = new NotificationMessage { CorrelationId = null, Payload = null, Type = null };
+        var aa = _mapper.FromNotificationMessage(nm);
 
     }
 
