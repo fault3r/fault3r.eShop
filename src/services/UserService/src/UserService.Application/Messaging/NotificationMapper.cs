@@ -31,7 +31,7 @@ public sealed class NotificationMapper : INotificationMapper
         var res = message.Type switch
         {
             nameof(UserRegisteredNotification) =>
-                JsonSerializer.Deserialize<UserRegisteredNotification>(message.Payload),
+                JsonSerializer.Deserialize<UserRegisteredNotification>(message.Payload, jsonSerializerOptions),
             _ => throw new Exception()
         };
 

@@ -48,7 +48,7 @@ public sealed class RedisNotificationOutbox(
 
         if (payload.IsNullOrEmpty) return null;
 
-        return JsonSerializer.Deserialize<NotificationMessage>(payload!);
+        return JsonSerializer.Deserialize<NotificationMessage>(payload!, jsonSerializerOptions);
     }
 
     private readonly JsonSerializerOptions jsonSerializerOptions = new()

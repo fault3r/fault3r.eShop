@@ -151,4 +151,132 @@ Note that only mapped properties can be bound to constructor parameters. Navigat
  [2026-01-25 21:55:40 INF] 08898941-dc33-4f7c-b5fb-baf0ec4c1db1 UserService.Application.UseCases.Commands.RegisterUserUseCase.RegisterUserService Registering user with 'strin@JH.CVg' email address… 
  [2026-01-25 21:55:44 INF] 08898941-dc33-4f7c-b5fb-baf0ec4c1db1 UserService.Application.UseCases.Commands.RegisterUserUseCase.RegisterUserService User successfully registered with '17af890b1a5e49f3afd789619200f15d' identity. 
  [2026-01-25 21:55:44 INF] 08898941-dc33-4f7c-b5fb-baf0ec4c1db1  Completed request POST /api/v1/auth/register with status code 201. 
- 
+ [2026-01-25 22:00:31 INF] ac4c2f17-fce7-4d12-b549-a7bf219e8aba  Incoming request POST /api/v1/auth/register. 
+ [2026-01-25 22:00:32 INF] ac4c2f17-fce7-4d12-b549-a7bf219e8aba UserService.Application.UseCases.Commands.RegisterUserUseCase.RegisterUserService Registering user with 'strihhn@JH.CVg' email address… 
+ [2026-01-25 22:00:36 INF] ac4c2f17-fce7-4d12-b549-a7bf219e8aba UserService.Application.UseCases.Commands.RegisterUserUseCase.RegisterUserService User successfully registered with 'cff787c085ef44c89b40e3180da91fef' identity. 
+ [2026-01-25 22:00:36 INF] ac4c2f17-fce7-4d12-b549-a7bf219e8aba  Completed request POST /api/v1/auth/register with status code 201. 
+ [2026-01-25 22:00:38 FTL]  Microsoft.Extensions.Hosting.Internal.Host The HostOptions.BackgroundServiceExceptionBehavior is configured to StopHost. A BackgroundService has thrown an unhandled exception, and the IHost instance is stopping. To avoid this behavior, configure this to Ignore; however the BackgroundService will not be restarted. 
+ System.Text.Json.JsonException: JSON deserialization for type 'UserService.Domain.Messaging.Notification.NotificationMessage' was missing required properties including: 'Type', 'Payload', 'CorrelationId'.
+   at System.Text.Json.ThrowHelper.ThrowJsonException_JsonRequiredPropertyMissing(JsonTypeInfo parent, BitArray assignedOrNotRequiredPropertiesSet)
+   at System.Text.Json.Serialization.Converters.ObjectDefaultConverter`1.OnTryRead(Utf8JsonReader& reader, Type typeToConvert, JsonSerializerOptions options, ReadStack& state, T& value)
+   at System.Text.Json.Serialization.JsonConverter`1.TryRead(Utf8JsonReader& reader, Type typeToConvert, JsonSerializerOptions options, ReadStack& state, T& value, Boolean& isPopulatedValue)
+   at System.Text.Json.Serialization.JsonConverter`1.ReadCore(Utf8JsonReader& reader, T& value, JsonSerializerOptions options, ReadStack& state)
+   at System.Text.Json.Serialization.Metadata.JsonTypeInfo`1.Deserialize(Utf8JsonReader& reader, ReadStack& state)
+   at System.Text.Json.JsonSerializer.ReadFromSpan[TValue](ReadOnlySpan`1 utf8Json, JsonTypeInfo`1 jsonTypeInfo, Nullable`1 actualByteCount)
+   at System.Text.Json.JsonSerializer.ReadFromSpan[TValue](ReadOnlySpan`1 json, JsonTypeInfo`1 jsonTypeInfo)
+   at System.Text.Json.JsonSerializer.Deserialize[TValue](String json, JsonSerializerOptions options)
+   at UserService.Infrastructure.Messaging.Notification.RedisNotificationOutbox.DequeueAsync(CancellationToken cancellationToken) in /home/hamed-damavandi/Documents/fault3r.eShop/src/services/UserService/src/UserService.Infrastructure/Messaging/Notification/RedisNotificationOutbox.cs:line 51
+   at UserService.Infrastructure.Messaging.Notification.MediatorNotificationPublisherBackgroundService.ExecuteAsync(CancellationToken cancellationToken) in /home/hamed-damavandi/Documents/fault3r.eShop/src/services/UserService/src/UserService.Infrastructure/Messaging/Notification/MediatorNotificationPublisherBackgroundService.cs:line 27
+   at Microsoft.Extensions.Hosting.Internal.Host.TryExecuteBackgroundServiceAsync(BackgroundService backgroundService)
+[2026-01-25 22:11:14 INF] d74e7d84-90c2-490e-a24c-85117761e201  Incoming request GET /. 
+ [2026-01-25 22:11:15 INF] d74e7d84-90c2-490e-a24c-85117761e201  Completed request GET / with status code 200. 
+ [2026-01-25 22:11:30 INF] 24abaa03-43de-4bb7-9d38-a1ea455a7353  Incoming request POST /api/v1/auth/register. 
+ [2026-01-25 22:11:30 INF] 24abaa03-43de-4bb7-9d38-a1ea455a7353 UserService.Application.UseCases.Commands.RegisterUserUseCase.RegisterUserService Registering user with 'string@qqq.com' email address… 
+ [2026-01-25 22:11:34 INF] 24abaa03-43de-4bb7-9d38-a1ea455a7353 UserService.Application.UseCases.Commands.RegisterUserUseCase.RegisterUserService User successfully registered with '4066d75bd87643609610e216a3367ba1' identity. 
+ [2026-01-25 22:11:34 INF] 24abaa03-43de-4bb7-9d38-a1ea455a7353  Completed request POST /api/v1/auth/register with status code 201. 
+ [2026-01-25 22:11:37 FTL]  Microsoft.Extensions.Hosting.Internal.Host The HostOptions.BackgroundServiceExceptionBehavior is configured to StopHost. A BackgroundService has thrown an unhandled exception, and the IHost instance is stopping. To avoid this behavior, configure this to Ignore; however the BackgroundService will not be restarted. 
+ System.Text.Json.JsonException: JSON deserialization for type 'UserService.Domain.Messaging.Notification.NotificationMessage' was missing required properties including: 'Type', 'Payload', 'CorrelationId'.
+   at System.Text.Json.ThrowHelper.ThrowJsonException_JsonRequiredPropertyMissing(JsonTypeInfo parent, BitArray assignedOrNotRequiredPropertiesSet)
+   at System.Text.Json.Serialization.Converters.ObjectDefaultConverter`1.OnTryRead(Utf8JsonReader& reader, Type typeToConvert, JsonSerializerOptions options, ReadStack& state, T& value)
+   at System.Text.Json.Serialization.JsonConverter`1.TryRead(Utf8JsonReader& reader, Type typeToConvert, JsonSerializerOptions options, ReadStack& state, T& value, Boolean& isPopulatedValue)
+   at System.Text.Json.Serialization.JsonConverter`1.ReadCore(Utf8JsonReader& reader, T& value, JsonSerializerOptions options, ReadStack& state)
+   at System.Text.Json.Serialization.Metadata.JsonTypeInfo`1.Deserialize(Utf8JsonReader& reader, ReadStack& state)
+   at System.Text.Json.JsonSerializer.ReadFromSpan[TValue](ReadOnlySpan`1 utf8Json, JsonTypeInfo`1 jsonTypeInfo, Nullable`1 actualByteCount)
+   at System.Text.Json.JsonSerializer.ReadFromSpan[TValue](ReadOnlySpan`1 json, JsonTypeInfo`1 jsonTypeInfo)
+   at System.Text.Json.JsonSerializer.Deserialize[TValue](String json, JsonSerializerOptions options)
+   at UserService.Infrastructure.Messaging.Notification.RedisNotificationOutbox.DequeueAsync(CancellationToken cancellationToken) in /home/hamed-damavandi/Documents/fault3r.eShop/src/services/UserService/src/UserService.Infrastructure/Messaging/Notification/RedisNotificationOutbox.cs:line 51
+   at UserService.Infrastructure.Messaging.Notification.MediatorNotificationPublisherBackgroundService.ExecuteAsync(CancellationToken cancellationToken) in /home/hamed-damavandi/Documents/fault3r.eShop/src/services/UserService/src/UserService.Infrastructure/Messaging/Notification/MediatorNotificationPublisherBackgroundService.cs:line 27
+   at Microsoft.Extensions.Hosting.Internal.Host.TryExecuteBackgroundServiceAsync(BackgroundService backgroundService)
+[2026-01-25 22:12:32 INF] f00201b5-ab35-40a2-911c-3f6dba636239  Incoming request POST /api/v1/auth/register. 
+ [2026-01-25 22:12:49 INF] f00201b5-ab35-40a2-911c-3f6dba636239 UserService.Application.UseCases.Commands.RegisterUserUseCase.RegisterUserService Registering user with 'string@qqq.com' email address… 
+ [2026-01-25 22:12:52 WRN] f00201b5-ab35-40a2-911c-3f6dba636239 UserService.Application.UseCases.Commands.RegisterUserUseCase.RegisterUserService User with this email address already exists! 
+ [2026-01-25 22:12:52 INF] f00201b5-ab35-40a2-911c-3f6dba636239  Completed request POST /api/v1/auth/register with status code 409. 
+ [2026-01-25 22:13:38 INF] 3adc2022-c0ca-4d88-a086-b138f4eb151f  Incoming request POST /api/v1/auth/register. 
+ [2026-01-25 22:13:38 INF] 3adc2022-c0ca-4d88-a086-b138f4eb151f UserService.Application.UseCases.Commands.RegisterUserUseCase.RegisterUserService Registering user with 'staaring@qqq.com' email address… 
+ [2026-01-25 22:13:40 INF] 3adc2022-c0ca-4d88-a086-b138f4eb151f UserService.Application.UseCases.Commands.RegisterUserUseCase.RegisterUserService User successfully registered with '1185816e4ca3469abd3cb92bc884445b' identity. 
+ [2026-01-25 22:13:40 INF] 3adc2022-c0ca-4d88-a086-b138f4eb151f  Completed request POST /api/v1/auth/register with status code 201. 
+ [2026-01-25 22:14:05 FTL]  Microsoft.Extensions.Hosting.Internal.Host The HostOptions.BackgroundServiceExceptionBehavior is configured to StopHost. A BackgroundService has thrown an unhandled exception, and the IHost instance is stopping. To avoid this behavior, configure this to Ignore; however the BackgroundService will not be restarted. 
+ System.Text.Json.JsonException: JSON deserialization for type 'UserService.Domain.Messaging.Notification.NotificationMessage' was missing required properties including: 'Type', 'Payload', 'CorrelationId'.
+   at System.Text.Json.ThrowHelper.ThrowJsonException_JsonRequiredPropertyMissing(JsonTypeInfo parent, BitArray assignedOrNotRequiredPropertiesSet)
+   at System.Text.Json.Serialization.Converters.ObjectDefaultConverter`1.OnTryRead(Utf8JsonReader& reader, Type typeToConvert, JsonSerializerOptions options, ReadStack& state, T& value)
+   at System.Text.Json.Serialization.JsonConverter`1.TryRead(Utf8JsonReader& reader, Type typeToConvert, JsonSerializerOptions options, ReadStack& state, T& value, Boolean& isPopulatedValue)
+   at System.Text.Json.Serialization.JsonConverter`1.ReadCore(Utf8JsonReader& reader, T& value, JsonSerializerOptions options, ReadStack& state)
+   at System.Text.Json.Serialization.Metadata.JsonTypeInfo`1.Deserialize(Utf8JsonReader& reader, ReadStack& state)
+   at System.Text.Json.JsonSerializer.ReadFromSpan[TValue](ReadOnlySpan`1 utf8Json, JsonTypeInfo`1 jsonTypeInfo, Nullable`1 actualByteCount)
+   at System.Text.Json.JsonSerializer.ReadFromSpan[TValue](ReadOnlySpan`1 json, JsonTypeInfo`1 jsonTypeInfo)
+   at System.Text.Json.JsonSerializer.Deserialize[TValue](String json, JsonSerializerOptions options)
+   at UserService.Infrastructure.Messaging.Notification.RedisNotificationOutbox.DequeueAsync(CancellationToken cancellationToken) in /home/hamed-damavandi/Documents/fault3r.eShop/src/services/UserService/src/UserService.Infrastructure/Messaging/Notification/RedisNotificationOutbox.cs:line 51
+   at UserService.Infrastructure.Messaging.Notification.MediatorNotificationPublisherBackgroundService.ExecuteAsync(CancellationToken cancellationToken) in /home/hamed-damavandi/Documents/fault3r.eShop/src/services/UserService/src/UserService.Infrastructure/Messaging/Notification/MediatorNotificationPublisherBackgroundService.cs:line 27
+   at Microsoft.Extensions.Hosting.Internal.Host.TryExecuteBackgroundServiceAsync(BackgroundService backgroundService)
+[2026-01-25 22:15:22 INF] 300320f3-5bc1-49db-88db-def2f89fb17a  Incoming request POST /api/v1/auth/register. 
+ [2026-01-25 22:15:22 INF] 300320f3-5bc1-49db-88db-def2f89fb17a UserService.Application.UseCases.Commands.RegisterUserUseCase.RegisterUserService Registering user with 'stawwwddwaring@qqq.com' email address… 
+ [2026-01-25 22:15:26 INF] 300320f3-5bc1-49db-88db-def2f89fb17a UserService.Application.UseCases.Commands.RegisterUserUseCase.RegisterUserService User successfully registered with '6259a5fdbab74e4eb24728a93ea1502a' identity. 
+ [2026-01-25 22:15:26 INF] 300320f3-5bc1-49db-88db-def2f89fb17a  Completed request POST /api/v1/auth/register with status code 201. 
+ [2026-01-25 22:15:28 FTL]  Microsoft.Extensions.Hosting.Internal.Host The HostOptions.BackgroundServiceExceptionBehavior is configured to StopHost. A BackgroundService has thrown an unhandled exception, and the IHost instance is stopping. To avoid this behavior, configure this to Ignore; however the BackgroundService will not be restarted. 
+ System.ArgumentNullException: Value cannot be null. (Parameter 'email')
+   at System.ArgumentNullException.Throw(String paramName)
+   at System.ArgumentNullException.ThrowIfNull(Object argument, String paramName)
+   at System.ArgumentException.ThrowNullOrEmptyException(String argument, String paramName)
+   at System.ArgumentException.ThrowIfNullOrEmpty(String argument, String paramName)
+   at UserService.Application.Messaging.Notifications.UserRegisteredNotification..ctor(String email, String fullName) in /home/hamed-damavandi/Documents/fault3r.eShop/src/services/UserService/src/UserService.Application/Messaging/Notifications/UserRegisteredNotification.cs:line 17
+   at .ctor(String, String, Object, Object)
+   at System.Text.Json.Serialization.Converters.SmallObjectWithParameterizedConstructorConverter`5.CreateObject(ReadStackFrame& frame)
+   at System.Text.Json.Serialization.Converters.ObjectWithParameterizedConstructorConverter`1.OnTryRead(Utf8JsonReader& reader, Type typeToConvert, JsonSerializerOptions options, ReadStack& state, T& value)
+   at System.Text.Json.Serialization.JsonConverter`1.TryRead(Utf8JsonReader& reader, Type typeToConvert, JsonSerializerOptions options, ReadStack& state, T& value, Boolean& isPopulatedValue)
+   at System.Text.Json.Serialization.JsonConverter`1.ReadCore(Utf8JsonReader& reader, T& value, JsonSerializerOptions options, ReadStack& state)
+   at System.Text.Json.Serialization.Metadata.JsonTypeInfo`1.Deserialize(Utf8JsonReader& reader, ReadStack& state)
+   at System.Text.Json.JsonSerializer.ReadFromSpan[TValue](ReadOnlySpan`1 utf8Json, JsonTypeInfo`1 jsonTypeInfo, Nullable`1 actualByteCount)
+   at System.Text.Json.JsonSerializer.ReadFromSpan[TValue](ReadOnlySpan`1 json, JsonTypeInfo`1 jsonTypeInfo)
+   at System.Text.Json.JsonSerializer.Deserialize[TValue](String json, JsonSerializerOptions options)
+   at UserService.Application.Messaging.NotificationMapper.FromNotificationMessage(NotificationMessage message) in /home/hamed-damavandi/Documents/fault3r.eShop/src/services/UserService/src/UserService.Application/Messaging/NotificationMapper.cs:line 34
+   at UserService.Infrastructure.Messaging.Notification.MediatorNotificationPublisherBackgroundService.ExecuteAsync(CancellationToken cancellationToken) in /home/hamed-damavandi/Documents/fault3r.eShop/src/services/UserService/src/UserService.Infrastructure/Messaging/Notification/MediatorNotificationPublisherBackgroundService.cs:line 35
+   at Microsoft.Extensions.Hosting.Internal.Host.TryExecuteBackgroundServiceAsync(BackgroundService backgroundService)
+[2026-01-25 22:17:59 INF] 44f1d1a7-2de6-4368-bec9-3f9cc7629697  Incoming request POST /api/v1/auth/register. 
+ [2026-01-25 22:18:00 INF] 44f1d1a7-2de6-4368-bec9-3f9cc7629697 UserService.Application.UseCases.Commands.RegisterUserUseCase.RegisterUserService Registering user with 'stawwwdddddwaring@qqq.com' email address… 
+ [2026-01-25 22:19:25 INF] 44f1d1a7-2de6-4368-bec9-3f9cc7629697 UserService.Application.UseCases.Commands.RegisterUserUseCase.RegisterUserService User successfully registered with '108ce390ba644d34a8d49c131bea21b8' identity. 
+ [2026-01-25 22:26:18 FTL]  Microsoft.Extensions.Hosting.Internal.Host The HostOptions.BackgroundServiceExceptionBehavior is configured to StopHost. A BackgroundService has thrown an unhandled exception, and the IHost instance is stopping. To avoid this behavior, configure this to Ignore; however the BackgroundService will not be restarted. 
+ System.ArgumentNullException: Value cannot be null. (Parameter 'email')
+   at System.ArgumentNullException.Throw(String paramName)
+   at System.ArgumentNullException.ThrowIfNull(Object argument, String paramName)
+   at System.ArgumentException.ThrowNullOrEmptyException(String argument, String paramName)
+   at System.ArgumentException.ThrowIfNullOrEmpty(String argument, String paramName)
+   at UserService.Application.Messaging.Notifications.UserRegisteredNotification..ctor(String email, String fullName) in /home/hamed-damavandi/Documents/fault3r.eShop/src/services/UserService/src/UserService.Application/Messaging/Notifications/UserRegisteredNotification.cs:line 17
+   at .ctor(String, String, Object, Object)
+   at System.Text.Json.Serialization.Converters.SmallObjectWithParameterizedConstructorConverter`5.CreateObject(ReadStackFrame& frame)
+   at System.Text.Json.Serialization.Converters.ObjectWithParameterizedConstructorConverter`1.OnTryRead(Utf8JsonReader& reader, Type typeToConvert, JsonSerializerOptions options, ReadStack& state, T& value)
+   at System.Text.Json.Serialization.JsonConverter`1.TryRead(Utf8JsonReader& reader, Type typeToConvert, JsonSerializerOptions options, ReadStack& state, T& value, Boolean& isPopulatedValue)
+   at System.Text.Json.Serialization.JsonConverter`1.ReadCore(Utf8JsonReader& reader, T& value, JsonSerializerOptions options, ReadStack& state)
+   at System.Text.Json.Serialization.Metadata.JsonTypeInfo`1.Deserialize(Utf8JsonReader& reader, ReadStack& state)
+   at System.Text.Json.JsonSerializer.ReadFromSpan[TValue](ReadOnlySpan`1 utf8Json, JsonTypeInfo`1 jsonTypeInfo, Nullable`1 actualByteCount)
+   at System.Text.Json.JsonSerializer.ReadFromSpan[TValue](ReadOnlySpan`1 json, JsonTypeInfo`1 jsonTypeInfo)
+   at System.Text.Json.JsonSerializer.Deserialize[TValue](String json, JsonSerializerOptions options)
+   at UserService.Application.Messaging.NotificationMapper.FromNotificationMessage(NotificationMessage message) in /home/hamed-damavandi/Documents/fault3r.eShop/src/services/UserService/src/UserService.Application/Messaging/NotificationMapper.cs:line 34
+   at UserService.Infrastructure.Messaging.Notification.MediatorNotificationPublisherBackgroundService.ExecuteAsync(CancellationToken cancellationToken) in /home/hamed-damavandi/Documents/fault3r.eShop/src/services/UserService/src/UserService.Infrastructure/Messaging/Notification/MediatorNotificationPublisherBackgroundService.cs:line 35
+   at Microsoft.Extensions.Hosting.Internal.Host.TryExecuteBackgroundServiceAsync(BackgroundService backgroundService)
+[2026-01-25 22:26:20 INF] 44f1d1a7-2de6-4368-bec9-3f9cc7629697  Completed request POST /api/v1/auth/register with status code 201. 
+ [2026-01-25 22:26:53 INF] a2565a49-c31d-4e85-8ceb-775efb017f7d  Incoming request POST /api/v1/auth/register. 
+ [2026-01-25 22:26:53 INF] a2565a49-c31d-4e85-8ceb-775efb017f7d UserService.Application.UseCases.Commands.RegisterUserUseCase.RegisterUserService Registering user with 'stawwwdddooddwaring@qqq.com' email address… 
+ [2026-01-25 22:27:50 INF] a2565a49-c31d-4e85-8ceb-775efb017f7d UserService.Application.UseCases.Commands.RegisterUserUseCase.RegisterUserService User successfully registered with 'e109c27cb16a487aa3edf8cec89d8560' identity. 
+ [2026-01-25 22:33:50 INF] 4f3aaa8e-19a1-4cf5-9e21-c128880f625b  Incoming request POST /api/v1/auth/register. 
+ [2026-01-25 22:33:51 INF] 4f3aaa8e-19a1-4cf5-9e21-c128880f625b UserService.Application.UseCases.Commands.RegisterUserUseCase.RegisterUserService Registering user with 'stawwwdddolring@qqq.com' email address… 
+ [2026-01-25 22:35:56 INF] 4f3aaa8e-19a1-4cf5-9e21-c128880f625b UserService.Application.UseCases.Commands.RegisterUserUseCase.RegisterUserService User successfully registered with '6719aea58a414c3e8701106916fbb1de' identity. 
+ [2026-01-25 22:39:28 INF] bdaa11e0-12da-4fa2-99ef-f2197a702a74  Incoming request POST /api/v1/auth/register. 
+ [2026-01-25 22:39:28 INF] bdaa11e0-12da-4fa2-99ef-f2197a702a74 UserService.Application.UseCases.Commands.RegisterUserUseCase.RegisterUserService Registering user with 'snnwwdddolring@qqq.com' email address… 
+ [2026-01-25 22:39:40 INF] bdaa11e0-12da-4fa2-99ef-f2197a702a74 UserService.Application.UseCases.Commands.RegisterUserUseCase.RegisterUserService User successfully registered with 'b7536c403ebc4007b3b96651eb6a873b' identity. 
+ [2026-01-25 22:40:54 INF] a4cecf93-5a1e-4080-8576-b5b31d2a548d  Incoming request POST /api/v1/auth/register. 
+ [2026-01-25 22:40:54 INF] a4cecf93-5a1e-4080-8576-b5b31d2a548d UserService.Application.UseCases.Commands.RegisterUserUseCase.RegisterUserService Registering user with 'snnwwdnddolring@qqq.com' email address… 
+ [2026-01-25 22:40:58 INF] a4cecf93-5a1e-4080-8576-b5b31d2a548d UserService.Application.UseCases.Commands.RegisterUserUseCase.RegisterUserService User successfully registered with 'fec02ae3c1bb4733a4836ec2f5827db5' identity. 
+ [2026-01-25 22:40:58 INF] a4cecf93-5a1e-4080-8576-b5b31d2a548d  Completed request POST /api/v1/auth/register with status code 201. 
+ [2026-01-25 22:41:02 FTL]  Microsoft.Extensions.Hosting.Internal.Host The HostOptions.BackgroundServiceExceptionBehavior is configured to StopHost. A BackgroundService has thrown an unhandled exception, and the IHost instance is stopping. To avoid this behavior, configure this to Ignore; however the BackgroundService will not be restarted. 
+ System.InvalidOperationException: Cannot resolve 'System.Collections.Generic.IEnumerable`1[MediatR.INotificationHandler`1[UserService.Application.Messaging.Notifications.UserRegisteredNotification]]' from root provider because it requires scoped service 'UserService.Application.Services.EmailService.IEmailSender'.
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteValidator.ValidateResolution(ServiceCallSite callSite, IServiceScope scope, IServiceScope rootScope)
+   at Microsoft.Extensions.DependencyInjection.ServiceProvider.OnResolve(ServiceCallSite callSite, IServiceScope scope)
+   at Microsoft.Extensions.DependencyInjection.ServiceProvider.GetService(ServiceIdentifier serviceIdentifier, ServiceProviderEngineScope serviceProviderEngineScope)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.ServiceProviderEngineScope.GetService(Type serviceType)
+   at Microsoft.Extensions.DependencyInjection.ServiceProviderServiceExtensions.GetRequiredService(IServiceProvider provider, Type serviceType)
+   at MediatR.ServiceFactoryExtensions.GetInstances[T](ServiceFactory factory)
+   at MediatR.Wrappers.NotificationHandlerWrapperImpl`1.Handle(INotification notification, ServiceFactory serviceFactory, Func`4 publish, CancellationToken cancellationToken)
+   at MediatR.Mediator.PublishNotification(INotification notification, CancellationToken cancellationToken)
+   at MediatR.Mediator.Publish[TNotification](TNotification notification, CancellationToken cancellationToken)
+   at UserService.Infrastructure.Messaging.Notification.MediatorNotificationPublisherBackgroundService.ExecuteAsync(CancellationToken cancellationToken) in /home/hamed-damavandi/Documents/fault3r.eShop/src/services/UserService/src/UserService.Infrastructure/Messaging/Notification/MediatorNotificationPublisherBackgroundService.cs:line 37
+   at Microsoft.Extensions.Hosting.Internal.Host.TryExecuteBackgroundServiceAsync(BackgroundService backgroundService)
