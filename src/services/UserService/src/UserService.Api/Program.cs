@@ -13,15 +13,9 @@ var settings = builder.Configuration
     .Get<AppSettings>()
         ?? throw new MissingAppSettingsException();
 
-builder.WebHost.UseUrls(settings.Urls.Http);
+//builder.WebHost.UseUrls(settings.Urls.Http);
 
 builder.Host.AddSerilogLogging();
-
-builder.Services.AddRateLimiting(builder.Configuration);
-
-builder.Services.AddInfrastructure();
-
-builder.Services.AddUseCases();
 
 builder.Services.AddPostgresDbContext(builder.Configuration);
 
@@ -29,7 +23,13 @@ builder.Services.AddJwtAuthentication(builder.Configuration);
 
 builder.Services.AddRedisCaching(builder.Configuration);
 
+builder.Services.AddRateLimiting(builder.Configuration);
+
+builder.Services.AddInfrastructure();
+
 builder.Services.AddApplicationSession(builder.Configuration);
+
+builder.Services.AddUseCases();
 
 builder.Services.AddApiVersioning(settings);
 

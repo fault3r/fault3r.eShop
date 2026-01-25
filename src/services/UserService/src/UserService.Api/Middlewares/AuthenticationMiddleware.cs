@@ -1,6 +1,6 @@
 
 using System;
-using UserService.Application.Interfaces;
+using UserService.Domain.Security.Authentication;
 
 namespace UserService.Api.Middlewares;
 
@@ -31,7 +31,7 @@ public sealed class AuthenticationMiddleware(
         }
         var token = authHeader[TokenPrefix.Length..].Trim();
 
-        var claims = await _tokenService.ReadClaimsAsync(token);
+        var claims =  _tokenService.ReadAccessTokenClaims(token);
         if (claims is null)
         {
             await WriteResponseError(ref context, "Invalid token!");

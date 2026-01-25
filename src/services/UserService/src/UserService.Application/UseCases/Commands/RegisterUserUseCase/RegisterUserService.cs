@@ -11,6 +11,7 @@ using Microsoft.Extensions.Logging;
 using UserService.Domain.Interfaces;
 using UserService.Domain.Security;
 using UserService.Application.CrossCutting;
+using UserService.Domain.Messaging.Notification;
 
 namespace UserService.Application.UseCases.Commands.RegisterUserUseCase;
 
@@ -19,6 +20,7 @@ public sealed class RegisterUserService(
     IUserDomainService userDomainService,
     ICorrelationContext correlation,
     IPasswordHasher passwordHasher,
+    INotificationOutbox outbox,
     ILogger<RegisterUserService> logger
 ) : IRegisterUserService
 {
@@ -26,6 +28,8 @@ public sealed class RegisterUserService(
     private readonly IUserDomainService _userService = userDomainService;
     private readonly ICorrelationContext _correlation = correlation;
     private readonly IPasswordHasher _hasher = passwordHasher;
+    private readonly INotificationOutbox _outbox = outbox;
+
     private readonly ILogger<RegisterUserService> _logger = logger;
 
     public async Task<Result<RegisterUserResult>> ExecuteAsync(
@@ -74,7 +78,7 @@ public sealed class RegisterUserService(
         await _uow.EventOutbox.EnqueueAsync(user.Events, _correlation.CorrelationId, cancellationToken);
         await _uow.CommitAsync(cancellationToken);
 
-        //await _uow.NotificationOutbox.EnqueueAsync(user.Events.FirstOrDefault()!, cancellationToken);
+        await _outbox.EnqueueAsync(user.Events.FirstOrDefault()!, _correlation.CorrelationId, cancellationToken);
 
         user.ClearEvents();
 

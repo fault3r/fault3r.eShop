@@ -3,6 +3,7 @@ using System;
 using FluentValidation;
 using MediatR;
 using Microsoft.Extensions.DependencyInjection;
+using UserService.Application.CrossCutting;
 using UserService.Application.Interfaces;
 using UserService.Application.Messaging;
 using UserService.Application.UseCases.Commands.LoginUserUseCase;
@@ -13,6 +14,7 @@ using UserService.Application.UseCases.Queries.UserProfileUseCase;
 using UserService.Domain.DomainServices;
 using UserService.Domain.Interfaces;
 using UserService.Domain.Messaging;
+using UserService.Domain.Messaging.Notification;
 using UserService.Domain.Repositories;
 using UserService.Domain.Security;
 using UserService.Domain.UnitOfWork;
@@ -34,7 +36,7 @@ public static class DIsExtensions
 
         services.AddScoped<IEventOutbox, EfEventOutbox>();
 
-        services.AddScoped<INotificationOutbox, MediatorDomainNotification>();
+        services.AddSingleton<INotificationOutbox, RedisNotificationOutbox>();
 
         services.AddScoped<IUserRepository, EfUserRepository>();
 
@@ -44,7 +46,9 @@ public static class DIsExtensions
 
         services.AddSingleton<IPasswordHasher, Argon2PasswordHasher>();
 
-        services.AddSingleton<IEventNotificationMapper, EventNotificationMapper>();
+        services.AddHostedService<MediatorNotificationPublisherBackgroundService>();
+
+        services.AddSingleton<INotificationMapper, NotificationMapper>();
 
         return services;
     }

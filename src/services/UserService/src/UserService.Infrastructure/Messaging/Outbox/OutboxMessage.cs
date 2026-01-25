@@ -19,7 +19,7 @@ public sealed class OutboxMessage
     {
         ArgumentNullException.ThrowIfNull(domainEvent);
         ArgumentException.ThrowIfNullOrEmpty(correlationId);
-        
+
         Id = domainEvent.EventId;
         EnqueuedOn = domainEvent.OccurredOn;
         Type = domainEvent.GetType().Name;
@@ -40,4 +40,13 @@ public sealed class OutboxMessage
         WriteIndented = false,
         PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
     };
+
+    #region ⤚EFCore
+    public OutboxMessage()
+    {
+        Type = null!;
+        Payload = null!;
+        CorrelationId = null!;
+    }
+    #endregion
 }
