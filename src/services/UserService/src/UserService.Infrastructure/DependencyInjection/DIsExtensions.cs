@@ -6,6 +6,7 @@ using Microsoft.Extensions.DependencyInjection;
 using UserService.Application.CrossCutting;
 using UserService.Application.Interfaces;
 using UserService.Application.Messaging;
+using UserService.Application.Messaging.NotificationHandlers;
 using UserService.Application.UseCases.Commands.LoginUserUseCase;
 using UserService.Application.UseCases.Commands.LogoutUserUseCase;
 using UserService.Application.UseCases.Commands.RefreshAuthUseCase;
@@ -59,6 +60,7 @@ public static class DIsExtensions
         services.AddMediatR(typeof(RegisterUserCommandHandler).Assembly);
         services.AddScoped<IRegisterUserService, RegisterUserService>();
         services.AddScoped<IValidator<RegisterUserCommand>, RegisterUserValidator>();
+        services.AddMediatR(typeof(UserRegisteredNotificationHandler).Assembly);
 
         services.AddMediatR(typeof(LoginUserCommandHandler).Assembly);
         services.AddScoped<ILoginUserService, LoginUserService>();

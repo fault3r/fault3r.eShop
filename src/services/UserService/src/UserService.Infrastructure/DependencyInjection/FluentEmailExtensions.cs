@@ -51,7 +51,7 @@ public static class FluentEmailExtensions
 
         services.AddSingleton<IEmailTemplateRenderer, EmailTemplateRenderer>();
 
-        services.AddScoped<IEmailSender, FluentEmailSender>();
+        services.AddSingleton<IEmailSender, FluentEmailSender>();
 
         return services;
     }

@@ -1,0 +1,70 @@
+[2026-01-26 16:20:21 INF] 53f86fe2-8d7d-4e06-addc-e1762e86f796  Incoming request POST /api/v1/auth/register. 
+ [2026-01-26 16:20:23 INF] 53f86fe2-8d7d-4e06-addc-e1762e86f796 UserService.Application.UseCases.Commands.RegisterUserUseCase.RegisterUserService Registering user with 'test@jj.comng' email address… 
+ [2026-01-26 16:20:26 INF] 53f86fe2-8d7d-4e06-addc-e1762e86f796 UserService.Application.UseCases.Commands.RegisterUserUseCase.RegisterUserService User successfully registered with '084bf8887dfe43b38dc59e20eafd81f3' identity. 
+ [2026-01-26 16:20:30 INF] 53f86fe2-8d7d-4e06-addc-e1762e86f796  Completed request POST /api/v1/auth/register with status code 201. 
+ [2026-01-26 16:20:32 FTL]  Microsoft.Extensions.Hosting.Internal.Host The HostOptions.BackgroundServiceExceptionBehavior is configured to StopHost. A BackgroundService has thrown an unhandled exception, and the IHost instance is stopping. To avoid this behavior, configure this to Ignore; however the BackgroundService will not be restarted. 
+ System.InvalidOperationException: Cannot resolve 'System.Collections.Generic.IEnumerable`1[MediatR.INotificationHandler`1[UserService.Application.Messaging.Notifications.UserRegisteredNotification]]' from root provider because it requires scoped service 'UserService.Application.Services.EmailService.IEmailSender'.
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteValidator.ValidateResolution(ServiceCallSite callSite, IServiceScope scope, IServiceScope rootScope)
+   at Microsoft.Extensions.DependencyInjection.ServiceProvider.OnResolve(ServiceCallSite callSite, IServiceScope scope)
+   at Microsoft.Extensions.DependencyInjection.ServiceProvider.GetService(ServiceIdentifier serviceIdentifier, ServiceProviderEngineScope serviceProviderEngineScope)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.ServiceProviderEngineScope.GetService(Type serviceType)
+   at Microsoft.Extensions.DependencyInjection.ServiceProviderServiceExtensions.GetRequiredService(IServiceProvider provider, Type serviceType)
+   at MediatR.ServiceFactoryExtensions.GetInstances[T](ServiceFactory factory)
+   at MediatR.Wrappers.NotificationHandlerWrapperImpl`1.Handle(INotification notification, ServiceFactory serviceFactory, Func`4 publish, CancellationToken cancellationToken)
+   at MediatR.Mediator.PublishNotification(INotification notification, CancellationToken cancellationToken)
+   at MediatR.Mediator.Publish[TNotification](TNotification notification, CancellationToken cancellationToken)
+   at UserService.Infrastructure.Messaging.Notification.MediatorNotificationPublisherBackgroundService.ExecuteAsync(CancellationToken cancellationToken) in /home/hamed-damavandi/Documents/fault3r.eShop/src/services/UserService/src/UserService.Infrastructure/Messaging/Notification/MediatorNotificationPublisherBackgroundService.cs:line 37
+   at Microsoft.Extensions.Hosting.Internal.Host.TryExecuteBackgroundServiceAsync(BackgroundService backgroundService)
+[2026-01-26 16:26:55 INF] aebbae6c-db68-4dce-930b-975817e76c8d  Incoming request POST /api/v1/auth/register. 
+ [2026-01-26 16:27:17 INF] aebbae6c-db68-4dce-930b-975817e76c8d UserService.Application.UseCases.Commands.RegisterUserUseCase.RegisterUserService Registering user with 'test@jj.comkng' email address… 
+ [2026-01-26 16:27:22 INF] aebbae6c-db68-4dce-930b-975817e76c8d UserService.Application.UseCases.Commands.RegisterUserUseCase.RegisterUserService User successfully registered with 'd6e9adc6f67b4d8ebde48afc007552dc' identity. 
+ [2026-01-26 16:27:31 INF] aebbae6c-db68-4dce-930b-975817e76c8d  Completed request POST /api/v1/auth/register with status code 201. 
+ [2026-01-26 16:27:33 FTL]  Microsoft.Extensions.Hosting.Internal.Host The HostOptions.BackgroundServiceExceptionBehavior is configured to StopHost. A BackgroundService has thrown an unhandled exception, and the IHost instance is stopping. To avoid this behavior, configure this to Ignore; however the BackgroundService will not be restarted. 
+ System.Net.Mail.SmtpException: Failure sending mail.
+ ---> System.Net.Sockets.SocketException (11): Resource temporarily unavailable
+   at System.Net.Sockets.Socket.AwaitableSocketAsyncEventArgs.ThrowException(SocketError error, CancellationToken cancellationToken)
+   at System.Net.Sockets.Socket.AwaitableSocketAsyncEventArgs.System.Threading.Tasks.Sources.IValueTaskSource.GetResult(Int16 token)
+   at System.Threading.Tasks.ValueTask.ValueTaskSourceAsTask.<>c.<.cctor>b__4_0(Object state)
+--- End of stack trace from previous location ---
+   at System.Threading.Tasks.TaskToAsyncResult.End(IAsyncResult asyncResult)
+   at System.Net.Sockets.TcpClient.EndConnect(IAsyncResult asyncResult)
+   at System.Net.Mail.SmtpConnection.ConnectAndHandshakeAsyncResult.InitializeConnectionCallback(IAsyncResult result)
+--- End of stack trace from previous location ---
+   at System.Net.Mail.SmtpClient.ConnectCallback(IAsyncResult result)
+   --- End of inner exception stack trace ---
+   at FluentEmail.Smtp.SendMailEx.SendMailExImplAsync(SmtpClient client, MailMessage message, CancellationToken token)
+   at FluentEmail.Smtp.SmtpSender.SendAsync(IFluentEmail email, Nullable`1 token)
+   at UserService.Infrastructure.Services.EmailService.FluentEmailSender.SendAsync(String to, String subject, String body, CancellationToken cancellationToken) in /home/hamed-damavandi/Documents/fault3r.eShop/src/services/UserService/src/UserService.Infrastructure/Services/EmailService/FluentEmailSender.cs:line 26
+   at UserService.Application.Messaging.NotificationHandlers.UserRegisteredNotificationHandler.Handle(UserRegisteredNotification notification, CancellationToken cancellationToken) in /home/hamed-damavandi/Documents/fault3r.eShop/src/services/UserService/src/UserService.Application/Messaging/NotificationHandlers/UserRegisteredNotificationHandler.cs:line 31
+   at MediatR.Mediator.PublishCore(IEnumerable`1 allHandlers, INotification notification, CancellationToken cancellationToken)
+   at UserService.Infrastructure.Messaging.Notification.MediatorNotificationPublisherBackgroundService.ExecuteAsync(CancellationToken cancellationToken) in /home/hamed-damavandi/Documents/fault3r.eShop/src/services/UserService/src/UserService.Infrastructure/Messaging/Notification/MediatorNotificationPublisherBackgroundService.cs:line 37
+   at Microsoft.Extensions.Hosting.Internal.Host.TryExecuteBackgroundServiceAsync(BackgroundService backgroundService)
+[2026-01-26 16:28:03 INF] fbba9b5c-bf51-4e64-b78b-76bc89d09d85  Incoming request POST /api/v1/auth/register. 
+ [2026-01-26 16:28:03 INF] fbba9b5c-bf51-4e64-b78b-76bc89d09d85 UserService.Application.UseCases.Commands.RegisterUserUseCase.RegisterUserService Registering user with 'test@jj.co' email address… 
+ [2026-01-26 16:28:06 INF] fbba9b5c-bf51-4e64-b78b-76bc89d09d85 UserService.Application.UseCases.Commands.RegisterUserUseCase.RegisterUserService User successfully registered with '20b56a1dc3f74ea294fa4006e8042ba0' identity. 
+ [2026-01-26 16:28:06 INF] fbba9b5c-bf51-4e64-b78b-76bc89d09d85  Completed request POST /api/v1/auth/register with status code 201. 
+ [2026-01-26 16:28:10 FTL]  Microsoft.Extensions.Hosting.Internal.Host The HostOptions.BackgroundServiceExceptionBehavior is configured to StopHost. A BackgroundService has thrown an unhandled exception, and the IHost instance is stopping. To avoid this behavior, configure this to Ignore; however the BackgroundService will not be restarted. 
+ System.Net.Mail.SmtpException: Failure sending mail.
+ ---> System.Net.Sockets.SocketException (11): Resource temporarily unavailable
+   at System.Net.Sockets.Socket.AwaitableSocketAsyncEventArgs.ThrowException(SocketError error, CancellationToken cancellationToken)
+   at System.Net.Sockets.Socket.AwaitableSocketAsyncEventArgs.System.Threading.Tasks.Sources.IValueTaskSource.GetResult(Int16 token)
+   at System.Threading.Tasks.ValueTask.ValueTaskSourceAsTask.<>c.<.cctor>b__4_0(Object state)
+--- End of stack trace from previous location ---
+   at System.Threading.Tasks.TaskToAsyncResult.End(IAsyncResult asyncResult)
+   at System.Net.Sockets.TcpClient.EndConnect(IAsyncResult asyncResult)
+   at System.Net.Mail.SmtpConnection.ConnectAndHandshakeAsyncResult.InitializeConnectionCallback(IAsyncResult result)
+--- End of stack trace from previous location ---
+   at System.Net.Mail.SmtpClient.ConnectCallback(IAsyncResult result)
+   --- End of inner exception stack trace ---
+   at FluentEmail.Smtp.SendMailEx.SendMailExImplAsync(SmtpClient client, MailMessage message, CancellationToken token)
+   at FluentEmail.Smtp.SmtpSender.SendAsync(IFluentEmail email, Nullable`1 token)
+   at UserService.Infrastructure.Services.EmailService.FluentEmailSender.SendAsync(String to, String subject, String body, CancellationToken cancellationToken) in /home/hamed-damavandi/Documents/fault3r.eShop/src/services/UserService/src/UserService.Infrastructure/Services/EmailService/FluentEmailSender.cs:line 26
+   at UserService.Application.Messaging.NotificationHandlers.UserRegisteredNotificationHandler.Handle(UserRegisteredNotification notification, CancellationToken cancellationToken) in /home/hamed-damavandi/Documents/fault3r.eShop/src/services/UserService/src/UserService.Application/Messaging/NotificationHandlers/UserRegisteredNotificationHandler.cs:line 31
+   at MediatR.Mediator.PublishCore(IEnumerable`1 allHandlers, INotification notification, CancellationToken cancellationToken)
+   at UserService.Infrastructure.Messaging.Notification.MediatorNotificationPublisherBackgroundService.ExecuteAsync(CancellationToken cancellationToken) in /home/hamed-damavandi/Documents/fault3r.eShop/src/services/UserService/src/UserService.Infrastructure/Messaging/Notification/MediatorNotificationPublisherBackgroundService.cs:line 37
+   at Microsoft.Extensions.Hosting.Internal.Host.TryExecuteBackgroundServiceAsync(BackgroundService backgroundService)
+[2026-01-26 16:28:43 INF] a72151b2-5363-47cc-8f72-b8602b2c0aa4  Incoming request POST /api/v1/auth/register. 
+ [2026-01-26 16:28:44 INF] a72151b2-5363-47cc-8f72-b8602b2c0aa4 UserService.Application.UseCases.Commands.RegisterUserUseCase.RegisterUserService Registering user with 'test@jj.cmo' email address… 
+ [2026-01-26 16:28:47 INF] a72151b2-5363-47cc-8f72-b8602b2c0aa4 UserService.Application.UseCases.Commands.RegisterUserUseCase.RegisterUserService User successfully registered with '9cf8e850ecb240cca0072cc975db33f5' identity. 
+ [2026-01-26 16:28:47 INF] a72151b2-5363-47cc-8f72-b8602b2c0aa4  Completed request POST /api/v1/auth/register with status code 201. 
+ 
