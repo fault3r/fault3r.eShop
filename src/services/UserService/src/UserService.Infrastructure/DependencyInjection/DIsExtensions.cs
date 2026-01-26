@@ -57,24 +57,26 @@ public static class DIsExtensions
     public static IServiceCollection AddUseCases(
         this IServiceCollection services)
     {
-        services.AddMediatR(typeof(RegisterUserCommandHandler).Assembly);
+        services.AddMediatR(typeof(ICorrelationContext).Assembly);
+
+        // services.AddMediatR(typeof(RegisterUserCommandHandler).Assembly);
         services.AddScoped<IRegisterUserService, RegisterUserService>();
         services.AddScoped<IValidator<RegisterUserCommand>, RegisterUserValidator>();
-        services.AddMediatR(typeof(UserRegisteredNotificationHandler).Assembly);
+        // services.AddMediatR(typeof(UserRegisteredNotificationHandler).Assembly);
 
-        services.AddMediatR(typeof(LoginUserCommandHandler).Assembly);
+        // services.AddMediatR(typeof(LoginUserCommandHandler).Assembly);
         services.AddScoped<ILoginUserService, LoginUserService>();
         services.AddScoped<IValidator<LoginUserCommand>, LoginUserValidator>();
 
-        services.AddMediatR(typeof(RefreshAuthCommandHandler).Assembly);
+        // services.AddMediatR(typeof(RefreshAuthCommandHandler).Assembly);
         services.AddScoped<IRefreshAuthService, RefreshAuthService>();
         services.AddScoped<IValidator<RefreshAuthCommand>, RefreshAuthValidator>();
     
-        services.AddMediatR(typeof(LogoutUserCommandHandler).Assembly);
+        // services.AddMediatR(typeof(LogoutUserCommandHandler).Assembly);
         services.AddScoped<ILogoutUserService, LogoutUserService>();
         services.AddScoped<IValidator<LogoutUserCommand>, LogoutUserValidator>();
 
-        services.AddMediatR(typeof(UserProfileQueryHandler).Assembly);
+        // services.AddMediatR(typeof(UserProfileQueryHandler).Assembly);
         services.AddScoped<IUserProfileService, UserProfileService>();
         services.AddScoped<IValidator<UserProfileQuery>, UserProfileValidator>();
 

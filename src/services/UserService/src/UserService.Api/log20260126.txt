@@ -67,4 +67,67 @@
  [2026-01-26 16:28:44 INF] a72151b2-5363-47cc-8f72-b8602b2c0aa4 UserService.Application.UseCases.Commands.RegisterUserUseCase.RegisterUserService Registering user with 'test@jj.cmo' email address… 
  [2026-01-26 16:28:47 INF] a72151b2-5363-47cc-8f72-b8602b2c0aa4 UserService.Application.UseCases.Commands.RegisterUserUseCase.RegisterUserService User successfully registered with '9cf8e850ecb240cca0072cc975db33f5' identity. 
  [2026-01-26 16:28:47 INF] a72151b2-5363-47cc-8f72-b8602b2c0aa4  Completed request POST /api/v1/auth/register with status code 201. 
+ [2026-01-26 16:42:04 INF] 2723a706-68f4-45d3-8437-76176ee5659c  Incoming request POST /api/v1/auth/login. 
+ [2026-01-26 16:42:14 INF] 2723a706-68f4-45d3-8437-76176ee5659c UserService.Application.UseCases.Commands.LoginUserUseCase.LoginUserService Loginning user with 'st@ss.cring' identity… 
+ [2026-01-26 16:42:17 WRN] 2723a706-68f4-45d3-8437-76176ee5659c UserService.Application.UseCases.Commands.LoginUserUseCase.LoginUserService Invalid credentials! 
+ [2026-01-26 16:42:17 INF] 2723a706-68f4-45d3-8437-76176ee5659c  Completed request POST /api/v1/auth/login with status code 401. 
+ [2026-01-26 16:43:02 INF] 8ec0a8ce-daeb-490a-8aef-0e5a4527fc69  Incoming request POST /api/v1/auth/register. 
+ [2026-01-26 16:43:02 INF] 8ec0a8ce-daeb-490a-8aef-0e5a4527fc69 UserService.Application.UseCases.Commands.RegisterUserUseCase.RegisterUserService Registering user with 'hamed.damaavandi@gmail.com' email address… 
+ [2026-01-26 16:43:03 INF] 8ec0a8ce-daeb-490a-8aef-0e5a4527fc69 UserService.Application.UseCases.Commands.RegisterUserUseCase.RegisterUserService User successfully registered with '935bed3d7cb045998856d5cc84fda3a7' identity. 
+ [2026-01-26 16:43:03 INF] 8ec0a8ce-daeb-490a-8aef-0e5a4527fc69  Completed request POST /api/v1/auth/register with status code 201. 
+ [2026-01-26 16:43:07 FTL]  Microsoft.Extensions.Hosting.Internal.Host The HostOptions.BackgroundServiceExceptionBehavior is configured to StopHost. A BackgroundService has thrown an unhandled exception, and the IHost instance is stopping. To avoid this behavior, configure this to Ignore; however the BackgroundService will not be restarted. 
+ System.Net.Mail.SmtpException: Failure sending mail.
+ ---> System.Net.Sockets.SocketException (11): Resource temporarily unavailable
+   at System.Net.Sockets.Socket.AwaitableSocketAsyncEventArgs.ThrowException(SocketError error, CancellationToken cancellationToken)
+   at System.Net.Sockets.Socket.AwaitableSocketAsyncEventArgs.System.Threading.Tasks.Sources.IValueTaskSource.GetResult(Int16 token)
+   at System.Threading.Tasks.ValueTask.ValueTaskSourceAsTask.<>c.<.cctor>b__4_0(Object state)
+--- End of stack trace from previous location ---
+   at System.Threading.Tasks.TaskToAsyncResult.End(IAsyncResult asyncResult)
+   at System.Net.Sockets.TcpClient.EndConnect(IAsyncResult asyncResult)
+   at System.Net.Mail.SmtpConnection.ConnectAndHandshakeAsyncResult.InitializeConnectionCallback(IAsyncResult result)
+--- End of stack trace from previous location ---
+   at System.Net.Mail.SmtpClient.ConnectCallback(IAsyncResult result)
+   --- End of inner exception stack trace ---
+   at FluentEmail.Smtp.SendMailEx.SendMailExImplAsync(SmtpClient client, MailMessage message, CancellationToken token)
+   at FluentEmail.Smtp.SmtpSender.SendAsync(IFluentEmail email, Nullable`1 token)
+   at UserService.Infrastructure.Services.EmailService.FluentEmailSender.SendAsync(String to, String subject, String body, CancellationToken cancellationToken) in /home/hamed-damavandi/Documents/fault3r.eShop/src/services/UserService/src/UserService.Infrastructure/Services/EmailService/FluentEmailSender.cs:line 26
+   at UserService.Application.Messaging.NotificationHandlers.UserRegisteredNotificationHandler.Handle(UserRegisteredNotification notification, CancellationToken cancellationToken) in /home/hamed-damavandi/Documents/fault3r.eShop/src/services/UserService/src/UserService.Application/Messaging/NotificationHandlers/UserRegisteredNotificationHandler.cs:line 31
+   at MediatR.Mediator.PublishCore(IEnumerable`1 allHandlers, INotification notification, CancellationToken cancellationToken)
+   at UserService.Infrastructure.Messaging.Notification.MediatorNotificationPublisherBackgroundService.ExecuteAsync(CancellationToken cancellationToken) in /home/hamed-damavandi/Documents/fault3r.eShop/src/services/UserService/src/UserService.Infrastructure/Messaging/Notification/MediatorNotificationPublisherBackgroundService.cs:line 37
+   at Microsoft.Extensions.Hosting.Internal.Host.TryExecuteBackgroundServiceAsync(BackgroundService backgroundService)
+[2026-01-26 16:46:35 INF] 91c073a7-7a61-465e-b535-84f78da17652  Incoming request POST /api/v1/auth/register. 
+ [2026-01-26 16:46:52 INF] 91c073a7-7a61-465e-b535-84f78da17652 UserService.Application.UseCases.Commands.RegisterUserUseCase.RegisterUserService Registering user with 'hamed.damavandi@gmail.com' email address… 
+ [2026-01-26 16:48:09 FTL]  Microsoft.Extensions.Hosting.Internal.Host The HostOptions.BackgroundServiceExceptionBehavior is configured to StopHost. A BackgroundService has thrown an unhandled exception, and the IHost instance is stopping. To avoid this behavior, configure this to Ignore; however the BackgroundService will not be restarted. 
+ StackExchange.Redis.RedisTimeoutException: Timeout awaiting response (outbound=0KiB, inbound=0KiB, 5400ms elapsed, timeout is 5000ms), command=RPOP, next: RPOP notification, inst: 1, qu: 0, qs: 1, aw: False, bw: Inactive, rs: DequeueResult, ws: Idle, in: 0, in-pipe: 5, out-pipe: 0, last-in: 0, cur-in: 5, sync-ops: 0, async-ops: 8, serverEndpoint: localhost:6379, conn-sec: 109.67, aoc: 1, mc: 1/1/0, mgr: 9 of 10 available, clientName: fault3r(SE.Redis-v2.10.1.65101), IOCP: (Busy=0,Free=1000,Min=1,Max=1000), WORKER: (Busy=2,Free=32765,Min=4,Max=32767), POOL: (Threads=4,QueuedItems=0,CompletedItems=418,Timers=2), v: 2.10.1.65101 (Please take a look at this article for some common client-side issues that can cause timeouts: https://stackexchange.github.io/StackExchange.Redis/Timeouts)
+   at UserService.Infrastructure.Messaging.Notification.RedisNotificationOutbox.DequeueAsync(CancellationToken cancellationToken) in /home/hamed-damavandi/Documents/fault3r.eShop/src/services/UserService/src/UserService.Infrastructure/Messaging/Notification/RedisNotificationOutbox.cs:line 47
+   at UserService.Infrastructure.Messaging.Notification.MediatorNotificationPublisherBackgroundService.ExecuteAsync(CancellationToken cancellationToken) in /home/hamed-damavandi/Documents/fault3r.eShop/src/services/UserService/src/UserService.Infrastructure/Messaging/Notification/MediatorNotificationPublisherBackgroundService.cs:line 27
+   at Microsoft.Extensions.Hosting.Internal.Host.TryExecuteBackgroundServiceAsync(BackgroundService backgroundService)
+[2026-01-26 16:51:33 INF] 8a6b33c9-6fa1-479a-a80d-1376eb6b2897  Incoming request POST /api/v1/auth/register. 
+ [2026-01-26 16:51:43 INF] 8a6b33c9-6fa1-479a-a80d-1376eb6b2897 UserService.Application.UseCases.Commands.RegisterUserUseCase.RegisterUserService Registering user with 'hamed.damalvandi@gmail.com' email address… 
+ [2026-01-26 16:51:49 INF] 8a6b33c9-6fa1-479a-a80d-1376eb6b2897 UserService.Application.UseCases.Commands.RegisterUserUseCase.RegisterUserService User successfully registered with 'eb1e35758ed04b5dbab18d2f253a1f33' identity. 
+ [2026-01-26 16:51:49 INF] 8a6b33c9-6fa1-479a-a80d-1376eb6b2897  Completed request POST /api/v1/auth/register with status code 201. 
+ [2026-01-26 16:52:23 FTL]  Microsoft.Extensions.Hosting.Internal.Host The HostOptions.BackgroundServiceExceptionBehavior is configured to StopHost. A BackgroundService has thrown an unhandled exception, and the IHost instance is stopping. To avoid this behavior, configure this to Ignore; however the BackgroundService will not be restarted. 
+ System.Net.Mail.SmtpException: Failure sending mail.
+ ---> System.Net.Sockets.SocketException (11): Resource temporarily unavailable
+   at System.Net.Sockets.Socket.AwaitableSocketAsyncEventArgs.ThrowException(SocketError error, CancellationToken cancellationToken)
+   at System.Net.Sockets.Socket.AwaitableSocketAsyncEventArgs.System.Threading.Tasks.Sources.IValueTaskSource.GetResult(Int16 token)
+   at System.Threading.Tasks.ValueTask.ValueTaskSourceAsTask.<>c.<.cctor>b__4_0(Object state)
+--- End of stack trace from previous location ---
+   at System.Threading.Tasks.TaskToAsyncResult.End(IAsyncResult asyncResult)
+   at System.Net.Sockets.TcpClient.EndConnect(IAsyncResult asyncResult)
+   at System.Net.Mail.SmtpConnection.ConnectAndHandshakeAsyncResult.InitializeConnectionCallback(IAsyncResult result)
+--- End of stack trace from previous location ---
+   at System.Net.Mail.SmtpClient.ConnectCallback(IAsyncResult result)
+   --- End of inner exception stack trace ---
+   at FluentEmail.Smtp.SendMailEx.SendMailExImplAsync(SmtpClient client, MailMessage message, CancellationToken token)
+   at FluentEmail.Smtp.SmtpSender.SendAsync(IFluentEmail email, Nullable`1 token)
+   at UserService.Infrastructure.Services.EmailService.FluentEmailSender.SendAsync(String to, String subject, String body, CancellationToken cancellationToken) in /home/hamed-damavandi/Documents/fault3r.eShop/src/services/UserService/src/UserService.Infrastructure/Services/EmailService/FluentEmailSender.cs:line 26
+   at UserService.Application.Messaging.NotificationHandlers.UserRegisteredNotificationHandler.Handle(UserRegisteredNotification notification, CancellationToken cancellationToken) in /home/hamed-damavandi/Documents/fault3r.eShop/src/services/UserService/src/UserService.Application/Messaging/NotificationHandlers/UserRegisteredNotificationHandler.cs:line 31
+   at MediatR.Mediator.PublishCore(IEnumerable`1 allHandlers, INotification notification, CancellationToken cancellationToken)
+   at UserService.Infrastructure.Messaging.Notification.MediatorNotificationPublisherBackgroundService.ExecuteAsync(CancellationToken cancellationToken) in /home/hamed-damavandi/Documents/fault3r.eShop/src/services/UserService/src/UserService.Infrastructure/Messaging/Notification/MediatorNotificationPublisherBackgroundService.cs:line 37
+   at Microsoft.Extensions.Hosting.Internal.Host.TryExecuteBackgroundServiceAsync(BackgroundService backgroundService)
+[2026-01-26 16:56:20 INF] 80d3c1d5-541d-4b74-b5b1-e774d08b8552  Incoming request POST /api/v1/auth/register. 
+ [2026-01-26 16:56:20 INF] 80d3c1d5-541d-4b74-b5b1-e774d08b8552 UserService.Application.UseCases.Commands.RegisterUserUseCase.RegisterUserService Registering user with 'hamed.damalvandi@gmail.com' email address… 
+ [2026-01-26 16:56:23 WRN] 80d3c1d5-541d-4b74-b5b1-e774d08b8552 UserService.Application.UseCases.Commands.RegisterUserUseCase.RegisterUserService User with this email address already exists! 
+ [2026-01-26 16:56:23 INF] 80d3c1d5-541d-4b74-b5b1-e774d08b8552  Completed request POST /api/v1/auth/register with status code 409. 
  

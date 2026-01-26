@@ -1,5 +1,6 @@
 
 using System;
+using MediatR;
 using Microsoft.AspNetCore.Mvc.ApiExplorer;
 using UserService.Api.Middlewares;
 using UserService.Infrastructure.DependencyInjection;
