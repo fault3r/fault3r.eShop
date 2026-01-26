@@ -2,6 +2,7 @@
 using System;
 using UserService.Domain.Interfaces;
 using UserService.Domain.Messaging;
+using UserService.Domain.Messaging.Outbox;
 using UserService.Infrastructure.Persistence;
 
 namespace UserService.Infrastructure.Messaging.Outbox;

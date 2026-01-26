@@ -26,7 +26,7 @@ public sealed class UserRegisteredNotificationHandler(
     {
         ArgumentNullException.ThrowIfNull(notification);
 
-        _logger.LogInformation("{CorrelationId} Sending welcome email to '{Email}' user…",
+        _logger.LogInformation("{Correlation} Sending welcome email to '{Email}' user…",
             notification.CorrelationId, notification.Email);
 
         var template = await _resolver.ResolveAsync(EmailTemplateType.Welcome, cancellationToken);
@@ -41,6 +41,6 @@ public sealed class UserRegisteredNotificationHandler(
         //     cancellationToken: cancellationToken
         // ); 
 
-        _logger.LogInformation("{CorrelationId} Welcome email successfully sent.", notification.CorrelationId);
+        _logger.LogInformation("{Correlation} Welcome email successfully sent.", notification.CorrelationId);
     }
 }

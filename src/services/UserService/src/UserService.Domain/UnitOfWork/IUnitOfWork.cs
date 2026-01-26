@@ -1,6 +1,6 @@
 
 using System;
-using UserService.Domain.Messaging;
+using UserService.Domain.Messaging.Outbox;
 using UserService.Domain.Repositories;
 
 namespace UserService.Domain.UnitOfWork;

@@ -2,7 +2,7 @@
 using System;
 using UserService.Domain.Interfaces;
 
-namespace UserService.Domain.Messaging;
+namespace UserService.Domain.Messaging.Outbox;
 
 public interface IEventOutbox
 {

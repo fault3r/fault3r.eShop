@@ -3,7 +3,7 @@ using System;
 using System.Text.Json;
 using UserService.Domain.Interfaces;
 
-namespace UserService.Infrastructure.Messaging.Outbox;
+namespace UserService.Domain.Messaging.Outbox;
 
 public sealed class OutboxMessage
 {
@@ -11,6 +11,7 @@ public sealed class OutboxMessage
     public DateTime EnqueuedOn { get; private set; }
     public string Type { get; private set; }
     public string Payload { get; private set; }
+    public bool Published { get; private set; }
     public string CorrelationId { get; private set; }
 
     private OutboxMessage(
@@ -25,6 +26,7 @@ public sealed class OutboxMessage
         Type = domainEvent.GetType().Name;
         Payload = JsonSerializer.Serialize(
             domainEvent, domainEvent.GetType(), jsonSerializerOptions);
+        Published = false;
         CorrelationId = correlationId;
     }
 

@@ -1,7 +1,7 @@
 
 using System;
 using Microsoft.EntityFrameworkCore;
-using UserService.Domain.Messaging;
+using UserService.Domain.Messaging.Outbox;
 using UserService.Domain.Repositories;
 using UserService.Domain.UnitOfWork;
 using UserService.Infrastructure.Persistence;

@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
+using UserService.Domain.Messaging.Outbox;
 
 namespace UserService.Infrastructure.Messaging.Outbox;
 
@@ -29,6 +30,10 @@ public sealed class OutboxMessageConfiguration : IEntityTypeConfiguration<Outbox
 
         builder.Property(p => p.Payload)
             .HasColumnName("Payload")
+            .IsRequired();
+        
+        builder.Property(p => p.Published)
+            .HasColumnName("Published")
             .IsRequired();
 
         builder.Property(p => p.CorrelationId)
