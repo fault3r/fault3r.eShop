@@ -29,7 +29,6 @@ public sealed class RegisterUserService(
     private readonly ICorrelationContext _correlation = correlation;
     private readonly IPasswordHasher _hasher = passwordHasher;
     private readonly INotificationOutbox _outbox = outbox;
-
     private readonly ILogger<RegisterUserService> _logger = logger;
 
     public async Task<Result<RegisterUserResult>> ExecuteAsync(

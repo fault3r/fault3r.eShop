@@ -31,7 +31,7 @@ public sealed class FluentEmailSender(
 
         if (!response.Successful)
             throw new CannotSendEmailException(to);
-        
+
         return Result.Success();
     }
 }

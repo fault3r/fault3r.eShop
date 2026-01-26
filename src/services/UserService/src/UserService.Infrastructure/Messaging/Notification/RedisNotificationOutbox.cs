@@ -25,7 +25,7 @@ public sealed class RedisNotificationOutbox(
     {
         ArgumentNullException.ThrowIfNull(@event);
 
-        var notification = _mapper.FromEvent(@event);
+        var notification = _mapper.FromEvent(@event, correlationId);
 
         var message = new NotificationMessage
         {

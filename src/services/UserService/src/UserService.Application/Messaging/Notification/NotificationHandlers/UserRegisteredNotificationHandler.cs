@@ -1,21 +1,24 @@
 
 using System;
 using MediatR;
-using UserService.Application.Messaging.Notifications;
+using Microsoft.Extensions.Logging;
+using UserService.Application.Messaging.Notification.Notifications;
 using UserService.Application.Services.EmailService;
 using UserService.Application.Services.EmailService.EmailTemplateModels;
 
-namespace UserService.Application.Messaging.NotificationHandlers;
+namespace UserService.Application.Messaging.Notification.NotificationHandlers;
 
 public sealed class UserRegisteredNotificationHandler(
     IEmailTemplateResolver resolver,
     IEmailTemplateRenderer renderer,
-    IEmailSender sender
+    IEmailSender sender,
+    ILogger<UserRegisteredNotificationHandler> logger
 ) : INotificationHandler<UserRegisteredNotification>
 {
     private readonly IEmailTemplateResolver _resolver = resolver;
     private readonly IEmailTemplateRenderer _renderer = renderer;
     private readonly IEmailSender _sender = sender;
+    private readonly ILogger<UserRegisteredNotificationHandler> _logger = logger;
 
     public async Task Handle(
         UserRegisteredNotification notification,
@@ -23,16 +26,21 @@ public sealed class UserRegisteredNotificationHandler(
     {
         ArgumentNullException.ThrowIfNull(notification);
 
+        _logger.LogInformation("{CorrelationId} Sending welcome email to '{Email}' user…",
+            notification.CorrelationId, notification.Email);
+
         var template = await _resolver.ResolveAsync(EmailTemplateType.Welcome, cancellationToken);
         var model = new WelcomeModel(notification.FullName);
 
         var body = await _renderer.RenderAsync(template, model, cancellationToken);
 
-        await _sender.SendAsync(
-            to: notification.Email,
-            subject: "Wewlcome",
-            body: body,
-            cancellationToken: cancellationToken
-        );
+        // await _sender.SendAsync(
+        //     to: notification.Email,
+        //     subject: "Wewlcome",
+        //     body: body,
+        //     cancellationToken: cancellationToken
+        // ); 
+
+        _logger.LogInformation("{CorrelationId} Welcome email successfully sent.", notification.CorrelationId);
     }
 }

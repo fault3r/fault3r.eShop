@@ -1,6 +1,5 @@
 
 using System;
-using MediatR;
 using Microsoft.AspNetCore.Mvc.ApiExplorer;
 using UserService.Api.Middlewares;
 using UserService.Infrastructure.DependencyInjection;
@@ -14,7 +13,7 @@ var settings = builder.Configuration
     .Get<AppSettings>()
         ?? throw new MissingAppSettingsException();
 
-//builder.WebHost.UseUrls(settings.Urls.Http);
+builder.WebHost.UseUrls(settings.Urls.Http);
 
 builder.Host.AddSerilogLogging();
 

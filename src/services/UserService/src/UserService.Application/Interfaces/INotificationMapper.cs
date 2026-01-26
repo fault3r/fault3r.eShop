@@ -8,6 +8,7 @@ namespace UserService.Application.Interfaces;
 
 public interface INotificationMapper
 {
-    INotification FromEvent(IDomainEvent domainEvent);
+    INotification FromEvent(IDomainEvent domainEvent, string correlationId);
+    
     INotification FromNotificationMessage(NotificationMessage notificationMessage);
 }
