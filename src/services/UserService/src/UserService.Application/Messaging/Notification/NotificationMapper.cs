@@ -10,8 +10,12 @@ using UserService.Domain.Messaging.Notification;
 
 namespace UserService.Application.Messaging.Notification;
 
-public sealed class NotificationMapper : INotificationMapper
+public sealed class NotificationMapper(
+    JsonSerializerOptions jsonSerializerOptions
+) : INotificationMapper
 {
+    private readonly JsonSerializerOptions _jsonOptions = jsonSerializerOptions;
+
     public INotification FromEvent(IDomainEvent @event, string correlationId)
     {
         ArgumentNullException.ThrowIfNull(@event);
@@ -31,16 +35,10 @@ public sealed class NotificationMapper : INotificationMapper
 
         var notification = message.Type switch
         {
-            nameof(UserRegisteredNotification) => JsonSerializer.Deserialize<UserRegisteredNotification>(message.Payload, jsonSerializerOptions),
+            nameof(UserRegisteredNotification) => JsonSerializer.Deserialize<UserRegisteredNotification>(message.Payload, _jsonOptions),
             _ => throw new ArgumentException("unsupported notification")
         };
 
         return notification!;
     }
-    
-    private readonly JsonSerializerOptions jsonSerializerOptions = new()
-    {
-        WriteIndented = false,
-        PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
-    };
 }

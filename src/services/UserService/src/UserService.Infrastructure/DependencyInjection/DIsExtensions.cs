@@ -1,5 +1,7 @@
 
 using System;
+using System.Reflection.Metadata.Ecma335;
+using System.Text.Json;
 using FluentValidation;
 using MediatR;
 using Microsoft.Extensions.DependencyInjection;
@@ -13,8 +15,8 @@ using UserService.Application.UseCases.Commands.RegisterUserUseCase;
 using UserService.Application.UseCases.Queries.UserProfileUseCase;
 using UserService.Domain.DomainServices;
 using UserService.Domain.Interfaces;
-using UserService.Domain.Messaging;
 using UserService.Domain.Messaging.Notification;
+using UserService.Domain.Messaging.Outbox;
 using UserService.Domain.Repositories;
 using UserService.Domain.Security;
 using UserService.Domain.UnitOfWork;
@@ -50,6 +52,15 @@ public static class DIsExtensions
 
         services.AddSingleton<INotificationMapper, NotificationMapper>();
 
+        services.AddSingleton(() =>
+        {
+            return new JsonSerializerOptions()
+            {
+                WriteIndented = false,
+                PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
+            };
+        });
+
         return services;
     }
 
@@ -70,7 +81,7 @@ public static class DIsExtensions
         // services.AddMediatR(typeof(RefreshAuthCommandHandler).Assembly);
         services.AddScoped<IRefreshAuthService, RefreshAuthService>();
         services.AddScoped<IValidator<RefreshAuthCommand>, RefreshAuthValidator>();
-    
+
         // services.AddMediatR(typeof(LogoutUserCommandHandler).Assembly);
         services.AddScoped<ILogoutUserService, LogoutUserService>();
         services.AddScoped<IValidator<LogoutUserCommand>, LogoutUserValidator>();
