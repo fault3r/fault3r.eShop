@@ -1,5 +1,6 @@
 
 using System;
+using System.Text.Json;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using StackExchange.Redis;
@@ -24,7 +25,8 @@ public static class SessionExtensions
         services.AddSingleton<ISessionService>(provider =>
         {
             var connection = provider.GetRequiredService<IConnectionMultiplexer>();
-            return new RedisSessionService(connection, settings);
+            var jsonOptions = provider.GetRequiredService<JsonSerializerOptions>();
+            return new RedisSessionService(connection, settings, jsonOptions);
         });
 
         return services;

@@ -25,7 +25,7 @@ public sealed class OutboxMessage
         EnqueuedOn = domainEvent.OccurredOn;
         Type = domainEvent.GetType().Name;
         Payload = JsonSerializer.Serialize(
-            domainEvent, domainEvent.GetType(), jsonSerializerOptions);
+            domainEvent, domainEvent.GetType(), jsonOptions);
         Published = false;
         CorrelationId = correlationId;
     }
@@ -37,7 +37,7 @@ public sealed class OutboxMessage
         return new(domainEvent, correlationId);
     }
 
-    private readonly JsonSerializerOptions jsonSerializerOptions = new()
+    private static readonly JsonSerializerOptions jsonOptions = new()
     {
         WriteIndented = false,
         PropertyNamingPolicy = JsonNamingPolicy.CamelCase,

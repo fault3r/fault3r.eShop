@@ -10,11 +10,13 @@ namespace UserService.Infrastructure.Messaging.Notification;
 
 public sealed class RedisNotificationOutbox(
     IConnectionMultiplexer redisConnection,
-    INotificationMapper mapper
+    INotificationMapper mapper,
+    JsonSerializerOptions jsonSerializerOptions
 ) : INotificationOutbox
 {
     private readonly IDatabase _database = redisConnection.GetDatabase();
     private readonly INotificationMapper _mapper = mapper;
+    private readonly JsonSerializerOptions _jsonOptions = jsonSerializerOptions;
 
     private const string queue = "notification";
 
@@ -33,11 +35,11 @@ public sealed class RedisNotificationOutbox(
             EnqueuedOn = @event.OccurredOn,
             Type = notification.GetType().Name,
             Payload = JsonSerializer.Serialize(
-                notification, notification.GetType(), jsonSerializerOptions),
+                notification, notification.GetType(), _jsonOptions),
             CorrelationId = correlationId,
         };
 
-        var payload = JsonSerializer.Serialize(message, jsonSerializerOptions);
+        var payload = JsonSerializer.Serialize(message, _jsonOptions);
 
         await _database.ListLeftPushAsync(queue, payload);
     }
@@ -48,13 +50,7 @@ public sealed class RedisNotificationOutbox(
 
         if (payload.IsNullOrEmpty) return null;
 
-        return JsonSerializer.Deserialize<NotificationMessage>(payload!, jsonSerializerOptions);
+        return JsonSerializer.Deserialize<NotificationMessage>(payload!, _jsonOptions);
     }
-
-    private readonly JsonSerializerOptions jsonSerializerOptions = new()
-    {
-        WriteIndented = false,
-        PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
-    };
 }
 

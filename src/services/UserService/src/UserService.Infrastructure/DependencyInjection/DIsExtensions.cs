@@ -52,7 +52,7 @@ public static class DIsExtensions
 
         services.AddSingleton<INotificationMapper, NotificationMapper>();
 
-        services.AddSingleton(() =>
+        services.AddSingleton(_ =>
         {
             return new JsonSerializerOptions()
             {
