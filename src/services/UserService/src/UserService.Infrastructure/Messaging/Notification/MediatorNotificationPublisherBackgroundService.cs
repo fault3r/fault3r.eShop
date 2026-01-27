@@ -22,6 +22,7 @@ public sealed class MediatorNotificationPublisherBackgroundService(
 
     protected override async Task ExecuteAsync(CancellationToken cancellationToken)
     {
+        
         while (!cancellationToken.IsCancellationRequested)
         {
             var message = await _outbox.DequeueAsync(cancellationToken);

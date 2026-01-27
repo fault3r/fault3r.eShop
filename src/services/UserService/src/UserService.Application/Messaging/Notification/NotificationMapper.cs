@@ -16,11 +16,13 @@ public sealed class NotificationMapper : INotificationMapper
     {
         ArgumentNullException.ThrowIfNull(@event);
 
-        return @event switch
+        var notification = @event switch
         {
             UserRegisteredEvent e => UserRegisteredNotification.FromEvent(e, correlationId),
-            _ => throw new Exception()
+            _ => throw new ArgumentException("unsupported event")
         };
+
+        return notification;
     }
 
     public INotification FromNotificationMessage(NotificationMessage message)
@@ -29,9 +31,8 @@ public sealed class NotificationMapper : INotificationMapper
 
         var notification = message.Type switch
         {
-            nameof(UserRegisteredNotification) =>
-                JsonSerializer.Deserialize<UserRegisteredNotification>(message.Payload, jsonSerializerOptions),
-            _ => throw new Exception()
+            nameof(UserRegisteredNotification) => JsonSerializer.Deserialize<UserRegisteredNotification>(message.Payload, jsonSerializerOptions),
+            _ => throw new ArgumentException("unsupported notification")
         };
 
         return notification!;

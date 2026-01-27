@@ -29,12 +29,16 @@ public sealed class EfUnitOfWork(
         {
             await using var transaction = await _dbContext.Database
                 .BeginTransactionAsync(cancellationToken);
-
             try
             {
                 var result = await _dbContext.SaveChangesAsync(cancellationToken);
                 await transaction.CommitAsync(cancellationToken);
                 return result;
+            }
+            catch (OperationCanceledException)
+            {
+                await transaction.RollbackAsync(cancellationToken);
+                throw;
             }
             catch
             {

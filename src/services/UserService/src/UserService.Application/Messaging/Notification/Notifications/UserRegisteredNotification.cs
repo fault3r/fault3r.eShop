@@ -1,20 +1,20 @@
 
 using System;
-using MediatR;
 using UserService.Domain.Aggregates.UserAggregate.Events;
 
 namespace UserService.Application.Messaging.Notification.Notifications;
 
-public sealed class UserRegisteredNotification : BaseNotification
+public sealed class UserRegisteredNotification : UserNotification
 {
     public string Email { get; init; }
     public string FullName { get; init; }
 
-    public UserRegisteredNotification(
+    private UserRegisteredNotification(
+        string userId,
         string email,
         string fullName,
         string correlationId
-    ) : base(correlationId)
+    ) : base(userId, correlationId)
     {
         ArgumentException.ThrowIfNullOrEmpty(email);
         ArgumentException.ThrowIfNullOrEmpty(fullName);
@@ -28,7 +28,8 @@ public sealed class UserRegisteredNotification : BaseNotification
         string correlationId)
     {
         ArgumentNullException.ThrowIfNull(@event);
+        ArgumentException.ThrowIfNullOrWhiteSpace(correlationId);
 
-        return new(@event.Email, @event.FullName, correlationId);
+        return new(@event.UserId, @event.Email, @event.FullName, correlationId);
     }
 }
