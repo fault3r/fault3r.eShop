@@ -22,6 +22,7 @@ public sealed class MediatorNotificationPublisherBackgroundService(
 
     protected override async Task ExecuteAsync(CancellationToken cancellationToken)
     {
+        // here: the best place for try catch blocks
         
         while (!cancellationToken.IsCancellationRequested)
         {
