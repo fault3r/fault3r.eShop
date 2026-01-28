@@ -22,21 +22,24 @@ public sealed class MediatorNotificationPublisherBackgroundService(
 
     protected override async Task ExecuteAsync(CancellationToken cancellationToken)
     {
-        // here: the best place for try catch blocks
-        
-        while (!cancellationToken.IsCancellationRequested)
+        try
         {
-            var message = await _outbox.DequeueAsync(cancellationToken);
-
-            if (message is null)
+            while (!cancellationToken.IsCancellationRequested)
             {
-                await AMomentAsync();
-                continue;
+                var message = await _outbox.DequeueAsync(cancellationToken);
+
+                if (message is null)
+                {
+                    await AMomentAsync();
+                    continue;
+                }
+
+                var notification = _mapper.FromNotificationMessage(message!);
+
+                await _mediator.Publish(notification, cancellationToken);
             }
-
-            var notification = _mapper.FromNotificationMessage(message!);
-
-            await _mediator.Publish(notification, cancellationToken);
         }
+        catch {}
     }
 }
+ 
