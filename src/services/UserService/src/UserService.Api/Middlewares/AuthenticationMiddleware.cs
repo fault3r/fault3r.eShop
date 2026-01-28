@@ -1,5 +1,7 @@
 
 using System;
+using System.Text.Json;
+using UserService.Domain.Contracts;
 using UserService.Domain.Security.Authentication;
 
 namespace UserService.Api.Middlewares;
@@ -26,43 +28,44 @@ public sealed class AuthenticationMiddleware(
 
         if (!authHeader.StartsWith(TokenPrefix))
         {
-            WriteResponseError(ref context, "Invalid authorization!");
+            await WriteResponseErrorAsync(context, "Invalid authorization!");
             return;
         }
         var token = authHeader[TokenPrefix.Length..].Trim();
 
-        var claims =  _tokenService.ReadAccessTokenClaims(token);
+        var claims = _tokenService.ReadAccessTokenClaims(token);
         if (claims is null)
         {
-            WriteResponseError(ref context, "Invalid token!");
+            await WriteResponseErrorAsync(context, "Invalid token!");
             return;
         }
 
         var sessionId = claims.FindFirst("jti")?.Value;
         if (string.IsNullOrWhiteSpace(sessionId))
         {
-            WriteResponseError(ref context, "Invalid token claims!");
+            await WriteResponseErrorAsync(context, "Invalid token claims!");
             return;
         }
 
         var session = await _sessionService.ExistAsync(sessionId);
         if (!session)
         {
-            WriteResponseError(ref context, "Invalidated session!");
+            await WriteResponseErrorAsync(context, "Invalidated session!");
             return;
         }
 
         context.User = claims;
         await _next(context);
     }
-
-    private static void WriteResponseError(ref HttpContext context, string errorMessage)
+    private static async Task WriteResponseErrorAsync(
+        HttpContext context, string errorMessage)
     {
-        var response = new { errorMessage };
-
-        context.Response.ContentType = "application/json";
-        context.Response.WriteAsJsonAsync(response);
         context.Response.StatusCode = StatusCodes.Status401Unauthorized;
+        context.Response.ContentType = "application/json";
+
+        var errorResponse = new { errorMessage };
+        await context.Response.WriteAsync(
+            JsonSerializer.Serialize(errorResponse, SharedJsonOptions.DefaultOptions));
     }
 }
 

@@ -1,11 +1,11 @@
 
 using System;
 using System.Text.Json;
-using StackExchange.Redis;
 using UserService.Application.Interfaces;
 using UserService.Domain.Contracts;
 using UserService.Domain.Interfaces;
 using UserService.Domain.Messaging.Notification;
+using StackExchange.Redis;
 
 namespace UserService.Infrastructure.Messaging.Notification;
 

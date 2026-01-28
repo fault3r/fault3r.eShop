@@ -15,7 +15,7 @@ public sealed class OutboxMessage
     public bool Published { get; private set; }
     public string CorrelationId { get; private set; }
 
-    private OutboxMessage(
+    public OutboxMessage(
         IDomainEvent domainEvent,
         string correlationId)
     {

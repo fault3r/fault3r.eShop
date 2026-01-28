@@ -1,6 +1,8 @@
 
 using System;
+using System.Text.Json;
 using Serilog;
+using UserService.Domain.Contracts;
 
 namespace UserService.Api.Middlewares;
 
@@ -40,9 +42,10 @@ public sealed class ExceptionHandlingMiddleware
                 correlationId = context.Items[correlationHeader],
             };
 
-            context.Response.ContentType = "application/json";
-            await context.Response.WriteAsJsonAsync(response, context.RequestAborted);
             context.Response.StatusCode = StatusCodes.Status500InternalServerError;
+            context.Response.ContentType = "application/json";
+            await context.Response.WriteAsync(
+                JsonSerializer.Serialize(response, SharedJsonOptions.DefaultOptions));
         }
     }
 }
