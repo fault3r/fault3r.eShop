@@ -4,7 +4,7 @@ using FluentValidation;
 using MediatR;
 using Microsoft.Extensions.Logging;
 using UserService.Application.Interfaces;
-using UserService.Domain.Common;
+using UserService.Domain.Contracts;
 using System.Linq;
 
 namespace UserService.Application.UseCases.Commands.LoginUserUseCase;

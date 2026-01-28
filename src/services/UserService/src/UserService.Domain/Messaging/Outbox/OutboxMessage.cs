@@ -1,6 +1,7 @@
 
 using System;
 using System.Text.Json;
+using UserService.Domain.Contracts;
 using UserService.Domain.Interfaces;
 
 namespace UserService.Domain.Messaging.Outbox;
@@ -25,7 +26,7 @@ public sealed class OutboxMessage
         EnqueuedOn = domainEvent.OccurredOn;
         Type = domainEvent.GetType().Name;
         Payload = JsonSerializer.Serialize(
-            domainEvent, domainEvent.GetType(), jsonOptions);
+            domainEvent, domainEvent.GetType(), SharedJsonOptions.DefaultOptions);
         Published = false;
         CorrelationId = correlationId;
     }
@@ -36,12 +37,6 @@ public sealed class OutboxMessage
     {
         return new(domainEvent, correlationId);
     }
-
-    private static readonly JsonSerializerOptions jsonOptions = new()
-    {
-        WriteIndented = false,
-        PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
-    };
 
     #region ⤚EFCore
     public OutboxMessage()

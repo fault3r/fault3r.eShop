@@ -2,7 +2,7 @@
 using System;
 using FluentEmail.Core;
 using UserService.Application.Services.EmailService;
-using UserService.Domain.Common;
+using UserService.Domain.Contracts;
 using UserService.Infrastructure.Exceptions.Services.EmailService;
 
 namespace UserService.Infrastructure.Services.EmailService;

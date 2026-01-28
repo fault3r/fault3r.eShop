@@ -1,7 +1,7 @@
 
 using System;
 
-namespace UserService.Domain.Common;
+namespace UserService.Domain.Contracts;
 
 public readonly struct Result
 {

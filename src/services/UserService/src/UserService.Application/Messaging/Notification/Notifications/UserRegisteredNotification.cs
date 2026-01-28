@@ -9,7 +9,7 @@ public sealed class UserRegisteredNotification : UserNotification
     public string Email { get; init; }
     public string FullName { get; init; }
 
-    private UserRegisteredNotification(
+    public UserRegisteredNotification(
         string userId,
         string email,
         string fullName,

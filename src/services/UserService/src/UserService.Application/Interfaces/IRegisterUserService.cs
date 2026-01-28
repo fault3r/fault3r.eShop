@@ -1,7 +1,7 @@
 ﻿
 using System;
 using UserService.Application.UseCases.Commands.RegisterUserUseCase;
-using UserService.Domain.Common;
+using UserService.Domain.Contracts;
 
 namespace UserService.Application.Interfaces;
 

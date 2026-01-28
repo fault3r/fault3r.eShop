@@ -3,6 +3,7 @@ using System;
 using System.Text.Json;
 using StackExchange.Redis;
 using UserService.Application.Interfaces;
+using UserService.Domain.Contracts;
 using UserService.Domain.Interfaces;
 using UserService.Domain.Messaging.Notification;
 
@@ -10,14 +11,15 @@ namespace UserService.Infrastructure.Messaging.Notification;
 
 public sealed class RedisNotificationOutbox(
     IConnectionMultiplexer redisConnection,
-    INotificationMapper mapper,
-    JsonSerializerOptions jsonSerializerOptions
+    INotificationMapper mapper
 ) : INotificationOutbox
 {
     private readonly IDatabase _database = redisConnection.GetDatabase();
     private readonly INotificationMapper _mapper = mapper;
-    private readonly JsonSerializerOptions _jsonOptions = jsonSerializerOptions;
 
+    private readonly JsonSerializerOptions jsonOptions
+        = SharedJsonOptions.DefaultOptions;
+        
     private const string queue = "notification";
 
     public async Task EnqueueAsync(
@@ -35,11 +37,11 @@ public sealed class RedisNotificationOutbox(
             EnqueuedOn = @event.OccurredOn,
             Type = notification.GetType().Name,
             Payload = JsonSerializer.Serialize(
-                notification, notification.GetType(), _jsonOptions),
+                notification, notification.GetType(), jsonOptions),
             CorrelationId = correlationId,
         };
 
-        var payload = JsonSerializer.Serialize(message, _jsonOptions);
+        var payload = JsonSerializer.Serialize(message, jsonOptions);
 
         await _database.ListLeftPushAsync(queue, payload);
     }
@@ -50,7 +52,7 @@ public sealed class RedisNotificationOutbox(
 
         if (payload.IsNullOrEmpty) return null;
 
-        return JsonSerializer.Deserialize<NotificationMessage>(payload!, _jsonOptions);
+        return JsonSerializer.Deserialize<NotificationMessage>(payload!, jsonOptions);
     }
 }
 

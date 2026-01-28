@@ -1,7 +1,7 @@
 ﻿
 using System;
 using MediatR;
-using UserService.Domain.Common;
+using UserService.Domain.Contracts;
 
 namespace UserService.Application.UseCases.Commands.RegisterUserUseCase;
 

@@ -5,16 +5,17 @@ using MediatR;
 using UserService.Application.Interfaces;
 using UserService.Application.Messaging.Notification.Notifications;
 using UserService.Domain.Aggregates.UserAggregate.Events;
+using UserService.Domain.Contracts;
 using UserService.Domain.Interfaces;
 using UserService.Domain.Messaging.Notification;
 
 namespace UserService.Application.Messaging.Notification;
 
 public sealed class NotificationMapper(
-    JsonSerializerOptions jsonSerializerOptions
 ) : INotificationMapper
 {
-    private readonly JsonSerializerOptions _jsonOptions = jsonSerializerOptions;
+    private readonly JsonSerializerOptions jsonOptions
+        = SharedJsonOptions.DefaultOptions;
 
     public INotification FromEvent(IDomainEvent @event, string correlationId)
     {
@@ -35,7 +36,7 @@ public sealed class NotificationMapper(
 
         var notification = message.Type switch
         {
-            nameof(UserRegisteredNotification) => JsonSerializer.Deserialize<UserRegisteredNotification>(message.Payload, _jsonOptions),
+            nameof(UserRegisteredNotification) => JsonSerializer.Deserialize<UserRegisteredNotification>(message.Payload, jsonOptions),
             _ => throw new ArgumentException("unsupported notification")
         };
 

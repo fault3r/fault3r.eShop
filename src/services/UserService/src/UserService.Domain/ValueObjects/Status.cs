@@ -1,7 +1,6 @@
 
 using System;
 using UserService.Domain.Abstractions;
-using UserService.Domain.Common;
 using UserService.Domain.Exceptions.Status;
 
 namespace UserService.Domain.ValueObjects;

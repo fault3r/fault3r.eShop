@@ -25,8 +25,7 @@ public static class SessionExtensions
         services.AddSingleton<ISessionService>(provider =>
         {
             var connection = provider.GetRequiredService<IConnectionMultiplexer>();
-            var jsonOptions = provider.GetRequiredService<JsonSerializerOptions>();
-            return new RedisSessionService(connection, settings, jsonOptions);
+            return new RedisSessionService(connection, settings);
         });
 
         return services;

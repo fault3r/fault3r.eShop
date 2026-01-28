@@ -2,6 +2,7 @@
 using System;
 using System.Text.Json;
 using StackExchange.Redis;
+using UserService.Domain.Contracts;
 using UserService.Domain.Security.Authentication;
 using UserService.Infrastructure.Exceptions.Security.Authentication;
 using UserService.Infrastructure.Settings;
@@ -10,14 +11,15 @@ namespace UserService.Infrastructure.Security.Authentication;
 
 public sealed class RedisSessionService(
     IConnectionMultiplexer redisConnection,
-    SessionSettings settings,
-    JsonSerializerOptions jsonSerializerOptions
+    SessionSettings settings
 ) : ISessionService
 {
     private readonly IDatabase _database = redisConnection.GetDatabase();
     private readonly SessionSettings _settings = settings;
-    private readonly JsonSerializerOptions _jsonOptions = jsonSerializerOptions;
 
+    private readonly JsonSerializerOptions jsonOptions
+        = SharedJsonOptions.DefaultOptions;
+        
     public async Task CreateAsync(
         SessionData session,
         CancellationToken cancellationToken = default)
@@ -26,7 +28,7 @@ public sealed class RedisSessionService(
 
         await EnforceSessionLimitAsync(session.UserId, cancellationToken);
 
-        var payload = JsonSerializer.Serialize(session, _jsonOptions);
+        var payload = JsonSerializer.Serialize(session, jsonOptions);
 
         var expires = session.RefreshTokenExpiresAt - DateTimeOffset.UtcNow;
         if (expires <= TimeSpan.Zero) expires = TimeSpan.FromMinutes(1);
@@ -62,7 +64,7 @@ public sealed class RedisSessionService(
             if (payload.IsNullOrEmpty)
                 continue;
 
-            var session = JsonSerializer.Deserialize<SessionData>(payload!, _jsonOptions);
+            var session = JsonSerializer.Deserialize<SessionData>(payload!, jsonOptions);
             if (session != null)
                 sessions.Add((id!, session));
         }
@@ -96,7 +98,7 @@ public sealed class RedisSessionService(
 
         if (payload.IsNullOrEmpty) return null;
 
-        return JsonSerializer.Deserialize<SessionData>(payload!, _jsonOptions)!;
+        return JsonSerializer.Deserialize<SessionData>(payload!, jsonOptions)!;
     }
 
     public async Task<bool> ExistAsync(
@@ -116,7 +118,7 @@ public sealed class RedisSessionService(
     {
         ArgumentNullException.ThrowIfNull(session);
 
-        var payload = JsonSerializer.Serialize(session, _jsonOptions);
+        var payload = JsonSerializer.Serialize(session, jsonOptions);
 
         var expires = session.RefreshTokenExpiresAt - DateTimeOffset.UtcNow;
         if (expires <= TimeSpan.Zero) expires = TimeSpan.FromMinutes(1);
@@ -145,7 +147,7 @@ public sealed class RedisSessionService(
 
         if (payload.IsNullOrEmpty) return;
 
-        var session = JsonSerializer.Deserialize<SessionData>(payload!, _jsonOptions);
+        var session = JsonSerializer.Deserialize<SessionData>(payload!, jsonOptions);
 
         var userSessionsKey = GetUserSessionsKey(session!.UserId);
 

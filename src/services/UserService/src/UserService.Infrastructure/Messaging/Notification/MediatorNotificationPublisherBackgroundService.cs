@@ -22,24 +22,21 @@ public sealed class MediatorNotificationPublisherBackgroundService(
 
     protected override async Task ExecuteAsync(CancellationToken cancellationToken)
     {
-        try
+
+        while (!cancellationToken.IsCancellationRequested)
         {
-            while (!cancellationToken.IsCancellationRequested)
+            var message = await _outbox.DequeueAsync(cancellationToken);
+
+            if (message is null)
             {
-                var message = await _outbox.DequeueAsync(cancellationToken);
-
-                if (message is null)
-                {
-                    await AMomentAsync();
-                    continue;
-                }
-
-                var notification = _mapper.FromNotificationMessage(message!);
-
-                await _mediator.Publish(notification, cancellationToken);
+                await AMomentAsync();
+                continue;
             }
+
+            var notification = _mapper.FromNotificationMessage(message!);
+
+            await _mediator.Publish(notification, cancellationToken);
         }
-        catch {}
     }
+
 }
- 

@@ -52,15 +52,6 @@ public static class DIsExtensions
 
         services.AddSingleton<INotificationMapper, NotificationMapper>();
 
-        services.AddSingleton(_ =>
-        {
-            return new JsonSerializerOptions()
-            {
-                WriteIndented = false,
-                PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
-            };
-        });
-
         return services;
     }
 

@@ -1,7 +1,7 @@
 
 using System;
 using UserService.Domain.Aggregates.UserAggregate;
-using UserService.Domain.Common;
+using UserService.Domain.Contracts;
 using UserService.Domain.Exceptions;
 using UserService.Domain.ValueObjects;
 

@@ -26,7 +26,7 @@ public sealed class AuthenticationMiddleware(
 
         if (!authHeader.StartsWith(TokenPrefix))
         {
-            await WriteResponseError(ref context, "Invalid authorization!");
+            WriteResponseError(ref context, "Invalid authorization!");
             return;
         }
         var token = authHeader[TokenPrefix.Length..].Trim();
@@ -34,21 +34,21 @@ public sealed class AuthenticationMiddleware(
         var claims =  _tokenService.ReadAccessTokenClaims(token);
         if (claims is null)
         {
-            await WriteResponseError(ref context, "Invalid token!");
+            WriteResponseError(ref context, "Invalid token!");
             return;
         }
 
         var sessionId = claims.FindFirst("jti")?.Value;
         if (string.IsNullOrWhiteSpace(sessionId))
         {
-            await WriteResponseError(ref context, "Invalid token claims!");
+            WriteResponseError(ref context, "Invalid token claims!");
             return;
         }
 
         var session = await _sessionService.ExistAsync(sessionId);
         if (!session)
         {
-            await WriteResponseError(ref context, "Invalidated session!");
+            WriteResponseError(ref context, "Invalidated session!");
             return;
         }
 
@@ -56,15 +56,13 @@ public sealed class AuthenticationMiddleware(
         await _next(context);
     }
 
-    private static Task WriteResponseError(ref HttpContext context, string errorMessage)
+    private static void WriteResponseError(ref HttpContext context, string errorMessage)
     {
         var response = new { errorMessage };
 
         context.Response.ContentType = "application/json";
         context.Response.WriteAsJsonAsync(response);
         context.Response.StatusCode = StatusCodes.Status401Unauthorized;
-
-        return Task.CompletedTask;
     }
 }
 
