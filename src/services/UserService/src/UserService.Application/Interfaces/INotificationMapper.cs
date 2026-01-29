@@ -1,6 +1,6 @@
 
 using System;
-using MediatR;
+using UserService.Application.Messaging.Notification;
 using UserService.Domain.Interfaces;
 using UserService.Domain.Messaging.Notification;
 
@@ -8,7 +8,7 @@ namespace UserService.Application.Interfaces;
 
 public interface INotificationMapper
 {
-    INotification FromEvent(IDomainEvent domainEvent, string correlationId);
+    Notification FromEvent(IDomainEvent domainEvent, string correlationId);
     
-    INotification FromNotificationMessage(NotificationMessage notificationMessage);
+    Notification FromNotificationMessage(NotificationMessage notificationMessage);
 }

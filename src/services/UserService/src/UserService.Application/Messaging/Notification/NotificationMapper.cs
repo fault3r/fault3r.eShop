@@ -1,7 +1,6 @@
 
 using System;
 using System.Text.Json;
-using MediatR;
 using UserService.Application.Interfaces;
 using UserService.Application.Messaging.Notification.Notifications;
 using UserService.Domain.Aggregates.UserAggregate.Events;
@@ -17,7 +16,7 @@ public sealed class NotificationMapper(
     private readonly JsonSerializerOptions jsonOptions
         = SharedJsonOptions.DefaultOptions;
 
-    public INotification FromEvent(IDomainEvent @event, string correlationId)
+    public Notification FromEvent(IDomainEvent @event, string correlationId)
     {
         ArgumentNullException.ThrowIfNull(@event);
 
@@ -30,7 +29,7 @@ public sealed class NotificationMapper(
         return notification;
     }
 
-    public INotification FromNotificationMessage(NotificationMessage message)
+    public Notification FromNotificationMessage(NotificationMessage message)
     {
         ArgumentNullException.ThrowIfNull(message);
 

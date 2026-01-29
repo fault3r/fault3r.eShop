@@ -4,12 +4,12 @@ using MediatR;
 
 namespace UserService.Application.Messaging.Notification;
 
-public abstract class UserNotification : INotification
+public abstract class Notification : INotification
 {
     public string UserId { get; init; }
     public string CorrelationId { get; init; }
 
-    public UserNotification(string userId, string correlationId)
+    public Notification(string userId, string correlationId)
     {
         ArgumentException.ThrowIfNullOrWhiteSpace(userId);
         ArgumentException.ThrowIfNullOrWhiteSpace(correlationId);

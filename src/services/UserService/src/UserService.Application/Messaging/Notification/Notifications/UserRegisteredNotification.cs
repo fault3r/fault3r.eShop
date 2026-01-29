@@ -4,7 +4,7 @@ using UserService.Domain.Aggregates.UserAggregate.Events;
 
 namespace UserService.Application.Messaging.Notification.Notifications;
 
-public sealed class UserRegisteredNotification : UserNotification
+public sealed class UserRegisteredNotification : Notification
 {
     public string Email { get; init; }
     public string FullName { get; init; }
