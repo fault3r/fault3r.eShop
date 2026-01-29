@@ -32,9 +32,9 @@ public sealed class ExceptionHandlingMiddleware
             Log.Warning("Operation was canceled!");
             throw; // 🛈/dev/null
         }
-        catch (Exception exception)
+        catch (Exception ex)
         {
-            Log.Error(exception, "Unhandled exception occurred!");
+            Log.Error(ex, "Unhandled exception occurred!");
 
             var response = new
             {

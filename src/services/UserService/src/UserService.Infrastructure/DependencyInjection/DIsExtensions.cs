@@ -48,7 +48,7 @@ public static class DIsExtensions
 
         services.AddSingleton<IPasswordHasher, Argon2PasswordHasher>();
 
-        //services.AddHostedService<MediatorNotificationPublisherBackgroundService>();
+        services.AddHostedService<MediatorNotificationPublisherBackgroundService>();
 
         services.AddSingleton<INotificationMapper, NotificationMapper>();
 

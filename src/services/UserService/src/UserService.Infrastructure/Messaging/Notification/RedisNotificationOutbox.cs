@@ -38,7 +38,6 @@ public sealed class RedisNotificationOutbox(
             Type = notification.GetType().Name,
             Payload = JsonSerializer.Serialize(
                 notification, notification.GetType(), jsonOptions),
-            CorrelationId = correlationId,
         };
 
         var payload = JsonSerializer.Serialize(message, jsonOptions);

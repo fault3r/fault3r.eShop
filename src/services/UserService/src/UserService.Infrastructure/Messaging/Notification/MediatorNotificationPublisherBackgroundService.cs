@@ -2,6 +2,7 @@
 using System;
 using MediatR;
 using Microsoft.Extensions.Hosting;
+using Serilog;
 using UserService.Application.Interfaces;
 using UserService.Domain.Messaging.Notification;
 
@@ -17,25 +18,33 @@ public sealed class MediatorNotificationPublisherBackgroundService(
     private readonly INotificationOutbox _outbox = outbox;
     private readonly INotificationMapper _mapper = mapper;
 
-    private static async Task AMomentAsync()
-        => await Task.Delay(TimeSpan.FromSeconds(5));
+    private static async Task SomeSecondsAsync(int second = 5)
+        => await Task.Delay(TimeSpan.FromSeconds(second));
 
     protected override async Task ExecuteAsync(CancellationToken cancellationToken)
     {
-
         while (!cancellationToken.IsCancellationRequested)
         {
-            var message = await _outbox.DequeueAsync(cancellationToken);
-
-            if (message is null)
+            try
             {
-                await AMomentAsync();
-                continue;
+                var message = await _outbox.DequeueAsync(cancellationToken);
+
+                if (message is null)
+                {
+                    await SomeSecondsAsync();
+                    continue;
+                }
+
+                var notification = _mapper.FromNotificationMessage(message!);
+
+                await _mediator.Publish(notification, cancellationToken);
             }
+            catch (Exception ex)
+            {
+                Log.Error(ex, "An error occurred while processing a background message.");
+                await SomeSecondsAsync(10);
 
-            var notification = _mapper.FromNotificationMessage(message!);
-
-            await _mediator.Publish(notification, cancellationToken);
+            }
         }
     }
 

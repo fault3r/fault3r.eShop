@@ -9,5 +9,4 @@ public sealed record NotificationMessage
     public DateTime EnqueuedOn { get; init; }
     public required string Type { get; init; }
     public required string Payload { get; init; }
-    public required string CorrelationId { get; init; }
 }

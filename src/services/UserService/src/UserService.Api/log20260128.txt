@@ -1,9 +1,0 @@
-[2026-01-28 23:56:54 INF] 012ea8c3-48d1-44a6-b4bc-86b0116c12f2  Incoming request POST /api/v1/auth/register. 
- [2026-01-28 23:56:55 INF] 012ea8c3-48d1-44a6-b4bc-86b0116c12f2 UserService.Application.UseCases.Commands.RegisterUserUseCase.RegisterUserService Registering user with 'skkk@wjw.lvv' email address… 
- [2026-01-28 23:56:58 INF] 012ea8c3-48d1-44a6-b4bc-86b0116c12f2 UserService.Application.UseCases.Commands.RegisterUserUseCase.RegisterUserService User successfully registered with '891267c4ee004548920698f80f77ebba' identity. 
- [2026-01-28 23:56:58 INF] 012ea8c3-48d1-44a6-b4bc-86b0116c12f2  Completed request POST /api/v1/auth/register with status code 201. 
- [2026-01-28 23:58:15 INF] 865fcfcf-2c2d-4356-aa39-36a4be5aaa7b  Incoming request POST /api/v1/auth/register. 
- [2026-01-28 23:58:15 INF] 865fcfcf-2c2d-4356-aa39-36a4be5aaa7b UserService.Application.UseCases.Commands.RegisterUserUseCase.RegisterUserService Registering user with 'skkak@wjw.lvv' email address… 
- [2026-01-28 23:58:18 INF] 865fcfcf-2c2d-4356-aa39-36a4be5aaa7b UserService.Application.UseCases.Commands.RegisterUserUseCase.RegisterUserService User successfully registered with '1339599d1d894db5aa72ea4198949ac5' identity. 
- [2026-01-28 23:58:18 INF] 865fcfcf-2c2d-4356-aa39-36a4be5aaa7b  Completed request POST /api/v1/auth/register with status code 201. 
- 
