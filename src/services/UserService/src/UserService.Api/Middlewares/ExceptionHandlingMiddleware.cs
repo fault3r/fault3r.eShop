@@ -34,7 +34,7 @@ public sealed class ExceptionHandlingMiddleware
         }
         catch (Exception ex)
         {
-            Log.Error(ex, "Unhandled exception occurred!");
+            Log.Error(ex, "An unhandled exception occurred!");
 
             var response = new
             {

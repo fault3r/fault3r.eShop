@@ -20,7 +20,7 @@ public sealed class RegisterUserService(
     IUserDomainService userDomainService,
     ICorrelationContext correlation,
     IPasswordHasher passwordHasher,
-    INotificationOutbox outbox,
+    INotificationOutbox notificationOutbox,
     ILogger<RegisterUserService> logger
 ) : IRegisterUserService
 {
@@ -28,7 +28,7 @@ public sealed class RegisterUserService(
     private readonly IUserDomainService _userService = userDomainService;
     private readonly ICorrelationContext _correlation = correlation;
     private readonly IPasswordHasher _hasher = passwordHasher;
-    private readonly INotificationOutbox _outbox = outbox;
+    private readonly INotificationOutbox _notificationOutbox = notificationOutbox;
     private readonly ILogger<RegisterUserService> _logger = logger;
 
     public async Task<Result<RegisterUserResult>> ExecuteAsync(
@@ -77,7 +77,7 @@ public sealed class RegisterUserService(
         await _uow.EventOutbox.EnqueueAsync(user.Events, _correlation.CorrelationId, cancellationToken);
         await _uow.CommitAsync(cancellationToken);
 
-        await _outbox.EnqueueAsync(user.Events.FirstOrDefault()!, _correlation.CorrelationId, cancellationToken);
+        await _notificationOutbox.EnqueueAsync(user.Events.FirstOrDefault()!, _correlation.CorrelationId, cancellationToken);
 
         user.ClearEvents();
 

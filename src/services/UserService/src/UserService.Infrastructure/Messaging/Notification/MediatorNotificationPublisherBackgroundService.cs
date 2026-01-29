@@ -3,6 +3,7 @@ using System;
 using MediatR;
 using Microsoft.Extensions.Hosting;
 using Serilog;
+using StackExchange.Redis;
 using UserService.Application.Interfaces;
 using UserService.Domain.Messaging.Notification;
 
@@ -29,22 +30,25 @@ public sealed class MediatorNotificationPublisherBackgroundService(
             {
                 var message = await _outbox.DequeueAsync(cancellationToken);
 
-                if (message is null)
-                {
-                    await SomeSecondsAsync();
-                    continue;
-                }
+                if (message is null) continue; 
 
                 var notification = _mapper.FromNotificationMessage(message!);
 
                 await _mediator.Publish(notification, cancellationToken);
             }
+            catch (RedisConnectionException)
+            {
+                Log.Error(nameof(MediatorNotificationPublisherBackgroundService)
+                    + " Failed to connect to the Redis database, Reconnectiong…");
+            }
             catch (Exception ex)
             {
-                Log.Error(ex, "An error occurred while processing a background message.");
-                await SomeSecondsAsync(10);
-
+                Log.Error(ex, nameof(MediatorNotificationPublisherBackgroundService)
+                    + " An unhandled exception occurred!");
+                
             }
+
+            finally { await SomeSecondsAsync(); }
         }
     }
 
