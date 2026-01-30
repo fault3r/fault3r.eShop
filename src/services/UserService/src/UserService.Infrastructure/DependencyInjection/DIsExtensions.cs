@@ -50,7 +50,7 @@ public static class DIsExtensions
 
         services.AddHostedService<MediatorNotificationPublisherBackgroundService>();
 
-        services.AddSingleton<INotificationMapper, NotificationMapper>();
+        services.AddSingleton<INotificationFactory, NotificationFactory>();
 
         return services;
     }

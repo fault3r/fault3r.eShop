@@ -10,8 +10,8 @@ using UserService.Domain.Messaging.Notification;
 
 namespace UserService.Application.Messaging.Notification;
 
-public sealed class NotificationMapper(
-) : INotificationMapper
+public sealed class NotificationFactory(
+) : INotificationFactory
 {
     private readonly JsonSerializerOptions jsonOptions
         = SharedJsonOptions.DefaultOptions;

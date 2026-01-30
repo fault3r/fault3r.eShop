@@ -25,14 +25,14 @@
 ## 📦 UserService.Application
 - 📂 Interfaces  
   - 🔗 ICorrelationContext.cs  
-  - 🔔 IEventNotificationMapper.cs  
+  - 🔔 IEventNotificationFactory.cs  
   - 🔑 ILoginUserService.cs  
   - 🔄 IRefreshAuthService.cs  
   - 📝 IRegisterUserService.cs  
   - 🗝️ ISessionService.cs  
   - 🎟️ ITokenService.cs  
 - 📂 Messaging  
-  - 🔄 EventNotificationMapper.cs  
+  - 🔄 EventNotificationFactory.cs  
   - 📂 NotificationHandlers  
     - 📢 UserRegisteredNotificationHandler.cs  
   - 📂 Notifications  

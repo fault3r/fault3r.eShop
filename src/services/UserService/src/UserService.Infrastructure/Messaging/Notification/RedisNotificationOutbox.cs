@@ -11,11 +11,11 @@ namespace UserService.Infrastructure.Messaging.Notification;
 
 public sealed class RedisNotificationOutbox(
     IConnectionMultiplexer redisConnection,
-    INotificationMapper mapper
+    INotificationFactory factory
 ) : INotificationOutbox
 {
     private readonly IDatabase _database = redisConnection.GetDatabase();
-    private readonly INotificationMapper _mapper = mapper;
+    private readonly INotificationFactory _factory = factory;
 
     private readonly JsonSerializerOptions jsonOptions
         = SharedJsonOptions.DefaultOptions;
@@ -29,7 +29,7 @@ public sealed class RedisNotificationOutbox(
     {
         ArgumentNullException.ThrowIfNull(@event);
 
-        var notification = _mapper.FromEvent(@event, correlationId);
+        var notification = _factory.FromEvent(@event, correlationId);
 
         var message = new NotificationMessage
         {

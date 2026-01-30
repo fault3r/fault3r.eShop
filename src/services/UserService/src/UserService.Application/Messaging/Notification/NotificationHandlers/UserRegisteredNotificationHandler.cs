@@ -29,9 +29,8 @@ public sealed class UserRegisteredNotificationHandler(
         _logger.LogInformation("{Correlation} Sending welcome email to '{Email}' user…",
             notification.CorrelationId, notification.Email);
 
-        var template = await _resolver.ResolveAsync(EmailTemplateType.Welcome, cancellationToken);
         var model = new WelcomeModel(notification.FullName);
-
+        var template = await _resolver.ResolveAsync(EmailTemplateType.Welcome, cancellationToken);
         var body = await _renderer.RenderAsync(template, model, cancellationToken);
 
         // await _sender.SendAsync(

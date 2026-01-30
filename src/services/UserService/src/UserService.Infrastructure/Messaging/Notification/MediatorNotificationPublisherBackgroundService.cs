@@ -12,12 +12,12 @@ namespace UserService.Infrastructure.Messaging.Notification;
 public sealed class MediatorNotificationPublisherBackgroundService(
     IMediator mediator,
     INotificationOutbox outbox,
-    INotificationMapper mapper
+    INotificationFactory factory
 ) : BackgroundService
 {
     private readonly IMediator _mediator = mediator;
     private readonly INotificationOutbox _outbox = outbox;
-    private readonly INotificationMapper _mapper = mapper;
+    private readonly INotificationFactory _factory = factory;
 
     private static async Task SomeSecondsAsync(int second = 5)
         => await Task.Delay(TimeSpan.FromSeconds(second));
@@ -30,12 +30,13 @@ public sealed class MediatorNotificationPublisherBackgroundService(
             {
                 var message = await _outbox.DequeueAsync(cancellationToken);
 
-                if (message is null) continue; 
+                if (message is null) continue;
 
-                var notification = _mapper.FromNotificationMessage(message!);
+                var notification = _factory.FromNotificationMessage(message!);
 
                 await _mediator.Publish(notification, cancellationToken);
             }
+
             catch (RedisConnectionException)
             {
                 Log.Error(nameof(MediatorNotificationPublisherBackgroundService)
@@ -45,7 +46,6 @@ public sealed class MediatorNotificationPublisherBackgroundService(
             {
                 Log.Error(ex, nameof(MediatorNotificationPublisherBackgroundService)
                     + " An unhandled exception occurred!");
-                
             }
 
             finally { await SomeSecondsAsync(); }

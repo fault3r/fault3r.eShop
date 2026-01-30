@@ -6,7 +6,7 @@ using UserService.Domain.Messaging.Notification;
 
 namespace UserService.Application.Interfaces;
 
-public interface INotificationMapper
+public interface INotificationFactory
 {
     Notification FromEvent(IDomainEvent domainEvent, string correlationId);
     
