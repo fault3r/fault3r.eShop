@@ -1,14 +1,34 @@
- [2026-02-01 19:26:26 INF] bbd60264-ffb3-4248-8891-07c768cf019d  Incoming request POST /api/v1/auth/register. 
- [2026-02-01 19:26:27 INF] bbd60264-ffb3-4248-8891-07c768cf019d UserService.Application.UseCases.Commands.RegisterUserUseCase.RegisterUserService Registering user with 'stunog@sspddds.cogm' email address… 
- [2026-02-01 19:26:36 ERR] bbd60264-ffb3-4248-8891-07c768cf019d UserService.Application.UseCases.Commands.RegisterUserUseCase.RegisterUserService Cannot enqueue notification message. Notification: [2026-02-01T15:56:28.1703860Z] UserRegisteredEvent (EventId=e19267a6-6aa8-4ebc-9269-b60dc04f1623) | UserId=b9aa0eb9fbe349aeb6d3a9f870374fd9, Email=stunog@sspddds.cogm, FullName=as sadsssssss 
- [2026-02-01 19:26:36 INF] bbd60264-ffb3-4248-8891-07c768cf019d UserService.Application.UseCases.Commands.RegisterUserUseCase.RegisterUserService User successfully registered with 'b9aa0eb9fbe349aeb6d3a9f870374fd9' identity. 
- [2026-02-01 19:26:36 INF] bbd60264-ffb3-4248-8891-07c768cf019d  Completed request POST /api/v1/auth/register with status code 201. 
- [2026-02-01 19:26:39 ERR]   MediatorNotificationPublisherBackgroundService Failed to connect to the Redis database, Reconnectiong… 
- [2026-02-01 19:27:23 ERR]   MediatorNotificationPublisherBackgroundService Failed to connect to the Redis database, Reconnectiong… 
- [2026-02-01 19:28:41 INF] fcfe2f8a-65a4-4b5c-84e7-6f3e3a51f08d  Incoming request POST /api/v1/auth/register. 
- [2026-02-01 19:28:41 INF] fcfe2f8a-65a4-4b5c-84e7-6f3e3a51f08d UserService.Application.UseCases.Commands.RegisterUserUseCase.RegisterUserService Registering user with 'stunog@sspdeedds.cogm' email address… 
- [2026-02-01 19:28:41 INF] fcfe2f8a-65a4-4b5c-84e7-6f3e3a51f08d UserService.Application.UseCases.Commands.RegisterUserUseCase.RegisterUserService User successfully registered with '206d824d7b6442ed919a235286e7f763' identity. 
- [2026-02-01 19:28:41 INF] fcfe2f8a-65a4-4b5c-84e7-6f3e3a51f08d  Completed request POST /api/v1/auth/register with status code 201. 
- [2026-02-01 19:28:43 INF]  UserService.Application.Messaging.Notification.NotificationHandlers.UserRegisteredNotificationHandler fcfe2f8a-65a4-4b5c-84e7-6f3e3a51f08d Sending welcome email to 'stunog@sspdeedds.cogm' user… 
- [2026-02-01 19:28:43 INF]  UserService.Application.Messaging.Notification.NotificationHandlers.UserRegisteredNotificationHandler fcfe2f8a-65a4-4b5c-84e7-6f3e3a51f08d Welcome email successfully sent. 
+[2026-02-01 19:50:21 INF] 861d936a-7dfd-43b2-8d4e-26e58fc0933a  Incoming request POST /api/v1/auth/register. 
+ [2026-02-01 19:50:21 INF] 861d936a-7dfd-43b2-8d4e-26e58fc0933a UserService.Application.UseCases.Commands.RegisterUserUseCase.RegisterUserService Registering user with 'str@eee.eeeeg' email address… 
+ [2026-02-01 19:50:24 INF] 861d936a-7dfd-43b2-8d4e-26e58fc0933a UserService.Application.UseCases.Commands.RegisterUserUseCase.RegisterUserService User successfully registered with 'e2bb4c5a900346139f7052046e8d56d3' identity. 
+ [2026-02-01 19:50:24 INF] 861d936a-7dfd-43b2-8d4e-26e58fc0933a  Completed request POST /api/v1/auth/register with status code 201. 
+ [2026-02-01 19:50:27 INF]  UserService.Application.Messaging.Notification.NotificationHandlers.UserRegisteredNotificationHandler 861d936a-7dfd-43b2-8d4e-26e58fc0933a Sending welcome email to 'str@eee.eeeeg' user… 
+ [2026-02-01 19:50:27 INF]  UserService.Application.Messaging.Notification.NotificationHandlers.UserRegisteredNotificationHandler 861d936a-7dfd-43b2-8d4e-26e58fc0933a Welcome email successfully sent. 
+ [2026-02-01 19:50:43 INF] 553aeedc-0297-4253-9b9d-f740604b5817  Incoming request POST /api/v1/auth/register. 
+ [2026-02-01 19:50:43 INF] 553aeedc-0297-4253-9b9d-f740604b5817 UserService.Application.UseCases.Commands.RegisterUserUseCase.RegisterUserService Registering user with 'str@ee' email address… 
+ [2026-02-01 19:50:43 WRN] 553aeedc-0297-4253-9b9d-f740604b5817 UserService.Application.UseCases.Commands.RegisterUserUseCase.RegisterUserService Domain validation failed: invalid email: str@ee 
+ [2026-02-01 19:50:43 INF] 553aeedc-0297-4253-9b9d-f740604b5817  Completed request POST /api/v1/auth/register with status code 400. 
+ [2026-02-01 19:51:14 INF] 2c0fa5fa-17f2-4022-b2ee-72743ea77094  Incoming request POST /api/v1/auth/register. 
+ [2026-02-01 19:51:14 INF] 2c0fa5fa-17f2-4022-b2ee-72743ea77094 UserService.Application.UseCases.Commands.RegisterUserUseCase.RegisterUserService Registering user with 'str@e.e' email address… 
+ [2026-02-01 19:51:14 WRN] 2c0fa5fa-17f2-4022-b2ee-72743ea77094 UserService.Application.UseCases.Commands.RegisterUserUseCase.RegisterUserService Domain validation failed: invalid email: str@e.e 
+ [2026-02-01 19:51:14 INF] 2c0fa5fa-17f2-4022-b2ee-72743ea77094  Completed request POST /api/v1/auth/register with status code 400. 
+ [2026-02-01 19:51:25 INF] 7be82537-5bf7-43d7-9ab2-7a131f7fbd95  Incoming request POST /api/v1/auth/register. 
+ [2026-02-01 19:51:25 WRN] 7be82537-5bf7-43d7-9ab2-7a131f7fbd95 UserService.Application.UseCases.Commands.RegisterUserUseCase.RegisterUserCommandHandler Validation failed: 'Email' is not a valid email address. 
+ [2026-02-01 19:51:25 INF] 7be82537-5bf7-43d7-9ab2-7a131f7fbd95  Completed request POST /api/v1/auth/register with status code 400. 
+ [2026-02-01 19:51:45 INF] 7a62ed75-0d4b-4ec2-b424-3231e9f74d73  Incoming request POST /api/v1/auth/register. 
+ [2026-02-01 19:51:45 WRN] 7a62ed75-0d4b-4ec2-b424-3231e9f74d73 UserService.Application.UseCases.Commands.RegisterUserUseCase.RegisterUserCommandHandler Validation failed: 'Password' must not be empty. - 'Password' must be between 6 and 100 characters. You entered 0 characters. 
+ [2026-02-01 19:51:45 INF] 7a62ed75-0d4b-4ec2-b424-3231e9f74d73  Completed request POST /api/v1/auth/register with status code 400. 
+ [2026-02-01 19:51:55 INF] f9a7bbda-53cc-4566-928b-909063ba59e5  Incoming request POST /api/v1/auth/register. 
+ [2026-02-01 19:51:55 WRN] f9a7bbda-53cc-4566-928b-909063ba59e5 UserService.Application.UseCases.Commands.RegisterUserUseCase.RegisterUserCommandHandler Validation failed: 'Password' must be between 6 and 100 characters. You entered 2 characters. 
+ [2026-02-01 19:51:55 INF] f9a7bbda-53cc-4566-928b-909063ba59e5  Completed request POST /api/v1/auth/register with status code 400. 
+ [2026-02-01 19:52:16 INF] cc0be4d2-fcc5-4ad2-bf27-32bf8e2ddf7c  Incoming request POST /api/v1/auth/register. 
+ [2026-02-01 19:52:16 INF] cc0be4d2-fcc5-4ad2-bf27-32bf8e2ddf7c UserService.Application.UseCases.Commands.RegisterUserUseCase.RegisterUserService Registering user with 'stre@asas.com' email address… 
+ [2026-02-01 19:52:16 WRN] cc0be4d2-fcc5-4ad2-bf27-32bf8e2ddf7c UserService.Application.UseCases.Commands.RegisterUserUseCase.RegisterUserService Domain validation failed: invalid fullname: strssssssssing 
+ [2026-02-01 19:52:16 INF] cc0be4d2-fcc5-4ad2-bf27-32bf8e2ddf7c  Completed request POST /api/v1/auth/register with status code 400. 
+ [2026-02-01 19:52:22 INF] 497f69f8-060c-4c95-a8c1-7d193d2aeb66  Incoming request POST /api/v1/auth/register. 
+ [2026-02-01 19:52:22 INF] 497f69f8-060c-4c95-a8c1-7d193d2aeb66 UserService.Application.UseCases.Commands.RegisterUserUseCase.RegisterUserService Registering user with 'stre@asas.com' email address… 
+ [2026-02-01 19:52:23 INF] 497f69f8-060c-4c95-a8c1-7d193d2aeb66 UserService.Application.UseCases.Commands.RegisterUserUseCase.RegisterUserService User successfully registered with 'f68455c88b864328960618a7270f0cef' identity. 
+ [2026-02-01 19:52:23 INF] 497f69f8-060c-4c95-a8c1-7d193d2aeb66  Completed request POST /api/v1/auth/register with status code 201. 
+ [2026-02-01 19:52:27 INF]  UserService.Application.Messaging.Notification.NotificationHandlers.UserRegisteredNotificationHandler 497f69f8-060c-4c95-a8c1-7d193d2aeb66 Sending welcome email to 'stre@asas.com' user… 
+ [2026-02-01 19:52:27 INF]  UserService.Application.Messaging.Notification.NotificationHandlers.UserRegisteredNotificationHandler 497f69f8-060c-4c95-a8c1-7d193d2aeb66 Welcome email successfully sent. 
  

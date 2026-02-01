@@ -12,6 +12,7 @@ using UserService.Domain.Interfaces;
 using UserService.Domain.Security;
 using UserService.Application.CrossCutting;
 using UserService.Domain.Messaging.Notification;
+using StackExchange.Redis;
 
 namespace UserService.Application.UseCases.Commands.RegisterUserUseCase;
 
@@ -82,7 +83,7 @@ public sealed class RegisterUserService(
         {
             await _notificationOutbox.EnqueueAsync(@event!, _correlation.CorrelationId, cancellationToken);
         }
-        catch
+        catch(RedisConnectionException)
         {
             _logger.LogError("Cannot enqueue notification message. Notification: {Notification}", @event!.ToString());
         }
