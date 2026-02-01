@@ -77,7 +77,15 @@ public sealed class RegisterUserService(
         await _uow.EventOutbox.EnqueueAsync(user.Events, _correlation.CorrelationId, cancellationToken);
         await _uow.CommitAsync(cancellationToken);
 
-        await _notificationOutbox.EnqueueAsync(user.Events.FirstOrDefault()!, _correlation.CorrelationId, cancellationToken);
+        var @event = user.Events.FirstOrDefault();        
+        try
+        {
+            await _notificationOutbox.EnqueueAsync(@event!, _correlation.CorrelationId, cancellationToken);
+        }
+        catch
+        {
+            _logger.LogError("Cannot enqueue notification message. Notification: {Notification}", @event!.ToString());
+        }
 
         user.ClearEvents();
 
