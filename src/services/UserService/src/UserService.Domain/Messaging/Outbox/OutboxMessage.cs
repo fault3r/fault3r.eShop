@@ -38,6 +38,8 @@ public sealed class OutboxMessage
         return new(domainEvent, correlationId);
     }
 
+    public void MarkAsPublished() => Published = true;
+
     #region ⤚EFCore
     public OutboxMessage()
     {

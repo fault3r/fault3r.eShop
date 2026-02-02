@@ -30,6 +30,6 @@ public sealed class EfEventOutbox(
             .Select(e => OutboxMessage.FromEvent(e, correlationId));
 
         await _dbContext.OutboxMessages
-            .AddRangeAsync(messages, cancellationToken);
+            .AddRangeAsync(messages, cancellationToken);        
     }
 }
