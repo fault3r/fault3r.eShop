@@ -1,5 +1,7 @@
 
 using System;
+using FluentEmail.Core;
+using Microsoft.EntityFrameworkCore;
 using UserService.Domain.Interfaces;
 using UserService.Domain.Messaging;
 using UserService.Domain.Messaging.Outbox;
@@ -30,6 +32,16 @@ public sealed class EfEventOutbox(
             .Select(e => OutboxMessage.FromEvent(e, correlationId));
 
         await _dbContext.OutboxMessages
-            .AddRangeAsync(messages, cancellationToken);        
+            .AddRangeAsync(messages, cancellationToken);
+    }
+
+    public async Task<IEnumerable<OutboxMessage>> DequeueAsync()
+    {
+        var messages = await _dbContext.OutboxMessages.Where(p => !p.Published).ToListAsync();
+
+        messages.ForEach(message => message.MarkAsPublished());
+
+        //
+
     }
 }
