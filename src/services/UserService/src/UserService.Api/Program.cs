@@ -82,7 +82,6 @@ app.UseCorrelationMiddleware(settings.CorrelationHeader);
 
 app.UseExceptionHandlingMiddleware(settings.CorrelationHeader);
 
-
 app.UseAuthentication();
 app.UseAuthenticationMiddleware();
 app.UseAuthorization();
