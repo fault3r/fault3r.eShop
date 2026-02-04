@@ -1,9 +1,7 @@
 
 using System;
-using FluentEmail.Core;
 using Microsoft.EntityFrameworkCore;
 using UserService.Domain.Interfaces;
-using UserService.Domain.Messaging;
 using UserService.Domain.Messaging.Outbox;
 using UserService.Infrastructure.Persistence;
 
@@ -35,13 +33,22 @@ public sealed class EfEventOutbox(
             .AddRangeAsync(messages, cancellationToken);
     }
 
-    public async Task<IEnumerable<OutboxMessage>> DequeueAsync()
+    public async Task<IEnumerable<OutboxMessage>> DequeueAsync(CancellationToken cancellationToken = default)
     {
-        var messages = await _dbContext.OutboxMessages.Where(p => !p.Published).ToListAsync();
+        return await _dbContext.OutboxMessages
+            .Where(p => !p.Published)
+            .OrderBy(p => p.EnqueuedOn)
+            .ToListAsync(cancellationToken);
+    }
 
-        messages.ForEach(message => message.MarkAsPublished());
+    public async Task MarkAsPublishedAsync(Guid messageId, CancellationToken cancellationToken = default)
+    {
+        var message = await _dbContext.OutboxMessages.FirstOrDefaultAsync(p => p.Id == messageId, cancellationToken);
 
-        //
-
+        if (message is not null && !message.Published)
+        {
+            message.MarkAsPublished();
+            await _dbContext.SaveChangesAsync(cancellationToken);
+        }
     }
 }

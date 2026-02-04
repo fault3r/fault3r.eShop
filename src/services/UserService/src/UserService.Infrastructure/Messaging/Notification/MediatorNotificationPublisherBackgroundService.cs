@@ -22,7 +22,7 @@ public sealed class MediatorNotificationPublisherBackgroundService(
     private static async Task SomeSecondsAsync(int second = 5)
         => await Task.Delay(TimeSpan.FromSeconds(second));
 
-    protected override async Task ExecuteAsync(CancellationToken cancellationToken)
+    protected override async Task ExecuteAsync(CancellationToken cancellationToken = default)
     {
         while (!cancellationToken.IsCancellationRequested)
         {

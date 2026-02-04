@@ -10,5 +10,14 @@ public interface IEventOutbox
         IEnumerable<IDomainEvent> events,
         string correlationId,
         CancellationToken cancellationToken = default
-    );    
+    );
+
+    Task<IEnumerable<OutboxMessage>> DequeueAsync(
+        CancellationToken cancellationToken = default
+    );
+
+    Task MarkAsPublishedAsync(
+        Guid messageId,
+        CancellationToken cancellationToken = default
+    );
 }
