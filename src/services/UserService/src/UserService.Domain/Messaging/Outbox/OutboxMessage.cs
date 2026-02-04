@@ -31,14 +31,14 @@ public sealed class OutboxMessage
         CorrelationId = correlationId;
     }
 
+    public void MarkAsPublished() => Published = true;
+    
     public static OutboxMessage FromEvent(
         IDomainEvent domainEvent,
         string correlationId)
     {
         return new(domainEvent, correlationId);
     }
-
-    public void MarkAsPublished() => Published = true;
 
     #region ⤚EFCore
     public OutboxMessage()
