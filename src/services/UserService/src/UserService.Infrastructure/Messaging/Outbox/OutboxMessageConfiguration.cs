@@ -14,14 +14,14 @@ public sealed class OutboxMessageConfiguration : IEntityTypeConfiguration<Outbox
 
         builder.HasKey(p => p.Id);
 
-        builder.HasIndex(p => p.EnqueuedOn);
+        builder.HasIndex(p => p.Timestamp);
 
         builder.Property(p => p.Id)
             .HasColumnName("Id")
             .ValueGeneratedNever();
 
-        builder.Property(p => p.EnqueuedOn)
-            .HasColumnName("EnqueuedOn")
+        builder.Property(p => p.Timestamp)
+            .HasColumnName("Timestamp")
             .IsRequired();
 
         builder.Property(p => p.Type)
@@ -32,8 +32,8 @@ public sealed class OutboxMessageConfiguration : IEntityTypeConfiguration<Outbox
             .HasColumnName("Payload")
             .IsRequired();
         
-        builder.Property(p => p.Published)
-            .HasColumnName("Published")
+        builder.Property(p => p.Processed)
+            .HasColumnName("Processed")
             .IsRequired();
 
         builder.Property(p => p.CorrelationId)

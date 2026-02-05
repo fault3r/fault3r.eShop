@@ -36,18 +36,18 @@ public sealed class EfEventOutbox(
     public async Task<IEnumerable<OutboxMessage>> DequeueAsync(CancellationToken cancellationToken = default)
     {
         return await _dbContext.OutboxMessages
-            .Where(p => !p.Published)
-            .OrderBy(p => p.EnqueuedOn)
+            .Where(p => !p.Processed)
+            .OrderBy(p => p.Timestamp)
             .ToListAsync(cancellationToken);
     }
 
-    public async Task MarkAsPublishedAsync(Guid messageId, CancellationToken cancellationToken = default)
+    public async Task MarkAsProcessedAsync(Guid messageId, CancellationToken cancellationToken = default)
     {
         var message = await _dbContext.OutboxMessages.FirstOrDefaultAsync(p => p.Id == messageId, cancellationToken);
 
-        if (message is not null && !message.Published)
+        if (message is not null && !message.Processed)
         {
-            message.MarkAsPublished();
+            message.MarkAsProcessed();
             await _dbContext.SaveChangesAsync(cancellationToken);
         }
     }

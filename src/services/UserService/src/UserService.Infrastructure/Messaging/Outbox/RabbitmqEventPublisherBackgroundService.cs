@@ -22,28 +22,30 @@ public sealed class RabbitmqEventPublisherBackgroundService(
         await using var scope = _scopeFactory.CreateAsyncScope();
         var outbox = scope.ServiceProvider.GetRequiredService<IEventOutbox>();
 
-        Log.Information("Event outbox publisher background service started.");        
+        Log.Information("Event outbox publisher background service started.");
 
         while (!cancellationToken.IsCancellationRequested)
         {
             try
             {
-                IEnumerable<OutboxMessage> messages = [];
-
-                messages = await outbox.DequeueAsync(cancellationToken);
+                var messages = await outbox.DequeueAsync(cancellationToken);
 
                 if (!messages.Any()) continue;
 
                 foreach (var message in messages)
                 {
-                    //publish
-                    Console.WriteLine(message.Type);
+                    //publish in rabbitmq here
+                    Console.WriteLine($"published: {message.CorrelationId}");
 
-                    await outbox.MarkAsPublishedAsync(message.Id, cancellationToken);
+                    await outbox.MarkAsProcessedAsync(message.Id, cancellationToken);
                 }
             }
 
-            catch(SocketException)
+            catch (OperationCanceledException)
+            {
+                throw;
+            }
+            catch (SocketException)
             {
                 Log.Error(nameof(RabbitmqEventPublisherBackgroundService)
                     + " Failed to connect to the Postgres database, Reconnectiong…");
