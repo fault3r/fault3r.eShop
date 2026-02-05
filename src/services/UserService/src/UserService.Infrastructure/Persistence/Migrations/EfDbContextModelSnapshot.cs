@@ -68,18 +68,18 @@ namespace UserService.Infrastructure.Persistence.Migrations
                         .HasColumnType("text")
                         .HasColumnName("CorrelationId");
 
-                    b.Property<DateTime>("EnqueuedOn")
-                        .HasColumnType("timestamp with time zone")
-                        .HasColumnName("EnqueuedOn");
-
                     b.Property<string>("Payload")
                         .IsRequired()
                         .HasColumnType("text")
                         .HasColumnName("Payload");
 
-                    b.Property<bool>("Published")
+                    b.Property<bool>("Processed")
                         .HasColumnType("boolean")
-                        .HasColumnName("Published");
+                        .HasColumnName("Processed");
+
+                    b.Property<DateTime>("Timestamp")
+                        .HasColumnType("timestamp with time zone")
+                        .HasColumnName("Timestamp");
 
                     b.Property<string>("Type")
                         .IsRequired()
@@ -88,7 +88,7 @@ namespace UserService.Infrastructure.Persistence.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("EnqueuedOn");
+                    b.HasIndex("Timestamp");
 
                     b.ToTable("OuboxMessages", (string)null);
                 });

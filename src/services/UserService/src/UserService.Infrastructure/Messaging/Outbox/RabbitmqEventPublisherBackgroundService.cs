@@ -1,6 +1,6 @@
 
 using System;
-using System.Net.Sockets;
+using Microsoft.EntityFrameworkCore.Storage;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Serilog;
@@ -22,43 +22,40 @@ public sealed class RabbitmqEventPublisherBackgroundService(
         await using var scope = _scopeFactory.CreateAsyncScope();
         var outbox = scope.ServiceProvider.GetRequiredService<IEventOutbox>();
 
-        Log.Information("Event outbox publisher background service started.");
-
         while (!cancellationToken.IsCancellationRequested)
         {
             try
             {
                 var messages = await outbox.DequeueAsync(cancellationToken);
 
+                Log.Information("{Name} Successfully retrieved {Count} message(s).",
+                    nameof(RabbitmqEventPublisherBackgroundService), messages.Count());
+
                 if (!messages.Any()) continue;
 
                 foreach (var message in messages)
                 {
-                    //publish in rabbitmq here
-                    Console.WriteLine($"published: {message.CorrelationId}");
+                    //publish in rabbitMQ
 
                     await outbox.MarkAsProcessedAsync(message.Id, cancellationToken);
+
+                    Log.Information("{Name} {Correlation} Successfully sent message {MessageId}.",
+                        nameof(RabbitmqEventPublisherBackgroundService), message.CorrelationId, message.Id);
+
+                    await SomeSecondsAsync(1);
                 }
             }
-
-            catch (OperationCanceledException)
-            {
-                throw;
-            }
-            catch (SocketException)
+            catch (RetryLimitExceededException)
             {
                 Log.Error(nameof(RabbitmqEventPublisherBackgroundService)
-                    + " Failed to connect to the Postgres database, Reconnectiong…");
+                    + " Cannot connect to the messages database, Reconnectiong…");
             }
             catch (Exception ex)
             {
                 Log.Error(ex, nameof(RabbitmqEventPublisherBackgroundService)
                     + " An unhandled exception occurred!");
             }
-
             finally { await SomeSecondsAsync(); }
         }
-
-        Log.Information("Event outbox publisher background service stopped.");
     }
 }

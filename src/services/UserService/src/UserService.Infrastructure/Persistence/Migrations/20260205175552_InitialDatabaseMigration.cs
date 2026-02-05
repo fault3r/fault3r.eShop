@@ -19,11 +19,11 @@ namespace UserService.Infrastructure.Persistence.Migrations
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uuid", nullable: false),
-                    EnqueuedOn = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
+                    Timestamp = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
                     Type = table.Column<string>(type: "text", nullable: false),
                     Payload = table.Column<string>(type: "text", nullable: false),
-                    Published = table.Column<bool>(type: "boolean", nullable: false),
-                    CorrelationId = table.Column<string>(type: "text", nullable: false)
+                    CorrelationId = table.Column<string>(type: "text", nullable: false),
+                    Processed = table.Column<bool>(type: "boolean", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -48,9 +48,9 @@ namespace UserService.Infrastructure.Persistence.Migrations
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_OuboxMessages_EnqueuedOn",
+                name: "IX_OuboxMessages_Timestamp",
                 table: "OuboxMessages",
-                column: "EnqueuedOn");
+                column: "Timestamp");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Users_Email",
