@@ -3,9 +3,7 @@ using System;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using StackExchange.Redis;
-using UserService.Domain.Security.Authentication;
 using UserService.Infrastructure.Exceptions.DependencyInjection;
-using UserService.Infrastructure.Security.Authentication;
 using UserService.Infrastructure.Settings;
 
 namespace UserService.Infrastructure.DependencyInjection;

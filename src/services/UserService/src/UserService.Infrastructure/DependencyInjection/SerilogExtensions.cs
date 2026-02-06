@@ -33,7 +33,7 @@ public static class SerilogExtensions
                     outputTemplate: "[{Timestamp:yyyy-MM-dd HH:mm:ss} {Level:u3}] {CorrelationId} {SourceContext} {Message:lj} {NewLine} {Exception}"
                 );
         })
-            .ConfigureServices((context, services) =>
+            .ConfigureServices((_, services) =>
             {
                 services.AddLogging(config =>
                 {
