@@ -7,11 +7,11 @@ using UserService.Infrastructure.Persistence;
 
 namespace UserService.Infrastructure.Messaging.Outbox;
 
-public sealed class EfEventOutbox(
-    EfDbContext efDbContext
+public sealed class EfPostgresEventOutbox(
+    EfPostgresDbContext efDbContext
 ) : IEventOutbox
 {
-    private readonly EfDbContext _dbContext = efDbContext;
+    private readonly EfPostgresDbContext _dbContext = efDbContext;
 
     public async Task EnqueueAsync(
         IEnumerable<IDomainEvent> events,

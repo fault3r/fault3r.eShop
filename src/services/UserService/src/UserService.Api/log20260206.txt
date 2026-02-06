@@ -1,0 +1,18 @@
+[2026-02-06 13:24:58 INF]   RabbitmqEventPublisherBackgroundService Successfully retrieved 0 message(s). 
+ [2026-02-06 13:25:03 INF]   RabbitmqEventPublisherBackgroundService Successfully retrieved 0 message(s). 
+ [2026-02-06 13:25:08 INF]   RabbitmqEventPublisherBackgroundService Successfully retrieved 0 message(s). 
+ [2026-02-06 13:25:13 INF]   RabbitmqEventPublisherBackgroundService Successfully retrieved 0 message(s). 
+ [2026-02-06 13:25:18 INF]   RabbitmqEventPublisherBackgroundService Successfully retrieved 0 message(s). 
+ [2026-02-06 13:25:23 INF]   RabbitmqEventPublisherBackgroundService Successfully retrieved 0 message(s). 
+ [2026-02-06 13:25:28 INF]   RabbitmqEventPublisherBackgroundService Successfully retrieved 0 message(s). 
+ [2026-02-06 13:25:32 INF] 80aa2897-be02-4efe-986e-016c7a4a9f28  Incoming request POST /api/v1/auth/register. 
+ [2026-02-06 13:25:33 INF] 80aa2897-be02-4efe-986e-016c7a4a9f28 UserService.Application.UseCases.Commands.RegisterUserUseCase.RegisterUserService Registering user with 'string@sss.ccc' email address… 
+ [2026-02-06 13:25:33 INF]   RabbitmqEventPublisherBackgroundService Successfully retrieved 0 message(s). 
+ [2026-02-06 13:25:34 INF] 80aa2897-be02-4efe-986e-016c7a4a9f28 UserService.Application.UseCases.Commands.RegisterUserUseCase.RegisterUserService User successfully registered with '947e1db0c1a04cb4b165a03a19ef6e36' identity. 
+ [2026-02-06 13:25:34 INF] 80aa2897-be02-4efe-986e-016c7a4a9f28  Completed request POST /api/v1/auth/register with status code 201. 
+ [2026-02-06 13:25:37 INF]  UserService.Application.Messaging.Notification.NotificationHandlers.UserRegisteredNotificationHandler 80aa2897-be02-4efe-986e-016c7a4a9f28 Sending welcome email to 'string@sss.ccc' user… 
+ [2026-02-06 13:25:37 INF]  UserService.Application.Messaging.Notification.NotificationHandlers.UserRegisteredNotificationHandler 80aa2897-be02-4efe-986e-016c7a4a9f28 Welcome email successfully sent. 
+ [2026-02-06 13:25:38 INF]   RabbitmqEventPublisherBackgroundService Successfully retrieved 1 message(s). 
+ [2026-02-06 13:25:38 INF]   RabbitmqEventPublisherBackgroundService 80aa2897-be02-4efe-986e-016c7a4a9f28 Successfully sent message "e43bb4dd-a1e4-4294-8efb-a78f8989ef80". 
+ [2026-02-06 13:25:44 INF]   RabbitmqEventPublisherBackgroundService Successfully retrieved 0 message(s). 
+ 

@@ -10,7 +10,7 @@ using UserService.Infrastructure.Persistence;
 
 namespace UserService.Infrastructure.Persistence.Migrations
 {
-    [DbContext(typeof(EfDbContext))]
+    [DbContext(typeof(EfPostgresDbContext))]
     partial class EfDbContextModelSnapshot : ModelSnapshot
     {
         protected override void BuildModel(ModelBuilder modelBuilder)

@@ -43,9 +43,9 @@ public static class JwtExtensions
         })
             .AddJwtBearer(config =>
             {
-                config.RequireHttpsMetadata = false;
-                config.SaveToken = true;
                 config.TokenValidationParameters = tokenValidationParameters;
+                config.SaveToken = true;
+                config.RequireHttpsMetadata = false;
             });
 
         services.AddAuthorization(config =>

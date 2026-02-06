@@ -19,9 +19,6 @@ builder.Host.AddSerilogLogging();
 
 builder.Services.AddInfrastructure(builder.Configuration);
 
-builder.Services.AddControllers(config =>
-    config.SuppressAsyncSuffixInActionNames = false);
-
 #region ⤚Swagger
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(options =>

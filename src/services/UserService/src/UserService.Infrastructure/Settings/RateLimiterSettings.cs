@@ -3,7 +3,7 @@ using System;
 
 namespace UserService.Infrastructure.Settings;
 
-public sealed class RateLimitingSettings
+public sealed class RateLimiterSettings
 {
     public required int PermitLimit { get; init; }
     public required int Window { get; init; }

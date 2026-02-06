@@ -9,12 +9,12 @@ using UserService.Infrastructure.Persistence;
 namespace UserService.Infrastructure.UnitOfWork;
 
 public sealed class EfUnitOfWork(
-    EfDbContext efDbContext,
+    EfPostgresDbContext efDbContext,
     IEventOutbox outbox,
     IUserRepository userRepository
 ) : IUnitOfWork
 {
-    private readonly EfDbContext _dbContext = efDbContext;
+    private readonly EfPostgresDbContext _dbContext = efDbContext;
     public IEventOutbox EventOutbox { get; } = outbox;
     public IUserRepository UserRepository { get; } = userRepository;
 

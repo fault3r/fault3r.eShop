@@ -256,7 +256,7 @@
 │       │   │   ├── MissingFluentEmailSettingsException.cs
 │       │   │   ├── MissingJwtSettingsException.cs
 │       │   │   ├── MissingPostgresSettingsException.cs
-│       │   │   ├── MissingRateLimitingSettings.cs
+│       │   │   ├── MissingRateLimiterSettings.cs
 │       │   │   ├── MissingRedisSettingsException.cs
 │       │   │   ├── MissingSerilogSettingsException.cs
 │       │   │   └── MissingSessionSettingsException.cs
@@ -274,7 +274,7 @@
 │       │   │   ├── MediatorNotificationPublisherBackgroundService.cs
 │       │   │   └── RedisNotificationOutbox.cs
 │       │   └── Outbox
-│       │       ├── EfEventOutbox.cs
+│       │       ├── EfPostgresEventOutbox.cs
 │       │       ├── OutboxMessageConfiguration.cs
 │       │       └── RabbitmqEventPublisherBackgroundService.cs
 │       ├── obj
@@ -294,7 +294,7 @@
 │       ├── Persistence
 │       │   ├── Configurations
 │       │   │   └── UserConfiguration.cs
-│       │   ├── EfDbContext.cs
+│       │   ├── EfPostgresDbContext.cs
 │       │   └── Migrations
 │       │       ├── 20260205175552_InitialDatabaseMigration.cs
 │       │       ├── 20260205175552_InitialDatabaseMigration.Designer.cs
@@ -319,7 +319,7 @@
 │       │   ├── FluentEmailSettings.cs
 │       │   ├── JwtSettings.cs
 │       │   ├── PostgresSettings.cs
-│       │   ├── RateLimitingSettings.cs
+│       │   ├── RateLimiterSettings.cs
 │       │   ├── RedisSettings.cs
 │       │   ├── SerilogSettings.cs
 │       │   └── SessionSettings.cs

@@ -13,14 +13,14 @@ namespace UserService.Infrastructure.DependencyInjection;
 
 public static class RateLimiterExtensions
 {
-    public static IServiceCollection AddRateLimiting(
+    public static IServiceCollection AddRateLimiter(
         this IServiceCollection services,
         IConfiguration configuration)
     {
         var settings = configuration
-            .GetSection(nameof(RateLimitingSettings))
-            .Get<RateLimitingSettings>()
-                ?? throw new MissingRateLimitingSettings();
+            .GetSection(nameof(RateLimiterSettings))
+            .Get<RateLimiterSettings>()
+                ?? throw new MissingRateLimiterSettings();
 
         services.AddRateLimiter(config =>
         {

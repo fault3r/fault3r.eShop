@@ -36,4 +36,8 @@
     <ProjectReference Include="../UserService.Domain/UserService.Domain.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Messaging/EventBus/" />
+  </ItemGroup>
+
 </Project>

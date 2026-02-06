@@ -34,25 +34,30 @@ public static class DIsExtensions
         this IServiceCollection services,
         IConfiguration configuration)
     {
-        services.AddPostgresDbContext(configuration);
+        services.AddEfPostgresDbContext(configuration);
 
         services.AddJwtAuthentication(configuration);
 
         services.AddRedisCaching(configuration);
 
-        services.AddRateLimiting(configuration);
+        services.AddRateLimiter(configuration);
 
-        services.AddApplicationSession(configuration);
+        services.AddSession(configuration);
 
         services.AddApiVersioning(configuration);
 
+        services.AddRabbitmqMessageBroker(configuration);
+
         services.AddFluentEmailService(configuration);
 
+        services.AddControllers(config =>
+            config.SuppressAsyncSuffixInActionNames = false);
+        
         services.AddUseCases();
 
         services.AddScoped<IUnitOfWork, EfUnitOfWork>();
 
-        services.AddScoped<IEventOutbox, EfEventOutbox>();
+        services.AddScoped<IEventOutbox, EfPostgresEventOutbox>();
 
         services.AddSingleton<INotificationOutbox, RedisNotificationOutbox>();
 
@@ -65,6 +70,7 @@ public static class DIsExtensions
         services.AddSingleton<IPasswordHasher, Argon2PasswordHasher>();
 
         services.AddHostedService<MediatorNotificationPublisherBackgroundService>();
+        
         services.AddHostedService<RabbitmqEventPublisherBackgroundService>();
 
         services.AddSingleton<INotificationFactory, NotificationFactory>();

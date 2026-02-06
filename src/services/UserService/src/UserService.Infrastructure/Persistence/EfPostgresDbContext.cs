@@ -6,8 +6,8 @@ using UserService.Domain.Messaging.Outbox;
 
 namespace UserService.Infrastructure.Persistence;
 
-public sealed class EfDbContext(
-    DbContextOptions<EfDbContext> dbcOptions
+public sealed class EfPostgresDbContext(
+    DbContextOptions<EfPostgresDbContext> dbcOptions
 ) : DbContext(dbcOptions)
 {
     public DbSet<User> Users => Set<User>();
@@ -17,6 +17,6 @@ public sealed class EfDbContext(
     protected override void OnModelCreating(ModelBuilder builder)
     {
         builder.ApplyConfigurationsFromAssembly(
-            typeof(EfDbContext).Assembly);
+            typeof(EfPostgresDbContext).Assembly);
     }
 }

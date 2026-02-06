@@ -5,6 +5,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Serilog;
 using UserService.Domain.Messaging.Outbox;
+using UserService.Infrastructure.Messaging.EventBus;
 
 namespace UserService.Infrastructure.Messaging.Outbox;
 
@@ -21,6 +22,7 @@ public sealed class RabbitmqEventPublisherBackgroundService(
     {
         await using var scope = _scopeFactory.CreateAsyncScope();
         var outbox = scope.ServiceProvider.GetRequiredService<IEventOutbox>();
+        var publisher = scope.ServiceProvider.GetRequiredService<RabbitmqEventPublisher>();
 
         while (!cancellationToken.IsCancellationRequested)
         {
@@ -35,7 +37,7 @@ public sealed class RabbitmqEventPublisherBackgroundService(
 
                 foreach (var message in messages)
                 {
-                    //publish in rabbitMQ
+                    await publisher.PublishAsync(message, cancellationToken);
 
                     await outbox.MarkAsProcessedAsync(message.Id, cancellationToken);
 

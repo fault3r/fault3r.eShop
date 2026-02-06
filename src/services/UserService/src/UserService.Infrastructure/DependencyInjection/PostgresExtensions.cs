@@ -11,7 +11,7 @@ namespace UserService.Infrastructure.DependencyInjection;
 
 public static class PostgresExtensions
 {
-    public static IServiceCollection AddPostgresDbContext(
+    public static IServiceCollection AddEfPostgresDbContext(
         this IServiceCollection services,
         IConfiguration configuration)
     {
@@ -22,12 +22,12 @@ public static class PostgresExtensions
 
         var connectionString = settings.ToConnectionString();
 
-        services.AddDbContext<EfDbContext>(config =>
+        services.AddDbContext<EfPostgresDbContext>(config =>
         {
             config.UseNpgsql(connectionString, config =>
             {
                 config.MigrationsAssembly(
-                    typeof(EfDbContext).Assembly.FullName);
+                    typeof(EfPostgresDbContext).Assembly.FullName);
 
                 config.EnableRetryOnFailure(
                     maxRetryCount: 3,

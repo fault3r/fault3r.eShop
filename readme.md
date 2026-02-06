@@ -174,13 +174,13 @@
   - 🔔 Notification  
     - 📢 MediatorDomainNotification.cs  
   - 📦 Outbox  
-    - 🗄️ EfEventOutbox.cs  
+    - 🗄️ EfPostgresEventOutbox.cs  
     - ⚙️ OutboxMessageConfiguration.cs  
     - 📦 OutboxMessage.cs  
 - 📂 Persistence  
   - ⚙️ Configurations  
     - 🗄️ UserConfiguration.cs  
-  - 🗄️ EfDbContext.cs  
+  - 🗄️ EfPostgresDbContext.cs  
   - 📂 Migrations  
     - 🗄️ 20260103141758_InitialDbMigration.cs  
     - 🗄️ 20260103141758_InitialDbMigration.Designer.cs  

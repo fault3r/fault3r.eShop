@@ -1,6 +1,5 @@
 
 using System;
-using System.Text.Json;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using StackExchange.Redis;
@@ -13,21 +12,21 @@ namespace UserService.Infrastructure.DependencyInjection;
 
 public static class SessionExtensions
 {
-    public static IServiceCollection AddApplicationSession(
+    public static IServiceCollection AddSession(
         this IServiceCollection services,
         IConfiguration configuration)
     {
         var settings = configuration
             .GetSection(nameof(SessionSettings))
             .Get<SessionSettings>()
-                ?? throw new MissingSessionSettingsException();    
+                ?? throw new MissingSessionSettingsException();
 
         services.AddSingleton<ISessionService>(sp =>
         {
             var connection = sp.GetRequiredService<IConnectionMultiplexer>();
             return new RedisSessionService(connection, settings);
         });
-
+        
         return services;
     }
 }

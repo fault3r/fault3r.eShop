@@ -1,6 +1,7 @@
 version: "3.9"
 
 services:
+
   postgres-dev:
     image: postgres:latest
     container_name: postgres-dev
@@ -19,8 +20,25 @@ services:
     container_name: redis_server
     ports:
       - "${REDIS_PORT}:6379"
+    volumes:
+      - redisdata:/data
+    restart: unless-stopped
+
+  rabbitmq:
+    image: rabbitmq:3.13-management
+    container_name: rabbitmq
+    environment:
+      RABBITMQ_DEFAULT_USER: ${RABBITMQ_USER}
+      RABBITMQ_DEFAULT_PASS: ${RABBITMQ_PASSWORD}
+    ports:
+      - "${RABBITMQ_PORT}:5672"
+      - "${RABBITMQ_UI_PORT}:15672"
+    volumes:
+      - rabbitmqdata:/var/lib/rabbitmq
     restart: unless-stopped
 
 volumes:
   pgdata:
+  redisdata:
+  rabbitmqdata:
 

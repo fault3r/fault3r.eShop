@@ -9,10 +9,10 @@ using UserService.Infrastructure.Persistence;
 namespace UserService.Infrastructure.Repositories;
 
 public sealed class EfUserRepository(
-    EfDbContext efDbContext
+    EfPostgresDbContext efDbContext
 ) : IUserRepository
 {
-    private readonly EfDbContext _dbContext = efDbContext;
+    private readonly EfPostgresDbContext _dbContext = efDbContext;
 
     public async Task CreateAsync(User user, CancellationToken cancellationToken = default)
     {

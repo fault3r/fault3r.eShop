@@ -4,49 +4,56 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using RabbitMQ.Client;
 using UserService.Infrastructure.Exceptions.DependencyInjection;
+using UserService.Infrastructure.Messaging.EventBus;
 using UserService.Infrastructure.Settings;
 
 namespace UserService.Infrastructure.DependencyInjection;
 
 public static class RabbitmqExtensions
 {
-    public static IServiceCollection AddRabbitmqMessageBroker(this IServiceCollection services, IConfiguration configuration)
+    public static IServiceCollection AddRabbitmqMessageBroker(
+        this IServiceCollection services,
+        IConfiguration configuration)
     {
-        var settings = configuration.GetSection(nameof(RabbitmqSettings)).Get<RabbitmqSettings>()
-            ?? throw new MissingRabbitmqSettingsException();
+        var settings = configuration
+            .GetSection(nameof(RabbitmqSettings))
+            .Get<RabbitmqSettings>()
+                ?? throw new MissingRabbitmqSettingsException();
 
-        services.AddSingleton(settings);
-
-        services.AddSingleton<IConnectionFactory>(_ =>
-            new ConnectionFactory
+        services.AddSingleton<IConnection>(_ =>
+        {
+            var factory = new ConnectionFactory
             {
                 HostName = settings.HostName,
                 Port = settings.Port,
                 UserName = settings.UserName,
                 Password = settings.Password,
-            });
+                DispatchConsumersAsync = true,
+            };
 
-        services.AddSingleton<IConnection>(sp =>
-        {
-            var factory = sp.GetRequiredService<IConnectionFactory>();
             return factory.CreateConnection();
         });
 
         services.AddSingleton<IModel>(sp =>
         {
             var connection = sp.GetRequiredService<IConnection>();
-            var channel = connection.CreateModel();
 
-            var s = sp.GetRequiredService<RabbitmqSettings>();
+            var channel = connection.CreateModel();
             channel.ExchangeDeclare(
-                exchange: s.Exchange,
-                type: s.ExchangeType,
+                exchange: settings.Exchange,
+                type: settings.ExchangeType,
                 durable: true,
                 autoDelete: false,
                 arguments: null
             );
 
             return channel;
+        });
+
+        services.AddSingleton<RabbitmqEventPublisher>(sp =>
+        {
+            var channel = sp.GetRequiredService<IModel>();
+            return new(channel, settings);
         });
 
         return services;

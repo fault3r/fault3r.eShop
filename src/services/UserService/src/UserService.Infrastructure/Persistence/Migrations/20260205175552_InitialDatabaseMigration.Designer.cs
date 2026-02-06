@@ -11,7 +11,7 @@ using UserService.Infrastructure.Persistence;
 
 namespace UserService.Infrastructure.Persistence.Migrations
 {
-    [DbContext(typeof(EfDbContext))]
+    [DbContext(typeof(EfPostgresDbContext))]
     [Migration("20260205175552_InitialDatabaseMigration")]
     partial class InitialDatabaseMigration
     {
