@@ -26,7 +26,7 @@ namespace CatalogService.Api.Configurations
                 var settings = configuration.GetSection(nameof(RabbitmqSettings))
                     .Get<RabbitmqSettings>() ??
                     throw new Exception();
-                services.AddSingleton<IConnection>(provider =>
+                services.AddSingleton<IConnection>(sp =>
                 {
                     try
                     {
@@ -64,20 +64,20 @@ namespace CatalogService.Api.Configurations
                         throw new InvalidOperationException(nameof(RabbitmqSettings));
                     }
                 });
-                services.AddScoped<IEventPublisher>(provider =>
+                services.AddScoped<IEventPublisher>(sp =>
                 {
-                    var connection = provider.GetRequiredService<IConnection>();
-                    var logger = provider.GetRequiredService<ILoggerService<RabbitmqEventPublisher>>();
+                    var connection = sp.GetRequiredService<IConnection>();
+                    var logger = sp.GetRequiredService<ILoggerService<RabbitmqEventPublisher>>();
                     return new RabbitmqEventPublisher(connection, settings, logger);
                 });
                 services.AddScoped<IEventHandler<ItemCreatedEvent>, ItemCreatedEventHandler>();
                 services.AddScoped<IEventHandler<ItemUpdatedEvent>, ItemUpdatedEventHandler>();
                 services.AddScoped<IEventHandler<ItemDeletedEvent>, ItemDeletedEventHandler>();
-                services.AddSingleton<RabbitmqEventSubscriber>(provider =>
+                services.AddSingleton<RabbitmqEventSubscriber>(sp =>
                 {
-                    var connection = provider.GetRequiredService<IConnection>();
-                    var logger = provider.GetRequiredService<ILoggerService<RabbitmqEventSubscriber>>();
-                    return new RabbitmqEventSubscriber(connection, settings, provider, logger);
+                    var connection = sp.GetRequiredService<IConnection>();
+                    var logger = sp.GetRequiredService<ILoggerService<RabbitmqEventSubscriber>>();
+                    return new RabbitmqEventSubscriber(connection, settings, sp, logger);
                 });
                 services.AddHostedService<RabbitmqEventSubscriberHostedService>();
                 _logger.LogInformation("RabbitMQ configured successfully.");

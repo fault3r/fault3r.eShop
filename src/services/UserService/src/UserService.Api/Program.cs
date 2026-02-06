@@ -17,26 +17,10 @@ builder.WebHost.UseUrls(settings.Urls.Http);
 
 builder.Host.AddSerilogLogging();
 
-builder.Services.AddPostgresDbContext(builder.Configuration);
-
-builder.Services.AddJwtAuthentication(builder.Configuration);
-
-builder.Services.AddRedisCaching(builder.Configuration);
-
-builder.Services.AddRateLimiting(builder.Configuration);
-
-builder.Services.AddInfrastructure();
-
-builder.Services.AddApplicationSession(builder.Configuration);
-
-builder.Services.AddUseCases();
-
-builder.Services.AddApiVersioning(settings);
+builder.Services.AddInfrastructure(builder.Configuration);
 
 builder.Services.AddControllers(config =>
     config.SuppressAsyncSuffixInActionNames = false);
-
-builder.Services.AddFluentEmailService(builder.Configuration);
 
 #region ⤚Swagger
 builder.Services.AddEndpointsApiExplorer();
@@ -59,13 +43,13 @@ builder.Services.AddVersionedApiExplorer(config =>
 var app = builder.Build();
 
 #region ⤚Swagger
-var provider = app.Services.GetRequiredService<IApiVersionDescriptionProvider>();
+var sp = app.Services.GetRequiredService<IApiVersionDescriptionProvider>();
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
     app.UseSwaggerUI(options =>
     {
-        foreach (var description in provider.ApiVersionDescriptions)
+        foreach (var description in sp.ApiVersionDescriptions)
         {
             options.SwaggerEndpoint(
                 url: $"/swagger/{description.GroupName}/swagger.json",

@@ -1,9 +1,8 @@
 
 using System;
-using System.Reflection.Metadata.Ecma335;
-using System.Text.Json;
 using FluentValidation;
 using MediatR;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using UserService.Application.CrossCutting;
 using UserService.Application.Interfaces;
@@ -32,8 +31,25 @@ namespace UserService.Infrastructure.DependencyInjection;
 public static class DIsExtensions
 {
     public static IServiceCollection AddInfrastructure(
-        this IServiceCollection services)
+        this IServiceCollection services,
+        IConfiguration configuration)
     {
+        services.AddPostgresDbContext(configuration);
+
+        services.AddJwtAuthentication(configuration);
+
+        services.AddRedisCaching(configuration);
+
+        services.AddRateLimiting(configuration);
+
+        services.AddApplicationSession(configuration);
+
+        services.AddApiVersioning(configuration);
+
+        services.AddFluentEmailService(configuration);
+
+        services.AddUseCases();
+
         services.AddScoped<IUnitOfWork, EfUnitOfWork>();
 
         services.AddScoped<IEventOutbox, EfEventOutbox>();

@@ -24,13 +24,13 @@ namespace CatalogService.Infrastructure.EventBus
         private readonly ILoggerService<RabbitmqEventSubscriber> _logger;
 
         public RabbitmqEventSubscriber(
-            IConnection connection, RabbitmqSettings settings, IServiceProvider provider,
+            IConnection connection, RabbitmqSettings settings, IServiceProvider sp,
             ILoggerService<RabbitmqEventSubscriber> logger)
         {
             _connection = connection;
             channel = _connection.CreateModel();
             this.settings = settings;
-            _provider = provider;
+            _provider = sp;
             InitialChannel();
             _logger = logger;
             _logger.LogInformation("instance created.");

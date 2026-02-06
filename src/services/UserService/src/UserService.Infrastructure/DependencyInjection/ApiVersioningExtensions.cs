@@ -2,6 +2,7 @@
 using System;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Versioning;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using UserService.Infrastructure.Exceptions.DependencyInjection;
 using UserService.Infrastructure.Settings;
@@ -12,10 +13,12 @@ public static class ApiVersioningExtensions
 {
     public static IServiceCollection AddApiVersioning(
         this IServiceCollection services,
-        AppSettings settings)
+        IConfiguration configuration)
     {
-        if (settings is null)
-            throw new MissingAppSettingsException();
+        var settings = configuration
+            .GetSection(nameof(AppSettings))
+            .Get<AppSettings>()
+                ?? throw new MissingAppSettingsException();
 
         float version = (float)Math.Round(settings.ApiVersion, 1);
 

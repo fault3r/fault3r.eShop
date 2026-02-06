@@ -53,10 +53,8 @@ public static class JwtExtensions
             config.AddPolicy("requiredUser", policy => policy.RequireRole("User"));
         });
 
-        services.AddSingleton<ITokenService>(provider =>
-        {
-            return new JwtTokenService(tokenValidationParameters, settings);
-        });
+        services.AddSingleton<ITokenService>(_ =>
+            new JwtTokenService(tokenValidationParameters, settings));
 
         return services;
     }

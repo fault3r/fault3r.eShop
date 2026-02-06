@@ -10,14 +10,10 @@ namespace UserService.Infrastructure.DependencyInjection;
 
 public static class RabbitmqExtensions
 {
-    public static IServiceCollection AddRabbitmq(
-        this IServiceCollection services,
-        IConfiguration configuration)
+    public static IServiceCollection AddRabbitmqMessageBroker(this IServiceCollection services, IConfiguration configuration)
     {
-        var settings = configuration
-            .GetSection(nameof(RabbitmqSettings))
-            .Get<RabbitmqSettings>()
-                ?? throw new MissingRabbitmqSettingsException();
+        var settings = configuration.GetSection(nameof(RabbitmqSettings)).Get<RabbitmqSettings>()
+            ?? throw new MissingRabbitmqSettingsException();
 
         services.AddSingleton(settings);
 
@@ -28,7 +24,6 @@ public static class RabbitmqExtensions
                 Port = settings.Port,
                 UserName = settings.UserName,
                 Password = settings.Password,
-                DispatchConsumersAsync = true
             });
 
         services.AddSingleton<IConnection>(sp =>
@@ -42,8 +37,14 @@ public static class RabbitmqExtensions
             var connection = sp.GetRequiredService<IConnection>();
             var channel = connection.CreateModel();
 
-            var settings = sp.GetRequiredService<RabbitmqSettings>();
-            channel.ExchangeDeclare(settings.Exchange, settings.ExchangeType, durable: true);
+            var s = sp.GetRequiredService<RabbitmqSettings>();
+            channel.ExchangeDeclare(
+                exchange: s.Exchange,
+                type: s.ExchangeType,
+                durable: true,
+                autoDelete: false,
+                arguments: null
+            );
 
             return channel;
         });

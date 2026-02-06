@@ -20,14 +20,14 @@ namespace CatalogService.Api.Configurations
                 var settings = configuration.GetSection(nameof(MongoSettings))
                     .Get<MongoSettings>() ??
                     throw new Exception();
-                services.AddSingleton<MongoClient>(provider =>
+                services.AddSingleton<MongoClient>(sp =>
                 {
                     return new MongoClient(settings.ConnectionString);
                 });
-                services.AddScoped<MongoContext>(provider =>
+                services.AddScoped<MongoContext>(sp =>
                 {
-                    var client = provider.GetRequiredService<MongoClient>();
-                    var logger = provider.GetRequiredService<ILoggerService<MongoContext>>();
+                    var client = sp.GetRequiredService<MongoClient>();
+                    var logger = sp.GetRequiredService<ILoggerService<MongoContext>>();
                     return new MongoContext(client, settings.DatabaseName, settings.CollectionName, logger);
                 });
                 _logger.LogInformation("MongoContext configured successfully.");

@@ -22,9 +22,9 @@ public static class SessionExtensions
             .Get<SessionSettings>()
                 ?? throw new MissingSessionSettingsException();    
 
-        services.AddSingleton<ISessionService>(provider =>
+        services.AddSingleton<ISessionService>(sp =>
         {
-            var connection = provider.GetRequiredService<IConnectionMultiplexer>();
+            var connection = sp.GetRequiredService<IConnectionMultiplexer>();
             return new RedisSessionService(connection, settings);
         });
 
