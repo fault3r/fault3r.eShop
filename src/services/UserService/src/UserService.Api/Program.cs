@@ -58,9 +58,7 @@ if (app.Environment.IsDevelopment())
 #endregion
 
 app.UseRateLimiter();
-
 app.UseCorrelationMiddleware(settings.CorrelationHeader);
-
 app.UseExceptionHandlingMiddleware(settings.CorrelationHeader);
 
 app.UseAuthentication();
@@ -68,7 +66,6 @@ app.UseAuthenticationMiddleware();
 app.UseAuthorization();
 
 app.MapControllers();
-
 app.MapGet("/", () => settings.Service);
 
 app.Run();

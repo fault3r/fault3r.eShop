@@ -30,10 +30,10 @@ public sealed class RabbitmqEventPublisherBackgroundService(
             {
                 var messages = await outbox.DequeueAsync(cancellationToken);
 
+                if (!messages.Any()) continue;
+                
                 Log.Information("{Name} Successfully retrieved {Count} message(s).",
                     nameof(RabbitmqEventPublisherBackgroundService), messages.Count());
-
-                if (!messages.Any()) continue;
 
                 foreach (var message in messages)
                 {

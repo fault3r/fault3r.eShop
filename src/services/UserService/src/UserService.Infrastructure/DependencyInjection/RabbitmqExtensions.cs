@@ -37,17 +37,7 @@ public static class RabbitmqExtensions
         services.AddSingleton<IModel>(sp =>
         {
             var connection = sp.GetRequiredService<IConnection>();
-
-            var channel = connection.CreateModel();
-            channel.ExchangeDeclare(
-                exchange: settings.Exchange,
-                type: settings.ExchangeType,
-                durable: true,
-                autoDelete: false,
-                arguments: null
-            );
-
-            return channel;
+            return connection.CreateModel();
         });
 
         services.AddSingleton<RabbitmqEventPublisher>(sp =>

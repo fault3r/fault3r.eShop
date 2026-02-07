@@ -1,3 +1,5 @@
+
+using System;
 using System.Text;
 using RabbitMQ.Client;
 using UserService.Domain.Messaging.Outbox;
@@ -5,12 +7,29 @@ using UserService.Infrastructure.Settings;
 
 namespace UserService.Infrastructure.Messaging.EventBus;
 
-public sealed class RabbitmqEventPublisher(IModel channel, RabbitmqSettings settings)
+public sealed class RabbitmqEventPublisher
 {
-    private readonly IModel _channel = channel;
-    private readonly RabbitmqSettings _settings = settings;
+    private readonly IModel _channel;
+    private readonly RabbitmqSettings _settings;
 
-    public Task PublishAsync(OutboxMessage message, CancellationToken cancellationToken = default)
+    public RabbitmqEventPublisher(IModel channel,
+    RabbitmqSettings settings)
+    {
+        _channel = channel;
+        _settings = settings;
+
+        channel.ExchangeDeclare(
+            exchange: settings.Exchange,
+            type: settings.ExchangeType,
+            durable: true,
+            autoDelete: false,
+            arguments: null
+        );
+    }
+
+    public Task PublishAsync(
+        OutboxMessage message,
+        CancellationToken cancellationToken = default)
     {
         var body = Encoding.UTF8.GetBytes(message.Payload);
 
@@ -18,7 +37,7 @@ public sealed class RabbitmqEventPublisher(IModel channel, RabbitmqSettings sett
         props.MessageId = message.Id.ToString();
         props.CorrelationId = message.CorrelationId;
         props.ContentType = "application/json";
-        props.DeliveryMode = 2; 
+        props.DeliveryMode = 2;
 
         _channel.BasicPublish(
             exchange: _settings.Exchange,
