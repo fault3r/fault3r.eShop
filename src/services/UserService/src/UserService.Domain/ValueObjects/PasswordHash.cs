@@ -45,8 +45,8 @@ public sealed class PasswordHash : ValueObject<PasswordHash>
     public override string ToString()
         => Value;
 
-    public static implicit operator string(PasswordHash hash)
-        => hash.Value;
+    public static implicit operator string(PasswordHash passwordHash)
+        => passwordHash.Value;
 
     public static explicit operator PasswordHash(string value)
         => From(value);

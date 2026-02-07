@@ -1,21 +1,23 @@
 
 using System;
+using System.Security.Cryptography;
 
 namespace UserService.Domain.Contracts;
 
 public static class RandomStringGenerator
 {
-    private const string Characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
-    private static readonly int Lenght = Characters.Length;
-    private static readonly Random random = new();
+    public const string Characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+    private static readonly int Length = Characters.Length;
 
     public static string Generate(int length = 16)
     {
-        var buffer = new char[length];
+        var buffer = new byte[length];
+        RandomNumberGenerator.Fill(buffer);
 
+        var generated = new char[length];
         for (int i = 0; i < length; i++)
-            buffer[i] = Characters[random.Next(Lenght)];
+            generated[i] = Characters[buffer[i] % Length];
 
-        return string.Concat(buffer);
+        return new string(generated);
     }
 }
