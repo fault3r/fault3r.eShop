@@ -33,9 +33,6 @@ public sealed class Identity : ValueObject<Identity>
     private static bool IsValid(string value)
         => Guid.TryParse(value, out var guid) && guid != Guid.Empty;
 
-    public static Identity New()
-        => new(Guid.NewGuid());
-
     public static Identity From(Guid guid)
         => new(guid);
 

@@ -7,17 +7,17 @@ namespace UserService.Domain.ValueObjects;
 
 public sealed class Role : ValueObject<Role>
 {
-    public RoleType Value { get; }
-
     public enum RoleType
     {
         User = 1,
         Admin = 101,
     }
 
-    private Role(RoleType roleType)
+    public RoleType Value { get; }
+
+    private Role(RoleType role)
     {
-        Value = roleType;
+        Value = role;
     }
 
     private Role(string value)

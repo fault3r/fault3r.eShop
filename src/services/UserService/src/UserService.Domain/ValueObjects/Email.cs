@@ -6,7 +6,7 @@ using UserService.Domain.Exceptions.Email;
 
 namespace UserService.Domain.ValueObjects;
 
-public sealed partial class Email : ValueObject<Email>
+public sealed class Email : ValueObject<Email>
 {
     public string Value { get; }
 
@@ -15,19 +15,24 @@ public sealed partial class Email : ValueObject<Email>
         if (string.IsNullOrWhiteSpace(value))
             throw new MissingEmailException();
 
-        if (!IsValid(value.Trim()))
+        value = value.Trim();
+
+        if (!IsValid(value))
             throw new InvalidEmailException(value);
 
         Value = Normalize(value);
     }
 
+    private static readonly Regex EmailRegex = new(
+        pattern: @"^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$",
+        options: RegexOptions.Compiled | RegexOptions.CultureInvariant
+    );
+
     private static bool IsValid(string value)
-       => EmailRegex().IsMatch(value);
+        => EmailRegex.IsMatch(value);
 
     private static string Normalize(string value)
     {
-        value = value.Trim();
-
         var atIndex = value.IndexOf('@');
         var local = value[..atIndex];
         var domain = value[++atIndex..];
@@ -65,8 +70,4 @@ public sealed partial class Email : ValueObject<Email>
     {
         yield return Value;
     }
-
-    [GeneratedRegex(@"^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$",
-        RegexOptions.Compiled | RegexOptions.CultureInvariant)]
-    private static partial Regex EmailRegex();
 }

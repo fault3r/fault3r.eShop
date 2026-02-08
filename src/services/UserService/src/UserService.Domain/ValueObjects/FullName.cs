@@ -15,28 +15,29 @@ public sealed class FullName : ValueObject<FullName>
         if (string.IsNullOrWhiteSpace(value))
             throw new MissingFullNameException();
 
-        if (!IsValid(value.Trim()))
+        value = value.Trim();
+
+        if (!IsValid(value))
             throw new InvalidFullNameException(value);
 
         var parts = value
-            .Trim()
             .Split(' ', StringSplitOptions.RemoveEmptyEntries);
 
         FirstName = parts[0];
-        LastName = string.Join(" ", parts.Skip(1));
+        LastName = string.Join(' ', parts.Skip(1));
     }
 
     private static bool IsValid(string value)
     {
-        if (value.Length < 2 || value.Length > 100)
-            return false;
+        if (value.Length >= 2 && value.Length <= 100)
+        {
+            var parts = value
+                .Split(' ', StringSplitOptions.RemoveEmptyEntries);
 
-        var parts = value
-            .Split(' ', StringSplitOptions.RemoveEmptyEntries);
+            if (parts.Length > 1) return true;
+        }
 
-        if (parts.Length < 2) return false;
-
-        return true;
+        return false;
     }
 
     public static FullName From(string value)
