@@ -1,6 +1,7 @@
 
 using System;
 using UserService.Domain.Aggregates.UserAggregate;
+using UserService.Domain.Contracts;
 using UserService.Domain.Interfaces;
 using UserService.Domain.Repositories;
 using UserService.Domain.Security;
@@ -27,7 +28,7 @@ public class UserDomainService(
         return exists is null;
     }
 
-    public async Task<User?> VerifyCredentialsAsync(
+    public async Task<Result<User>> VerifyCredentialsAsync(
        string identity,
        string password,
        CancellationToken cancellationToken = default)
@@ -35,8 +36,8 @@ public class UserDomainService(
         ArgumentException.ThrowIfNullOrWhiteSpace(identity);
         ArgumentException.ThrowIfNullOrWhiteSpace(password);
 
-        if (!Email.TryFrom(identity, out var email))
-            return null;
+        if (!Email.TryParse(identity, out var email))
+            return Result<User>.Failure("Invalid identity!");
 
         var user = await _userRepository.GetByEmailAsync(email!, cancellationToken);
 
@@ -47,6 +48,9 @@ public class UserDomainService(
 
         bool verified = _passwordHasher.Verify(password, hash);
 
-        return verified ? user : null;
+        if (!verified)
+            return Result<User>.Failure("Invalid credentials!");
+
+        return Result<User>.Success(user!);
     }
 }

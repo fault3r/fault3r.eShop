@@ -9,7 +9,7 @@ public static class RandomStringGenerator
     public const string Characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
     private static readonly int Length = Characters.Length;
 
-    public static string Generate(int length = 16)
+    public static string Generate(int length = 8)
     {
         var buffer = new byte[length];
         RandomNumberGenerator.Fill(buffer);

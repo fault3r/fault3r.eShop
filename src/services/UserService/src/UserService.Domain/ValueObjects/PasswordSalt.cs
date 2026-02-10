@@ -23,26 +23,26 @@ public sealed class PasswordSalt : ValueObject<PasswordSalt>
     }
 
     private static bool IsValid(string value)
-        => value.Length >= 50
+        => value.Length >= 8
            && value.All(c =>
                (c >= 'A' && c <= 'Z') ||
                (c >= 'a' && c <= 'z') ||
                (c >= '0' && c <= '9')
             );
 
-    public static PasswordSalt From(string value)
+    public static PasswordSalt Parse(string value)
         => new(value);
 
-    public static bool TryFrom(string value, out PasswordSalt? passwordSalt)
+    public static bool TryParse(string value, out PasswordSalt? salt)
     {
         try
         {
-            passwordSalt = From(value);
+            salt = Parse(value);
             return true;
         }
         catch
         {
-            passwordSalt = null;
+            salt = null;
             return false;
         }
     }
@@ -50,11 +50,11 @@ public sealed class PasswordSalt : ValueObject<PasswordSalt>
     public override string ToString()
         => Value;
 
-    public static implicit operator string(PasswordSalt passwordSalt)
-        => passwordSalt.Value;
+    public static implicit operator string(PasswordSalt salt)
+        => salt.Value;
 
     public static explicit operator PasswordSalt(string value)
-        => From(value);
+        => Parse(value);
 
     protected override IEnumerable<object> GetEqualityComponents()
     {

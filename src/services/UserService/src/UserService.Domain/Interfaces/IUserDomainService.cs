@@ -1,6 +1,7 @@
 
 using System;
 using UserService.Domain.Aggregates.UserAggregate;
+using UserService.Domain.Contracts;
 using UserService.Domain.ValueObjects;
 
 namespace UserService.Domain.Interfaces;
@@ -12,7 +13,7 @@ public interface IUserDomainService
         CancellationToken cancellationToken = default
     );
 
-    Task<User?> VerifyCredentialsAsync(
+    Task<Result<User>> VerifyCredentialsAsync(
         string identity,
         string password,
         CancellationToken cancellationToken = default

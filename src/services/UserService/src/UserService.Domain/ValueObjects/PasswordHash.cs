@@ -25,19 +25,19 @@ public sealed class PasswordHash : ValueObject<PasswordHash>
     private static bool IsValid(string value)
         => value.Length > 50;
 
-    public static PasswordHash From(string value)
+    public static PasswordHash Parse(string value)
         => new(value);
 
-    public static bool TryFrom(string value, out PasswordHash? passwordHash)
+    public static bool TryParse(string value, out PasswordHash? hash)
     {
         try
         {
-            passwordHash = From(value);
+            hash = Parse(value);
             return true;
         }
         catch
         {
-            passwordHash = null;
+            hash = null;
             return false;
         }
     }
@@ -45,11 +45,11 @@ public sealed class PasswordHash : ValueObject<PasswordHash>
     public override string ToString()
         => Value;
 
-    public static implicit operator string(PasswordHash passwordHash)
-        => passwordHash.Value;
+    public static implicit operator string(PasswordHash hash)
+        => hash.Value;
 
     public static explicit operator PasswordHash(string value)
-        => From(value);
+        => Parse(value);
 
     protected override IEnumerable<object> GetEqualityComponents()
     {

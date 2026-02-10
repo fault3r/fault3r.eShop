@@ -10,6 +10,7 @@ public sealed class User : AggregateRoot<User, Identity>
 {
     public Email Email { get; private set; }
     public PasswordHash PasswordHash { get; private set; }
+    public PasswordSalt PasswordSalt { get; private set; }
     public FullName FullName { get; private set; }
     public Role Role { get; private set; }
     public Status Status { get; private set; }
@@ -18,6 +19,7 @@ public sealed class User : AggregateRoot<User, Identity>
         Identity id,
         Email email,
         PasswordHash passwordHash,
+        PasswordSalt passwordSalt,
         FullName fullName,
         Role role,
         Status status)
@@ -25,12 +27,14 @@ public sealed class User : AggregateRoot<User, Identity>
     {
         ArgumentNullException.ThrowIfNull(email);
         ArgumentNullException.ThrowIfNull(passwordHash);
+        ArgumentNullException.ThrowIfNull(passwordSalt);
         ArgumentNullException.ThrowIfNull(fullName);
         ArgumentNullException.ThrowIfNull(role);
         ArgumentNullException.ThrowIfNull(status);
 
         Email = email;
         PasswordHash = passwordHash;
+        PasswordSalt = passwordSalt;
         FullName = fullName;
         Role = role;
         Status = status;
@@ -40,11 +44,12 @@ public sealed class User : AggregateRoot<User, Identity>
         Identity id,
         Email email,
         PasswordHash passwordHash,
+        PasswordSalt passwordSalt,
         FullName fullName,
         Role role,
         Status status)
     {
-        var user = new User(id, email, passwordHash, fullName, role, status);
+        var user = new User(id, email, passwordHash, passwordSalt, fullName, role, status);
         user.RaiseEvent(new UserRegisteredEvent(user.Id, user.Email, user.FullName));
         return user;
     }
@@ -76,6 +81,7 @@ public sealed class User : AggregateRoot<User, Identity>
     {
         Email = null!;
         PasswordHash = null!;
+        PasswordSalt = null!;
         FullName = null!;
         Role = null!;
         Status = null!;

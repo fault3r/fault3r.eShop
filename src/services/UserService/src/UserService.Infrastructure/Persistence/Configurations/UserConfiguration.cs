@@ -33,17 +33,25 @@ public sealed class UserConfiguration : IEntityTypeConfiguration<User>
             .HasColumnName("Email")
             .HasConversion(
                 email => email.Value,
-                value => Email.From(value)
+                value => Email.Parse(value)
             )
             .IsRequired();
 
         builder.Property(p => p.PasswordHash)
-            .HasColumnName("Password")
+            .HasColumnName("PasswordHash")
             .HasConversion(
                 passwordHash => passwordHash.Value,
-                value => PasswordHash.From(value)
+                value => PasswordHash.Parse(value)
             )
             .IsRequired();
+
+        builder.Property(p => p.PasswordSalt)
+            .HasColumnName("PasswordSalt")
+            .HasConversion(
+                passwordHash => passwordHash.Value,
+                value => PasswordSalt.Parse(value)
+            )
+            .IsRequired();                        
 
         builder.OwnsOne(p => p.FullName, ownBuilder =>
         {            

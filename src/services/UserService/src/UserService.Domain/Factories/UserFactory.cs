@@ -12,6 +12,7 @@ public sealed class UserFactory
     public static User Create(
         Email email,
         PasswordHash passwordHash,
+        PasswordSalt passwordSalt,
         FullName fullName)
     {
         var defaultId = Identity.From(Guid.NewGuid());
@@ -22,6 +23,7 @@ public sealed class UserFactory
             id: defaultId,
             email: email,
             passwordHash: passwordHash,
+            passwordSalt: passwordSalt,
             fullName: fullName,
             role: defaultRole,
             status: defaultStatus
@@ -31,11 +33,12 @@ public sealed class UserFactory
     public static Result<User> TryCreate(
         Email email,
         PasswordHash passwordHash,
+        PasswordSalt passwordSalt,
         FullName fullName)
     {
         try
         {
-            var user = Create(email, passwordHash, fullName);
+            var user = Create(email, passwordHash, passwordSalt, fullName);
             return Result<User>.Success(user);
         }
         catch (DomainException ex)
@@ -48,10 +51,11 @@ public sealed class UserFactory
         Identity id,
         Email email,
         PasswordHash passwordHash,
+        PasswordSalt passwordSalt,
         FullName fullName,
         Role role,
         Status status)
     {
-        return User.Create(id, email, passwordHash, fullName, role, status);
+        return User.Create(id, email, passwordHash, passwordSalt, fullName, role, status);
     }
 }

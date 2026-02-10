@@ -40,14 +40,17 @@ public sealed class FullName : ValueObject<FullName>
         return false;
     }
 
-    public static FullName From(string value)
+    public static FullName From(string firstname, string lastname)
+        => new($"{firstname} {lastname}");
+
+    public static FullName Parse(string value)
         => new(value);
 
-    public static bool TryFrom(string value, out FullName? fullName)
+    public static bool TryParse(string value, out FullName? fullName)
     {
         try
         {
-            fullName = From(value);
+            fullName = Parse(value);
             return true;
         }
         catch
@@ -64,7 +67,7 @@ public sealed class FullName : ValueObject<FullName>
         => fullName.ToString();
 
     public static explicit operator FullName(string value)
-        => From(value);
+        => Parse(value);
 
     protected override IEnumerable<object> GetEqualityComponents()
     {

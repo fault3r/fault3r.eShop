@@ -40,14 +40,14 @@ public sealed class Email : ValueObject<Email>
         return $"{local}@{domain.ToLowerInvariant()}";
     }
 
-    public static Email From(string value)
+    public static Email Parse(string value)
         => new(value);
 
-    public static bool TryFrom(string value, out Email? email)
+    public static bool TryParse(string value, out Email? email)
     {
         try
         {
-            email = From(value);
+            email = Parse(value);
             return true;
         }
         catch
@@ -64,7 +64,7 @@ public sealed class Email : ValueObject<Email>
         => email.Value;
 
     public static explicit operator Email(string value)
-        => From(value);
+        => Parse(value);
 
     protected override IEnumerable<object> GetEqualityComponents()
     {

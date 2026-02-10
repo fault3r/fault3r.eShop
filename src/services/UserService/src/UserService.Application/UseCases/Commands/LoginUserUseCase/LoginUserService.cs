@@ -33,13 +33,15 @@ public sealed class LoginUserService(
 
         _logger.LogInformation("Loginning user with '{Identity}' identity…", identity.Trim());
 
-        var user = await _userService.VerifyCredentialsAsync(identity, password, cancellationToken);
-        if (user is null)
+        var verified = await _userService.VerifyCredentialsAsync(identity, password, cancellationToken);
+        if (verified.IsFailure)
         {
             _logger.LogWarning("Invalid credentials!");
 
             return Result<LoginUserResult>.Failure("Invalid credentials!");
         }
+
+        var user = verified.Value!;
 
         if (user.Status.IsLocked)
         {

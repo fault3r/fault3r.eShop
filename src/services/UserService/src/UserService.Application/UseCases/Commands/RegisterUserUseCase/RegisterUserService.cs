@@ -50,14 +50,17 @@ public sealed class RegisterUserService(
         FullName voFullName;
         try
         {
-            voEmail = Email.From(email);
+            voEmail = Email.Parse(email);
 
-            string hashed = _hasher.Hash(password);
-            voPasswordHash = PasswordHash.From(hashed);
+            var voPasswordSalt = PasswordSalt.Parse(
+                RandomStringGenerator.Generate(length: 8));
 
-            voFullName = FullName.From(fullName);
+            string hash = _hasher.Hash(password + voPasswordSalt);
+            voPasswordHash = PasswordHash.Parse(hash);
 
-            user = UserFactory.Create(voEmail, voPasswordHash, voFullName);
+            voFullName = FullName.Parse(fullName);
+
+            user = UserFactory.Create(voEmail, voPasswordHash, voPasswordSalt, voFullName);
         }
         catch (DomainException ex)
         {

@@ -11,13 +11,14 @@ public sealed class Role : ValueObject<Role>
     {
         User = 1,
         Admin = 101,
+        Unsupported = 0,
     }
 
     public RoleType Value { get; }
 
-    private Role(RoleType role)
+    private Role(RoleType roleType)
     {
-        Value = role;
+        Value = roleType;
     }
 
     private Role(string value)
@@ -33,16 +34,16 @@ public sealed class Role : ValueObject<Role>
         Value = role;
     }
 
-    public static bool IsValid(string value, out RoleType role)
+    private static bool IsValid(string value, out RoleType roleType)
     {
-        if (!Enum.TryParse(value, ignoreCase: true, out role))
+        if (!Enum.TryParse(value, ignoreCase: true, out roleType))
             return false;
 
         return true;
     }
 
-    public static Role From(RoleType value)
-        => new(value);
+    public static Role From(RoleType roleType)
+        => new(roleType);
 
     public static Role Parse(string value)
         => new(value);
@@ -61,9 +62,6 @@ public sealed class Role : ValueObject<Role>
         }
     }
 
-    public static readonly Role User = new(RoleType.User);
-    public static readonly Role Admin = new(RoleType.Admin);
-
     public bool IsUser => Value == RoleType.User;
     public bool IsAdmin => Value == RoleType.Admin;
 
@@ -80,4 +78,7 @@ public sealed class Role : ValueObject<Role>
     {
         yield return Value;
     }
+
+    public static readonly Role Admin = new(RoleType.Admin);
+    public static readonly Role User = new(RoleType.User);
 }

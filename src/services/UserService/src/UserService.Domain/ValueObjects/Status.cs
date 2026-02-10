@@ -12,13 +12,14 @@ public sealed class Status : ValueObject<Status>
         Locked = 1,
         Pending = 2,
         Active = 3,
+        Unsupported = 0,
     }
 
     public StatusType Value { get; }
 
-    private Status(StatusType status)
+    private Status(StatusType statusType)
     {
-        Value = status;
+        Value = statusType;
     }
 
     private Status(string value)
@@ -34,16 +35,16 @@ public sealed class Status : ValueObject<Status>
         Value = status;
     }
 
-    private static bool IsValid(string value, out StatusType status)
+    private static bool IsValid(string value, out StatusType statusType)
     {
-        if (!Enum.TryParse(value, ignoreCase: true, out status))
+        if (!Enum.TryParse(value, ignoreCase: true, out statusType))
             return false;
 
         return true;
     }
 
-    public static Status From(StatusType status)
-        => new(status);
+    public static Status From(StatusType statusType)
+        => new(statusType);
 
     public static Status Parse(string value)
         => new(value);
