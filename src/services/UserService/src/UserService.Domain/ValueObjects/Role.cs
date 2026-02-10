@@ -25,18 +25,20 @@ public sealed class Role : ValueObject<Role>
         if (string.IsNullOrWhiteSpace(value))
             throw new MissingRoleException();
 
-        value = value
-            .Trim()
-            .ToLowerInvariant();
+        value = value.Trim();
 
-        var role = value switch
-        {
-            "user" => RoleType.User,
-            "admin" => RoleType.Admin,
-            _ => throw new UnsupportedRoleException(value),
-        };
+        if (!IsValid(value, out RoleType role))
+            throw new UnsupportedRoleException(value);
 
         Value = role;
+    }
+
+    public static bool IsValid(string value, out RoleType role)
+    {
+        if (!Enum.TryParse(value, ignoreCase: true, out role))
+            return false;
+
+        return true;
     }
 
     public static Role From(RoleType value)
@@ -61,7 +63,7 @@ public sealed class Role : ValueObject<Role>
 
     public static readonly Role User = new(RoleType.User);
     public static readonly Role Admin = new(RoleType.Admin);
-    
+
     public bool IsUser => Value == RoleType.User;
     public bool IsAdmin => Value == RoleType.Admin;
 

@@ -9,9 +9,9 @@ public sealed class Status : ValueObject<Status>
 {
     public enum StatusType
     {
-        Locked = -1,
-        Pending = 0,
-        Active = 1,
+        Locked = 1,
+        Pending = 2,
+        Active = 3,
     }
 
     public StatusType Value { get; }
@@ -42,13 +42,13 @@ public sealed class Status : ValueObject<Status>
         return true;
     }
 
-    public static Status From(StatusType statusType)
-        => new(statusType);
+    public static Status From(StatusType status)
+        => new(status);
 
     public static Status Parse(string value)
         => new(value);
 
-   public static bool TryParse(string value, out Status? status)
+    public static bool TryParse(string value, out Status? status)
     {
         try
         {
@@ -62,17 +62,12 @@ public sealed class Status : ValueObject<Status>
         }
     }
 
-
     public bool IsLocked => Value == StatusType.Locked;
     public bool IsPending => Value == StatusType.Pending;
     public bool IsActive => Value == StatusType.Active;
 
-    public static readonly Status Locked = new(StatusType.Locked);
-    public static readonly Status Pending = new(StatusType.Pending);
-    public static readonly Status Active = new(StatusType.Active);
-
     public override string ToString()
-        => Value.ToString().ToLowerInvariant();
+        => Value.ToString().ToLower();
 
     public static implicit operator string(Status status)
         => status.ToString();
@@ -85,4 +80,7 @@ public sealed class Status : ValueObject<Status>
         yield return Value;
     }
 
+    public static readonly Status Locked = new(StatusType.Locked);
+    public static readonly Status Pending = new(StatusType.Pending);
+    public static readonly Status Active = new(StatusType.Active);
 }
