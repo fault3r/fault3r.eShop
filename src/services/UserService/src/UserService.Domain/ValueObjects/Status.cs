@@ -7,8 +7,6 @@ namespace UserService.Domain.ValueObjects;
 
 public sealed class Status : ValueObject<Status>
 {
-    public StatusType Value { get; }
-
     public enum StatusType
     {
         Locked = -1,
@@ -16,9 +14,11 @@ public sealed class Status : ValueObject<Status>
         Active = 1,
     }
 
-    private Status(StatusType statusType)
+    public StatusType Value { get; }
+
+    private Status(StatusType status)
     {
-        Value = statusType;
+        Value = status;
     }
 
     private Status(string value)
@@ -28,22 +28,18 @@ public sealed class Status : ValueObject<Status>
 
         value = value.Trim();
 
-        if (!TryParse(value, out StatusType status))
+        if (!IsValid(value, out StatusType status))
             throw new UnsupportedStatusException(value);
 
         Value = status;
     }
-    
-    public static readonly Status Locked = new(StatusType.Locked);
-    public static readonly Status Pending = new(StatusType.Pending);
-    public static readonly Status Active = new(StatusType.Active);
 
-    private static bool TryParse(string value, out StatusType statusType)
+    private static bool IsValid(string value, out StatusType status)
     {
-        if (!Enum.TryParse(value, ignoreCase: true, out statusType))
+        if (!Enum.TryParse(value, ignoreCase: true, out status))
             return false;
 
-        return Enum.IsDefined(typeof(StatusType), statusType);
+        return true;
     }
 
     public static Status From(StatusType statusType)
@@ -70,6 +66,10 @@ public sealed class Status : ValueObject<Status>
     public bool IsLocked => Value == StatusType.Locked;
     public bool IsPending => Value == StatusType.Pending;
     public bool IsActive => Value == StatusType.Active;
+
+    public static readonly Status Locked = new(StatusType.Locked);
+    public static readonly Status Pending = new(StatusType.Pending);
+    public static readonly Status Active = new(StatusType.Active);
 
     public override string ToString()
         => Value.ToString().ToLowerInvariant();

@@ -39,9 +39,6 @@ public sealed class Role : ValueObject<Role>
         Value = role;
     }
 
-    public static readonly Role User = new(RoleType.User);
-    public static readonly Role Admin = new(RoleType.Admin);
-
     public static Role From(RoleType value)
         => new(value);
 
@@ -62,11 +59,14 @@ public sealed class Role : ValueObject<Role>
         }
     }
 
+    public static readonly Role User = new(RoleType.User);
+    public static readonly Role Admin = new(RoleType.Admin);
+    
     public bool IsUser => Value == RoleType.User;
     public bool IsAdmin => Value == RoleType.Admin;
 
     public override string ToString()
-        => Value.ToString().ToLowerInvariant();
+        => Value.ToString().ToLower();
 
     public static implicit operator string(Role role)
         => role.ToString();

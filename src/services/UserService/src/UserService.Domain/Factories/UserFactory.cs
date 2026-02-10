@@ -9,9 +9,12 @@ namespace UserService.Domain.Factories;
 
 public sealed class UserFactory
 {
-    public static User Create(Email email, PasswordHash passwordHash, FullName fullName)
+    public static User Create(
+        Email email,
+        PasswordHash passwordHash,
+        FullName fullName)
     {
-        var defaultId = Identity.New();
+        var defaultId = Identity.From(Guid.NewGuid());
         var defaultRole = Role.User;
         var defaultStatus = Status.Pending;
 
@@ -25,7 +28,10 @@ public sealed class UserFactory
         );
     }
 
-    public static Result<User> TryCreate(Email email, PasswordHash passwordHash, FullName fullName)
+    public static Result<User> TryCreate(
+        Email email,
+        PasswordHash passwordHash,
+        FullName fullName)
     {
         try
         {
