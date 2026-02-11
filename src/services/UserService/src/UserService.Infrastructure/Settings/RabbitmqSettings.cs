@@ -9,6 +9,6 @@ public sealed class RabbitmqSettings
     public int Port { get; init; } = 5672;
     public required string UserName { get; init; }
     public required string Password { get; init; }
-    public required string Exchange { get; init; }
+    public required string ExchangeName { get; init; }
     public required string ExchangeType { get; init; }
 }

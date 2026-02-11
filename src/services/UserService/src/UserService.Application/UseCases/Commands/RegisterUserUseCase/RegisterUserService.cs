@@ -54,7 +54,7 @@ public sealed class RegisterUserService(
 
             var voPasswordSalt = PasswordSalt.Parse(_hasher.GenerateSalt());                
 
-            string hash = _hasher.Hash(password + voPasswordSalt);
+            string hash = _hasher.Compute(password + voPasswordSalt);
             voPasswordHash = PasswordHash.Parse(hash);
 
             voFullName = FullName.Parse(fullName);

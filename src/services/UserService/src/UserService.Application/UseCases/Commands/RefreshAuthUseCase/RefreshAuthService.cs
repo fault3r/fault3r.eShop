@@ -68,7 +68,7 @@ public sealed class RefreshAuthService(
         }
 
         var newRefreshToken = _tokenService.GenerateRefreshToken();
-        var newRefreshTokenHash = _tokenService.HashRefreshToken(newRefreshToken);
+        var newRefreshTokenHash = _tokenService.ComputeRefreshTokenHash(newRefreshToken);
         var now = DateTimeOffset.UtcNow;
 
         session.RefreshTokenHash = newRefreshTokenHash;

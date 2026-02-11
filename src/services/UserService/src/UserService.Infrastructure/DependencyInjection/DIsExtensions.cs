@@ -40,9 +40,9 @@ public static class DIsExtensions
 
         services.AddRedisCaching(configuration);
 
-        services.AddRateLimiter(configuration);
-
         services.AddSession(configuration);
+
+        services.AddRateLimiter(configuration);
 
         services.AddApiVersioning(configuration);
 

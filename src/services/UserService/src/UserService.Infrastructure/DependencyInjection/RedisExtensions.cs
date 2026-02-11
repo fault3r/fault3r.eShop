@@ -17,14 +17,20 @@ public static class RedisExtensions
         var settings = configuration
             .GetSection(nameof(RedisSettings))
             .Get<RedisSettings>()
-                ?? throw new MissingRedisSettingsException();    
+                ?? throw new MissingRedisSettingsException();
 
         services.AddSingleton<IConnectionMultiplexer>(_ =>
         {
-            return ConnectionMultiplexer.Connect(
-                settings.ToConnectionString());
+            string connectionString = settings.ConnectionString;
+            return ConnectionMultiplexer.Connect(connectionString);
         });
 
+        services.AddSingleton<IDatabase>(sp =>
+        {
+            var connection = sp.GetRequiredService<IConnectionMultiplexer>();
+            return connection.GetDatabase();
+        });
+        
         return services;
     }
 }

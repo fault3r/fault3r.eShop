@@ -20,7 +20,8 @@ public static class ApiVersioningExtensions
             .Get<AppSettings>()
                 ?? throw new MissingAppSettingsException();
 
-        float version = (float)Math.Round(settings.ApiVersion, 1);
+        float version = settings.ApiVersion;
+        version = (float)Math.Round(version, 1);
 
         if (version < 1.0f)
             throw new InvalidApiVersionException();

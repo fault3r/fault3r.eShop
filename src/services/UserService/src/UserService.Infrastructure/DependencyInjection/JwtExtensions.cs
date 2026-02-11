@@ -29,14 +29,16 @@ public static class JwtExtensions
             ValidateAudience = true,
             ValidateIssuerSigningKey = true,
             ValidateLifetime = true,
+
             ValidIssuer = settings.Issuer,
             ValidAudience = settings.Audience,
             IssuerSigningKey = new SymmetricSecurityKey(
                 Encoding.UTF8.GetBytes(settings.SigningKey)
             ),
+
             ClockSkew = TimeSpan.Zero,
         };
-        
+
         services.AddAuthentication(config =>
         {
             config.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
@@ -47,12 +49,7 @@ public static class JwtExtensions
                 config.SaveToken = true;
                 config.RequireHttpsMetadata = false;
             });
-
-        services.AddAuthorization(config =>
-        {
-            config.AddPolicy("requiredUser", policy => policy.RequireRole("User"));
-        });
-
+            
         services.AddSingleton<ITokenService>(_ =>
             new JwtTokenService(tokenValidationParameters, settings));
 

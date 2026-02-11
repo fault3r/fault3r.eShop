@@ -19,7 +19,7 @@ public sealed class RabbitmqEventPublisher
         _settings = settings;
 
         channel.ExchangeDeclare(
-            exchange: settings.Exchange,
+            exchange: settings.ExchangeName,
             type: settings.ExchangeType,
             durable: true,
             autoDelete: false,
@@ -40,7 +40,7 @@ public sealed class RabbitmqEventPublisher
         props.DeliveryMode = 2;
 
         _channel.BasicPublish(
-            exchange: _settings.Exchange,
+            exchange: _settings.ExchangeName,
             routingKey: message.Type,
             basicProperties: props,
             body: body

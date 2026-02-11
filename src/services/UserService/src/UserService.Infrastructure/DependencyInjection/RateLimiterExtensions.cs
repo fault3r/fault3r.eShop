@@ -24,20 +24,20 @@ public static class RateLimiterExtensions
 
         services.AddRateLimiter(config =>
         {
-            // config.GlobalLimiter = PartitionedRateLimiter.Create<HttpContext, string>(httpContext =>
-            //     RateLimitPartition.GetFixedWindowLimiter(
-            //         partitionKey: httpContext.Connection.RemoteIpAddress?.ToString() ?? "unknown",
-            //         factory: _ => new FixedWindowRateLimiterOptions
-            //         {
-            //             PermitLimit = settings.PermitLimit,
-            //             Window = TimeSpan.FromMinutes(settings.Window),
-            //             QueueLimit = settings.QueueLimit,
-            //             QueueProcessingOrder = settings.IsOldestFirst 
-            //                 ? QueueProcessingOrder.OldestFirst
-            //                 : QueueProcessingOrder.NewestFirst,
-            //         }
-            //     )
-            // );
+            config.GlobalLimiter = PartitionedRateLimiter.Create<HttpContext, string>(httpContext =>
+                RateLimitPartition.GetFixedWindowLimiter(
+                    partitionKey: httpContext.Connection.RemoteIpAddress?.ToString() ?? "unknown",
+                    factory: _ => new FixedWindowRateLimiterOptions
+                    {
+                        PermitLimit = settings.PermitLimit,
+                        Window = TimeSpan.FromMinutes(settings.Window),
+                        QueueLimit = settings.QueueLimit,
+                        QueueProcessingOrder = settings.IsOldestFirst 
+                            ? QueueProcessingOrder.OldestFirst
+                            : QueueProcessingOrder.NewestFirst,
+                    }
+                )
+            );
 
             config.AddFixedWindowLimiter("RefAuthRateLimit", options =>
             {

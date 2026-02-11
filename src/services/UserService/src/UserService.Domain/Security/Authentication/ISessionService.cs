@@ -8,7 +8,7 @@ public interface ISessionService
     Task CreateAsync(SessionData session, CancellationToken cancellationToken = default);
 
     Task<SessionData?> GetAsync(string sessionId, CancellationToken cancellationToken = default);
-    Task<bool> ExistAsync(string sessionId, CancellationToken cancellationToken = default);
+    Task<bool> ExistsAsync(string sessionId, CancellationToken cancellationToken = default);
 
     Task UpdateAsync(SessionData session, CancellationToken cancellationToken = default);
     

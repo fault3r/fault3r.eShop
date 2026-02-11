@@ -10,6 +10,6 @@ public interface ITokenService
     ClaimsPrincipal? ReadAccessTokenClaims(string token);
 
     string GenerateRefreshToken();
-    string HashRefreshToken(string raw);
+    string ComputeRefreshTokenHash(string raw);
     bool VerifyRefreshToken(string raw, string hash);
 }

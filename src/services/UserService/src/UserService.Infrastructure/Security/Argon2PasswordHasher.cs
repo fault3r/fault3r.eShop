@@ -10,7 +10,7 @@ namespace UserService.Infrastructure.Security;
 
 public sealed class Argon2PasswordHasher : IPasswordHasher
 {
-    public string Hash(string password)
+    public string Compute(string password)
     {
         var salt = RandomNumberGenerator.GetBytes(16);
 
@@ -56,8 +56,9 @@ public sealed class Argon2PasswordHasher : IPasswordHasher
     }
 
     public string DummyHash
-        => "$argon2id$v=19$m=65536,t=3,p=4$AAAAAAAAAAAAAAAAAAAAAA==$AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=";
+        => "$argon2id$v=19$m=65536,t=3,p=4$AAAAAAAAAAAAAAAAAAAAAA"
+            + "==$AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=";
 
     public string GenerateSalt()
-        => RandomStringGenerator.Generate(length: 4);
+        => RandomStringGenerator.GetString(length: 4);
 }

@@ -26,8 +26,6 @@ public sealed class LoginUserService(
         string password,
         CancellationToken cancellationToken = default)
     {
-        Thread.Sleep(10000);
-
         ArgumentException.ThrowIfNullOrWhiteSpace(identity);
         ArgumentException.ThrowIfNullOrWhiteSpace(password);
 
@@ -53,15 +51,15 @@ public sealed class LoginUserService(
         var sessionId = Guid.NewGuid().ToString("N");
 
         var refreshToken = _tokenService.GenerateRefreshToken();
-        var refreshTokenHash = _tokenService.HashRefreshToken(refreshToken);
+        var refreshTokenHash = _tokenService.ComputeRefreshTokenHash(refreshToken);
 
         var now = DateTimeOffset.UtcNow;
 
         var session = new SessionData
         {
             SessionId = sessionId,
-            DeviceId = "unknown", //
-            IpAddress = "unknown", //
+            DeviceId = "unknown",
+            IpAddress = "unknown",
             CreatedAt = now,
 
             RefreshTokenHash = refreshTokenHash,

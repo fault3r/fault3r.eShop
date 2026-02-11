@@ -10,11 +10,11 @@ using UserService.Infrastructure.Settings;
 namespace UserService.Infrastructure.Security.Authentication;
 
 public sealed class RedisSessionService(
-    IConnectionMultiplexer redisConnection,
+    IDatabase database,
     SessionSettings settings
 ) : ISessionService
 {
-    private readonly IDatabase _database = redisConnection.GetDatabase();
+    private readonly IDatabase _database = database;
     private readonly SessionSettings _settings = settings;
 
     private readonly JsonSerializerOptions jsonOptions
@@ -101,7 +101,7 @@ public sealed class RedisSessionService(
         return JsonSerializer.Deserialize<SessionData>(payload!, jsonOptions)!;
     }
 
-    public async Task<bool> ExistAsync(
+    public async Task<bool> ExistsAsync(
         string sessionId,
         CancellationToken cancellationToken = default)
     {

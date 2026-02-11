@@ -72,10 +72,10 @@ public sealed class JwtTokenService(
 
     public string GenerateRefreshToken()
     {
-        return RandomStringGenerator.Generate(length: 50);
+        return RandomStringGenerator.GetString(length: 50);
     }
 
-    public string HashRefreshToken(string raw)
+    public string ComputeRefreshTokenHash(string raw)
     {
         ArgumentException.ThrowIfNullOrWhiteSpace(raw);
 

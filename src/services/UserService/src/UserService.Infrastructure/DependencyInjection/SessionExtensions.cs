@@ -23,7 +23,7 @@ public static class SessionExtensions
 
         services.AddSingleton<ISessionService>(sp =>
         {
-            var connection = sp.GetRequiredService<IConnectionMultiplexer>();
+            var connection = sp.GetRequiredService<IDatabase>();
             return new RedisSessionService(connection, settings);
         });
         

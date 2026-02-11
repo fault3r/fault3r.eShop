@@ -28,6 +28,7 @@ public static class RabbitmqExtensions
                 Port = settings.Port,
                 UserName = settings.UserName,
                 Password = settings.Password,
+
                 DispatchConsumersAsync = true,
             };
 
