@@ -9,4 +9,6 @@ public interface IPasswordHasher
     bool Verify(string password, string hash);
     
     string DummyHash { get; }
+
+    string GenerateSalt();
 }

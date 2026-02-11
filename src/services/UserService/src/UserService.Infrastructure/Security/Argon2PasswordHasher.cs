@@ -3,9 +3,10 @@ using System;
 using System.Security.Cryptography;
 using System.Text;
 using Konscious.Security.Cryptography;
+using UserService.Domain.Contracts;
 using UserService.Domain.Security;
 
-namespace UserService.Infrastructure.Security.PasswordHasher;
+namespace UserService.Infrastructure.Security;
 
 public sealed class Argon2PasswordHasher : IPasswordHasher
 {
@@ -54,6 +55,9 @@ public sealed class Argon2PasswordHasher : IPasswordHasher
         return CryptographicOperations.FixedTimeEquals(computedHash, expectedHash);
     }
 
-    public string DummyHash 
+    public string DummyHash
         => "$argon2id$v=19$m=65536,t=3,p=4$AAAAAAAAAAAAAAAAAAAAAA==$AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=";
+
+    public string GenerateSalt()
+        => RandomStringGenerator.Generate(length: 4);
 }

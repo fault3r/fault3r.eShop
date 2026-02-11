@@ -46,7 +46,7 @@ public class UserDomainService(
             ? _passwordHasher.DummyHash
             : user.PasswordHash;
 
-        bool verified = _passwordHasher.Verify(password, hash);
+        bool verified = _passwordHasher.Verify(password + user!.PasswordSalt, hash);
 
         if (!verified)
             return Result<User>.Failure("Invalid credentials!");
