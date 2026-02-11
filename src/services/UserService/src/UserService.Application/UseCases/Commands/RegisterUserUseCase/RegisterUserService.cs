@@ -52,8 +52,7 @@ public sealed class RegisterUserService(
         {
             voEmail = Email.Parse(email);
 
-            var voPasswordSalt = PasswordSalt.Parse(
-                RandomStringGenerator.Generate(length: 8));
+            var voPasswordSalt = PasswordSalt.Parse(_hasher.GenerateSalt());                
 
             string hash = _hasher.Hash(password + voPasswordSalt);
             voPasswordHash = PasswordHash.Parse(hash);
@@ -88,7 +87,7 @@ public sealed class RegisterUserService(
         }
         catch(RedisConnectionException)
         {
-            _logger.LogError("Cannot enqueue notification message. Notification: {Notification}", @event!.ToString());
+            _logger.LogError("Failed to enqueue notification '{Notification}'!", @event!.ToString());
         }
 
         user.ClearEvents();

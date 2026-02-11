@@ -23,7 +23,7 @@ using UserService.Infrastructure.CrossCutting;
 using UserService.Infrastructure.Messaging.Notification;
 using UserService.Infrastructure.Messaging.Outbox;
 using UserService.Infrastructure.Repositories;
-using UserService.Infrastructure.Security.PasswordHasher;
+using UserService.Infrastructure.Security;
 using UserService.Infrastructure.UnitOfWork;
 
 namespace UserService.Infrastructure.DependencyInjection;

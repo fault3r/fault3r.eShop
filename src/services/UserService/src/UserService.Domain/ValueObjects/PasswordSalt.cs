@@ -23,7 +23,7 @@ public sealed class PasswordSalt : ValueObject<PasswordSalt>
     }
 
     private static bool IsValid(string value)
-        => value.Length >= 8
+        => value.Length >= 4
            && value.All(c =>
                (c >= 'A' && c <= 'Z') ||
                (c >= 'a' && c <= 'z') ||

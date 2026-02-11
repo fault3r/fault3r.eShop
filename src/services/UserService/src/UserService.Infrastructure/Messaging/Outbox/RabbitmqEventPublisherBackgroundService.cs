@@ -41,7 +41,7 @@ public sealed class RabbitmqEventPublisherBackgroundService(
 
                     await outbox.MarkAsProcessedAsync(message.Id, cancellationToken);
 
-                    Log.Information("{Name} {Correlation} Successfully sent message {MessageId}.",
+                    Log.Information("{Name} {Correlation} Successfully sent message '{MessageId}'.",
                         nameof(RabbitmqEventPublisherBackgroundService), message.CorrelationId, message.Id);
 
                     await SomeSecondsAsync(1);
