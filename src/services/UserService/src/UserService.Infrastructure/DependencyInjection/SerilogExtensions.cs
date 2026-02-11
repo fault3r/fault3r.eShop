@@ -23,13 +23,13 @@ public static class SerilogExtensions
                     ?? throw new MissingSerilogSettingsException();
 
             config
-                .MinimumLevel.Override("Microsoft", LogEventLevel.Verbose)
-                .MinimumLevel.Override("System", LogEventLevel.Verbose)
+                .MinimumLevel.Override("Microsoft", LogEventLevel.Warning)
+                .MinimumLevel.Override("System", LogEventLevel.Warning)
                 .MinimumLevel.Verbose()
                 .Enrich.FromLogContext()
                 .WriteTo.File(
-                    path: settings.Filename,
-                    rollingInterval: RollingInterval.Day,
+                    path: Path.Combine("Logs", settings.Filename),
+                    rollingInterval: RollingInterval.Minute,
                     outputTemplate: "[{Timestamp:yyyy-MM-dd HH:mm:ss} {Level:u3}] {SourceContext} {CorrelationId} {Message:lj} {NewLine} {Exception}"
                 );
         })
