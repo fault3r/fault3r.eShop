@@ -13,6 +13,7 @@ public interface IEventOutbox
     );
 
     Task<IEnumerable<OutboxMessage>> DequeueAsync(
+        int count = 5,
         CancellationToken cancellationToken = default
     );
 

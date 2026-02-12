@@ -1,0 +1,6 @@
+[2026-02-11 21:47:47 INF]   RabbitmqEventPublisherBackgroundService Successfully retrieved 4 message(s). 
+ [2026-02-11 21:47:48 INF]   RabbitmqEventPublisherBackgroundService 86b94ca4-f5aa-4d93-8cd5-ebc195e38b82 Successfully sent message '"f4d324e4-59a7-4473-9615-7992ae50cdd3"'. 
+ [2026-02-11 21:47:49 INF]   RabbitmqEventPublisherBackgroundService 3e08ec7c-4bda-4fe4-84f8-c8786852ca49 Successfully sent message '"24ab861c-5f11-4b01-ae0f-d302a2f3369b"'. 
+ [2026-02-11 21:47:50 INF]   RabbitmqEventPublisherBackgroundService 48e05dac-5806-4c32-a9ea-9a87ccf546bd Successfully sent message '"d1e9914e-2f53-4e30-b476-ecfa43e7e5de"'. 
+ [2026-02-11 21:47:51 INF]   RabbitmqEventPublisherBackgroundService 882c3d10-1243-4a2f-8a44-cc32a7cbf1ea Successfully sent message '"4df027c9-7105-45a5-8afc-09228a2b858e"'. 
+ 

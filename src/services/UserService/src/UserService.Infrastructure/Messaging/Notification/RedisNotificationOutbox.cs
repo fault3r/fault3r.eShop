@@ -23,11 +23,23 @@ public sealed class RedisNotificationOutbox(
     private const string queue = "notification";
 
     public async Task EnqueueAsync(
-        IDomainEvent @event,
+        IEnumerable<IDomainEvent> events,
         string correlationId,
         CancellationToken cancellationToken = default)
     {
-        ArgumentNullException.ThrowIfNull(@event);
+        ArgumentNullException.ThrowIfNull(events);
+        ArgumentException.ThrowIfNullOrWhiteSpace(correlationId);
+
+        if (!events.Any()) return;
+
+        if (events.Any(e => e is null))
+            throw new ArgumentException($"{nameof(events)} contains null element");
+
+        var notifications = events
+            .Select(e => OutboxMessage.FromEvent(e, correlationId));
+
+        await _dbContext.OutboxMessages
+            .AddRangeAsync(messages, cancellationToken);
 
         var notification = _factory.FromEvent(@event, correlationId);
 

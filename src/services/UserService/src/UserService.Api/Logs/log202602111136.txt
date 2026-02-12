@@ -1,5 +1,0 @@
-[2026-02-11 11:36:27 INF]  e1daa5e2-d4db-4e78-9510-b6b27a29fac1 Incoming request POST /api/v1/auth/register. 
- [2026-02-11 11:36:27 INF] UserService.Application.UseCases.Commands.RegisterUserUseCase.RegisterUserService e1daa5e2-d4db-4e78-9510-b6b27a29fac1 Registering user with 'stri@sdfsdf.vsdsng' email address… 
- [2026-02-11 11:36:29 WRN] UserService.Application.UseCases.Commands.RegisterUserUseCase.RegisterUserService e1daa5e2-d4db-4e78-9510-b6b27a29fac1 User with this email address already exists! 
- [2026-02-11 11:36:29 INF]  e1daa5e2-d4db-4e78-9510-b6b27a29fac1 Completed request POST /api/v1/auth/register with status code 409. 
- 

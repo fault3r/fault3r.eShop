@@ -29,7 +29,7 @@ public static class SerilogExtensions
                 .Enrich.FromLogContext()
                 .WriteTo.File(
                     path: Path.Combine("Logs", settings.Filename),
-                    rollingInterval: RollingInterval.Minute,
+                    rollingInterval: RollingInterval.Hour,
                     outputTemplate: "[{Timestamp:yyyy-MM-dd HH:mm:ss} {Level:u3}] {SourceContext} {CorrelationId} {Message:lj} {NewLine} {Exception}"
                 );
         })

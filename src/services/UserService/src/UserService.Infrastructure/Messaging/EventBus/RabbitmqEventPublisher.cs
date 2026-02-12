@@ -1,51 +1,67 @@
 
 using System;
 using System.Text;
+using Polly;
+using Polly.Retry;
 using RabbitMQ.Client;
 using UserService.Domain.Messaging.Outbox;
-using UserService.Infrastructure.Settings;
 
 namespace UserService.Infrastructure.Messaging.EventBus;
 
 public sealed class RabbitmqEventPublisher
 {
     private readonly IModel _channel;
-    private readonly RabbitmqSettings _settings;
+    private readonly string exchangeName;
+    private readonly AsyncRetryPolicy retryPolicy;
 
     public RabbitmqEventPublisher(IModel channel,
-    RabbitmqSettings settings)
+        string exchangeName, string exchangeType)
     {
+        ArgumentException.ThrowIfNullOrWhiteSpace(exchangeName);
+        ArgumentException.ThrowIfNullOrWhiteSpace(exchangeType);
+
         _channel = channel;
-        _settings = settings;
+        this.exchangeName = exchangeName;
 
         channel.ExchangeDeclare(
-            exchange: settings.ExchangeName,
-            type: settings.ExchangeType,
+            exchange: exchangeName,
+            type: exchangeType,
             durable: true,
             autoDelete: false,
             arguments: null
         );
+
+        retryPolicy = Policy
+            .Handle<Exception>()
+            .WaitAndRetryAsync(
+                retryCount: 3,
+                sleepDurationProvider: (retryAttempt) => TimeSpan.FromSeconds(Math.Pow(2, retryAttempt))
+            );
     }
 
-    public Task PublishAsync(
+    public async Task PublishAsync(
         OutboxMessage message,
         CancellationToken cancellationToken = default)
     {
-        var body = Encoding.UTF8.GetBytes(message.Payload);
+        ArgumentNullException.ThrowIfNull(message);
 
         var props = _channel.CreateBasicProperties();
         props.MessageId = message.Id.ToString();
         props.CorrelationId = message.CorrelationId;
-        props.ContentType = "application/json";
         props.DeliveryMode = 2;
+        props.ContentType = "application/json";
 
-        _channel.BasicPublish(
-            exchange: _settings.ExchangeName,
-            routingKey: message.Type,
-            basicProperties: props,
-            body: body
-        );
+        var body = Encoding.UTF8.GetBytes(message.Payload);
 
-        return Task.CompletedTask;
+        await retryPolicy.ExecuteAsync(async (cancellationToken) =>
+        {
+            _channel.BasicPublish(
+                exchange: exchangeName,
+                routingKey: message.Type,
+                basicProperties: props,
+                body: body
+            );
+
+        }, cancellationToken);
     }
 }

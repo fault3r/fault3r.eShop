@@ -33,17 +33,23 @@ public sealed class EfPostgresEventOutbox(
             .AddRangeAsync(messages, cancellationToken);
     }
 
-    public async Task<IEnumerable<OutboxMessage>> DequeueAsync(CancellationToken cancellationToken = default)
+    public async Task<IEnumerable<OutboxMessage>> DequeueAsync(
+        int count = 5,
+        CancellationToken cancellationToken = default)
     {
         return await _dbContext.OutboxMessages
             .Where(p => !p.Processed)
             .OrderBy(p => p.Timestamp)
+            .Take(count)
             .ToListAsync(cancellationToken);
     }
 
-    public async Task MarkAsProcessedAsync(Guid messageId, CancellationToken cancellationToken = default)
+    public async Task MarkAsProcessedAsync(
+        Guid messageId,
+        CancellationToken cancellationToken = default)
     {
-        var message = await _dbContext.OutboxMessages.FirstOrDefaultAsync(p => p.Id == messageId, cancellationToken);
+        var message = await _dbContext.OutboxMessages
+            .FirstOrDefaultAsync(p => p.Id == messageId, cancellationToken);
 
         if (message is not null && !message.Processed)
         {

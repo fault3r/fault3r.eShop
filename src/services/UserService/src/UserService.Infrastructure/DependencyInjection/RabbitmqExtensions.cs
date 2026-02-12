@@ -44,7 +44,7 @@ public static class RabbitmqExtensions
         services.AddSingleton<RabbitmqEventPublisher>(sp =>
         {
             var channel = sp.GetRequiredService<IModel>();
-            return new(channel, settings);
+            return new(channel, settings.ExchangeName, settings.ExchangeType);
         });
 
         return services;

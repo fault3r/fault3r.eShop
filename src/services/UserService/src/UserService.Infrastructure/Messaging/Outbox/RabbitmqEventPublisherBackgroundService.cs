@@ -1,6 +1,5 @@
 
 using System;
-using Microsoft.EntityFrameworkCore.Storage;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Serilog;
@@ -15,9 +14,6 @@ public sealed class RabbitmqEventPublisherBackgroundService(
 {
     private readonly IServiceScopeFactory _scopeFactory = serviceScopeFactory;
 
-    private static async Task SomeSecondsAsync(int second = 5)
-        => await Task.Delay(TimeSpan.FromSeconds(second));
-
     protected override async Task ExecuteAsync(CancellationToken cancellationToken = default)
     {
         await using var scope = _scopeFactory.CreateAsyncScope();
@@ -28,10 +24,10 @@ public sealed class RabbitmqEventPublisherBackgroundService(
         {
             try
             {
-                var messages = await outbox.DequeueAsync(cancellationToken);
+                var messages = await outbox.DequeueAsync(count: 5, cancellationToken);
 
                 if (!messages.Any()) continue;
-                
+
                 Log.Information("{Name} Successfully retrieved {Count} message(s).",
                     nameof(RabbitmqEventPublisherBackgroundService), messages.Count());
 
@@ -47,17 +43,30 @@ public sealed class RabbitmqEventPublisherBackgroundService(
                     await SomeSecondsAsync(1);
                 }
             }
-            catch (RetryLimitExceededException)
+
+            catch (Microsoft.EntityFrameworkCore.Storage.RetryLimitExceededException)
             {
                 Log.Error(nameof(RabbitmqEventPublisherBackgroundService)
                     + " Cannot connect to the messages database, Reconnectiong…");
+            }
+            catch (RabbitMQ.Client.Exceptions.AlreadyClosedException)
+            {
+                Log.Error(nameof(RabbitmqEventPublisherBackgroundService)
+                    + " Failed to connect to the messages publisher!");
             }
             catch (Exception ex)
             {
                 Log.Error(ex, nameof(RabbitmqEventPublisherBackgroundService)
                     + " An unhandled exception occurred!");
             }
-            finally { await SomeSecondsAsync(); }
+
+            finally
+            {
+                await SomeSecondsAsync();
+            }
         }
     }
+
+    private static async Task SomeSecondsAsync(int second = 5)
+        => await Task.Delay(TimeSpan.FromSeconds(second));
 }
