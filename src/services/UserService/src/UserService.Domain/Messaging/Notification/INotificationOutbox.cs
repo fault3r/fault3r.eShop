@@ -12,7 +12,7 @@ public interface INotificationOutbox
         CancellationToken cancellationToken = default
     );
 
-    Task<IEnumerable<NotificationMessage>> DequeueAsync(
+    Task<NotificationMessage?> DequeueAsync(
         CancellationToken cancellationToken = default
     );
 }

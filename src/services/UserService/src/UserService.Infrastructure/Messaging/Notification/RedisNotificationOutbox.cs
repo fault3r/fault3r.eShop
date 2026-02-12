@@ -17,6 +17,7 @@ public sealed class RedisNotificationOutbox(
 {
     private readonly IDatabase _database = database;
     private readonly INotificationFactory _factory = factory;
+    private const string Key = "notification";
 
     private readonly JsonSerializerOptions jsonOptions
         = SharedJsonOptions.DefaultOptions;
@@ -28,11 +29,6 @@ public sealed class RedisNotificationOutbox(
     {
         ArgumentNullException.ThrowIfNull(events);
         ArgumentException.ThrowIfNullOrWhiteSpace(correlationId);
-
-        if (!events.Any()) return;
-
-        if (events.Any(e => e is null))
-            throw new ArgumentException($"{nameof(events)} contains null element");
 
         var transaction = _database.CreateTransaction();
 
@@ -47,36 +43,25 @@ public sealed class RedisNotificationOutbox(
                 Payload = JsonSerializer.Serialize(
                     notification, notification.GetType(), jsonOptions),
                 Timestamp = @event.OccurredOn,
-                CorrelationId = correlationId,
+                CorrelationId = correlationId
             };
 
             var payload = JsonSerializer.Serialize(message, jsonOptions);
 
-            _ = transaction.SetAddAsync(SetKey, payload);
+            _ = transaction.ListLeftPushAsync(Key, payload);
         }
 
         if (!await transaction.ExecuteAsync())
             throw new RedisTransactionFailedException();
     }
 
-    public async Task<IEnumerable<NotificationMessage>> DequeueAsync(
+    public async Task<NotificationMessage?> DequeueAsync(
         CancellationToken cancellationToken = default)
     {
-        var values = await _database.SetMembersAsync(SetKey);
+        var value = await _database.ListRightPopAsync(Key);
 
-        if (values.Length == 0) return [];
+        if (value.IsNullOrEmpty) return null;
 
-        return values.Select(e => JsonSerializer.Deserialize<NotificationMessage>(e!, jsonOptions))!;
+        return JsonSerializer.Deserialize<NotificationMessage>(value!, jsonOptions);
     }
-
-    public async Task MarkAsProcessedAsync(
-        Guid notificationId,
-        CancellationToken cancellationToken = default)
-    {
-
-    }
-    
-    public string GetKey(Guid notificationId)
-        => $"notification:{notificationId}";
 }
-

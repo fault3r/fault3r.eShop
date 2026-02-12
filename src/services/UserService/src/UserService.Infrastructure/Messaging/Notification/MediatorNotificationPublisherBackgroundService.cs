@@ -1,6 +1,5 @@
 
 using System;
-using FluentEmail.Core;
 using MediatR;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -17,8 +16,8 @@ public sealed class MediatorNotificationPublisherBackgroundService(
 {
     private readonly IServiceScopeFactory _scopeFactory = serviceScopeFactory;
 
-    private static async Task SomeSecondsAsync(int second = 5)
-        => await Task.Delay(TimeSpan.FromSeconds(second));
+    private static async Task SomeSecondsAsync(int second = 5, CancellationToken cancellationToken = default)
+        => await Task.Delay(TimeSpan.FromSeconds(second), cancellationToken);
 
     protected override async Task ExecuteAsync(CancellationToken cancellationToken = default)
     {
@@ -31,14 +30,13 @@ public sealed class MediatorNotificationPublisherBackgroundService(
         {
             try
             {
-                var messages = await _outbox.DequeueAsync(cancellationToken);
+                var message = await _outbox.DequeueAsync(cancellationToken);
 
-                if (!messages.Any()) continue;
+                if (message is null) continue;
 
-                var notifications = messages.Select(_factory.FromNotificationMessage);
+                var notification = _factory.FromNotificationMessage(message);
 
-                foreach(var notification in notifications)
-                    await _mediator.Publish(notification, cancellationToken);
+                await _mediator.Publish(notification, cancellationToken);
             }
 
             catch (RedisConnectionException)
@@ -52,7 +50,7 @@ public sealed class MediatorNotificationPublisherBackgroundService(
                     + " An unhandled exception occurred!");
             }
 
-            finally { await SomeSecondsAsync(); }
+            finally { await SomeSecondsAsync(second: 5, cancellationToken); }
         }
     }
 
