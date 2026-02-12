@@ -15,4 +15,9 @@ public interface INotificationOutbox
     Task<NotificationMessage?> DequeueAsync(
         CancellationToken cancellationToken = default
     );
+
+    Task RequeueAsync(
+        NotificationMessage message,
+        CancellationToken cancellationToken = default
+    );
 }

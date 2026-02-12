@@ -4,7 +4,6 @@ using MediatR;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Serilog;
-using StackExchange.Redis;
 using UserService.Application.Interfaces;
 using UserService.Domain.Messaging.Notification;
 
@@ -16,9 +15,6 @@ public sealed class MediatorNotificationPublisherBackgroundService(
 {
     private readonly IServiceScopeFactory _scopeFactory = serviceScopeFactory;
 
-    private static async Task SomeSecondsAsync(int second = 5, CancellationToken cancellationToken = default)
-        => await Task.Delay(TimeSpan.FromSeconds(second), cancellationToken);
-
     protected override async Task ExecuteAsync(CancellationToken cancellationToken = default)
     {
         await using var scope = _scopeFactory.CreateAsyncScope();
@@ -28,9 +24,10 @@ public sealed class MediatorNotificationPublisherBackgroundService(
 
         while (!cancellationToken.IsCancellationRequested)
         {
+            NotificationMessage? message = null;
             try
             {
-                var message = await _outbox.DequeueAsync(cancellationToken);
+                message = await _outbox.DequeueAsync(cancellationToken);
 
                 if (message is null) continue;
 
@@ -39,19 +36,28 @@ public sealed class MediatorNotificationPublisherBackgroundService(
                 await _mediator.Publish(notification, cancellationToken);
             }
 
-            catch (RedisConnectionException)
+            catch (StackExchange.Redis.RedisConnectionException)
             {
                 Log.Error(nameof(MediatorNotificationPublisherBackgroundService)
                     + " Failed to connect to the Redis database, Reconnectiong…");
             }
             catch (Exception ex)
             {
+                await _outbox.RequeueAsync(message!, cancellationToken);
+
                 Log.Error(ex, nameof(MediatorNotificationPublisherBackgroundService)
-                    + " An unhandled exception occurred!");
+                    + " Failed to publish notification!");
             }
 
-            finally { await SomeSecondsAsync(second: 5, cancellationToken); }
+            finally
+            {
+                await SomeSecondsAsync(second: 5, cancellationToken);
+            }
         }
     }
 
+    private static async Task SomeSecondsAsync(
+        int second = 5,
+        CancellationToken cancellationToken = default)
+    => await Task.Delay(TimeSpan.FromSeconds(second), cancellationToken);
 }

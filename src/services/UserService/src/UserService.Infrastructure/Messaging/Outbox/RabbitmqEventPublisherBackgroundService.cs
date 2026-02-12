@@ -40,7 +40,7 @@ public sealed class RabbitmqEventPublisherBackgroundService(
                     Log.Information("{Name} {Correlation} Successfully sent message '{MessageId}'.",
                         nameof(RabbitmqEventPublisherBackgroundService), message.CorrelationId, message.Id);
 
-                    await SomeSecondsAsync(1);
+                    await SomeSecondsAsync(second: 5, cancellationToken);
                 }
             }
 
@@ -62,11 +62,13 @@ public sealed class RabbitmqEventPublisherBackgroundService(
 
             finally
             {
-                await SomeSecondsAsync();
+                await SomeSecondsAsync(second: 5, cancellationToken);
             }
         }
     }
 
-    private static async Task SomeSecondsAsync(int second = 5)
-        => await Task.Delay(TimeSpan.FromSeconds(second));
+    private static async Task SomeSecondsAsync(
+        int second = 5,
+        CancellationToken cancellationToken = default)
+    => await Task.Delay(TimeSpan.FromSeconds(second), cancellationToken);
 }

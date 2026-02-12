@@ -1,0 +1,86 @@
+[2026-02-12 21:52:39 INF]  1752f2a8-200b-4614-85aa-d0dc1c14aa81 Incoming request POST /api/v1/auth/register. 
+ [2026-02-12 21:52:39 INF] UserService.Application.UseCases.Commands.RegisterUserUseCase.RegisterUserService 1752f2a8-200b-4614-85aa-d0dc1c14aa81 Registering user with 'hamed.damaavandi@gmail.com' email address… 
+ [2026-02-12 21:52:41 INF] UserService.Application.UseCases.Commands.RegisterUserUseCase.RegisterUserService 1752f2a8-200b-4614-85aa-d0dc1c14aa81 User successfully registered with 'e8cbc94a7a424c9b97e5007b4ed30bda' identity. 
+ [2026-02-12 21:52:41 INF]  1752f2a8-200b-4614-85aa-d0dc1c14aa81 Completed request POST /api/v1/auth/register with status code 201. 
+ [2026-02-12 21:52:43 INF] UserService.Application.Messaging.Notification.NotificationHandlers.UserRegisteredNotificationHandler  1752f2a8-200b-4614-85aa-d0dc1c14aa81 Sending welcome email to 'hamed.damaavandi@gmail.com' user… 
+ [2026-02-12 21:52:43 ERR]   MediatorNotificationPublisherBackgroundService An unhandled exception occurred! 
+ System.Net.Mail.SmtpException: Failure sending mail.
+ ---> System.Net.Sockets.SocketException (11): Resource temporarily unavailable
+   at System.Net.Sockets.Socket.AwaitableSocketAsyncEventArgs.ThrowException(SocketError error, CancellationToken cancellationToken)
+   at System.Net.Sockets.Socket.AwaitableSocketAsyncEventArgs.System.Threading.Tasks.Sources.IValueTaskSource.GetResult(Int16 token)
+   at System.Threading.Tasks.ValueTask.ValueTaskSourceAsTask.<>c.<.cctor>b__4_0(Object state)
+--- End of stack trace from previous location ---
+   at System.Threading.Tasks.TaskToAsyncResult.End(IAsyncResult asyncResult)
+   at System.Net.Sockets.TcpClient.EndConnect(IAsyncResult asyncResult)
+   at System.Net.Mail.SmtpConnection.ConnectAndHandshakeAsyncResult.InitializeConnectionCallback(IAsyncResult result)
+--- End of stack trace from previous location ---
+   at System.Net.Mail.SmtpClient.ConnectCallback(IAsyncResult result)
+   --- End of inner exception stack trace ---
+   at FluentEmail.Smtp.SendMailEx.SendMailExImplAsync(SmtpClient client, MailMessage message, CancellationToken token)
+   at FluentEmail.Smtp.SmtpSender.SendAsync(IFluentEmail email, Nullable`1 token)
+   at UserService.Infrastructure.Services.EmailService.FluentEmailSender.SendAsync(String to, String subject, String body, CancellationToken cancellationToken) in /home/hamed-damavandi/Documents/fault3r.eShop/src/services/UserService/src/UserService.Infrastructure/Services/EmailService/FluentEmailSender.cs:line 26
+   at UserService.Application.Messaging.Notification.NotificationHandlers.UserRegisteredNotificationHandler.Handle(UserRegisteredNotification notification, CancellationToken cancellationToken) in /home/hamed-damavandi/Documents/fault3r.eShop/src/services/UserService/src/UserService.Application/Messaging/Notification/NotificationHandlers/UserRegisteredNotificationHandler.cs:line 36
+   at MediatR.Mediator.PublishCore(IEnumerable`1 allHandlers, INotification notification, CancellationToken cancellationToken)
+   at UserService.Infrastructure.Messaging.Notification.MediatorNotificationPublisherBackgroundService.ExecuteAsync(CancellationToken cancellationToken) in /home/hamed-damavandi/Documents/fault3r.eShop/src/services/UserService/src/UserService.Infrastructure/Messaging/Notification/MediatorNotificationPublisherBackgroundService.cs:line 36
+[2026-02-12 21:52:45 INF]   RabbitmqEventPublisherBackgroundService Successfully retrieved 1 message(s). 
+ [2026-02-12 21:52:46 INF]   RabbitmqEventPublisherBackgroundService 1752f2a8-200b-4614-85aa-d0dc1c14aa81 Successfully sent message '"1b165161-884c-4abc-9343-fa7e289e9fb9"'. 
+ [2026-02-12 21:52:48 INF] UserService.Application.Messaging.Notification.NotificationHandlers.UserRegisteredNotificationHandler  1752f2a8-200b-4614-85aa-d0dc1c14aa81 Sending welcome email to 'hamed.damaavandi@gmail.com' user… 
+ [2026-02-12 21:52:48 ERR]   MediatorNotificationPublisherBackgroundService An unhandled exception occurred! 
+ System.Net.Mail.SmtpException: Failure sending mail.
+ ---> System.Net.Sockets.SocketException (11): Resource temporarily unavailable
+   at System.Net.Sockets.Socket.AwaitableSocketAsyncEventArgs.ThrowException(SocketError error, CancellationToken cancellationToken)
+   at System.Net.Sockets.Socket.AwaitableSocketAsyncEventArgs.System.Threading.Tasks.Sources.IValueTaskSource.GetResult(Int16 token)
+   at System.Threading.Tasks.ValueTask.ValueTaskSourceAsTask.<>c.<.cctor>b__4_0(Object state)
+--- End of stack trace from previous location ---
+   at System.Threading.Tasks.TaskToAsyncResult.End(IAsyncResult asyncResult)
+   at System.Net.Sockets.TcpClient.EndConnect(IAsyncResult asyncResult)
+   at System.Net.Mail.SmtpConnection.ConnectAndHandshakeAsyncResult.InitializeConnectionCallback(IAsyncResult result)
+--- End of stack trace from previous location ---
+   at System.Net.Mail.SmtpClient.ConnectCallback(IAsyncResult result)
+   --- End of inner exception stack trace ---
+   at FluentEmail.Smtp.SendMailEx.SendMailExImplAsync(SmtpClient client, MailMessage message, CancellationToken token)
+   at FluentEmail.Smtp.SmtpSender.SendAsync(IFluentEmail email, Nullable`1 token)
+   at UserService.Infrastructure.Services.EmailService.FluentEmailSender.SendAsync(String to, String subject, String body, CancellationToken cancellationToken) in /home/hamed-damavandi/Documents/fault3r.eShop/src/services/UserService/src/UserService.Infrastructure/Services/EmailService/FluentEmailSender.cs:line 26
+   at UserService.Application.Messaging.Notification.NotificationHandlers.UserRegisteredNotificationHandler.Handle(UserRegisteredNotification notification, CancellationToken cancellationToken) in /home/hamed-damavandi/Documents/fault3r.eShop/src/services/UserService/src/UserService.Application/Messaging/Notification/NotificationHandlers/UserRegisteredNotificationHandler.cs:line 36
+   at MediatR.Mediator.PublishCore(IEnumerable`1 allHandlers, INotification notification, CancellationToken cancellationToken)
+   at UserService.Infrastructure.Messaging.Notification.MediatorNotificationPublisherBackgroundService.ExecuteAsync(CancellationToken cancellationToken) in /home/hamed-damavandi/Documents/fault3r.eShop/src/services/UserService/src/UserService.Infrastructure/Messaging/Notification/MediatorNotificationPublisherBackgroundService.cs:line 36
+[2026-02-12 21:52:53 INF] UserService.Application.Messaging.Notification.NotificationHandlers.UserRegisteredNotificationHandler  1752f2a8-200b-4614-85aa-d0dc1c14aa81 Sending welcome email to 'hamed.damaavandi@gmail.com' user… 
+ [2026-02-12 21:52:53 ERR]   MediatorNotificationPublisherBackgroundService An unhandled exception occurred! 
+ System.Net.Mail.SmtpException: Failure sending mail.
+ ---> System.Net.Sockets.SocketException (11): Resource temporarily unavailable
+   at System.Net.Sockets.Socket.AwaitableSocketAsyncEventArgs.ThrowException(SocketError error, CancellationToken cancellationToken)
+   at System.Net.Sockets.Socket.AwaitableSocketAsyncEventArgs.System.Threading.Tasks.Sources.IValueTaskSource.GetResult(Int16 token)
+   at System.Threading.Tasks.ValueTask.ValueTaskSourceAsTask.<>c.<.cctor>b__4_0(Object state)
+--- End of stack trace from previous location ---
+   at System.Threading.Tasks.TaskToAsyncResult.End(IAsyncResult asyncResult)
+   at System.Net.Sockets.TcpClient.EndConnect(IAsyncResult asyncResult)
+   at System.Net.Mail.SmtpConnection.ConnectAndHandshakeAsyncResult.InitializeConnectionCallback(IAsyncResult result)
+--- End of stack trace from previous location ---
+   at System.Net.Mail.SmtpClient.ConnectCallback(IAsyncResult result)
+   --- End of inner exception stack trace ---
+   at FluentEmail.Smtp.SendMailEx.SendMailExImplAsync(SmtpClient client, MailMessage message, CancellationToken token)
+   at FluentEmail.Smtp.SmtpSender.SendAsync(IFluentEmail email, Nullable`1 token)
+   at UserService.Infrastructure.Services.EmailService.FluentEmailSender.SendAsync(String to, String subject, String body, CancellationToken cancellationToken) in /home/hamed-damavandi/Documents/fault3r.eShop/src/services/UserService/src/UserService.Infrastructure/Services/EmailService/FluentEmailSender.cs:line 26
+   at UserService.Application.Messaging.Notification.NotificationHandlers.UserRegisteredNotificationHandler.Handle(UserRegisteredNotification notification, CancellationToken cancellationToken) in /home/hamed-damavandi/Documents/fault3r.eShop/src/services/UserService/src/UserService.Application/Messaging/Notification/NotificationHandlers/UserRegisteredNotificationHandler.cs:line 36
+   at MediatR.Mediator.PublishCore(IEnumerable`1 allHandlers, INotification notification, CancellationToken cancellationToken)
+   at UserService.Infrastructure.Messaging.Notification.MediatorNotificationPublisherBackgroundService.ExecuteAsync(CancellationToken cancellationToken) in /home/hamed-damavandi/Documents/fault3r.eShop/src/services/UserService/src/UserService.Infrastructure/Messaging/Notification/MediatorNotificationPublisherBackgroundService.cs:line 36
+[2026-02-12 21:52:58 INF] UserService.Application.Messaging.Notification.NotificationHandlers.UserRegisteredNotificationHandler  1752f2a8-200b-4614-85aa-d0dc1c14aa81 Sending welcome email to 'hamed.damaavandi@gmail.com' user… 
+ [2026-02-12 21:52:58 ERR]   MediatorNotificationPublisherBackgroundService An unhandled exception occurred! 
+ System.Net.Mail.SmtpException: Failure sending mail.
+ ---> System.Net.Sockets.SocketException (11): Resource temporarily unavailable
+   at System.Net.Sockets.Socket.AwaitableSocketAsyncEventArgs.ThrowException(SocketError error, CancellationToken cancellationToken)
+   at System.Net.Sockets.Socket.AwaitableSocketAsyncEventArgs.System.Threading.Tasks.Sources.IValueTaskSource.GetResult(Int16 token)
+   at System.Threading.Tasks.ValueTask.ValueTaskSourceAsTask.<>c.<.cctor>b__4_0(Object state)
+--- End of stack trace from previous location ---
+   at System.Threading.Tasks.TaskToAsyncResult.End(IAsyncResult asyncResult)
+   at System.Net.Sockets.TcpClient.EndConnect(IAsyncResult asyncResult)
+   at System.Net.Mail.SmtpConnection.ConnectAndHandshakeAsyncResult.InitializeConnectionCallback(IAsyncResult result)
+--- End of stack trace from previous location ---
+   at System.Net.Mail.SmtpClient.ConnectCallback(IAsyncResult result)
+   --- End of inner exception stack trace ---
+   at FluentEmail.Smtp.SendMailEx.SendMailExImplAsync(SmtpClient client, MailMessage message, CancellationToken token)
+   at FluentEmail.Smtp.SmtpSender.SendAsync(IFluentEmail email, Nullable`1 token)
+   at UserService.Infrastructure.Services.EmailService.FluentEmailSender.SendAsync(String to, String subject, String body, CancellationToken cancellationToken) in /home/hamed-damavandi/Documents/fault3r.eShop/src/services/UserService/src/UserService.Infrastructure/Services/EmailService/FluentEmailSender.cs:line 26
+   at UserService.Application.Messaging.Notification.NotificationHandlers.UserRegisteredNotificationHandler.Handle(UserRegisteredNotification notification, CancellationToken cancellationToken) in /home/hamed-damavandi/Documents/fault3r.eShop/src/services/UserService/src/UserService.Application/Messaging/Notification/NotificationHandlers/UserRegisteredNotificationHandler.cs:line 36
+   at MediatR.Mediator.PublishCore(IEnumerable`1 allHandlers, INotification notification, CancellationToken cancellationToken)
+   at UserService.Infrastructure.Messaging.Notification.MediatorNotificationPublisherBackgroundService.ExecuteAsync(CancellationToken cancellationToken) in /home/hamed-damavandi/Documents/fault3r.eShop/src/services/UserService/src/UserService.Infrastructure/Messaging/Notification/MediatorNotificationPublisherBackgroundService.cs:line 36
