@@ -16,7 +16,12 @@ public interface INotificationOutbox
         CancellationToken cancellationToken = default
     );
 
-    Task RequeueAsync(
+    Task MarkAsFailureAsync(
+        NotificationMessage message,
+        CancellationToken cancellationToken = default
+    );
+
+    Task MarkAsProcessedAsync(
         NotificationMessage message,
         CancellationToken cancellationToken = default
     );

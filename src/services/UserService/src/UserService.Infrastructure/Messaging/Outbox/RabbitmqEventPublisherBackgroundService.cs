@@ -20,6 +20,8 @@ public sealed class RabbitmqEventPublisherBackgroundService(
         var _outbox = scope.ServiceProvider.GetRequiredService<IEventOutbox>();
         var _publisher = scope.ServiceProvider.GetRequiredService<RabbitmqEventPublisher>();
 
+        var logger = Log.ForContext<RabbitmqEventPublisherBackgroundService>();
+
         while (!cancellationToken.IsCancellationRequested)
         {
             try
@@ -28,8 +30,7 @@ public sealed class RabbitmqEventPublisherBackgroundService(
 
                 if (!messages.Any()) continue;
 
-                Log.Information("{Name} Successfully retrieved {Count} message(s).",
-                    nameof(RabbitmqEventPublisherBackgroundService), messages.Count());
+                logger.Information("Retrieved {Count} message(s).", messages.Count());
 
                 foreach (var message in messages)
                 {
@@ -37,8 +38,7 @@ public sealed class RabbitmqEventPublisherBackgroundService(
 
                     await _outbox.MarkAsProcessedAsync(message.Id, cancellationToken);
 
-                    Log.Information("{Name} {Correlation} Successfully sent message '{MessageId}'.",
-                        nameof(RabbitmqEventPublisherBackgroundService), message.CorrelationId, message.Id);
+                    logger.Information("{Correlation} {Type} Published.", message.CorrelationId, message.Type);
 
                     await SomeSecondsAsync(second: 5, cancellationToken);
                 }
@@ -46,18 +46,15 @@ public sealed class RabbitmqEventPublisherBackgroundService(
 
             catch (Microsoft.EntityFrameworkCore.Storage.RetryLimitExceededException)
             {
-                Log.Error(nameof(RabbitmqEventPublisherBackgroundService)
-                    + " Cannot connect to the messages database, Reconnectiong…");
+                logger.Error("Cannot connect to the messages database, Reconnectiong…");
             }
             catch (RabbitMQ.Client.Exceptions.AlreadyClosedException)
             {
-                Log.Error(nameof(RabbitmqEventPublisherBackgroundService)
-                    + " Failed to connect to the messages publisher!");
+                logger.Error("Failed to connect to the messages publisher!");
             }
             catch (Exception ex)
             {
-                Log.Error(ex, nameof(RabbitmqEventPublisherBackgroundService)
-                    + " An unhandled exception occurred!");
+                logger.Error(ex, "An unhandled exception occurred!");
             }
 
             finally

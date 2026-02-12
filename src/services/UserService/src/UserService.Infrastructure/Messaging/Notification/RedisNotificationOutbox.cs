@@ -65,7 +65,7 @@ public sealed class RedisNotificationOutbox(
         return JsonSerializer.Deserialize<NotificationMessage>(value!, jsonOptions);
     }
 
-    public async Task RequeueAsync(
+    public async Task MarkAsFailureAsync(
         NotificationMessage message,
         CancellationToken cancellationToken = default)
     {
@@ -74,5 +74,16 @@ public sealed class RedisNotificationOutbox(
         var payload = JsonSerializer.Serialize(message, jsonOptions);
 
         await _database.ListRightPushAsync(Key, payload);
+    }
+
+    public async Task MarkAsProcessedAsync(
+        NotificationMessage message,
+        CancellationToken cancellationToken = default)
+    {
+        if (message is null) return;
+
+        var payload = JsonSerializer.Serialize(message, jsonOptions);
+
+        await _database.SetAddAsync($"{Key}:processed", payload);
     }
 }

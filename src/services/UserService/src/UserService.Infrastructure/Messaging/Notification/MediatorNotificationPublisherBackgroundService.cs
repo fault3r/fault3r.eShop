@@ -22,6 +22,8 @@ public sealed class MediatorNotificationPublisherBackgroundService(
         var _outbox = scope.ServiceProvider.GetRequiredService<INotificationOutbox>();
         var _factory = scope.ServiceProvider.GetRequiredService<INotificationFactory>();
 
+        var logger = Log.ForContext<MediatorNotificationPublisherBackgroundService>();
+
         while (!cancellationToken.IsCancellationRequested)
         {
             NotificationMessage? message = null;
@@ -33,20 +35,26 @@ public sealed class MediatorNotificationPublisherBackgroundService(
 
                 var notification = _factory.FromNotificationMessage(message);
 
+                logger.Information("{Correlation} Publishing {Type}…",
+                    message.CorrelationId, notification.GetType().Name);
+
                 await _mediator.Publish(notification, cancellationToken);
+
+                await _outbox.MarkAsProcessedAsync(message, cancellationToken);
+
+                logger.Information("{Correlation} {Type} published.",
+                    message.CorrelationId, notification.GetType().Name);
             }
 
             catch (StackExchange.Redis.RedisConnectionException)
             {
-                Log.Error(nameof(MediatorNotificationPublisherBackgroundService)
-                    + " Failed to connect to the Redis database, Reconnectiong…");
+                logger.Error("Failed to connect to the Redis database, Reconnectiong…");
             }
             catch (Exception ex)
             {
-                await _outbox.RequeueAsync(message!, cancellationToken);
+                await _outbox.MarkAsFailureAsync(message!, cancellationToken);
 
-                Log.Error(ex, nameof(MediatorNotificationPublisherBackgroundService)
-                    + " Failed to publish notification!");
+                logger.Error("Failed to publish notification! {Error}", ex.Message);
             }
 
             finally
