@@ -6,6 +6,7 @@ using UserService.Domain.Contracts;
 using UserService.Domain.Interfaces;
 using UserService.Domain.Messaging.Notification;
 using StackExchange.Redis;
+using UserService.Infrastructure.Exceptions.Security.Authentication;
 
 namespace UserService.Infrastructure.Messaging.Notification;
 
@@ -19,8 +20,6 @@ public sealed class RedisNotificationOutbox(
 
     private readonly JsonSerializerOptions jsonOptions
         = SharedJsonOptions.DefaultOptions;
-        
-    private const string queue = "notification";
 
     public async Task EnqueueAsync(
         IEnumerable<IDomainEvent> events,
@@ -35,31 +34,49 @@ public sealed class RedisNotificationOutbox(
         if (events.Any(e => e is null))
             throw new ArgumentException($"{nameof(events)} contains null element");
 
-        var notifications = events
-            .Select(e => _factory.FromEvent(e, correlationId));
+        var transaction = _database.CreateTransaction();
 
-
-        var message = new NotificationMessage
+        foreach (var @event in events)
         {
-            Id = @event.EventId,
-            EnqueuedOn = @event.OccurredOn,
-            Type = notification.GetType().Name,
-            Payload = JsonSerializer.Serialize(
-                notification, notification.GetType(), jsonOptions),
-        };
+            var notification = _factory.FromEvent(@event, correlationId);
 
-        var payload = JsonSerializer.Serialize(message, jsonOptions);
+            var message = new NotificationMessage
+            {
+                Id = @event.EventId,
+                Type = notification.GetType().Name,
+                Payload = JsonSerializer.Serialize(
+                    notification, notification.GetType(), jsonOptions),
+                Timestamp = @event.OccurredOn,
+                CorrelationId = correlationId,
+            };
 
-        await _database.ListLeftPushAsync(queue, payload);
+            var payload = JsonSerializer.Serialize(message, jsonOptions);
+
+            _ = transaction.SetAddAsync(SetKey, payload);
+        }
+
+        if (!await transaction.ExecuteAsync())
+            throw new RedisTransactionFailedException();
     }
 
-    public async Task<NotificationMessage?> DequeueAsync(CancellationToken cancellationToken = default)
+    public async Task<IEnumerable<NotificationMessage>> DequeueAsync(
+        CancellationToken cancellationToken = default)
     {
-        var payload = await _database.ListRightPopAsync(queue);
+        var values = await _database.SetMembersAsync(SetKey);
 
-        if (payload.IsNullOrEmpty) return null;
+        if (values.Length == 0) return [];
 
-        return JsonSerializer.Deserialize<NotificationMessage>(payload!, jsonOptions);
+        return values.Select(e => JsonSerializer.Deserialize<NotificationMessage>(e!, jsonOptions))!;
     }
+
+    public async Task MarkAsProcessedAsync(
+        Guid notificationId,
+        CancellationToken cancellationToken = default)
+    {
+
+    }
+    
+    public string GetKey(Guid notificationId)
+        => $"notification:{notificationId}";
 }
 

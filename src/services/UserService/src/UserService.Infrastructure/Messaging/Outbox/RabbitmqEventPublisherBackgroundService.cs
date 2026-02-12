@@ -17,14 +17,14 @@ public sealed class RabbitmqEventPublisherBackgroundService(
     protected override async Task ExecuteAsync(CancellationToken cancellationToken = default)
     {
         await using var scope = _scopeFactory.CreateAsyncScope();
-        var outbox = scope.ServiceProvider.GetRequiredService<IEventOutbox>();
-        var publisher = scope.ServiceProvider.GetRequiredService<RabbitmqEventPublisher>();
+        var _outbox = scope.ServiceProvider.GetRequiredService<IEventOutbox>();
+        var _publisher = scope.ServiceProvider.GetRequiredService<RabbitmqEventPublisher>();
 
         while (!cancellationToken.IsCancellationRequested)
         {
             try
             {
-                var messages = await outbox.DequeueAsync(count: 5, cancellationToken);
+                var messages = await _outbox.DequeueAsync(count: 5, cancellationToken);
 
                 if (!messages.Any()) continue;
 
@@ -33,9 +33,9 @@ public sealed class RabbitmqEventPublisherBackgroundService(
 
                 foreach (var message in messages)
                 {
-                    await publisher.PublishAsync(message, cancellationToken);
+                    await _publisher.PublishAsync(message, cancellationToken);
 
-                    await outbox.MarkAsProcessedAsync(message.Id, cancellationToken);
+                    await _outbox.MarkAsProcessedAsync(message.Id, cancellationToken);
 
                     Log.Information("{Name} {Correlation} Successfully sent message '{MessageId}'.",
                         nameof(RabbitmqEventPublisherBackgroundService), message.CorrelationId, message.Id);

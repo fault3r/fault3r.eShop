@@ -80,14 +80,13 @@ public sealed class RegisterUserService(
         await _uow.EventOutbox.EnqueueAsync(user.Events, _correlation.CorrelationId, cancellationToken);
         await _uow.CommitAsync(cancellationToken);
 
-        var @event = user.Events.FirstOrDefault();        
         try
         {
-            await _notificationOutbox.EnqueueAsync(@event!, _correlation.CorrelationId, cancellationToken);
+            await _notificationOutbox.EnqueueAsync(user.Events, _correlation.CorrelationId, cancellationToken);
         }
-        catch(RedisConnectionException)
+        catch(Exception)
         {
-            _logger.LogError("Failed to enqueue notification '{Notification}'!", @event!.ToString());
+            _logger.LogError("Failed to enqueue notification '{Notification}'!", user.Events.First().ToString());
         }
 
         user.ClearEvents();
