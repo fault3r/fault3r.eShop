@@ -7,12 +7,12 @@ namespace UserService.Domain.Abstractions;
 public abstract record DomainEvent : IDomainEvent
 {
     public Guid EventId { get; }
-    public DateTime OccurredOn { get; }
+    public DateTimeOffset OccurredOn { get; }
 
     protected DomainEvent()
     {
         EventId = Guid.NewGuid();
-        OccurredOn = DateTime.UtcNow;
+        OccurredOn = DateTimeOffset.UtcNow;
     }
 
     public override string ToString()

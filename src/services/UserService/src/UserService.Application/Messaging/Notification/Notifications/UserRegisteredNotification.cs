@@ -13,8 +13,9 @@ public sealed class UserRegisteredNotification : Notification
         string userId,
         string email,
         string fullName,
+        DateTimeOffset timestamp,
         string correlationId
-    ) : base(userId, correlationId)
+    ) : base(userId, timestamp, correlationId)
     {
         ArgumentException.ThrowIfNullOrEmpty(email);
         ArgumentException.ThrowIfNullOrEmpty(fullName);
@@ -30,6 +31,6 @@ public sealed class UserRegisteredNotification : Notification
         ArgumentNullException.ThrowIfNull(@event);
         ArgumentException.ThrowIfNullOrWhiteSpace(correlationId);
 
-        return new(@event.UserId, @event.Email, @event.FullName, correlationId);
+        return new(@event.UserId, @event.Email, @event.FullName, @event.OccurredOn, correlationId);
     }
 }

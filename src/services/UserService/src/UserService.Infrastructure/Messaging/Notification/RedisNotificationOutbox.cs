@@ -10,11 +10,11 @@ using StackExchange.Redis;
 namespace UserService.Infrastructure.Messaging.Notification;
 
 public sealed class RedisNotificationOutbox(
-    IConnectionMultiplexer redisConnection,
+    IDatabase database,
     INotificationFactory factory
 ) : INotificationOutbox
 {
-    private readonly IDatabase _database = redisConnection.GetDatabase();
+    private readonly IDatabase _database = database;
     private readonly INotificationFactory _factory = factory;
 
     private readonly JsonSerializerOptions jsonOptions
@@ -36,12 +36,8 @@ public sealed class RedisNotificationOutbox(
             throw new ArgumentException($"{nameof(events)} contains null element");
 
         var notifications = events
-            .Select(e => OutboxMessage.FromEvent(e, correlationId));
+            .Select(e => _factory.FromEvent(e, correlationId));
 
-        await _dbContext.OutboxMessages
-            .AddRangeAsync(messages, cancellationToken);
-
-        var notification = _factory.FromEvent(@event, correlationId);
 
         var message = new NotificationMessage
         {

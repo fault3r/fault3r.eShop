@@ -60,11 +60,11 @@ public sealed class LoginUserService(
             SessionId = sessionId,
             DeviceId = "unknown",
             IpAddress = "unknown",
-            CreatedAt = now,
+            Timestamp = now,
+            LastAccessedAt = now,
 
             RefreshTokenHash = refreshTokenHash,
             RefreshTokenExpiresAt = now.AddDays(SessionLifetimeDays),
-            LastAccessedAt = now,
 
             UserId = user.Id,
             Email = user.Email,

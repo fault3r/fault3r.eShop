@@ -19,6 +19,7 @@ public sealed class NotificationFactory(
     public Notification FromEvent(IDomainEvent @event, string correlationId)
     {
         ArgumentNullException.ThrowIfNull(@event);
+        ArgumentException.ThrowIfNullOrWhiteSpace(correlationId);
 
         var notification = @event switch
         {

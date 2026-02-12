@@ -9,11 +9,11 @@ namespace UserService.Domain.Messaging.Outbox;
 public sealed class OutboxMessage
 {
     public Guid Id { get; private set; }
-    public DateTime Timestamp { get; private set; }
     public string Type { get; private set; }
     public string Payload { get; private set; }
-    public string CorrelationId { get; private set; }
     public bool Processed { get; private set; }
+    public DateTimeOffset Timestamp { get; private set; }
+    public string CorrelationId { get; private set; }
 
     public OutboxMessage(
         IDomainEvent domainEvent,
@@ -23,11 +23,11 @@ public sealed class OutboxMessage
         ArgumentException.ThrowIfNullOrEmpty(correlationId);
 
         Id = domainEvent.EventId;
-        Timestamp = domainEvent.OccurredOn;
         Type = domainEvent.GetType().Name;
         Payload = JsonSerializer.Serialize(
             domainEvent, domainEvent.GetType(), SharedJsonOptions.DefaultOptions);
         Processed = false;
+        Timestamp = domainEvent.OccurredOn;
         CorrelationId = correlationId;
     }
 
