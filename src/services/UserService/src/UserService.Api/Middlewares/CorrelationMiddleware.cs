@@ -51,8 +51,7 @@ public static class CorrelationMiddlewareExtensions
 {
     public static IApplicationBuilder UseCorrelationMiddleware(
         this IApplicationBuilder builder,
-        string correlationHeader
-    )
-       => builder.UseMiddleware<CorrelationMiddleware>(correlationHeader);
+        string correlationHeader)
+    => builder.UseMiddleware<CorrelationMiddleware>(correlationHeader);
 }
 

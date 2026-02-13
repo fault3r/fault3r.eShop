@@ -72,7 +72,6 @@ public sealed class AuthenticationMiddleware(
 public static class AuthenticationMiddlewareExtensions
 {
     public static IApplicationBuilder UseAuthenticationMiddleware(
-        this IApplicationBuilder builder
-    )
-        => builder.UseMiddleware<AuthenticationMiddleware>();
+        this IApplicationBuilder builder)
+    => builder.UseMiddleware<AuthenticationMiddleware>();
 }
