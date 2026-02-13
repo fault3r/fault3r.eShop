@@ -23,7 +23,7 @@ public static class FluentEmailExtensions
         var settings = configuration
             .GetSection(nameof(FluentEmailSettings))
             .Get<FluentEmailSettings>()
-                ?? throw new MissingFluentEmailSettingsException();
+        ?? throw new MissingFluentEmailSettingsException();
 
         services
             .AddFluentEmail(

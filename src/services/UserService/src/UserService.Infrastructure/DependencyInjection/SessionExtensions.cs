@@ -19,7 +19,7 @@ public static class SessionExtensions
         var settings = configuration
             .GetSection(nameof(SessionSettings))
             .Get<SessionSettings>()
-                ?? throw new MissingSessionSettingsException();
+        ?? throw new MissingSessionSettingsException();
 
         services.AddSingleton<ISessionService>(sp =>
         {

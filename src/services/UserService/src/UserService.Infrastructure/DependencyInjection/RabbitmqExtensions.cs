@@ -18,7 +18,7 @@ public static class RabbitmqExtensions
         var settings = configuration
             .GetSection(nameof(RabbitmqSettings))
             .Get<RabbitmqSettings>()
-                ?? throw new MissingRabbitmqSettingsException();
+        ?? throw new MissingRabbitmqSettingsException();
 
         services.AddSingleton<IConnection>(_ =>
         {

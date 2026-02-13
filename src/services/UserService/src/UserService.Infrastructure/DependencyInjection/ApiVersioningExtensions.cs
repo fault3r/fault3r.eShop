@@ -18,7 +18,7 @@ public static class ApiVersioningExtensions
         var settings = configuration
             .GetSection(nameof(AppSettings))
             .Get<AppSettings>()
-                ?? throw new MissingAppSettingsException();
+        ?? throw new MissingAppSettingsException();
 
         float version = settings.ApiVersion;
         version = (float)Math.Round(version, 1);

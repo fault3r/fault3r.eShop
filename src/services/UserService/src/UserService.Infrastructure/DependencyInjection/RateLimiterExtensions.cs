@@ -20,7 +20,7 @@ public static class RateLimiterExtensions
         var settings = configuration
             .GetSection(nameof(RateLimiterSettings))
             .Get<RateLimiterSettings>()
-                ?? throw new MissingRateLimiterSettings();
+        ?? throw new MissingRateLimiterSettings();
 
         services.AddRateLimiter(config =>
         {

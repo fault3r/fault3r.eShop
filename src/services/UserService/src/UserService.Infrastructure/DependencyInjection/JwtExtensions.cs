@@ -21,7 +21,7 @@ public static class JwtExtensions
         var settings = configuration
             .GetSection(nameof(JwtSettings))
             .Get<JwtSettings>()
-                ?? throw new MissingJwtSettingsException();
+        ?? throw new MissingJwtSettingsException();
 
         var tokenValidationParameters = new TokenValidationParameters
         {
