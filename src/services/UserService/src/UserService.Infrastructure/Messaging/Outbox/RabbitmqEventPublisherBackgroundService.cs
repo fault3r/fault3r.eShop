@@ -40,21 +40,21 @@ public sealed class RabbitmqEventPublisherBackgroundService(
 
                     logger.Information("{Correlation} {Type} Published.", message.CorrelationId, message.Type);
 
-                    await SomeSecondsAsync(second: 5, cancellationToken);
+                    await SomeSecondsAsync(second: 1, cancellationToken);
                 }
             }
 
             catch (Microsoft.EntityFrameworkCore.Storage.RetryLimitExceededException)
             {
-                logger.Error("Cannot connect to the messages database, Reconnectiong…");
+                logger.Error("EFCore connection error, Reconnectiong…");
             }
             catch (RabbitMQ.Client.Exceptions.AlreadyClosedException)
             {
-                logger.Error("Failed to connect to the messages publisher!");
+                logger.Error("RabbitMQ connection error!");
             }
             catch (Exception ex)
             {
-                logger.Error(ex, "An unhandled exception occurred!");
+                logger.Error(ex, "An exception occurred!");
             }
 
             finally

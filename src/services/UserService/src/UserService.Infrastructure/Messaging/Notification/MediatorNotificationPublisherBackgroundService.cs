@@ -35,26 +35,24 @@ public sealed class MediatorNotificationPublisherBackgroundService(
 
                 var notification = _factory.FromNotificationMessage(message);
 
-                logger.Information("{Correlation} Publishing {Type}…",
-                    message.CorrelationId, notification.GetType().Name);
+                logger.Information("{Correlation} Publishing {Type}…", message.CorrelationId, notification.GetType().Name);
 
                 await _mediator.Publish(notification, cancellationToken);
 
                 await _outbox.MarkAsProcessedAsync(message, cancellationToken);
 
-                logger.Information("{Correlation} {Type} published.",
-                    message.CorrelationId, notification.GetType().Name);
+                logger.Information("{Correlation} {Type} published.", message.CorrelationId, notification.GetType().Name);
             }
 
             catch (StackExchange.Redis.RedisConnectionException)
             {
-                logger.Error("Failed to connect to the Redis database, Reconnectiong…");
+                logger.Error("Redis connection error, Reconnectiong…");
             }
             catch (Exception ex)
             {
                 await _outbox.MarkAsFailureAsync(message!, cancellationToken);
 
-                logger.Error("Failed to publish notification! {Error}", ex.Message);
+                logger.Error("Failed to publish notification, {Error}", ex.Message);
             }
 
             finally
