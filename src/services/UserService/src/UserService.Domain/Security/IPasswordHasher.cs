@@ -5,10 +5,10 @@ namespace UserService.Domain.Security;
 
 public interface IPasswordHasher
 {
-    string Compute(string password);
-    bool Verify(string password, string hash);
-    
+    string Compute(string raw);
+    bool Verify(string raw, string hash);
     string DummyHash { get; }
 
     string GenerateSalt();
+    string DummySalt { get; }
 }

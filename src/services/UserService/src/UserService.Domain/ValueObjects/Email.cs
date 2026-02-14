@@ -24,8 +24,8 @@ public sealed class Email : ValueObject<Email>
     }
 
     private static readonly Regex EmailRegex = new(
-        pattern: @"^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$",
-        options: RegexOptions.Compiled | RegexOptions.CultureInvariant
+        pattern: @"^[^@\s]+@[^@\s]+\.[^@\s]+$",
+        options: RegexOptions.CultureInvariant | RegexOptions.Compiled
     );
 
     private static bool IsValid(string value)

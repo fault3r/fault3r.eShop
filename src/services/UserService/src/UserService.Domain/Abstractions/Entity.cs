@@ -25,6 +25,7 @@ public abstract class Entity<T, TId> : IEquatable<T>,
     public bool Equals(T? other)
     {
         if (ReferenceEquals(this, other)) return true;
+
         if (other is null) return false;
 
         return EqualityComparer<TId>.Default.Equals(Id, other.Id);
@@ -36,6 +37,7 @@ public abstract class Entity<T, TId> : IEquatable<T>,
     public static bool operator ==(Entity<T, TId>? left, Entity<T, TId>? right)
     {
         if (ReferenceEquals(left, right)) return true;
+
         if (left is null || right is null) return false;
 
         return left.Equals((T)right);

@@ -26,7 +26,7 @@ public sealed class RefreshAuthService(
         ArgumentException.ThrowIfNullOrWhiteSpace(accessToken);
         ArgumentException.ThrowIfNullOrWhiteSpace(refreshToken);
 
-        _logger.LogInformation("Refreshing authentication with '{Token}' refresh token…", refreshToken.Trim());
+        _logger.LogInformation("Refreshing authentication…");
 
         var claims = _tokenService.ReadAccessTokenClaims(accessToken);
         if (claims is null)
@@ -46,11 +46,12 @@ public sealed class RefreshAuthService(
             return Result<RefreshAuthResult>.Failure("Invalid token claims!");
         }
 
+        _logger.LogInformation("Refreshing authentication for {User}…", userId);
+
         var session = await _sessionService.GetAsync(sessionId, cancellationToken);
         if (session is null)
         {
-            _logger.LogInformation("Session expired or invalidated. User '{UserId}', session '{SessionId}'!",
-                userId, sessionId);
+            _logger.LogWarning("Session '{Session}' expired or invalidated.", sessionId);
 
             return Result<RefreshAuthResult>.Failure("Session expired or invalidated!");
         }
@@ -61,8 +62,7 @@ public sealed class RefreshAuthService(
             // ⟶session hijacking!
             await _sessionService.InvalidateAllAsync(userId, cancellationToken);
 
-            _logger.LogWarning("Refresh token mismatch, All user sessions invalidated. User '{UserId}', session '{SessionId}'!",
-                userId, sessionId);
+            _logger.LogWarning("Refresh token mismatch for session '{Session}', All user sessions invalidated!", sessionId);
 
             return Result<RefreshAuthResult>.Failure("Invalid refresh token!");
         }

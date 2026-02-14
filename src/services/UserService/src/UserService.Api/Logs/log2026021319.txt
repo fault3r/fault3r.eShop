@@ -19,4 +19,36 @@
  [2026-02-13 19:16:31 INF]  75145992-18a4-4ca3-b887-c52805cf0f52 Completed request PUT /api/v1/auth/refresh with status code 200. 
  [2026-02-13 19:16:40 INF]  f78a8a89-b10d-4f38-9530-552b369b1114 Incoming request DELETE /api/v1/auth/logout. 
  [2026-02-13 19:16:40 INF]  f78a8a89-b10d-4f38-9530-552b369b1114 Completed request DELETE /api/v1/auth/logout with status code 401. 
+ [2026-02-13 19:51:04 INF]  19afb92d-62b9-4d79-9c98-969f316b3ffa Incoming request POST /api/v1/auth/login. 
+ [2026-02-13 19:51:04 WRN] UserService.Application.UseCases.Commands.LoginUserUseCase.LoginUserCommandHandler 19afb92d-62b9-4d79-9c98-969f316b3ffa Validation failed: 'Password' must be between 8 and 100 characters. You entered 6 characters. 
+ [2026-02-13 19:51:04 INF]  19afb92d-62b9-4d79-9c98-969f316b3ffa Completed request POST /api/v1/auth/login with status code 400. 
+ [2026-02-13 19:51:13 INF]  90324014-c6d3-4e42-a4fb-fd9cff269629 Incoming request POST /api/v1/auth/login. 
+ [2026-02-13 19:51:13 INF] UserService.Application.UseCases.Commands.LoginUserUseCase.LoginUserService 90324014-c6d3-4e42-a4fb-fd9cff269629 Logging in user with 'hamed@gmail.com' identity… 
+ [2026-02-13 19:51:14 WRN] UserService.Application.UseCases.Commands.LoginUserUseCase.LoginUserService 90324014-c6d3-4e42-a4fb-fd9cff269629 Invalid credentials! 
+ [2026-02-13 19:51:14 INF]  90324014-c6d3-4e42-a4fb-fd9cff269629 Completed request POST /api/v1/auth/login with status code 401. 
+ [2026-02-13 19:51:21 INF]  3a83a424-efae-444e-8dc4-6497d75c93b3 Incoming request POST /api/v1/auth/login. 
+ [2026-02-13 19:51:21 INF] UserService.Application.UseCases.Commands.LoginUserUseCase.LoginUserService 3a83a424-efae-444e-8dc4-6497d75c93b3 Logging in user with 'hamed@gmail.com' identity… 
+ [2026-02-13 19:51:22 WRN] UserService.Application.UseCases.Commands.LoginUserUseCase.LoginUserService 3a83a424-efae-444e-8dc4-6497d75c93b3 Invalid credentials! 
+ [2026-02-13 19:51:22 INF]  3a83a424-efae-444e-8dc4-6497d75c93b3 Completed request POST /api/v1/auth/login with status code 401. 
+ [2026-02-13 19:51:54 INF]  631cf5d6-eebb-4b70-835e-1d87a9eb38a1 Incoming request POST /api/v1/auth/login. 
+ [2026-02-13 19:51:54 INF] UserService.Application.UseCases.Commands.LoginUserUseCase.LoginUserService 631cf5d6-eebb-4b70-835e-1d87a9eb38a1 Logging in user with 'hamed@gmail.com' identity… 
+ [2026-02-13 19:51:54 WRN] UserService.Application.UseCases.Commands.LoginUserUseCase.LoginUserService 631cf5d6-eebb-4b70-835e-1d87a9eb38a1 Invalid credentials! 
+ [2026-02-13 19:51:54 INF]  631cf5d6-eebb-4b70-835e-1d87a9eb38a1 Completed request POST /api/v1/auth/login with status code 401. 
+ [2026-02-13 19:52:30 INF]  cce5b97e-b2eb-4c58-9350-f20ffd451936 Incoming request POST /api/v1/auth/login. 
+ [2026-02-13 19:52:30 INF] UserService.Application.UseCases.Commands.LoginUserUseCase.LoginUserService cce5b97e-b2eb-4c58-9350-f20ffd451936 Logging in user with 'hamed@gmail.com' identity… 
+ [2026-02-13 19:52:30 WRN] UserService.Application.UseCases.Commands.LoginUserUseCase.LoginUserService cce5b97e-b2eb-4c58-9350-f20ffd451936 Invalid credentials! 
+ [2026-02-13 19:52:30 INF]  cce5b97e-b2eb-4c58-9350-f20ffd451936 Completed request POST /api/v1/auth/login with status code 401. 
+ [2026-02-13 19:52:37 INF]  22915bdf-a2b9-43be-bffd-0b6b1a006338 Incoming request POST /api/v1/auth/login. 
+ [2026-02-13 19:52:37 WRN] UserService.Application.UseCases.Commands.LoginUserUseCase.LoginUserCommandHandler 22915bdf-a2b9-43be-bffd-0b6b1a006338 Validation failed: 'Password' must be between 8 and 100 characters. You entered 5 characters. 
+ [2026-02-13 19:52:37 INF]  22915bdf-a2b9-43be-bffd-0b6b1a006338 Completed request POST /api/v1/auth/login with status code 400. 
+ [2026-02-13 19:52:45 INF]  79a7a47a-c78d-4131-af14-02480c91ee40 Incoming request POST /api/v1/auth/login. 
+ [2026-02-13 19:52:45 INF] UserService.Application.UseCases.Commands.LoginUserUseCase.LoginUserService 79a7a47a-c78d-4131-af14-02480c91ee40 Logging in user with 'hamed@gmail.com' identity… 
+ [2026-02-13 19:52:45 WRN] UserService.Application.UseCases.Commands.LoginUserUseCase.LoginUserService 79a7a47a-c78d-4131-af14-02480c91ee40 Invalid credentials! 
+ [2026-02-13 19:52:45 INF]  79a7a47a-c78d-4131-af14-02480c91ee40 Completed request POST /api/v1/auth/login with status code 401. 
+ [2026-02-13 19:53:34 INF]  9cb14b64-7dfb-4688-8b35-5cb10fff9f45 Incoming request POST /api/v1/auth/login. 
+ [2026-02-13 19:53:34 INF] UserService.Application.UseCases.Commands.LoginUserUseCase.LoginUserService 9cb14b64-7dfb-4688-8b35-5cb10fff9f45 Logging in user with 'hamed@gmail.com' identity… 
+ [2026-02-13 19:53:35 WRN] UserService.Application.UseCases.Commands.LoginUserUseCase.LoginUserService 9cb14b64-7dfb-4688-8b35-5cb10fff9f45 Invalid credentials! 
+ [2026-02-13 19:53:35 INF]  9cb14b64-7dfb-4688-8b35-5cb10fff9f45 Completed request POST /api/v1/auth/login with status code 401. 
+ [2026-02-13 19:54:22 INF]  e91400af-df5f-4200-85c2-eef853b2d013 Incoming request POST /api/v1/auth/login. 
+ [2026-02-13 19:54:22 INF] UserService.Application.UseCases.Commands.LoginUserUseCase.LoginUserService e91400af-df5f-4200-85c2-eef853b2d013 Logging in user with 'hamed@gmail.com' identity… 
  

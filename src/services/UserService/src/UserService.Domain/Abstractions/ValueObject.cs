@@ -14,6 +14,7 @@ public abstract class ValueObject<T> : IEquatable<T>
     public bool Equals(T? other)
     {
         if (ReferenceEquals(this, other)) return true;
+
         if (other is null) return false;
 
         return GetEqualityComponents()
@@ -33,6 +34,7 @@ public abstract class ValueObject<T> : IEquatable<T>
     public static bool operator ==(ValueObject<T>? left, ValueObject<T>? right)
     {
         if (ReferenceEquals(left, right)) return true;
+        
         if (left is null || right is null) return false;
 
         return left.Equals((T)right);

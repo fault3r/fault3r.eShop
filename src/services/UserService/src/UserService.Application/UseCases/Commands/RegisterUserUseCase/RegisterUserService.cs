@@ -12,7 +12,6 @@ using UserService.Domain.Interfaces;
 using UserService.Domain.Security;
 using UserService.Application.CrossCutting;
 using UserService.Domain.Messaging.Notification;
-using StackExchange.Redis;
 
 namespace UserService.Application.UseCases.Commands.RegisterUserUseCase;
 
@@ -42,7 +41,7 @@ public sealed class RegisterUserService(
         ArgumentException.ThrowIfNullOrWhiteSpace(password);
         ArgumentException.ThrowIfNullOrWhiteSpace(fullName);
 
-        _logger.LogInformation("Registering user with '{Email}' email address…", email.Trim());
+        _logger.LogInformation("Registering user with '{Email}' email…", email.Trim());
 
         User user;
         Email voEmail;
@@ -86,7 +85,7 @@ public sealed class RegisterUserService(
         }
         catch(Exception)
         {
-            _logger.LogError("Failed to enqueue notification '{Notification}'!", user.Events.First().ToString());
+            _logger.LogError("Failed to enqueue notification: {Notification}", user.Events.First().ToString());
         }
 
         user.ClearEvents();

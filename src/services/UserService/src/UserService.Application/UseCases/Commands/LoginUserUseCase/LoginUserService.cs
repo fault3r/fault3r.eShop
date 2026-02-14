@@ -29,7 +29,7 @@ public sealed class LoginUserService(
         ArgumentException.ThrowIfNullOrWhiteSpace(identity);
         ArgumentException.ThrowIfNullOrWhiteSpace(password);
 
-        _logger.LogInformation("Loginning user with '{Identity}' identity…", identity.Trim());
+        _logger.LogInformation("Logging in user with '{Identity}' identity…", identity.Trim());
 
         var verify = await _userService.VerifyCredentialsAsync(identity, password, cancellationToken);
         if (verify.IsFailure)

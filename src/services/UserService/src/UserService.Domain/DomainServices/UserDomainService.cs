@@ -41,17 +41,21 @@ public class UserDomainService(
 
         var user = await _userRepository.GetByEmailAsync(email!, cancellationToken);
 
+        // ⟶rainbow table attack!
+        string raw = password +
+            (user is null
+                ? _passwordHasher.DummySalt
+                : user.PasswordSalt
+            );
+
         // ⟶timing attack!
         string hash = user is null
             ? _passwordHasher.DummyHash
             : user.PasswordHash;
 
-        // ⟶rainbow table attack!
-        password +=  user?.PasswordSalt ?? string.Empty;
+        bool verify = _passwordHasher.Verify(raw, hash);
 
-        bool verified = _passwordHasher.Verify(password, hash);
-
-        if (!verified)
+        if (!verify)
             return Result<User>.Failure("Invalid credentials!");
 
         return Result<User>.Success(user!);

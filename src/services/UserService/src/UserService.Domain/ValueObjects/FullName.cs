@@ -29,7 +29,7 @@ public sealed class FullName : ValueObject<FullName>
 
     private static bool IsValid(string value)
     {
-        if (value.Length >= 2 && value.Length <= 100)
+        if (value.Length >= 5 && value.Length <= 100)
         {
             var parts = value
                 .Split(' ', StringSplitOptions.RemoveEmptyEntries);

@@ -10,11 +10,11 @@ namespace UserService.Infrastructure.Security;
 
 public sealed class Argon2PasswordHasher : IPasswordHasher
 {
-    public string Compute(string password)
+    public string Compute(string raw)
     {
         var salt = RandomNumberGenerator.GetBytes(16);
 
-        var argon2 = new Argon2id(Encoding.UTF8.GetBytes(password))
+        var argon2 = new Argon2id(Encoding.UTF8.GetBytes(raw))
         {
             Salt = salt,
             DegreeOfParallelism = 4,
@@ -30,7 +30,7 @@ public sealed class Argon2PasswordHasher : IPasswordHasher
         return hashString;
     }
 
-    public bool Verify(string password, string hash)
+    public bool Verify(string raw, string hash)
     {
         var parts = hash.Split('$', StringSplitOptions.RemoveEmptyEntries);
 
@@ -42,7 +42,7 @@ public sealed class Argon2PasswordHasher : IPasswordHasher
         var salt = Convert.FromBase64String(parts[3]);
         var expectedHash = Convert.FromBase64String(parts[4]);
 
-        var argon2 = new Argon2id(Encoding.UTF8.GetBytes(password))
+        var argon2 = new Argon2id(Encoding.UTF8.GetBytes(raw))
         {
             Salt = salt,
             DegreeOfParallelism = parallelism,
@@ -61,4 +61,7 @@ public sealed class Argon2PasswordHasher : IPasswordHasher
 
     public string GenerateSalt()
         => RandomStringGenerator.GetString(length: 4);
+
+    public string DummySalt
+        => "salt";
 }

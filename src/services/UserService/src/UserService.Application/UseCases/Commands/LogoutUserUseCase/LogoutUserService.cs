@@ -21,12 +21,12 @@ public class LogoutUserService(
     {
         ArgumentException.ThrowIfNullOrWhiteSpace(sessionId);
 
-        _logger.LogInformation("Invalidating '{SessionId}' session…", sessionId.Trim());
+        _logger.LogInformation("Logging out '{SessionId}' session…", sessionId.Trim());
 
         var session = await _sessionService.GetAsync(sessionId, cancellationToken);
         if (session is null)
         {
-            _logger.LogInformation("Session already expired or invalidated!");
+            _logger.LogWarning("Session already expired or invalidated!");
 
             return Result.Failure("Session already expired or invalidated!");
         }

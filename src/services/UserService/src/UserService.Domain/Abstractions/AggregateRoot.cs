@@ -8,8 +8,7 @@ public abstract class AggregateRoot<T, TId> : Entity<T, TId>,
     IAggregateRoot, IAggregateRoot<TId>
     where T : AggregateRoot<T, TId>
 {
-    private readonly List<IDomainEvent> events
-        = [];
+    private readonly List<IDomainEvent> events = [];
 
     public IReadOnlyCollection<IDomainEvent> Events
         => [..events];      
