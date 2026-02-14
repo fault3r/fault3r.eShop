@@ -42,13 +42,10 @@ public sealed class MediatorNotificationPublisherBackgroundService(
                 await _outbox.MarkAsProcessedAsync(message, cancellationToken);
 
                 logger.Information("{Correlation} {Type} published.", message.CorrelationId, notification.GetType().Name);
+                
+                await SomeSecondsAsync(second: 5, cancellationToken);
             }
 
-            catch (OperationCanceledException)
-            {
-                logger.Error("{Correlation} Operation canceled!");
-                break;
-            }
             catch (StackExchange.Redis.RedisConnectionException)
             {
                 logger.Error("Redis connection error, Reconnectiong…");
@@ -59,8 +56,6 @@ public sealed class MediatorNotificationPublisherBackgroundService(
 
                 logger.Error("Failed to publish notification, {Error}", ex.Message);
             }
-
-            await SomeSecondsAsync(second: 5, cancellationToken);
         }
     }
 

@@ -42,6 +42,7 @@ public sealed class RabbitmqEventPublisherBackgroundService(
 
                     await SomeSecondsAsync(second: 1, cancellationToken);
                 }
+                await SomeSecondsAsync(second: 5, cancellationToken);
             }
 
             catch (Microsoft.EntityFrameworkCore.Storage.RetryLimitExceededException)
@@ -55,11 +56,6 @@ public sealed class RabbitmqEventPublisherBackgroundService(
             catch (Exception ex)
             {
                 logger.Error(ex, "An exception occurred!");
-            }
-
-            finally
-            {
-                await SomeSecondsAsync(second: 5, cancellationToken);
             }
         }
     }
