@@ -1,0 +1,9 @@
+[2026-02-14 19:59:38 INF]  7197a358-e0c7-478b-b432-799c4148f4e3 Incoming request POST /api/v1/auth/register. 
+ [2026-02-14 19:59:39 INF] UserService.Application.UseCases.Commands.RegisterUserUseCase.RegisterUserService 7197a358-e0c7-478b-b432-799c4148f4e3 Registering user with 'stri@aaafaa.amang' email… 
+ [2026-02-14 19:59:41 INF] UserService.Application.UseCases.Commands.RegisterUserUseCase.RegisterUserService 7197a358-e0c7-478b-b432-799c4148f4e3 User successfully registered with '7ed84bbe7a094026a0ff93967e691ed0' identity. 
+ [2026-02-14 19:59:41 INF] UserService.Infrastructure.Messaging.Notification.MediatorNotificationPublisherBackgroundService  7197a358-e0c7-478b-b432-799c4148f4e3 Publishing UserRegisteredNotification… 
+ [2026-02-14 19:59:41 INF]  7197a358-e0c7-478b-b432-799c4148f4e3 Completed request POST /api/v1/auth/register with status code 201. 
+ [2026-02-14 19:59:41 INF] UserService.Application.Messaging.Notification.NotificationHandlers.UserRegisteredNotificationHandler  7197a358-e0c7-478b-b432-799c4148f4e3 Sending welcome email to 'stri@aaafaa.amang' user… 
+ [2026-02-14 19:59:44 INF] UserService.Infrastructure.Messaging.Outbox.RabbitmqEventPublisherBackgroundService  Retrieved 1 message(s). 
+ [2026-02-14 19:59:44 INF] UserService.Infrastructure.Messaging.Outbox.RabbitmqEventPublisherBackgroundService  7197a358-e0c7-478b-b432-799c4148f4e3 UserRegisteredEvent Published. 
+ 

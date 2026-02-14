@@ -32,7 +32,7 @@ public sealed class UserRegisteredNotificationHandler(
         var model = new WelcomeModel(notification.FullName);
         var template = await _resolver.ResolveAsync(EmailTemplateType.Welcome, cancellationToken);
         var body = await _renderer.RenderAsync(template, model, cancellationToken);
-
+        await Task.Delay(20000, cancellationToken);
         await _sender.SendAsync(
             to: notification.Email,
             subject: "Wewlcome",
