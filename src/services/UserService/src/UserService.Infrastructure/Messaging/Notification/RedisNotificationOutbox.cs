@@ -10,17 +10,49 @@ using UserService.Infrastructure.Exceptions.Security.Authentication;
 
 namespace UserService.Infrastructure.Messaging.Notification;
 
-public sealed class RedisNotificationOutbox(
-    IDatabase database,
-    INotificationFactory factory
-) : INotificationOutbox
+public sealed class RedisNotificationOutbox : INotificationOutbox
 {
-    private readonly IDatabase _database = database;
-    private readonly INotificationFactory _factory = factory;
-    private const string Key = "notification";
+    private readonly IDatabase _database;
+    private readonly INotificationFactory _factory;
+    private const string StreamKey = "notification-stream";
+    private const string GroupName = "group-application";
+    private const string ConsumerName = "consumer-application";
 
     private readonly JsonSerializerOptions jsonOptions
         = SharedJsonOptions.DefaultOptions;
+
+    public RedisNotificationOutbox(
+        IDatabase database,
+        INotificationFactory notificationFactory)
+    {
+        _database = database;
+        _factory = notificationFactory;
+
+        var init = InitialConsumer();
+        init.Wait();
+
+        if (!init.Result)
+            throw new Exception();
+    }
+
+    public async Task<bool> InitialConsumer(CancellationToken cancellationToken = default)
+    {
+        try
+        {
+            var result = await _database
+                .StreamCreateConsumerGroupAsync(StreamKey, GroupName, StreamPosition.NewMessages);
+
+            return result;
+        }
+        catch (RedisServerException ex) when (ex.Message.Contains("BUSYGROUP"))
+        {
+            return true;
+        }
+        catch(Exception)
+        {
+            return false;
+        }
+    }
 
     public async Task EnqueueAsync(
         IEnumerable<IDomainEvent> events,
@@ -36,19 +68,16 @@ public sealed class RedisNotificationOutbox(
         {
             var notification = _factory.FromEvent(@event, correlationId);
 
-            var message = new NotificationMessage
+            var entries = new NameValueEntry[]
             {
-                Id = @event.EventId,
-                Type = notification.GetType().Name,
-                Payload = JsonSerializer.Serialize(
-                    notification, notification.GetType(), jsonOptions),
-                Timestamp = @event.OccurredOn,
-                CorrelationId = correlationId
+                new("Id" , @event.EventId.ToString()),
+                new("Type", notification.GetType().Name),
+                new("Payload", JsonSerializer.Serialize(notification, notification.GetType(), jsonOptions)),
+                new("Timestamp", @event.OccurredOn.ToString()),
+                new("CorrelationId", correlationId),
             };
 
-            var payload = JsonSerializer.Serialize(message, jsonOptions);
-
-            _ = transaction.ListLeftPushAsync(Key, payload);
+            _ = transaction.StreamAddAsync(StreamKey, entries);
         }
 
         if (!await transaction.ExecuteAsync())
@@ -58,11 +87,13 @@ public sealed class RedisNotificationOutbox(
     public async Task<NotificationMessage?> DequeueAsync(
         CancellationToken cancellationToken = default)
     {
-        var value = await _database.ListRightPopAsync(Key);
+        var entries = await _database.StreamReadGroupAsync(StreamKey, GroupName, ConsumerName, StreamPosition.NewMessages, 1);
 
-        if (value.IsNullOrEmpty) return null;
+        if (entries.Length == 0) return null;
 
-        return JsonSerializer.Deserialize<NotificationMessage>(value!, jsonOptions);
+        var entry = entries[0];
+
+       // turn entry to NotificationMessage and return it
     }
 
     public async Task MarkAsFailureAsync(
@@ -73,7 +104,7 @@ public sealed class RedisNotificationOutbox(
 
         var payload = JsonSerializer.Serialize(message, jsonOptions);
 
-        await _database.ListRightPushAsync(Key, payload);
+        await _database.ListRightPushAsync(StreamKey, payload);
     }
 
     public async Task MarkAsProcessedAsync(
@@ -84,6 +115,6 @@ public sealed class RedisNotificationOutbox(
 
         var payload = JsonSerializer.Serialize(message, jsonOptions);
 
-        await _database.SetAddAsync($"{Key}:processed", payload);
+        await _database.SetAddAsync($"{StreamKey}:processed", payload);
     }
 }
