@@ -39,8 +39,12 @@ public sealed class RedisNotificationOutbox : INotificationOutbox
     {
         try
         {
-            var result = await _database
-                .StreamCreateConsumerGroupAsync(StreamKey, GroupName, StreamPosition.NewMessages);
+            var result = await _database.StreamCreateConsumerGroupAsync(
+                key: StreamKey,
+                groupName: GroupName,
+                position: StreamPosition.NewMessages,
+                createStream: true
+            );
 
             return result;
         }
@@ -48,7 +52,7 @@ public sealed class RedisNotificationOutbox : INotificationOutbox
         {
             return true;
         }
-        catch(Exception)
+        catch (Exception)
         {
             return false;
         }
@@ -87,34 +91,38 @@ public sealed class RedisNotificationOutbox : INotificationOutbox
     public async Task<NotificationMessage?> DequeueAsync(
         CancellationToken cancellationToken = default)
     {
-        var entries = await _database.StreamReadGroupAsync(StreamKey, GroupName, ConsumerName, StreamPosition.NewMessages, 1);
+        var entries = await _database.StreamReadGroupAsync(
+            key: StreamKey,
+            groupName: GroupName,
+            consumerName: ConsumerName,
+            position: ">",
+            count: 1
+        );
 
         if (entries.Length == 0) return null;
 
-        var entry = entries[0];
+        var values = entries[0].Values.ToDictionary(e => e.Name, e => e.Value);
 
-       // turn entry to NotificationMessage and return it
-    }
+        var message = new NotificationMessage
+        {
+            Id = Guid.Parse(values["Id"]!),
+            Type = values["Type"]!,
+            Payload = values["Payload"]!,
+            Timestamp = DateTimeOffset.Parse(values["Timestamp"]!),
+            CorrelationId = values["CorrelationId"]!,
+        };
 
-    public async Task MarkAsFailureAsync(
-        NotificationMessage message,
-        CancellationToken cancellationToken = default)
-    {
-        if (message is null) return;
-
-        var payload = JsonSerializer.Serialize(message, jsonOptions);
-
-        await _database.ListRightPushAsync(StreamKey, payload);
+        return message;
     }
 
     public async Task MarkAsProcessedAsync(
-        NotificationMessage message,
+        Guid messageId,
         CancellationToken cancellationToken = default)
     {
-        if (message is null) return;
-
-        var payload = JsonSerializer.Serialize(message, jsonOptions);
-
-        await _database.SetAddAsync($"{StreamKey}:processed", payload);
+        await _database.StreamAcknowledgeAsync(
+            key: StreamKey,
+            groupName: GroupName,
+            messageId: messageId.ToString()
+        );
     }
 }
