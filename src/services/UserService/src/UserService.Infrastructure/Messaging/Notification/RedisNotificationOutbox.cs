@@ -94,11 +94,9 @@ public sealed class RedisNotificationOutbox : INotificationOutbox
     public async Task<NotificationMessage?> DequeueAsync(
         CancellationToken cancellationToken = default)
     {
-        var entries = await _database.StreamReadGroupAsync(
+        var entries = await _database.StreamReadAsync(
             key: StreamKey,
-            groupName: GroupName,
-            consumerName: ConsumerName,
-            position: ">",
+            position: "0-0",
             count: 1
         );
 
@@ -112,7 +110,7 @@ public sealed class RedisNotificationOutbox : INotificationOutbox
             Type = dict["Type"]!,
             Payload = dict["Payload"]!,
             Timestamp = DateTimeOffset.Parse(dict["Timestamp"]!),
-            StreamId =  entries[0].Id!,
+            StreamId = entries[0].Id!,
             CorrelationId = dict["CorrelationId"]!,
         };
 
