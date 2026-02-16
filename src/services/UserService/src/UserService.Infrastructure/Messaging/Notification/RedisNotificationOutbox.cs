@@ -81,7 +81,10 @@ public sealed class RedisNotificationOutbox : INotificationOutbox
                 new("CorrelationId", correlationId),
             };
 
-            _ = transaction.StreamAddAsync(StreamKey, entries);
+            _ = transaction.StreamAddAsync(
+                key: StreamKey,
+                streamPairs: entries
+            );
         }
 
         if (!await transaction.ExecuteAsync())
@@ -101,28 +104,29 @@ public sealed class RedisNotificationOutbox : INotificationOutbox
 
         if (entries.Length == 0) return null;
 
-        var values = entries[0].Values.ToDictionary(e => e.Name, e => e.Value);
+        var dict = entries[0].Values.ToDictionary(e => e.Name, e => e.Value);
 
         var message = new NotificationMessage
         {
-            Id = Guid.Parse(values["Id"]!),
-            Type = values["Type"]!,
-            Payload = values["Payload"]!,
-            Timestamp = DateTimeOffset.Parse(values["Timestamp"]!),
-            CorrelationId = values["CorrelationId"]!,
+            Id = Guid.Parse(dict["Id"]!),
+            Type = dict["Type"]!,
+            Payload = dict["Payload"]!,
+            Timestamp = DateTimeOffset.Parse(dict["Timestamp"]!),
+            CacheId =  entries[0].Id!,
+            CorrelationId = dict["CorrelationId"]!,
         };
 
         return message;
     }
 
     public async Task MarkAsProcessedAsync(
-        Guid messageId,
+        NotificationMessage message,
         CancellationToken cancellationToken = default)
     {
         await _database.StreamAcknowledgeAsync(
             key: StreamKey,
             groupName: GroupName,
-            messageId: messageId.ToString()
+            messageId: message.CacheId
         );
     }
 }

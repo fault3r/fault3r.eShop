@@ -16,13 +16,8 @@ public interface INotificationOutbox
         CancellationToken cancellationToken = default
     );
 
-    Task MarkAsFailureAsync(
-        NotificationMessage message,
-        CancellationToken cancellationToken = default
-    );
-
     Task MarkAsProcessedAsync(
-        NotificationMessage message,
+        NotificationMessage notification,
         CancellationToken cancellationToken = default
     );
 }

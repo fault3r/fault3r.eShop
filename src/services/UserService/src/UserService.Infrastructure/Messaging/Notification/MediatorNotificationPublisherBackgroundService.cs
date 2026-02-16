@@ -52,8 +52,6 @@ public sealed class MediatorNotificationPublisherBackgroundService(
             }
             catch (Exception ex)
             {
-                await _outbox.MarkAsFailureAsync(message!, cancellationToken);
-
                 logger.Error("Failed to publish notification, {Error}", ex.Message);
             }
         }
