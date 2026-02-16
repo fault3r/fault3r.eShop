@@ -77,7 +77,7 @@ public sealed class RedisNotificationOutbox : INotificationOutbox
                 new("Id" , @event.EventId.ToString()),
                 new("Type", notification.GetType().Name),
                 new("Payload", JsonSerializer.Serialize(notification, notification.GetType(), jsonOptions)),
-                new("Timestamp", @event.OccurredOn.ToString()),
+                new("Timestamp", @event.OccurredOn.ToString("O")),
                 new("CorrelationId", correlationId),
             };
 
@@ -112,7 +112,7 @@ public sealed class RedisNotificationOutbox : INotificationOutbox
             Type = dict["Type"]!,
             Payload = dict["Payload"]!,
             Timestamp = DateTimeOffset.Parse(dict["Timestamp"]!),
-            CacheId =  entries[0].Id!,
+            StreamId =  entries[0].Id!,
             CorrelationId = dict["CorrelationId"]!,
         };
 
@@ -126,7 +126,7 @@ public sealed class RedisNotificationOutbox : INotificationOutbox
         await _database.StreamAcknowledgeAsync(
             key: StreamKey,
             groupName: GroupName,
-            messageId: message.CacheId
+            messageId: message.StreamId
         );
     }
 }

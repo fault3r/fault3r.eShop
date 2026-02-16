@@ -9,6 +9,6 @@ public sealed record NotificationMessage
     public required string Type { get; init; }
     public required string Payload { get; init; }
     public DateTimeOffset Timestamp { get; init; }
-    public required string CacheId { get; init; }
+    public required string StreamId { get; init; }
     public required string CorrelationId { get; init; }
 }

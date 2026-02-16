@@ -17,48 +17,50 @@ public sealed class MediatorNotificationPublisherBackgroundService(
 
     protected override async Task ExecuteAsync(CancellationToken cancellationToken = default)
     {
-        await using var scope = _scopeFactory.CreateAsyncScope();
-        var _mediator = scope.ServiceProvider.GetRequiredService<IMediator>();
-        var _outbox = scope.ServiceProvider.GetRequiredService<INotificationOutbox>();
-        var _factory = scope.ServiceProvider.GetRequiredService<INotificationFactory>();
-
         var logger = Log.ForContext<MediatorNotificationPublisherBackgroundService>();
 
         while (!cancellationToken.IsCancellationRequested)
         {
+            await using var scope = _scopeFactory.CreateAsyncScope();
+            var _mediator = scope.ServiceProvider.GetRequiredService<IMediator>();
+            var _outbox = scope.ServiceProvider.GetRequiredService<INotificationOutbox>();
+            var _factory = scope.ServiceProvider.GetRequiredService<INotificationFactory>();
+
             NotificationMessage? message = null;
+            string correlationId = string.Empty;
             try
             {
                 message = await _outbox.DequeueAsync(cancellationToken);
 
-                if (message is null) continue;
+                if (message is null)
+                {
+                    await Task.Delay(3000, cancellationToken);
+                    continue;
+                }
+
+                logger.Information("{Correlation} Publishing {Type}…", message.CorrelationId, message.Type);
+
+                correlationId = message.CorrelationId;
 
                 var notification = _factory.FromNotificationMessage(message);
-
-                logger.Information("{Correlation} Publishing {Type}…", message.CorrelationId, notification.GetType().Name);
 
                 await _mediator.Publish(notification, cancellationToken);
 
                 await _outbox.MarkAsProcessedAsync(message, cancellationToken);
 
-                logger.Information("{Correlation} {Type} published.", message.CorrelationId, notification.GetType().Name);
-                
-                await SomeSecondsAsync(second: 5, cancellationToken);
+                logger.Information("{Correlation} {Type} published.", message.CorrelationId, message.Type);
             }
 
             catch (StackExchange.Redis.RedisConnectionException)
             {
                 logger.Error("Redis connection error, Reconnectiong…");
+                await Task.Delay(3000, cancellationToken);
             }
             catch (Exception ex)
             {
-                logger.Error("Failed to publish notification, {Error}", ex.Message);
+                logger.Error("{Correlation} Failed to publish notification, {Error}", correlationId, ex.Message);
+                await Task.Delay(3000, cancellationToken);
             }
         }
     }
-
-    private static async Task SomeSecondsAsync(
-        int second = 5,
-        CancellationToken cancellationToken = default)
-    => await Task.Delay(TimeSpan.FromSeconds(second), cancellationToken);
 }
