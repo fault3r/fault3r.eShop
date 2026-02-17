@@ -14,9 +14,10 @@ public sealed class RedisNotificationOutbox : INotificationOutbox
 {
     private readonly IDatabase _database;
     private readonly INotificationFactory _factory;
-    private const string StreamKey = "notification-stream";
-    private const string GroupName = "group-application";
-    private const string ConsumerName = "consumer-application";
+
+    private const string StreamKey = "stream-notification";
+    private const string GroupName = "group-notification";
+    private const string ConsumerName = "consumer-outbox";
 
     private readonly JsonSerializerOptions jsonOptions
         = SharedJsonOptions.DefaultOptions;
@@ -32,7 +33,7 @@ public sealed class RedisNotificationOutbox : INotificationOutbox
         init.Wait();
 
         if (!init.Result)
-            throw new Exception();
+            throw new Exception("Failed to initialize Redis consumer group");
     }
 
     public async Task<bool> InitialConsumer(CancellationToken cancellationToken = default)
@@ -50,9 +51,9 @@ public sealed class RedisNotificationOutbox : INotificationOutbox
         }
         catch (RedisServerException ex) when (ex.Message.Contains("BUSYGROUP"))
         {
-            return true;
+            return true; // group already exists
         }
-        catch (Exception)
+        catch
         {
             return false;
         }
@@ -81,10 +82,7 @@ public sealed class RedisNotificationOutbox : INotificationOutbox
                 new("CorrelationId", correlationId),
             };
 
-            _ = transaction.StreamAddAsync(
-                key: StreamKey,
-                streamPairs: entries
-            );
+            _ = transaction.StreamAddAsync(StreamKey, entries);
         }
 
         if (!await transaction.ExecuteAsync())
@@ -94,7 +92,7 @@ public sealed class RedisNotificationOutbox : INotificationOutbox
     public async Task<NotificationMessage?> DequeueAsync(
         CancellationToken cancellationToken = default)
     {
-        var entries = await _database.StreamReadGroupAsync(
+        var pending = await _database.StreamReadGroupAsync(
             key: StreamKey,
             groupName: GroupName,
             consumerName: ConsumerName,
@@ -102,22 +100,31 @@ public sealed class RedisNotificationOutbox : INotificationOutbox
             count: 1
         );
 
+        var entries = pending.Length > 0
+            ? pending
+            : await _database.StreamReadGroupAsync(
+                key: StreamKey,
+                groupName: GroupName,
+                consumerName: ConsumerName,
+                position: StreamPosition.NewMessages,
+                count: 1
+            );
 
-        if (entries.Length == 0) return null;
+        if (entries.Length == 0)
+            return null;
 
-        var dict = entries[0].Values.ToDictionary(e => e.Name, e => e.Value);
+        var entry = entries[0];
+        var dict = entry.Values.ToDictionary(e => e.Name, e => e.Value);
 
-        var message = new NotificationMessage
+        return new NotificationMessage
         {
             Id = Guid.Parse(dict["Id"]!),
             Type = dict["Type"]!,
             Payload = dict["Payload"]!,
             Timestamp = DateTimeOffset.Parse(dict["Timestamp"]!),
-            StreamId = entries[0].Id!,
+            StreamId = entry.Id!,
             CorrelationId = dict["CorrelationId"]!,
         };
-
-        return message;
     }
 
     public async Task MarkAsProcessedAsync(

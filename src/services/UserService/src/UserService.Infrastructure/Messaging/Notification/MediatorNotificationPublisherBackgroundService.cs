@@ -46,7 +46,7 @@ public sealed class MediatorNotificationPublisherBackgroundService(
 
                 await _mediator.Publish(notification, cancellationToken);
 
-                //await _outbox.MarkAsProcessedAsync(message, cancellationToken);
+                await _outbox.MarkAsProcessedAsync(message, cancellationToken);
 
                 logger.Information("{Correlation} {Type} published.", message.CorrelationId, message.Type);
             }
