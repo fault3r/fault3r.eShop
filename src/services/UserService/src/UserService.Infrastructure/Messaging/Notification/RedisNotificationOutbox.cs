@@ -7,6 +7,8 @@ using UserService.Domain.Interfaces;
 using UserService.Domain.Messaging.Notification;
 using StackExchange.Redis;
 using UserService.Infrastructure.Exceptions.Security.Authentication;
+using Polly;
+using Polly.Retry;
 
 namespace UserService.Infrastructure.Messaging.Notification;
 
@@ -19,8 +21,9 @@ public sealed class RedisNotificationOutbox : INotificationOutbox
     private const string GroupName = "group-notification";
     private const string ConsumerName = "consumer-outbox";
 
-    private readonly JsonSerializerOptions jsonOptions
-        = SharedJsonOptions.DefaultOptions;
+    private readonly JsonSerializerOptions jsonOptions = SharedJsonOptions.DefaultOptions;
+
+    private readonly AsyncRetryPolicy retryPolicy;
 
     public RedisNotificationOutbox(
         IDatabase database,
@@ -29,34 +32,34 @@ public sealed class RedisNotificationOutbox : INotificationOutbox
         _database = database;
         _factory = notificationFactory;
 
-        var init = InitialConsumer();
-        init.Wait();
+        retryPolicy = Policy
+            .Handle<RedisConnectionException>()
+            .Or<RedisTimeoutException>()
+            .Or<RedisServerException>()
+            .WaitAndRetryAsync(
+                retryCount: 5,
+                sleepDurationProvider: attempt => TimeSpan.FromMilliseconds(200 * attempt)
+            );
 
-        if (!init.Result)
-            throw new Exception("Failed to initialize Redis consumer group");
+        var init = Initial();
+        init.Wait();
     }
 
-    public async Task<bool> InitialConsumer(CancellationToken cancellationToken = default)
+    public async Task Initial(CancellationToken cancellationToken = default)
     {
         try
         {
-            var result = await _database.StreamCreateConsumerGroupAsync(
+            await _database.StreamCreateConsumerGroupAsync(
                 key: StreamKey,
                 groupName: GroupName,
                 position: StreamPosition.Beginning,
                 createStream: true
             );
-
-            return result;
         }
         catch (RedisServerException ex) when (ex.Message.Contains("BUSYGROUP"))
-        {
-            return true; // group already exists
-        }
-        catch
-        {
-            return false;
-        }
+        { }
+
+        catch (Exception) { throw; }
     }
 
     public async Task EnqueueAsync(
@@ -85,7 +88,12 @@ public sealed class RedisNotificationOutbox : INotificationOutbox
             _ = transaction.StreamAddAsync(StreamKey, entries);
         }
 
-        if (!await transaction.ExecuteAsync())
+        var committed = await retryPolicy.ExecuteAsync(
+            async ct => await transaction.ExecuteAsync(),
+            cancellationToken
+        );
+
+        if (!committed)
             throw new RedisTransactionFailedException();
     }
 
@@ -131,10 +139,13 @@ public sealed class RedisNotificationOutbox : INotificationOutbox
         NotificationMessage message,
         CancellationToken cancellationToken = default)
     {
-        await _database.StreamAcknowledgeAsync(
-            key: StreamKey,
-            groupName: GroupName,
-            messageId: message.StreamId
+        await retryPolicy.ExecuteAsync(
+            async ct => await _database.StreamAcknowledgeAsync(
+                key: StreamKey,
+                groupName: GroupName,
+                messageId: message.StreamId
+            ),
+            cancellationToken
         );
     }
 }
