@@ -31,8 +31,6 @@ public sealed class OutboxMessage
         CorrelationId = correlationId;
     }
 
-    public void MarkAsProcessed() => Processed = true;
-    
     public static OutboxMessage FromEvent(
         IDomainEvent domainEvent,
         string correlationId)
@@ -40,6 +38,8 @@ public sealed class OutboxMessage
         return new(domainEvent, correlationId);
     }
 
+    public void MarkAsProcessed() => Processed = true;
+    
     #region ⤚EFCore
     public OutboxMessage()
     {
