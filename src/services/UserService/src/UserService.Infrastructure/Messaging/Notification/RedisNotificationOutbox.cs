@@ -42,7 +42,7 @@ public sealed class RedisNotificationOutbox : INotificationOutbox
             var result = await _database.StreamCreateConsumerGroupAsync(
                 key: StreamKey,
                 groupName: GroupName,
-                position: StreamPosition.NewMessages,
+                position: StreamPosition.Beginning,
                 createStream: true
             );
 
@@ -94,11 +94,14 @@ public sealed class RedisNotificationOutbox : INotificationOutbox
     public async Task<NotificationMessage?> DequeueAsync(
         CancellationToken cancellationToken = default)
     {
-        var entries = await _database.StreamReadAsync(
+        var entries = await _database.StreamReadGroupAsync(
             key: StreamKey,
-            position: "0-0",
+            groupName: GroupName,
+            consumerName: ConsumerName,
+            position: StreamPosition.Beginning,
             count: 1
         );
+
 
         if (entries.Length == 0) return null;
 

@@ -1,0 +1,21 @@
+[2026-02-17 18:30:03 INF]  0773860d-b47f-49e4-b3b4-16b41280bf32 Incoming request POST /api/v1/auth/register. 
+ [2026-02-17 18:30:03 INF] UserService.Application.UseCases.Commands.RegisterUserUseCase.RegisterUserService 0773860d-b47f-49e4-b3b4-16b41280bf32 Registering user with 'string@ema.ff' email… 
+ [2026-02-17 18:30:07 INF] UserService.Infrastructure.Messaging.Outbox.RabbitmqEventPublisherBackgroundService  Retrieved 1 message(s). 
+ [2026-02-17 18:30:07 INF] UserService.Infrastructure.Messaging.Outbox.RabbitmqEventPublisherBackgroundService  0773860d-b47f-49e4-b3b4-16b41280bf32 UserRegisteredEvent Published. 
+ [2026-02-17 18:30:07 INF] UserService.Application.UseCases.Commands.RegisterUserUseCase.RegisterUserService 0773860d-b47f-49e4-b3b4-16b41280bf32 User successfully registered with 'c906b3316a0e43c791ec035245c927ff' identity. 
+ [2026-02-17 18:30:07 INF]  0773860d-b47f-49e4-b3b4-16b41280bf32 Completed request POST /api/v1/auth/register with status code 201. 
+ [2026-02-17 18:30:09 INF] UserService.Infrastructure.Messaging.Notification.MediatorNotificationPublisherBackgroundService  0773860d-b47f-49e4-b3b4-16b41280bf32 Publishing UserRegisteredNotification… 
+ [2026-02-17 18:30:09 INF] UserService.Application.Messaging.Notification.NotificationHandlers.UserRegisteredNotificationHandler  0773860d-b47f-49e4-b3b4-16b41280bf32 Sending welcome email to 'string@ema.ff' user… 
+ [2026-02-17 18:30:09 INF] UserService.Application.Messaging.Notification.NotificationHandlers.UserRegisteredNotificationHandler  0773860d-b47f-49e4-b3b4-16b41280bf32 Welcome email successfully sent. 
+ [2026-02-17 18:30:09 INF] UserService.Infrastructure.Messaging.Notification.MediatorNotificationPublisherBackgroundService  0773860d-b47f-49e4-b3b4-16b41280bf32 UserRegisteredNotification published. 
+ [2026-02-17 18:35:29 INF]  fa3aaa3d-3ab8-417c-9ffa-7359d057223b Incoming request POST /api/v1/auth/register. 
+ [2026-02-17 18:35:29 INF] UserService.Application.UseCases.Commands.RegisterUserUseCase.RegisterUserService fa3aaa3d-3ab8-417c-9ffa-7359d057223b Registering user with 'string@ema.fff' email… 
+ [2026-02-17 18:35:31 INF] UserService.Infrastructure.Messaging.Outbox.RabbitmqEventPublisherBackgroundService  Retrieved 1 message(s). 
+ [2026-02-17 18:35:31 INF] UserService.Application.UseCases.Commands.RegisterUserUseCase.RegisterUserService fa3aaa3d-3ab8-417c-9ffa-7359d057223b User successfully registered with '5f30f1a068d74099984577a1c1521f00' identity. 
+ [2026-02-17 18:35:31 INF]  fa3aaa3d-3ab8-417c-9ffa-7359d057223b Completed request POST /api/v1/auth/register with status code 201. 
+ [2026-02-17 18:35:32 INF] UserService.Infrastructure.Messaging.Outbox.RabbitmqEventPublisherBackgroundService  fa3aaa3d-3ab8-417c-9ffa-7359d057223b UserRegisteredEvent Published. 
+ [2026-02-17 18:35:33 INF] UserService.Infrastructure.Messaging.Notification.MediatorNotificationPublisherBackgroundService  fa3aaa3d-3ab8-417c-9ffa-7359d057223b Publishing UserRegisteredNotification… 
+ [2026-02-17 18:35:33 INF] UserService.Application.Messaging.Notification.NotificationHandlers.UserRegisteredNotificationHandler  fa3aaa3d-3ab8-417c-9ffa-7359d057223b Sending welcome email to 'string@ema.fff' user… 
+ [2026-02-17 18:35:33 INF] UserService.Application.Messaging.Notification.NotificationHandlers.UserRegisteredNotificationHandler  fa3aaa3d-3ab8-417c-9ffa-7359d057223b Welcome email successfully sent. 
+ [2026-02-17 18:35:33 INF] UserService.Infrastructure.Messaging.Notification.MediatorNotificationPublisherBackgroundService  fa3aaa3d-3ab8-417c-9ffa-7359d057223b UserRegisteredNotification published. 
+ 
