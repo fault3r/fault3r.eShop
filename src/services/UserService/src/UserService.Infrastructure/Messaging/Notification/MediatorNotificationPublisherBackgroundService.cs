@@ -54,11 +54,13 @@ public sealed class MediatorNotificationPublisherBackgroundService(
             catch (StackExchange.Redis.RedisConnectionException)
             {
                 logger.Error("Redis connection error, Reconnectiong…");
+                
                 await Task.Delay(3000, cancellationToken);
             }
             catch (Exception ex)
             {
                 logger.Error("{Correlation} Failed to publish notification, {Error}", correlationId, ex.Message);
+                
                 await Task.Delay(3000, cancellationToken);
             }
         }

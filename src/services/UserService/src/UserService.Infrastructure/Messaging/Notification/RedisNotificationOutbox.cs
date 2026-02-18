@@ -23,7 +23,7 @@ public sealed class RedisNotificationOutbox : INotificationOutbox
 
     private readonly JsonSerializerOptions jsonOptions = SharedJsonOptions.DefaultOptions;
 
-    private readonly AsyncRetryPolicy retryPolicy;
+    // private readonly AsyncRetryPolicy retryPolicy;
 
     public RedisNotificationOutbox(
         IDatabase database,
@@ -32,14 +32,14 @@ public sealed class RedisNotificationOutbox : INotificationOutbox
         _database = database;
         _factory = notificationFactory;
 
-        retryPolicy = Policy
-            .Handle<RedisConnectionException>()
-            .Or<RedisTimeoutException>()
-            .Or<RedisServerException>()
-            .WaitAndRetryAsync(
-                retryCount: 5,
-                sleepDurationProvider: attempt => TimeSpan.FromMilliseconds(200 * attempt)
-            );
+        // retryPolicy = Policy
+        //     .Handle<RedisConnectionException>()
+        //     .Or<RedisTimeoutException>()
+        //     .Or<RedisServerException>()
+        //     .WaitAndRetryAsync(
+        //         retryCount: 2,
+        //         sleepDurationProvider: attempt => TimeSpan.FromSeconds(Math.Pow(2, attempt))
+        //     );
 
         var init = Initial();
         init.Wait();
@@ -100,26 +100,30 @@ public sealed class RedisNotificationOutbox : INotificationOutbox
     public async Task<NotificationMessage?> DequeueAsync(
         CancellationToken cancellationToken = default)
     {
-        var pending = await _database.StreamReadGroupAsync(
-            key: StreamKey,
-            groupName: GroupName,
-            consumerName: ConsumerName,
-            position: StreamPosition.Beginning,
-            count: 1
-        );
-
-        var entries = pending.Length > 0
-            ? pending
-            : await _database.StreamReadGroupAsync(
+        var entries = await retryPolicy.ExecuteAsync(async ct =>
+        {
+            var pending = await _database.StreamReadGroupAsync(
                 key: StreamKey,
                 groupName: GroupName,
                 consumerName: ConsumerName,
-                position: StreamPosition.NewMessages,
+                position: StreamPosition.Beginning,
                 count: 1
             );
 
-        if (entries.Length == 0)
-            return null;
+            var entries = pending.Length > 0
+                ? pending
+                : await _database.StreamReadGroupAsync(
+                    key: StreamKey,
+                    groupName: GroupName,
+                    consumerName: ConsumerName,
+                    position: StreamPosition.NewMessages,
+                    count: 1
+                );
+
+            return entries;
+        }, cancellationToken);
+
+        if (entries.Length == 0) return null;
 
         var entry = entries[0];
         var dict = entry.Values.ToDictionary(e => e.Name, e => e.Value);
@@ -140,11 +144,14 @@ public sealed class RedisNotificationOutbox : INotificationOutbox
         CancellationToken cancellationToken = default)
     {
         await retryPolicy.ExecuteAsync(
-            async ct => await _database.StreamAcknowledgeAsync(
-                key: StreamKey,
-                groupName: GroupName,
-                messageId: message.StreamId
-            ),
+            async ct =>
+            {
+                await _database.StreamAcknowledgeAsync(
+                    key: StreamKey,
+                    groupName: GroupName,
+                    messageId: message.StreamId
+                );
+            },
             cancellationToken
         );
     }
