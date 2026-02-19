@@ -39,8 +39,8 @@ public class MainTests
                 Console.WriteLine("operation failed!");
             });
 
-        var policy = fallback.WrapAsync(timeout).WrapAsync(retry);
-
+        var policy = fallback.WrapAsync(retry).WrapAsync(timeout);
+        
         await policy.ExecuteAsync(async ct =>
         {
             var op = Task.Delay(4000, CancellationToken.None);

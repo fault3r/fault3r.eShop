@@ -1,0 +1,14 @@
+[2026-02-19 11:37:25 INF]  a83f9f3a-205e-4f80-a8c3-e2836fd6e3b2 Incoming request POST /api/v1/auth/register. 
+ [2026-02-19 11:37:25 INF] UserService.Application.UseCases.Commands.RegisterUserUseCase.RegisterUserService a83f9f3a-205e-4f80-a8c3-e2836fd6e3b2 Registering user with 'strinnmn@tesfftrt.bbncccg' email… 
+ [2026-02-19 11:37:28 INF] UserService.Infrastructure.Messaging.Outbox.RabbitmqEventPublisherBackgroundService  Retrieved 1 message(s). 
+ [2026-02-19 11:37:28 INF] UserService.Application.UseCases.Commands.RegisterUserUseCase.RegisterUserService a83f9f3a-205e-4f80-a8c3-e2836fd6e3b2 User successfully registered with '2d609ac4021c4b44b3dc79664da59f0a' identity. 
+ [2026-02-19 11:37:28 INF] UserService.Infrastructure.Messaging.Outbox.RabbitmqEventPublisherBackgroundService  a83f9f3a-205e-4f80-a8c3-e2836fd6e3b2 UserRegisteredEvent Published. 
+ [2026-02-19 11:37:28 INF]  a83f9f3a-205e-4f80-a8c3-e2836fd6e3b2 Completed request POST /api/v1/auth/register with status code 201. 
+ [2026-02-19 11:37:48 INF]  d1c2a25d-4262-40bb-86e3-3f85764aa062 Incoming request POST /api/v1/auth/register. 
+ [2026-02-19 11:37:48 INF] UserService.Application.UseCases.Commands.RegisterUserUseCase.RegisterUserService d1c2a25d-4262-40bb-86e3-3f85764aa062 Registering user with 'strinngmn@tesfftrt.bbncccg' email… 
+ [2026-02-19 11:37:48 INF] UserService.Infrastructure.Messaging.Outbox.RabbitmqEventPublisherBackgroundService  Retrieved 1 message(s). 
+ [2026-02-19 11:37:48 INF] UserService.Infrastructure.Messaging.Outbox.RabbitmqEventPublisherBackgroundService  d1c2a25d-4262-40bb-86e3-3f85764aa062 UserRegisteredEvent Published. 
+ [2026-02-19 11:38:04 ERR] UserService.Application.UseCases.Commands.RegisterUserUseCase.RegisterUserService d1c2a25d-4262-40bb-86e3-3f85764aa062 Failed to enqueue notification: [2026-02-19T08:07:48.8925084+00:00] UserRegisteredEvent (EventId=88f4f0a6-49f8-4635-96a7-9d9bb45a04ab) | UserId=d4c60a80619d4650bd020de49c0c609b, Email=strinngmn@tesfftrt.bbncccg, FullName=strin asssssssssssssg 
+ [2026-02-19 11:38:04 INF] UserService.Application.UseCases.Commands.RegisterUserUseCase.RegisterUserService d1c2a25d-4262-40bb-86e3-3f85764aa062 User successfully registered with 'd4c60a80619d4650bd020de49c0c609b' identity. 
+ [2026-02-19 11:38:04 INF]  d1c2a25d-4262-40bb-86e3-3f85764aa062 Completed request POST /api/v1/auth/register with status code 201. 
+ 

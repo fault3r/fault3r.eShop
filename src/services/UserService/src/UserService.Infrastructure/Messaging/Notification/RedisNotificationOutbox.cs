@@ -8,7 +8,8 @@ using UserService.Domain.Messaging.Notification;
 using StackExchange.Redis;
 using UserService.Infrastructure.Exceptions.Security.Authentication;
 using Polly;
-using Polly.Retry;
+using Polly.Timeout;
+using Polly.Wrap;
 
 namespace UserService.Infrastructure.Messaging.Notification;
 
@@ -21,31 +22,41 @@ public sealed class RedisNotificationOutbox : INotificationOutbox
     private const string GroupName = "group-notification";
     private const string ConsumerName = "consumer-outbox";
 
+    private readonly AsyncPolicyWrap policy;
+
     private readonly JsonSerializerOptions jsonOptions = SharedJsonOptions.DefaultOptions;
 
-    // private readonly AsyncRetryPolicy retryPolicy;
-
     public RedisNotificationOutbox(
+
         IDatabase database,
         INotificationFactory notificationFactory)
     {
         _database = database;
         _factory = notificationFactory;
 
-        // retryPolicy = Policy
-        //     .Handle<RedisConnectionException>()
-        //     .Or<RedisTimeoutException>()
-        //     .Or<RedisServerException>()
-        //     .WaitAndRetryAsync(
-        //         retryCount: 2,
-        //         sleepDurationProvider: attempt => TimeSpan.FromSeconds(Math.Pow(2, attempt))
-        //     );
+        var timeout = Policy
+            .TimeoutAsync(
+                timeout: TimeSpan.FromSeconds(5),
+                timeoutStrategy: TimeoutStrategy.Pessimistic,
+                onTimeoutAsync: async (_, ts, _) =>
+                    Console.WriteLine($"{this}: Redis operation timed out after {ts}."));
 
-        var init = Initial();
+        var retry = Policy
+            .Handle<Exception>()
+            .WaitAndRetryAsync(
+                retryCount: 1,
+                sleepDurationProvider: attempt => TimeSpan.FromSeconds(5),
+                onRetryAsync: async (ex, ts) =>
+                    Console.WriteLine($"{this}: Redis transaction failed due {ts} {ex}!") 
+            );
+
+        policy = retry.WrapAsync(timeout);
+
+        var init = InitialConsumer();
         init.Wait();
     }
 
-    public async Task Initial(CancellationToken cancellationToken = default)
+    public async Task InitialConsumer(CancellationToken cancellationToken = default)
     {
         try
         {
@@ -57,8 +68,9 @@ public sealed class RedisNotificationOutbox : INotificationOutbox
             );
         }
         catch (RedisServerException ex) when (ex.Message.Contains("BUSYGROUP"))
-        { }
-
+        {
+            Console.WriteLine($"{this}: redis consumer group already exists.");
+        }
         catch (Exception) { throw; }
     }
 
@@ -88,10 +100,18 @@ public sealed class RedisNotificationOutbox : INotificationOutbox
             _ = transaction.StreamAddAsync(StreamKey, entries);
         }
 
-        var committed = await retryPolicy.ExecuteAsync(
-            async ct => await transaction.ExecuteAsync(),
-            cancellationToken
-        );
+        var committed = await policy.ExecuteAsync(async ct =>
+        {
+            var redis = transaction.ExecuteAsync();
+
+            await Task.WhenAny(redis, Task.Delay(Timeout.Infinite, ct));
+
+            ct.ThrowIfCancellationRequested();
+
+            return await redis;
+
+        }, cancellationToken);
+
 
         if (!committed)
             throw new RedisTransactionFailedException();
@@ -100,7 +120,7 @@ public sealed class RedisNotificationOutbox : INotificationOutbox
     public async Task<NotificationMessage?> DequeueAsync(
         CancellationToken cancellationToken = default)
     {
-        var entries = await retryPolicy.ExecuteAsync(async ct =>
+        var entries = await policy.ExecuteAsync(async ct =>
         {
             var pending = await _database.StreamReadGroupAsync(
                 key: StreamKey,
@@ -143,7 +163,7 @@ public sealed class RedisNotificationOutbox : INotificationOutbox
         NotificationMessage message,
         CancellationToken cancellationToken = default)
     {
-        await retryPolicy.ExecuteAsync(
+        await policy.ExecuteAsync(
             async ct =>
             {
                 await _database.StreamAcknowledgeAsync(
