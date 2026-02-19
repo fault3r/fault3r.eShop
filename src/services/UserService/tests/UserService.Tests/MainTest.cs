@@ -25,12 +25,12 @@ public class MainTests
                 TimeoutStrategy.Pessimistic
             );
 
-        // var retry = Policy
-        //     .Handle<Exception>()
-        //     .WaitAndRetryAsync(
-        //         retryCount: 1,
-        //         sleepDurationProvider: attempt => TimeSpan.FromSeconds(2)
-        //     );
+        var retry = Policy
+            .Handle<Exception>()
+            .WaitAndRetryAsync(
+                retryCount: 1,
+                sleepDurationProvider: attempt => TimeSpan.FromSeconds(2)
+            );
 
         var fallback = Policy
             .Handle<Exception>()
@@ -39,11 +39,11 @@ public class MainTests
                 Console.WriteLine("operation failed!");
             });
 
-        var policy = fallback.WrapAsync(timeout);
+        var policy = fallback.WrapAsync(timeout).WrapAsync(retry);
 
         await policy.ExecuteAsync(async ct =>
         {
-            var op = Task.Delay(4000);
+            var op = Task.Delay(4000, CancellationToken.None);
             
             await Task.WhenAny(op, Task.Delay(Timeout.Infinite, ct));
           
