@@ -52,14 +52,17 @@ public static class DIsExtensions
 
         services.AddControllers(config =>
             config.SuppressAsyncSuffixInActionNames = false);
-        
+
         services.AddUseCases();
 
         services.AddScoped<IUnitOfWork, EfUnitOfWork>();
 
         services.AddScoped<IEventOutbox, EfPostgresEventOutbox>();
 
-        services.AddSingleton<INotificationOutbox, RedisNotificationOutbox>();
+        services.AddSingleton<RedisNotificationOutbox>();
+
+        services.AddSingleton<INotificationOutbox>(sp =>
+            sp.GetRequiredService<RedisNotificationOutbox>());
 
         services.AddScoped<IUserRepository, EfUserRepository>();
 
@@ -69,11 +72,13 @@ public static class DIsExtensions
 
         services.AddSingleton<IPasswordHasher, Argon2PasswordHasher>();
 
-        // services.AddHostedService<MediatorNotificationPublisherBackgroundService>();
+        services.AddSingleton<INotificationFactory, NotificationFactory>();
         
+        // services.AddHostedService<MediatorNotificationPublisherBackgroundService>();
+
         services.AddHostedService<RabbitmqEventPublisherBackgroundService>();
 
-        services.AddSingleton<INotificationFactory, NotificationFactory>();
+        services.AddHostedService<DIsInitializerHostedService>();
 
         return services;
     }

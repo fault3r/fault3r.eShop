@@ -81,7 +81,7 @@ public sealed class RegisterUserService(
 
         try
         {
-            await _notificationOutbox.EnqueueAsync(user.Events, _correlation.CorrelationId, cancellationToken);
+            await _notificationOutbox.EnqueueAsync(user.Events.First(), _correlation.CorrelationId, cancellationToken);
         }
         catch(Exception)
         {

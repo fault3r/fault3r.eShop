@@ -6,10 +6,9 @@ using UserService.Domain.Contracts;
 using UserService.Domain.Interfaces;
 using UserService.Domain.Messaging.Notification;
 using StackExchange.Redis;
-using UserService.Infrastructure.Exceptions.Security.Authentication;
 using Polly;
-using Polly.Timeout;
 using Polly.Wrap;
+using Polly.Timeout;
 
 namespace UserService.Infrastructure.Messaging.Notification;
 
@@ -22,42 +21,45 @@ public sealed class RedisNotificationOutbox : INotificationOutbox
     private const string GroupName = "group-notification";
     private const string ConsumerName = "consumer-outbox";
 
-    private readonly AsyncPolicyWrap policy;
+    private AsyncPolicyWrap policy = default!;
 
     private readonly JsonSerializerOptions jsonOptions = SharedJsonOptions.DefaultOptions;
 
     public RedisNotificationOutbox(
-
         IDatabase database,
         INotificationFactory notificationFactory)
     {
         _database = database;
         _factory = notificationFactory;
-
-        var timeout = Policy
-            .TimeoutAsync(
-                timeout: TimeSpan.FromSeconds(5),
-                timeoutStrategy: TimeoutStrategy.Pessimistic,
-                onTimeoutAsync: async (_, ts, _) =>
-                    Console.WriteLine($"{this}: Redis operation timed out after {ts}."));
-
-        var retry = Policy
-            .Handle<Exception>()
-            .WaitAndRetryAsync(
-                retryCount: 1,
-                sleepDurationProvider: attempt => TimeSpan.FromSeconds(5),
-                onRetryAsync: async (ex, ts) =>
-                    Console.WriteLine($"{this}: Redis transaction failed due {ts} {ex}!") 
-            );
-
-        policy = retry.WrapAsync(timeout);
-
-        var init = InitialConsumer();
-        init.Wait();
     }
 
-    public async Task InitialConsumer(CancellationToken cancellationToken = default)
+    public async Task Initialize()
     {
+        var timeoutPolicy = Policy
+            .TimeoutAsync(
+                timeout: TimeSpan.FromSeconds(10),
+                timeoutStrategy: TimeoutStrategy.Optimistic,
+                onTimeoutAsync: async (_, delay, _) =>
+                {
+                    Console.WriteLine($"Redis operation timed out after {delay.TotalSeconds} seconds.");
+                    await Task.CompletedTask;
+                }
+        );
+
+        var retryPolicy = Policy
+            .Handle<Exception>()
+            .WaitAndRetryAsync(
+                retryCount: 2,
+                sleepDurationProvider: attempt => TimeSpan.FromSeconds(attempt * 2),
+                onRetryAsync: async (_, delay, attempt, _) =>
+                {
+                    Console.WriteLine($"{this}: Redis failed! Retry {attempt} after {delay.TotalSeconds} seconds!");
+                    await Task.CompletedTask;
+                }
+            );
+
+        policy = retryPolicy.WrapAsync(timeoutPolicy);
+
         try
         {
             await _database.StreamCreateConsumerGroupAsync(
@@ -71,50 +73,35 @@ public sealed class RedisNotificationOutbox : INotificationOutbox
         {
             Console.WriteLine($"{this}: redis consumer group already exists.");
         }
-        catch (Exception) { throw; }
     }
 
+
     public async Task EnqueueAsync(
-        IEnumerable<IDomainEvent> events,
+        IDomainEvent @event,
         string correlationId,
         CancellationToken cancellationToken = default)
     {
-        ArgumentNullException.ThrowIfNull(events);
+        ArgumentNullException.ThrowIfNull(@event);
         ArgumentException.ThrowIfNullOrWhiteSpace(correlationId);
 
-        var transaction = _database.CreateTransaction();
+        var notification = _factory.FromEvent(@event, correlationId);
 
-        foreach (var @event in events)
+        var entries = new NameValueEntry[]
         {
-            var notification = _factory.FromEvent(@event, correlationId);
-
-            var entries = new NameValueEntry[]
-            {
                 new("Id" , @event.EventId.ToString()),
                 new("Type", notification.GetType().Name),
                 new("Payload", JsonSerializer.Serialize(notification, notification.GetType(), jsonOptions)),
                 new("Timestamp", @event.OccurredOn.ToString("O")),
                 new("CorrelationId", correlationId),
-            };
+        };
 
-            _ = transaction.StreamAddAsync(StreamKey, entries);
-        }
-
-        var committed = await policy.ExecuteAsync(async ct =>
-        {
-            var redis = transaction.ExecuteAsync();
-
-            await Task.WhenAny(redis, Task.Delay(Timeout.Infinite, ct));
-
-            ct.ThrowIfCancellationRequested();
-
-            return await redis;
-
-        }, cancellationToken);
-
-
-        if (!committed)
-            throw new RedisTransactionFailedException();
+        await policy.ExecuteAsync(
+            async ct =>
+            {
+                await _database.StreamAddAsync(StreamKey, entries);
+            },
+            cancellationToken
+        );
     }
 
     public async Task<NotificationMessage?> DequeueAsync(
