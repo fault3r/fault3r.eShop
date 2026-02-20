@@ -15,7 +15,7 @@ public sealed class MediatorNotificationPublisherBackgroundService(
 {
     private readonly IServiceScopeFactory _scopeFactory = serviceScopeFactory;
 
-    protected override async Task ExecuteAsync(CancellationToken cancellationToken = default)
+    protected override async Task ExecuteAsync(CancellationToken cancellationToken)
     {
         var logger = Log.ForContext<MediatorNotificationPublisherBackgroundService>();
 

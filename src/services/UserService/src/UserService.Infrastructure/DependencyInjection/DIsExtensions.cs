@@ -74,7 +74,7 @@ public static class DIsExtensions
 
         services.AddSingleton<INotificationFactory, NotificationFactory>();
         
-        // services.AddHostedService<MediatorNotificationPublisherBackgroundService>();
+        services.AddHostedService<MediatorNotificationPublisherBackgroundService>();
 
         services.AddHostedService<RabbitmqEventPublisherBackgroundService>();
 

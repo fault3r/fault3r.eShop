@@ -12,26 +12,21 @@ using Polly.Timeout;
 
 namespace UserService.Infrastructure.Messaging.Notification;
 
-public sealed class RedisNotificationOutbox : INotificationOutbox
+public sealed class RedisNotificationOutbox(
+    IDatabase database,
+    INotificationFactory notificationFactory
+) : INotificationOutbox
 {
-    private readonly IDatabase _database;
-    private readonly INotificationFactory _factory;
+    private readonly IDatabase _database = database;
+    private readonly INotificationFactory _factory = notificationFactory;
+
+    private AsyncPolicyWrap policy = default!;
 
     private const string StreamKey = "stream-notification";
     private const string GroupName = "group-notification";
     private const string ConsumerName = "consumer-outbox";
 
-    private AsyncPolicyWrap policy = default!;
-
     private readonly JsonSerializerOptions jsonOptions = SharedJsonOptions.DefaultOptions;
-
-    public RedisNotificationOutbox(
-        IDatabase database,
-        INotificationFactory notificationFactory)
-    {
-        _database = database;
-        _factory = notificationFactory;
-    }
 
     public async Task Initialize()
     {
@@ -39,9 +34,9 @@ public sealed class RedisNotificationOutbox : INotificationOutbox
             .TimeoutAsync(
                 timeout: TimeSpan.FromSeconds(10),
                 timeoutStrategy: TimeoutStrategy.Optimistic,
-                onTimeoutAsync: async (_, delay, _) =>
+                onTimeoutAsync: async (_, delay, _, _) =>
                 {
-                    Console.WriteLine($"Redis operation timed out after {delay.TotalSeconds} seconds.");
+                    Console.WriteLine($"{this} Redis operation timed out after {delay.TotalSeconds} seconds!");
                     await Task.CompletedTask;
                 }
         );
@@ -75,7 +70,6 @@ public sealed class RedisNotificationOutbox : INotificationOutbox
         }
     }
 
-
     public async Task EnqueueAsync(
         IDomainEvent @event,
         string correlationId,
@@ -88,11 +82,11 @@ public sealed class RedisNotificationOutbox : INotificationOutbox
 
         var entries = new NameValueEntry[]
         {
-                new("Id" , @event.EventId.ToString()),
-                new("Type", notification.GetType().Name),
-                new("Payload", JsonSerializer.Serialize(notification, notification.GetType(), jsonOptions)),
-                new("Timestamp", @event.OccurredOn.ToString("O")),
-                new("CorrelationId", correlationId),
+            new("Id" , @event.EventId.ToString()),
+            new("Type", notification.GetType().Name),
+            new("Payload", JsonSerializer.Serialize(notification, notification.GetType(), jsonOptions)),
+            new("Timestamp", @event.OccurredOn.ToString("O")),
+            new("CorrelationId", correlationId),
         };
 
         await policy.ExecuteAsync(
@@ -107,28 +101,29 @@ public sealed class RedisNotificationOutbox : INotificationOutbox
     public async Task<NotificationMessage?> DequeueAsync(
         CancellationToken cancellationToken = default)
     {
-        var entries = await policy.ExecuteAsync(async ct =>
-        {
-            var pending = await _database.StreamReadGroupAsync(
-                key: StreamKey,
-                groupName: GroupName,
-                consumerName: ConsumerName,
-                position: StreamPosition.Beginning,
-                count: 1
-            );
-
-            var entries = pending.Length > 0
-                ? pending
-                : await _database.StreamReadGroupAsync(
+        var entries = await policy.ExecuteAsync(
+            async ct =>
+            {
+                var pending = await _database.StreamReadGroupAsync(
                     key: StreamKey,
                     groupName: GroupName,
                     consumerName: ConsumerName,
-                    position: StreamPosition.NewMessages,
+                    position: StreamPosition.Beginning,
                     count: 1
                 );
 
-            return entries;
-        }, cancellationToken);
+                var entries = pending.Length > 0
+                    ? pending
+                    : await _database.StreamReadGroupAsync(
+                        key: StreamKey,
+                        groupName: GroupName,
+                        consumerName: ConsumerName,
+                        position: StreamPosition.NewMessages,
+                        count: 1
+                    );
+
+                return entries;
+            }, cancellationToken);
 
         if (entries.Length == 0) return null;
 

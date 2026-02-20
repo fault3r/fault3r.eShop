@@ -11,4 +11,11 @@
  [2026-02-20 00:12:35 ERR] UserService.Application.UseCases.Commands.RegisterUserUseCase.RegisterUserService f6155acc-5bb8-469a-b8ca-fdc38306ce27 Failed to enqueue notification: [2026-02-19T20:42:11.9128395+00:00] UserRegisteredEvent (EventId=8e37d7bd-8f3c-49db-bcbf-958bac01ecef) | UserId=fc3d1659c77a4a7080a0306ebca7943d, Email=strhin@q.qqqqqg, FullName=string aaaaaaaaaaaaaaaaaaaaaaaaa 
  [2026-02-20 00:12:35 INF] UserService.Application.UseCases.Commands.RegisterUserUseCase.RegisterUserService f6155acc-5bb8-469a-b8ca-fdc38306ce27 User successfully registered with 'fc3d1659c77a4a7080a0306ebca7943d' identity. 
  [2026-02-20 00:12:35 INF]  f6155acc-5bb8-469a-b8ca-fdc38306ce27 Completed request POST /api/v1/auth/register with status code 201. 
+ [2026-02-20 00:32:21 INF]  840ada0a-5f9a-457e-9fd5-c60bf17a9c78 Incoming request POST /api/v1/auth/register. 
+ [2026-02-20 00:32:22 INF] UserService.Application.UseCases.Commands.RegisterUserUseCase.RegisterUserService 840ada0a-5f9a-457e-9fd5-c60bf17a9c78 Registering user with 'strhin@q.qqqqjjkkqg' email… 
+ [2026-02-20 00:32:24 INF] UserService.Infrastructure.Messaging.Outbox.RabbitmqEventPublisherBackgroundService  Retrieved 1 message(s). 
+ [2026-02-20 00:32:24 INF] UserService.Infrastructure.Messaging.Outbox.RabbitmqEventPublisherBackgroundService  840ada0a-5f9a-457e-9fd5-c60bf17a9c78 UserRegisteredEvent Published. 
+ [2026-02-20 00:32:47 ERR] UserService.Application.UseCases.Commands.RegisterUserUseCase.RegisterUserService 840ada0a-5f9a-457e-9fd5-c60bf17a9c78 Failed to enqueue notification: [2026-02-19T21:02:23.3379622+00:00] UserRegisteredEvent (EventId=c0713d53-b6ea-40ca-b543-799bb1f66f8a) | UserId=1ece38e48de4404e8722ae1fcb9a3c07, Email=strhin@q.qqqqjjkkqg, FullName=string aaaaaaaaaaaaaaaaaaaaaaaaa 
+ [2026-02-20 00:32:47 INF] UserService.Application.UseCases.Commands.RegisterUserUseCase.RegisterUserService 840ada0a-5f9a-457e-9fd5-c60bf17a9c78 User successfully registered with '1ece38e48de4404e8722ae1fcb9a3c07' identity. 
+ [2026-02-20 00:32:47 INF]  840ada0a-5f9a-457e-9fd5-c60bf17a9c78 Completed request POST /api/v1/auth/register with status code 201. 
  
