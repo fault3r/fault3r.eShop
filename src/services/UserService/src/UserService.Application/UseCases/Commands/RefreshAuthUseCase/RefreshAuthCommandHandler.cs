@@ -20,7 +20,7 @@ public sealed class RefreshAuthCommandHandler(
 
     public async Task<Result<RefreshAuthResult>> Handle(
         RefreshAuthCommand request,
-        CancellationToken cancellationToken = default)
+        CancellationToken cancellationToken)
     {
         ArgumentNullException.ThrowIfNull(request);
 

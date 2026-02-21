@@ -21,7 +21,7 @@ public sealed class RegisterUserCommandHandler(
 
     public async Task<Result<RegisterUserResult>> Handle(
         RegisterUserCommand request,
-        CancellationToken cancellationToken = default)
+        CancellationToken cancellationToken)
     {
         ArgumentNullException.ThrowIfNull(request);
 

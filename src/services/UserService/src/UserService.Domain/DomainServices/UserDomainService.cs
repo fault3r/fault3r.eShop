@@ -19,7 +19,7 @@ public class UserDomainService(
 
     public async Task<bool> VerifyCanCreateAsync(
         Email email,
-        CancellationToken cancellationToken = default)
+        CancellationToken cancellationToken)
     {
         ArgumentNullException.ThrowIfNull(email);
 
@@ -31,7 +31,7 @@ public class UserDomainService(
     public async Task<Result<User>> VerifyCredentialsAsync(
        string identity,
        string password,
-       CancellationToken cancellationToken = default)
+       CancellationToken cancellationToken)
     {
         ArgumentException.ThrowIfNullOrWhiteSpace(identity);
         ArgumentException.ThrowIfNullOrWhiteSpace(password);

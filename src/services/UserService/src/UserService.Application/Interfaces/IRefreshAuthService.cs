@@ -10,6 +10,6 @@ public interface IRefreshAuthService
     Task<Result<RefreshAuthResult>> ExecuteAsync(
         string accessToken,
         string refreshToken,
-        CancellationToken cancellationToken = default
+        CancellationToken cancellationToken
     );
 }

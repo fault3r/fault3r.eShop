@@ -24,7 +24,7 @@ public sealed class LoginUserService(
     public async Task<Result<LoginUserResult>> ExecuteAsync(
         string identity,
         string password,
-        CancellationToken cancellationToken = default)
+        CancellationToken cancellationToken)
     {
         ArgumentException.ThrowIfNullOrWhiteSpace(identity);
         ArgumentException.ThrowIfNullOrWhiteSpace(password);

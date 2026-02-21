@@ -9,15 +9,15 @@ public interface INotificationOutbox
     Task EnqueueAsync(
         IDomainEvent @event,
         string correlationId,
-        CancellationToken cancellationToken = default
+        CancellationToken cancellationToken
     );
 
     Task<NotificationMessage?> DequeueAsync(
-        CancellationToken cancellationToken = default
+        CancellationToken cancellationToken
     );
 
     Task MarkAsProcessedAsync(
         NotificationMessage notification,
-        CancellationToken cancellationToken = default
+        CancellationToken cancellationToken
     );
 }

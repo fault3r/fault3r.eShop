@@ -9,16 +9,16 @@ public interface IEventOutbox
     Task EnqueueAsync(
         IEnumerable<IDomainEvent> events,
         string correlationId,
-        CancellationToken cancellationToken = default
+        CancellationToken cancellationToken
     );
 
     Task<IEnumerable<OutboxMessage>> DequeueAsync(
-        int count = 5,
-        CancellationToken cancellationToken = default
+        int count,
+        CancellationToken cancellationToken
     );
 
     Task MarkAsProcessedAsync(
         Guid messageId,
-        CancellationToken cancellationToken = default
+        CancellationToken cancellationToken
     );
 }

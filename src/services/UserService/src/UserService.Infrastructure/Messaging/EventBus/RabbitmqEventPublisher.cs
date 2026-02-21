@@ -41,7 +41,7 @@ public sealed class RabbitmqEventPublisher
 
     public async Task PublishAsync(
         OutboxMessage message,
-        CancellationToken cancellationToken = default)
+        CancellationToken cancellationToken)
     {
         ArgumentNullException.ThrowIfNull(message);
 
@@ -53,7 +53,7 @@ public sealed class RabbitmqEventPublisher
 
         var body = Encoding.UTF8.GetBytes(message.Payload);
 
-        await retryPolicy.ExecuteAsync(async (cancellationToken) =>
+        await retryPolicy.ExecuteAsync(async (ct) =>
         {
             _channel.BasicPublish(
                 exchange: exchangeName,

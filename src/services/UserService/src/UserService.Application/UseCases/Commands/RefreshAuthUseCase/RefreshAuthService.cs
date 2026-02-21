@@ -21,7 +21,7 @@ public sealed class RefreshAuthService(
     public async Task<Result<RefreshAuthResult>> ExecuteAsync(
         string accessToken,
         string refreshToken,
-        CancellationToken cancellationToken = default)
+        CancellationToken cancellationToken)
     {
         ArgumentException.ThrowIfNullOrWhiteSpace(accessToken);
         ArgumentException.ThrowIfNullOrWhiteSpace(refreshToken);

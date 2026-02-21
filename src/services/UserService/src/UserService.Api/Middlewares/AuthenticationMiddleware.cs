@@ -47,7 +47,7 @@ public sealed class AuthenticationMiddleware(
             return;
         }
 
-        var session = await _sessionService.ExistsAsync(sessionId);
+        var session = await _sessionService.ExistsAsync(sessionId, context.RequestAborted);
         if (!session)
         {
             await WriteResponseErrorAsync(context, "Invalidated session!");

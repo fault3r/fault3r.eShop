@@ -14,7 +14,7 @@ public sealed class RabbitmqEventPublisherBackgroundService(
 {
     private readonly IServiceScopeFactory _scopeFactory = serviceScopeFactory;
 
-    protected override async Task ExecuteAsync(CancellationToken cancellationToken = default)
+    protected override async Task ExecuteAsync(CancellationToken cancellationToken)
     {
         await using var scope = _scopeFactory.CreateAsyncScope();
         var _outbox = scope.ServiceProvider.GetRequiredService<IEventOutbox>();
@@ -61,7 +61,7 @@ public sealed class RabbitmqEventPublisherBackgroundService(
     }
 
     private static async Task SomeSecondsAsync(
-        int second = 5,
-        CancellationToken cancellationToken = default)
+        int second,
+        CancellationToken cancellationToken)
     => await Task.Delay(TimeSpan.FromSeconds(second), cancellationToken);
 }

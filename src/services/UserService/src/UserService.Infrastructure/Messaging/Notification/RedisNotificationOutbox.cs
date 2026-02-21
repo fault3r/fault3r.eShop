@@ -73,7 +73,7 @@ public sealed class RedisNotificationOutbox(
     public async Task EnqueueAsync(
         IDomainEvent @event,
         string correlationId,
-        CancellationToken cancellationToken = default)
+        CancellationToken cancellationToken)
     {
         ArgumentNullException.ThrowIfNull(@event);
         ArgumentException.ThrowIfNullOrWhiteSpace(correlationId);
@@ -99,7 +99,7 @@ public sealed class RedisNotificationOutbox(
     }
 
     public async Task<NotificationMessage?> DequeueAsync(
-        CancellationToken cancellationToken = default)
+        CancellationToken cancellationToken)
     {
         var entries = await policy.ExecuteAsync(
             async ct =>
@@ -143,7 +143,7 @@ public sealed class RedisNotificationOutbox(
 
     public async Task MarkAsProcessedAsync(
         NotificationMessage message,
-        CancellationToken cancellationToken = default)
+        CancellationToken cancellationToken)
     {
         await policy.ExecuteAsync(
             async ct =>

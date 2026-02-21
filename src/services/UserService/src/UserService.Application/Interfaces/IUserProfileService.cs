@@ -9,5 +9,5 @@ public interface IUserProfileService
 {
     Task<Result<UserProfileResult>> ExecuteAsync(
         string sessionId,
-        CancellationToken cancellationToken = default);
+        CancellationToken cancellationToken);
 }

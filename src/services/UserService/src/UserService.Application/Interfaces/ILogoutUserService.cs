@@ -7,6 +7,6 @@ public interface ILogoutUserService
 {
     Task<Result> ExecuteAsync(
         string sessionId,
-        CancellationToken cancellationToken = default
+        CancellationToken cancellationToken
     );
 }

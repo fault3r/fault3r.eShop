@@ -20,7 +20,7 @@ public sealed class UserProfileQueryHandler(
 
     public async Task<Result<UserProfileResult>> Handle(
         UserProfileQuery request,
-        CancellationToken cancellationToken = default)
+        CancellationToken cancellationToken)
     {
         ArgumentNullException.ThrowIfNull(request);
 

@@ -14,28 +14,32 @@ public sealed class EfUserRepository(
 {
     private readonly EfPostgresDbContext _dbContext = efDbContext;
 
-    public async Task CreateAsync(User user, CancellationToken cancellationToken = default)
+    public async Task CreateAsync(User user, CancellationToken cancellationToken)
     {
         ArgumentNullException.ThrowIfNull(user);
 
         await _dbContext.Users.AddAsync(user, cancellationToken);
     }
 
-    public async Task<User?> GetByIdAsync(Identity id, CancellationToken cancellationToken = default)
+    public async Task<User?> GetByIdAsync(Identity id, CancellationToken cancellationToken)
     {
         ArgumentNullException.ThrowIfNull(id);
 
-        return await _dbContext.Users.FirstOrDefaultAsync(p => p.Id == id, cancellationToken);
+        return await _dbContext.Users
+            .AsNoTracking()
+            .FirstOrDefaultAsync(p => p.Id == id, cancellationToken);
     }
 
-    public async Task<User?> GetByEmailAsync(Email email, CancellationToken cancellationToken = default)
+    public async Task<User?> GetByEmailAsync(Email email, CancellationToken cancellationToken)
     {
         ArgumentNullException.ThrowIfNull(email);
 
-        return await _dbContext.Users.FirstOrDefaultAsync(p => p.Email == email, cancellationToken);
+        return await _dbContext.Users
+            .AsNoTracking()
+            .FirstOrDefaultAsync(p => p.Email == email, cancellationToken);
     }
 
-    public Task UpdateAsync(User user, CancellationToken cancellationToken = default)
+    public Task UpdateAsync(User user, CancellationToken cancellationToken)
     {
         ArgumentNullException.ThrowIfNull(user);
 
@@ -43,7 +47,7 @@ public sealed class EfUserRepository(
         return Task.CompletedTask;
     }
 
-    public Task DeleteAsync(Identity id, CancellationToken cancellationToken = default)
+    public Task DeleteAsync(Identity id, CancellationToken cancellationToken)
     {
         ArgumentNullException.ThrowIfNull(id);
 

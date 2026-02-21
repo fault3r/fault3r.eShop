@@ -17,7 +17,7 @@ public sealed class UserProfileService(
 
     public async Task<Result<UserProfileResult>> ExecuteAsync(
         string sessionId,
-        CancellationToken cancellationToken = default)
+        CancellationToken cancellationToken)
     {
         ArgumentException.ThrowIfNullOrWhiteSpace(sessionId);
 
