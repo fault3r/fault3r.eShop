@@ -40,9 +40,6 @@ public sealed class RabbitmqEventPublisherBackgroundService(
                 {
                     await _publisher.PublishAsync(message, cancellationToken);
 
-                    // messages may be published more than once
-                    // but consumer will ignore duplicates because it is idempotent
-
                     await _outbox.MarkAsProcessedAsync(message.Id, cancellationToken);
 
                     logger.Information("{Correlation} {Type} Published.", message.CorrelationId, message.Type);
@@ -50,22 +47,22 @@ public sealed class RabbitmqEventPublisherBackgroundService(
                     await Task.Delay(100, cancellationToken);
                 }
             }
-            // OperationCanceledException handles internally by BackgroundService
             catch (Microsoft.EntityFrameworkCore.Storage.RetryLimitExceededException)
             {
                 logger.Error("EFCore connection error, Reconnectiong…");
-                await Task.Delay(1000, cancellationToken);
 
+                await Task.Delay(1000, cancellationToken);
             }
             catch (RabbitMQ.Client.Exceptions.AlreadyClosedException)
             {
                 logger.Error("RabbitMQ connection error!");
+                
                 await Task.Delay(1000, cancellationToken);
-
             }
             catch (Exception ex)
             {
-                logger.Error(ex, "An exception occurred!");
+                logger.Error(ex, "An unexpected exception occurred!");
+                
                 await Task.Delay(1000, cancellationToken);
             }
         }

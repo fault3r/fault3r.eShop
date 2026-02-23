@@ -30,12 +30,14 @@ public sealed class RabbitmqEventPublisher
             autoDelete: false,
             arguments: null
         );
+        channel.ConfirmSelect();
 
         retryPolicy = Policy
             .Handle<Exception>()
             .WaitAndRetryAsync(
                 retryCount: 3,
-                sleepDurationProvider: (retryAttempt) => TimeSpan.FromSeconds(Math.Pow(2, retryAttempt))
+                sleepDurationProvider: (retryAttempt) =>
+                    TimeSpan.FromSeconds(Math.Pow(2, retryAttempt))
             );
     }
 
@@ -62,6 +64,7 @@ public sealed class RabbitmqEventPublisher
                 body: body
             );
 
+            _channel.WaitForConfirmsOrDie();
         }, cancellationToken);
     }
 }
