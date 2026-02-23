@@ -16,19 +16,23 @@ public sealed class RabbitmqEventPublisherBackgroundService(
 
     protected override async Task ExecuteAsync(CancellationToken cancellationToken)
     {
-        await using var scope = _scopeFactory.CreateAsyncScope();
-        var _outbox = scope.ServiceProvider.GetRequiredService<IEventOutbox>();
-        var _publisher = scope.ServiceProvider.GetRequiredService<RabbitmqEventPublisher>();
-
         var logger = Log.ForContext<RabbitmqEventPublisherBackgroundService>();
 
         while (!cancellationToken.IsCancellationRequested)
         {
+            await using var scope = _scopeFactory.CreateAsyncScope();
+            var _outbox = scope.ServiceProvider.GetRequiredService<IEventOutbox>();
+            var _publisher = scope.ServiceProvider.GetRequiredService<RabbitmqEventPublisher>();
+
             try
             {
-                var messages = await _outbox.DequeueAsync(count: 5, cancellationToken);
+                var messages = await _outbox.DequeueAsync(count: 1, cancellationToken);
 
-                if (!messages.Any()) continue;
+                if (!messages.Any())
+                {
+                    await Task.Delay(200, cancellationToken);
+                    continue;
+                }
 
                 logger.Information("Retrieved {Count} message(s).", messages.Count());
 
@@ -36,32 +40,34 @@ public sealed class RabbitmqEventPublisherBackgroundService(
                 {
                     await _publisher.PublishAsync(message, cancellationToken);
 
+                    // messages may be published more than once
+                    // but consumer will ignore duplicates because it is idempotent
+
                     await _outbox.MarkAsProcessedAsync(message.Id, cancellationToken);
 
                     logger.Information("{Correlation} {Type} Published.", message.CorrelationId, message.Type);
 
-                    await SomeSecondsAsync(second: 1, cancellationToken);
+                    await Task.Delay(100, cancellationToken);
                 }
-                await SomeSecondsAsync(second: 5, cancellationToken);
             }
-
+            // OperationCanceledException handles internally by BackgroundService
             catch (Microsoft.EntityFrameworkCore.Storage.RetryLimitExceededException)
             {
                 logger.Error("EFCore connection error, Reconnectiong…");
+                await Task.Delay(1000, cancellationToken);
+
             }
             catch (RabbitMQ.Client.Exceptions.AlreadyClosedException)
             {
                 logger.Error("RabbitMQ connection error!");
+                await Task.Delay(1000, cancellationToken);
+
             }
             catch (Exception ex)
             {
                 logger.Error(ex, "An exception occurred!");
+                await Task.Delay(1000, cancellationToken);
             }
         }
     }
-
-    private static async Task SomeSecondsAsync(
-        int second,
-        CancellationToken cancellationToken)
-    => await Task.Delay(TimeSpan.FromSeconds(second), cancellationToken);
 }

@@ -4,7 +4,6 @@ using FluentValidation;
 using MediatR;
 using Microsoft.Extensions.Logging;
 using UserService.Application.Interfaces;
-using UserService.Domain.Aggregates.UserAggregate;
 using UserService.Domain.Contracts;
 
 namespace UserService.Application.UseCases.Commands.RegisterUserUseCase;
