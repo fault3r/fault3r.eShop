@@ -5,16 +5,17 @@ using UserService.Domain.Messaging.Outbox;
 using UserService.Domain.Repositories;
 using UserService.Domain.UnitOfWork;
 using UserService.Infrastructure.Persistence;
+using UserService.Infrastructure.Persistence.Contexts;
 
 namespace UserService.Infrastructure.UnitOfWork;
 
 public sealed class EfUnitOfWork(
-    EfPostgresDbContext efDbContext,
+    IDatabaseContext dbContext,
     IEventOutbox outbox,
     IUserRepository userRepository
 ) : IUnitOfWork
 {
-    private readonly EfPostgresDbContext _dbContext = efDbContext;
+    private readonly IDatabaseContext _dbContext = dbContext;
     public IEventOutbox EventOutbox { get; } = outbox;
     public IUserRepository UserRepository { get; } = userRepository;
 

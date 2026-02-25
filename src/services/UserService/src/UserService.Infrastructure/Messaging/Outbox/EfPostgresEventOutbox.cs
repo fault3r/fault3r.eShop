@@ -3,15 +3,15 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using UserService.Domain.Interfaces;
 using UserService.Domain.Messaging.Outbox;
-using UserService.Infrastructure.Persistence;
+using UserService.Infrastructure.Persistence.Contexts;
 
 namespace UserService.Infrastructure.Messaging.Outbox;
 
 public sealed class EfPostgresEventOutbox(
-    EfPostgresDbContext efDbContext
+    IDatabaseContext dbContext
 ) : IEventOutbox
 {
-    private readonly EfPostgresDbContext _dbContext = efDbContext;
+    private readonly IDatabaseContext _dbContext = dbContext;
 
     public async Task EnqueueAsync(
         IEnumerable<IDomainEvent> events,

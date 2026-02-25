@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using UserService.Infrastructure.Exceptions.DependencyInjection;
-using UserService.Infrastructure.Persistence;
+using UserService.Infrastructure.Persistence.Contexts;
 using UserService.Infrastructure.Settings;
 
 namespace UserService.Infrastructure.DependencyInjection;
@@ -36,6 +36,8 @@ public static class PostgresExtensions
                 );
             });
         });
+
+        services.AddScoped<IDatabaseContext, EfPostgresDbContext>();
 
         return services;
     }

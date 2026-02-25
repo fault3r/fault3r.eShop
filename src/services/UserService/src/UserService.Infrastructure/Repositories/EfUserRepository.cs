@@ -4,15 +4,15 @@ using Microsoft.EntityFrameworkCore;
 using UserService.Domain.Aggregates.UserAggregate;
 using UserService.Domain.Repositories;
 using UserService.Domain.ValueObjects;
-using UserService.Infrastructure.Persistence;
+using UserService.Infrastructure.Persistence.Contexts;
 
 namespace UserService.Infrastructure.Repositories;
 
 public sealed class EfUserRepository(
-    EfPostgresDbContext efDbContext
+    IDatabaseContext dbContext
 ) : IUserRepository
 {
-    private readonly EfPostgresDbContext _dbContext = efDbContext;
+    private readonly IDatabaseContext _dbContext = dbContext;
 
     public async Task CreateAsync(User user, CancellationToken cancellationToken = default)
     {
