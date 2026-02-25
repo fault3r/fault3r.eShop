@@ -4,11 +4,11 @@ using Microsoft.EntityFrameworkCore;
 using UserService.Domain.Aggregates.UserAggregate;
 using UserService.Domain.Messaging.Outbox;
 
-namespace UserService.Infrastructure.Persistence;
+namespace UserService.Infrastructure.Persistence.Contexts;
 
 public sealed class EfPostgresDbContext(
     DbContextOptions<EfPostgresDbContext> dbcOptions
-) : DbContext(dbcOptions)
+) : DbContext(dbcOptions), IDatabaseContext
 {
     public DbSet<User> Users => Set<User>();
 
@@ -16,7 +16,9 @@ public sealed class EfPostgresDbContext(
 
     protected override void OnModelCreating(ModelBuilder builder)
     {
+        base.OnModelCreating(builder);
+        
         builder.ApplyConfigurationsFromAssembly(
-            typeof(EfPostgresDbContext).Assembly);
+            typeof(EfPostgresDbContext).Assembly);            
     }
 }

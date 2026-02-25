@@ -43,7 +43,7 @@ public sealed class RabbitmqEventPublisher
 
     public async Task PublishAsync(
         OutboxMessage message,
-        CancellationToken cancellationToken)
+        CancellationToken cancellationToken = default)
     {
         ArgumentNullException.ThrowIfNull(message);
 

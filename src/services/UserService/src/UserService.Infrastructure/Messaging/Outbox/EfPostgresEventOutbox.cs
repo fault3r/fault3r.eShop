@@ -16,7 +16,7 @@ public sealed class EfPostgresEventOutbox(
     public async Task EnqueueAsync(
         IEnumerable<IDomainEvent> events,
         string correlationId,
-        CancellationToken cancellationToken)
+        CancellationToken cancellationToken = default)
     {
         ArgumentNullException.ThrowIfNull(events);
         ArgumentException.ThrowIfNullOrWhiteSpace(correlationId);
@@ -35,7 +35,7 @@ public sealed class EfPostgresEventOutbox(
 
     public async Task<IEnumerable<OutboxMessage>> DequeueAsync(
         int count,
-        CancellationToken cancellationToken)
+        CancellationToken cancellationToken = default)
     {
         return await _dbContext.OutboxMessages
             .Where(p => !p.Processed)
@@ -46,7 +46,7 @@ public sealed class EfPostgresEventOutbox(
 
     public async Task MarkAsProcessedAsync(
         Guid messageId,
-        CancellationToken cancellationToken)
+        CancellationToken cancellationToken = default)
     {
         var message = await _dbContext.OutboxMessages
             .FirstOrDefaultAsync(p => p.Id == messageId, cancellationToken);

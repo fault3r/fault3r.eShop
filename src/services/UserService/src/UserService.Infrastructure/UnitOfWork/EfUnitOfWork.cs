@@ -18,7 +18,7 @@ public sealed class EfUnitOfWork(
     public IEventOutbox EventOutbox { get; } = outbox;
     public IUserRepository UserRepository { get; } = userRepository;
 
-    public async Task<int> CommitAsync(CancellationToken cancellationToken)
+    public async Task<int> CommitAsync(CancellationToken cancellationToken = default)
     {
         if (!_dbContext.ChangeTracker.HasChanges())
             return 0;

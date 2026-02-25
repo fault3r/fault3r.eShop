@@ -17,7 +17,7 @@ public class LogoutUserService(
 
     public async Task<Result> ExecuteAsync(
         string sessionId,
-        CancellationToken cancellationToken)
+        CancellationToken cancellationToken = default)
     {
         ArgumentException.ThrowIfNullOrWhiteSpace(sessionId);
 

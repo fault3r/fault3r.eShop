@@ -35,7 +35,7 @@ public sealed class RegisterUserService(
         string email,
         string password,
         string fullName,
-        CancellationToken cancellationToken)
+        CancellationToken cancellationToken = default)
     {
         ArgumentException.ThrowIfNullOrWhiteSpace(email);
         ArgumentException.ThrowIfNullOrWhiteSpace(password);

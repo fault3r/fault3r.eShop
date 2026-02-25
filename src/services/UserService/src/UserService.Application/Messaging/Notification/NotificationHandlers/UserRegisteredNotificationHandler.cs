@@ -22,7 +22,7 @@ public sealed class UserRegisteredNotificationHandler(
 
     public async Task Handle(
         UserRegisteredNotification notification,
-        CancellationToken cancellationToken)
+        CancellationToken cancellationToken = default)
     {
         ArgumentNullException.ThrowIfNull(notification);
 

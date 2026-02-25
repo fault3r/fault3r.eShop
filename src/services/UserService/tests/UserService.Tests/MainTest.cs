@@ -56,7 +56,7 @@ public class MainTests
 
     private static async Task<T> ExecuteWithCancellationAsync<T>(
         Task<T> redisTask,
-        CancellationToken cancellationToken)
+        CancellationToken cancellationToken = default)
     {
         using var timeoutCts = new CancellationTokenSource(TimeSpan.FromSeconds(10));
         

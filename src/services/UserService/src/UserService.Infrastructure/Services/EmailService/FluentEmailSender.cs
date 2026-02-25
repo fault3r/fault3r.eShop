@@ -17,7 +17,7 @@ public sealed class FluentEmailSender(
         string to,
         string subject,
         string body,
-        CancellationToken cancellationToken)
+        CancellationToken cancellationToken = default)
     {
         ArgumentException.ThrowIfNullOrEmpty(to);
         ArgumentException.ThrowIfNullOrEmpty(subject);

@@ -28,7 +28,7 @@ public sealed class EmailTemplateResolver : IEmailTemplateResolver
 
     public async Task<string> ResolveAsync(
         EmailTemplateType emailTemplateType,
-        CancellationToken cancellationToken)
+        CancellationToken cancellationToken = default)
     {
         var path = templates[emailTemplateType];
 

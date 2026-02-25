@@ -21,7 +21,7 @@ public sealed class LogoutUserCommandHandler(
 
     public async Task<Result> Handle(
         LogoutUserCommand request,
-        CancellationToken cancellationToken)
+        CancellationToken cancellationToken = default)
     {
         ArgumentNullException.ThrowIfNull(request);
 

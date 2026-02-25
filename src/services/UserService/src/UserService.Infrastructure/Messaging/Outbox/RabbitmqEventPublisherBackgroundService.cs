@@ -14,7 +14,7 @@ public sealed class RabbitmqEventPublisherBackgroundService(
 {
     private readonly IServiceScopeFactory _scopeFactory = serviceScopeFactory;
 
-    protected override async Task ExecuteAsync(CancellationToken cancellationToken)
+    protected override async Task ExecuteAsync(CancellationToken cancellationToken = default)
     {
         var logger = Log.ForContext<RabbitmqEventPublisherBackgroundService>();
 

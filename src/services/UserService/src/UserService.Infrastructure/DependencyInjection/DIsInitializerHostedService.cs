@@ -11,11 +11,11 @@ public sealed class DIsInitializerHostedService(
 {
     private readonly RedisNotificationOutbox _notificationOutbox = redisNotificationOutbox;
 
-    public async Task StartAsync(CancellationToken cancellationToken)
+    public async Task StartAsync(CancellationToken cancellationToken = default)
     {
         await _notificationOutbox.Initialize();
     }
 
-    public Task StopAsync(CancellationToken cancellationToken)
+    public Task StopAsync(CancellationToken cancellationToken = default)
         => Task.CompletedTask;
 }
