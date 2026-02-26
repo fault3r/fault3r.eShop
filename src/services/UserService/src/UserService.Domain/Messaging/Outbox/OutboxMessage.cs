@@ -11,8 +11,9 @@ public sealed class OutboxMessage
     public Guid Id { get; private set; }
     public string Type { get; private set; }
     public string Payload { get; private set; }
-    public bool Processed { get; private set; }
     public DateTimeOffset Timestamp { get; private set; }
+    public bool Processed { get; private set; }
+    public DateTimeOffset ProcessedAt { get; private set; }
     public string CorrelationId { get; private set; }
 
     public OutboxMessage(
@@ -39,6 +40,7 @@ public sealed class OutboxMessage
     }
 
     public void MarkAsProcessed() => Processed = true;
+    public void SetProcessedAt(DateTimeOffset timestamp) => ProcessedAt = timestamp;
     
     #region ⤚EFCore
     public OutboxMessage()

@@ -1,0 +1,29 @@
+[2026-02-26 13:19:52 DBG] MassTransit.Transports.BusDepot  Starting bus instances: IBus 
+ [2026-02-26 13:19:52 DBG] MassTransit  Starting bus: "rabbitmq://localhost/" 
+ [2026-02-26 13:19:52 ERR] UserService.Infrastructure.Messaging.Notification.MediatorNotificationPublisherBackgroundService   Failed to publish notification, Object reference not set to an instance of an object. 
+ [2026-02-26 13:19:52 DBG] MassTransit  Connect: fault3r@localhost:5672/ 
+ [2026-02-26 13:19:53 DBG] MassTransit  Connected: fault3r@localhost:5672/ (address: amqp://localhost:5672, local: 39562) 
+ [2026-02-26 13:19:53 DBG] MassTransit  Endpoint Ready: "rabbitmq://localhost/fault3r_UserServiceApi_bus_6gioyybugekb89nnbdx8k8ddb7?temporary=true" 
+ [2026-02-26 13:19:53 INF] MassTransit  Bus started: "rabbitmq://localhost/" 
+ [2026-02-26 13:19:55 ERR] MassTransit.EntityFrameworkCoreIntegration.InboxCleanupService  CleanUpInboxState faulted 
+ System.InvalidOperationException: Cannot create a DbSet for 'InboxState' because this type is not included in the model for the context.
+   at Microsoft.EntityFrameworkCore.Internal.InternalDbSet`1.get_EntityType()
+   at Microsoft.EntityFrameworkCore.Internal.InternalDbSet`1.CheckState()
+   at Microsoft.EntityFrameworkCore.Internal.InternalDbSet`1.get_EntityQueryable()
+   at Microsoft.EntityFrameworkCore.Internal.InternalDbSet`1.System.Linq.IQueryable.get_Provider()
+   at System.Linq.Queryable.Where[TSource](IQueryable`1 source, Expression`1 predicate)
+   at MassTransit.EntityFrameworkCoreIntegration.InboxCleanupService`1.GetExpiredInboxStates(TDbContext dbContext, CancellationToken cancellationToken)
+   at MassTransit.EntityFrameworkCoreIntegration.InboxCleanupService`1.CleanUpInboxState(CancellationToken cancellationToken) in /_/src/Persistence/MassTransit.EntityFrameworkCoreIntegration/EntityFrameworkCoreIntegration/InboxCleanupService.cs:line 73
+   at MassTransit.EntityFrameworkCoreIntegration.InboxCleanupService`1.CleanUpInboxState(CancellationToken cancellationToken) in /_/src/Persistence/MassTransit.EntityFrameworkCoreIntegration/EntityFrameworkCoreIntegration/InboxCleanupService.cs:line 87
+   at MassTransit.EntityFrameworkCoreIntegration.InboxCleanupService`1.CleanUpInboxState(CancellationToken cancellationToken) in /_/src/Persistence/MassTransit.EntityFrameworkCoreIntegration/EntityFrameworkCoreIntegration/InboxCleanupService.cs:line 91
+   at MassTransit.EntityFrameworkCoreIntegration.InboxCleanupService`1.ExecuteAsync(CancellationToken stoppingToken) in /_/src/Persistence/MassTransit.EntityFrameworkCoreIntegration/EntityFrameworkCoreIntegration/InboxCleanupService.cs:line 48
+[2026-02-26 13:19:55 ERR] MassTransit.EntityFrameworkCoreIntegration.BusOutboxDeliveryService  ProcessMessageBatch faulted 
+ System.InvalidOperationException: Entity type not found: MassTransit.EntityFrameworkCoreIntegration.OutboxState
+   at MassTransit.EntityFrameworkCoreIntegration.SqlLockStatementProvider.GetSchemaAndTableNameAndColumnName(DbContext context, Type type, String[] propertyNames) in /_/src/Persistence/MassTransit.EntityFrameworkCoreIntegration/EntityFrameworkCoreIntegration/SqlLockStatementProvider.cs:line 78
+   at MassTransit.EntityFrameworkCoreIntegration.SqlLockStatementProvider.GetOutboxStatement(DbContext context) in /_/src/Persistence/MassTransit.EntityFrameworkCoreIntegration/EntityFrameworkCoreIntegration/SqlLockStatementProvider.cs:line 49
+   at MassTransit.EntityFrameworkCoreIntegration.BusOutboxDeliveryService`1.DeliverOutbox(CancellationToken cancellationToken) in /_/src/Persistence/MassTransit.EntityFrameworkCoreIntegration/EntityFrameworkCoreIntegration/BusOutboxDeliveryService.cs:line 113
+   at MassTransit.EntityFrameworkCoreIntegration.BusOutboxDeliveryService`1.DeliverOutbox(CancellationToken cancellationToken) in /_/src/Persistence/MassTransit.EntityFrameworkCoreIntegration/EntityFrameworkCoreIntegration/BusOutboxDeliveryService.cs:line 197
+   at MassTransit.EntityFrameworkCoreIntegration.BusOutboxDeliveryService`1.DeliverOutbox(Int32 resultLimit, CancellationToken cancellationToken) in /_/src/Persistence/MassTransit.EntityFrameworkCoreIntegration/EntityFrameworkCoreIntegration/BusOutboxDeliveryService.cs:line 94
+   at MassTransit.Util.RequestRateAlgorithm.RunRequest(RequestCallback requestCallback, CancellationToken cancellationToken) in /_/src/MassTransit.Abstractions/Util/RequestRateAlgorithm.cs:line 157
+   at MassTransit.Util.RequestRateAlgorithm.Run(RequestCallback requestCallback, CancellationToken cancellationToken) in /_/src/MassTransit.Abstractions/Util/RequestRateAlgorithm.cs:line 150
+   at MassTransit.EntityFrameworkCoreIntegration.BusOutboxDeliveryService`1.ExecuteAsync(CancellationToken stoppingToken) in /_/src/Persistence/MassTransit.EntityFrameworkCoreIntegration/EntityFrameworkCoreIntegration/BusOutboxDeliveryService.cs:line 76

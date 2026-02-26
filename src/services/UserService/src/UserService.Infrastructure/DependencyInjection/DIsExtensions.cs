@@ -76,8 +76,6 @@ public static class DIsExtensions
         
         services.AddHostedService<MediatorNotificationPublisherBackgroundService>();
 
-        services.AddHostedService<RabbitmqEventPublisherBackgroundService>();
-
         services.AddHostedService<DIsInitializerHostedService>();
 
         return services;

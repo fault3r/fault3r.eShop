@@ -26,7 +26,6 @@ public sealed class EfUserRepository(
         ArgumentNullException.ThrowIfNull(id);
 
         return await _dbContext.Users
-            .AsNoTracking()
             .FirstOrDefaultAsync(p => p.Id == id, cancellationToken);
     }
 
@@ -35,7 +34,6 @@ public sealed class EfUserRepository(
         ArgumentNullException.ThrowIfNull(email);
 
         return await _dbContext.Users
-            .AsNoTracking()
             .FirstOrDefaultAsync(p => p.Email == email, cancellationToken);
     }
 
