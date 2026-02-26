@@ -46,7 +46,7 @@ public static class DIsExtensions
 
         services.AddApiVersioning(configuration);
 
-        services.AddRabbitmqMessageBroker(configuration);
+        services.AddMassTransitMessaging(configuration);
 
         services.AddFluentEmailService(configuration);
 
