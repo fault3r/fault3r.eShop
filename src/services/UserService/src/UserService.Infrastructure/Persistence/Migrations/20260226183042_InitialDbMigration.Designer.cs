@@ -5,7 +5,6 @@ using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
-using UserService.Infrastructure.Persistence;
 using UserService.Infrastructure.Persistence.Contexts;
 
 #nullable disable
@@ -13,15 +12,15 @@ using UserService.Infrastructure.Persistence.Contexts;
 namespace UserService.Infrastructure.Persistence.Migrations
 {
     [DbContext(typeof(EfPostgresDbContext))]
-    [Migration("20260211045636_InitialDatabaseMigration")]
-    partial class InitialDatabaseMigration
+    [Migration("20260226183042_InitialDbMigration")]
+    partial class InitialDbMigration
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "8.0.0")
+                .HasAnnotation("ProductVersion", "7.0.14")
                 .HasAnnotation("Relational:MaxIdentifierLength", 63);
 
             NpgsqlModelBuilderExtensions.HasPostgresExtension(modelBuilder, "citext");
@@ -86,7 +85,11 @@ namespace UserService.Infrastructure.Persistence.Migrations
                         .HasColumnType("boolean")
                         .HasColumnName("Processed");
 
-                    b.Property<DateTime>("Timestamp")
+                    b.Property<DateTimeOffset>("ProcessedAt")
+                        .HasColumnType("timestamp with time zone")
+                        .HasColumnName("ProcessedAt");
+
+                    b.Property<DateTimeOffset>("Timestamp")
                         .HasColumnType("timestamp with time zone")
                         .HasColumnName("Timestamp");
 

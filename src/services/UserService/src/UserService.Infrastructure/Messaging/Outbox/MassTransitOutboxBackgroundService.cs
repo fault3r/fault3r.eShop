@@ -1,7 +1,6 @@
+
 using System;
 using System.Text.Json;
-using System.Threading;
-using System.Threading.Tasks;
 using MassTransit;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
@@ -52,7 +51,6 @@ public sealed class MassTransitOutboxBackgroundService(
                     if (messageType == null)
                     {
                         message.MarkAsProcessed();
-                        message.SetProcessedAt(DateTimeOffset.UtcNow);
 
                         _logger.LogWarning(
                             "Unknown message type: {Type} for OutboxMessage {Id}",
@@ -71,7 +69,6 @@ public sealed class MassTransitOutboxBackgroundService(
                     catch (Exception ex)
                     {
                         message.MarkAsProcessed();
-                        message.SetProcessedAt(DateTimeOffset.UtcNow);
 
                         _logger.LogError(
                             ex,
@@ -86,7 +83,6 @@ public sealed class MassTransitOutboxBackgroundService(
                     if (body is null)
                     {
                         message.MarkAsProcessed();
-                        message.SetProcessedAt(DateTimeOffset.UtcNow);
 
                         _logger.LogError(
                             "Deserialized payload is null for OutboxMessage {Id} of type {Type}",
@@ -102,7 +98,6 @@ public sealed class MassTransitOutboxBackgroundService(
                         await publisher.Publish(body, messageType, stoppingToken);
 
                         message.MarkAsProcessed();
-                        message.SetProcessedAt(DateTimeOffset.UtcNow);
                     }
                     catch (Exception ex)
                     {
@@ -124,7 +119,7 @@ public sealed class MassTransitOutboxBackgroundService(
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "Outbox Dispatcher loop failed unexpectedly.");
+                _logger.LogError(ex, "Outbox Dispatcher failed unexpectedly.");
             }
 
             await Task.Delay(500, stoppingToken);

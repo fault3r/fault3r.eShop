@@ -16,36 +16,24 @@ public sealed class EfUnitOfWork(
 ) : IUnitOfWork
 {
     private readonly IDatabaseContext _dbContext = dbContext;
+    
     public IEventOutbox EventOutbox { get; } = outbox;
     public IUserRepository UserRepository { get; } = userRepository;
 
     public async Task<int> CommitAsync(CancellationToken cancellationToken = default)
     {
-        if (!_dbContext.ChangeTracker.HasChanges())
-            return 0;
-
         var strategy = _dbContext.Database.CreateExecutionStrategy();
 
         return await strategy.ExecuteAsync(async () =>
         {
             await using var transaction = await _dbContext.Database
                 .BeginTransactionAsync(cancellationToken);
-            try
-            {
-                var result = await _dbContext.SaveChangesAsync(cancellationToken);
-                await transaction.CommitAsync(cancellationToken);
-                return result;
-            }
-            catch (OperationCanceledException)
-            {
-                await transaction.RollbackAsync(cancellationToken);
-                throw;
-            }
-            catch
-            {
-                await transaction.RollbackAsync(cancellationToken);
-                throw;
-            }
+            Console.WriteLine("trying..");
+            var result = await _dbContext.SaveChangesAsync(cancellationToken);
+
+            await transaction.CommitAsync(cancellationToken);
+            
+            return result;
         });
     }
 }

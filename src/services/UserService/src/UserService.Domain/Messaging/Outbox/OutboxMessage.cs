@@ -39,8 +39,11 @@ public sealed class OutboxMessage
         return new(domainEvent, correlationId);
     }
 
-    public void MarkAsProcessed() => Processed = true;
-    public void SetProcessedAt(DateTimeOffset timestamp) => ProcessedAt = timestamp;
+    public void MarkAsProcessed()
+    {
+        Processed = true;
+        ProcessedAt = DateTimeOffset.UtcNow;
+    }
     
     #region ⤚EFCore
     public OutboxMessage()

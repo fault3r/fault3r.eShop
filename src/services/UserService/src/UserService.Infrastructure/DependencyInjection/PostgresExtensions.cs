@@ -24,16 +24,18 @@ public static class PostgresExtensions
 
         services.AddDbContext<EfPostgresDbContext>(config =>
         {
-            config.UseNpgsql(connectionString, config =>
+            config.UseNpgsql(connectionString, cfg =>
             {
-                config.MigrationsAssembly(
+                cfg.MigrationsAssembly(
                     typeof(EfPostgresDbContext).Assembly.FullName);
 
-                config.EnableRetryOnFailure(
+                cfg.EnableRetryOnFailure(
                     maxRetryCount: 3,
-                    maxRetryDelay: TimeSpan.FromSeconds(2),
+                    maxRetryDelay: TimeSpan.FromSeconds(5),
                     errorCodesToAdd: null
                 );
+
+                cfg.CommandTimeout(30);
             });
         });
 

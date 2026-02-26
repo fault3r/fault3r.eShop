@@ -24,6 +24,7 @@ public static class RateLimiterExtensions
 
         services.AddRateLimiter(config =>
         {
+            /*
             config.GlobalLimiter = PartitionedRateLimiter.Create<HttpContext, string>(httpContext =>
                 RateLimitPartition.GetFixedWindowLimiter(
                     partitionKey: httpContext.Connection.RemoteIpAddress?.ToString() ?? "unknown",
@@ -38,6 +39,7 @@ public static class RateLimiterExtensions
                     }
                 )
             );
+            */
 
             config.AddFixedWindowLimiter("RefAuthRateLimit", options =>
             {
