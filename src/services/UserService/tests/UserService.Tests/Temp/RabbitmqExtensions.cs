@@ -1,51 +1,51 @@
 
-// using System;
-// using Microsoft.Extensions.Configuration;
-// using Microsoft.Extensions.DependencyInjection;
-// using RabbitMQ.Client;
-// using UserService.Infrastructure.Exceptions.DependencyInjection;
-// using UserService.Infrastructure.Settings;
+using System;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
+using RabbitMQ.Client;
+using UserService.Infrastructure.Exceptions.DependencyInjection;
+using UserService.Infrastructure.Settings;
 
-// namespace Temp;
+namespace Temp;
 
-// public static class RabbitmqExtensions
-// {
-//     public static IServiceCollection AddRabbitmqMessageBroker(
-//         this IServiceCollection services,
-//         IConfiguration configuration)
-//     {
-//         var settings = configuration
-//             .GetSection(nameof(RabbitmqSettings))
-//             .Get<RabbitmqSettings>()
-//         ?? throw new MissingRabbitmqSettingsException();
+public static class RabbitmqExtensions
+{
+    public static IServiceCollection AddRabbitmqMessageBroker(
+        this IServiceCollection services,
+        IConfiguration configuration)
+    {
+        var settings = configuration
+            .GetSection(nameof(RabbitmqSettings))
+            .Get<RabbitmqSettings>()
+        ?? throw new MissingRabbitmqSettingsException();
 
-//         services.AddSingleton<IConnection>(_ =>
-//         {
-//             var factory = new ConnectionFactory
-//             {
-//                 HostName = settings.HostName,
-//                 Port = settings.Port,
-//                 UserName = settings.UserName,
-//                 Password = settings.Password,
+        services.AddSingleton<IConnection>(_ =>
+        {
+            var factory = new ConnectionFactory
+            {
+                HostName = settings.HostName,
+                Port = settings.Port,
+                UserName = settings.UserName,
+                Password = settings.Password,
 
-//                 DispatchConsumersAsync = true,
-//             };
+                DispatchConsumersAsync = true,
+            };
 
-//             return factory.CreateConnection();
-//         });
+            return factory.CreateConnection();
+        });
 
-//         services.AddSingleton<IModel>(sp =>
-//         {
-//             var connection = sp.GetRequiredService<IConnection>();
-//             return connection.CreateModel();
-//         });
+        services.AddSingleton<IModel>(sp =>
+        {
+            var connection = sp.GetRequiredService<IConnection>();
+            return connection.CreateModel();
+        });
 
-//         services.AddSingleton<RabbitmqEventPublisher>(sp =>
-//         {
-//             var channel = sp.GetRequiredService<IModel>();
-//             return new(channel, settings.ExchangeName, settings.ExchangeType);
-//         });
+        services.AddSingleton<RabbitmqEventPublisher>(sp =>
+        {
+            var channel = sp.GetRequiredService<IModel>();
+            return new(channel, settings.ExchangeName, settings.ExchangeType);
+        });
 
-//         return services;
-//     }
-// }
+        return services;
+    }
+}
