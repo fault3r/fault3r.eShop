@@ -11,7 +11,6 @@ using Microsoft.Extensions.Logging;
 using UserService.Domain.Interfaces;
 using UserService.Domain.Security;
 using UserService.Application.CrossCutting;
-using UserService.Domain.Messaging.Notification;
 
 namespace UserService.Application.UseCases.Commands.RegisterUserUseCase;
 
@@ -20,7 +19,7 @@ public sealed class RegisterUserService(
     IUserDomainService userDomainService,
     ICorrelationContext correlation,
     IPasswordHasher passwordHasher,
-    INotificationOutbox notificationOutbox,
+    INotificationSender notificationSender,
     ILogger<RegisterUserService> logger
 ) : IRegisterUserService
 {
@@ -28,7 +27,7 @@ public sealed class RegisterUserService(
     private readonly IUserDomainService _userService = userDomainService;
     private readonly ICorrelationContext _correlation = correlation;
     private readonly IPasswordHasher _hasher = passwordHasher;
-    private readonly INotificationOutbox _notificationOutbox = notificationOutbox;
+    private readonly INotificationSender _notificationSender = notificationSender;
     private readonly ILogger<RegisterUserService> _logger = logger;
 
     public async Task<Result<RegisterUserResult>> ExecuteAsync(
@@ -51,7 +50,7 @@ public sealed class RegisterUserService(
         {
             voEmail = Email.Parse(email);
 
-            var voPasswordSalt = PasswordSalt.Parse(_hasher.GenerateSalt());                
+            var voPasswordSalt = PasswordSalt.Parse(_hasher.GenerateSalt());
 
             string hash = _hasher.Compute(password + voPasswordSalt);
             voPasswordHash = PasswordHash.Parse(hash);
@@ -75,18 +74,12 @@ public sealed class RegisterUserService(
             return Result<RegisterUserResult>.Failure("User with this email address already exists!");
         }
 
+
         await _uow.UserRepository.CreateAsync(user, cancellationToken);
         await _uow.EventOutbox.EnqueueAsync(user.Events, _correlation.CorrelationId, cancellationToken);
         await _uow.CommitAsync(cancellationToken);
 
-        // try
-        // {
-        //     await _notificationOutbox.EnqueueAsync(user.Events.First(), _correlation.CorrelationId, cancellationToken);
-        // }
-        // catch(Exception)
-        // {
-        //     _logger.LogError("Failed to enqueue notification: {Notification}", user.Events.First().ToString());
-        // }
+        Task.Run( () => _notificationSender.SendAsync(user.Events.First(), _correlation.CorrelationId, cancellationToken));
 
         user.ClearEvents();
 
