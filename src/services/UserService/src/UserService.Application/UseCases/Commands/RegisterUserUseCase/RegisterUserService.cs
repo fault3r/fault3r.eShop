@@ -74,12 +74,9 @@ public sealed class RegisterUserService(
             return Result<RegisterUserResult>.Failure("User with this email address already exists!");
         }
 
-
         await _uow.UserRepository.CreateAsync(user, cancellationToken);
         await _uow.EventOutbox.EnqueueAsync(user.Events, _correlation.CorrelationId, cancellationToken);
         await _uow.CommitAsync(cancellationToken);
-
-        Task.Run( () => _notificationSender.SendAsync(user.Events.First(), _correlation.CorrelationId, cancellationToken));
 
         user.ClearEvents();
 

@@ -7,7 +7,6 @@ using StackExchange.Redis;
 using UserService.Application.Messaging.Notification;
 using UserService.Domain.Aggregates.UserAggregate.Events;
 using UserService.Domain.ValueObjects;
-using UserService.Infrastructure.Messaging.Notification;
 
 namespace UserService.Tests;
 
