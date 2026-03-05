@@ -2,26 +2,15 @@
 using System;
 using MediatR;
 using UserService.Application.Interfaces;
-using UserService.Application.Messaging.Notification.Notifications;
-using UserService.Domain.Aggregates.UserAggregate.Events;
 using UserService.Domain.Interfaces;
 
 namespace UserService.Application.Messaging.Notification;
 
-public sealed class MediatorNotificationSender : INotificationSender
+public sealed class MediatorNotificationSender(
+    IMediator mediator
+) : INotificationSender
 {
-    private readonly IMediator _mediator;
-    private readonly Dictionary<Type, Func<IDomainEvent, string, NotificationMessage>> _notificationMappers;
-
-    public MediatorNotificationSender(IMediator mediator)
-    {
-        _mediator = mediator;
-
-        _notificationMappers = new()
-        {
-            { typeof(UserRegisteredEvent), (e, corrId) => UserRegisteredNotification.FromEvent((UserRegisteredEvent)e, corrId) },
-        };
-    }
+    private readonly IMediator _mediator = mediator;
 
     public async Task PublishAsync(
         IDomainEvent @event,
@@ -31,11 +20,8 @@ public sealed class MediatorNotificationSender : INotificationSender
         ArgumentNullException.ThrowIfNull(@event);
         ArgumentException.ThrowIfNullOrWhiteSpace(correlationId);
 
-        var notification = @event switch
-        {
-            UserRegisteredEvent e => UserRegisteredNotification.FromEvent(e, correlationId),
-            _ => throw new ArgumentException("unsupported event")
-        };
+        var notification = NotificationMapper.Map(@event, correlationId)
+            ?? throw new ArgumentException($"Unsupported event type: {@event.GetType().Name}");
 
         await _mediator.Publish(notification, cancellationToken);
     }
