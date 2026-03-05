@@ -8,13 +8,22 @@ using UserService.Domain.Interfaces;
 
 namespace UserService.Application.Messaging.Notification;
 
-public sealed class MediatorNotificationSender(
-    IMediator mediator
-) : INotificationSender
+public sealed class MediatorNotificationSender : INotificationSender
 {
-    private readonly IMediator _mediator = mediator;
+    private readonly IMediator _mediator;
+    private readonly Dictionary<Type, Func<IDomainEvent, string, NotificationMessage>> _notificationMappers;
 
-    public async Task SendAsync(
+    public MediatorNotificationSender(IMediator mediator)
+    {
+        _mediator = mediator;
+
+        _notificationMappers = new()
+        {
+            { typeof(UserRegisteredEvent), (e, corrId) => UserRegisteredNotification.FromEvent((UserRegisteredEvent)e, corrId) },
+        };
+    }
+
+    public async Task PublishAsync(
         IDomainEvent @event,
         string correlationId,
         CancellationToken cancellationToken = default)

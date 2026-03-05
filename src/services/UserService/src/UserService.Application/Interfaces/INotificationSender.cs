@@ -7,7 +7,7 @@ namespace UserService.Application.Interfaces;
 
 public interface INotificationSender
 {
-    Task SendAsync(
+    Task PublishAsync(
         IDomainEvent @event,
         string correlationId,
         CancellationToken cancellationToken = default
