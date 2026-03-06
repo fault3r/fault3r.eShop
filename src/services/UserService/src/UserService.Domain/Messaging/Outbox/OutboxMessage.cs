@@ -27,8 +27,9 @@ public sealed class OutboxMessage
         Type = domainEvent.GetType().Name;
         Payload = JsonSerializer.Serialize(
             domainEvent, domainEvent.GetType(), SharedJsonOptions.DefaultOptions);
-        Processed = false;
         Timestamp = domainEvent.OccurredOn;
+        Processed = false;
+        ProcessedAt = Timestamp;
         CorrelationId = correlationId;
     }
 

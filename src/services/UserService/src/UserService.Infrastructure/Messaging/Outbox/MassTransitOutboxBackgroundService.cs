@@ -1,12 +1,12 @@
 
 using System;
 using System.Text.Json;
-using MassTransit;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
-using UserService.Infrastructure.Persistence.Contexts;
+using UserService.Domain.Interfaces;
+using UserService.Domain.Messaging.Outbox;
+using UserService.Infrastructure.Messaging.Bus;
 
 namespace UserService.Infrastructure.Messaging.Outbox;
 
@@ -20,23 +20,20 @@ public sealed class MassTransitOutboxBackgroundService(
 
     protected override async Task ExecuteAsync(CancellationToken stoppingToken)
     {
-        _logger.LogInformation("Outbox Dispatcher started");
-
         while (!stoppingToken.IsCancellationRequested)
         {
             try
             {
                 using var scope = _provider.CreateScope();
-                var dbContext = scope.ServiceProvider.GetRequiredService<IDatabaseContext>();
-                var publisher = scope.ServiceProvider.GetRequiredService<IPublishEndpoint>();
+                var _outbox = scope.ServiceProvider.GetRequiredService<IEventOutbox>();
+                var _publisher = scope.ServiceProvider.GetRequiredService<IMessageBus>();
 
-                var messages = await dbContext.OutboxMessages
-                    .Where(p => !p.Processed)
-                    .OrderBy(p => p.Timestamp)
-                    .Take(5)
-                    .ToListAsync(stoppingToken);
+                var messages = await _outbox.DequeueAsync(
+                    count: 5,
+                    cancellationToken: stoppingToken
+                );
 
-                if (messages.Count == 0)
+                if (!messages.Any())
                 {
                     await Task.Delay(500, stoppingToken);
                     continue;
@@ -48,69 +45,52 @@ public sealed class MassTransitOutboxBackgroundService(
                         break;
 
                     var messageType = OutboxTypeResolver.Resolve(message.Type);
+
                     if (messageType == null)
                     {
-                        message.MarkAsProcessed();
+                        await _outbox.MarkAsProcessedAsync(message.Id, stoppingToken);
 
-                        _logger.LogWarning(
-                            "Unknown message type: {Type} for OutboxMessage {Id}",
-                            message.Type,
-                            message.Id
-                        );
+                        _logger.LogWarning("Unknown message type: {Type} for OutboxMessage {Id}", message.Type, message.Id);
 
                         continue;
                     }
 
-                    object? body;
+                    object? payload;
                     try
                     {
-                        body = JsonSerializer.Deserialize(message.Payload, messageType);
+                        payload = JsonSerializer.Deserialize(message.Payload, messageType);
                     }
                     catch (Exception ex)
                     {
-                        message.MarkAsProcessed();
+                        await _outbox.MarkAsProcessedAsync(message.Id, stoppingToken);
 
-                        _logger.LogError(
-                            ex,
-                            "Failed to deserialize payload for OutboxMessage {Id} of type {Type}",
-                            message.Id,
-                            message.Type
-                        );
+                        _logger.LogWarning(ex, "Failed to deserialize payload for OutboxMessage {Id}.", message.Id);
 
                         continue;
                     }
 
-                    if (body is null)
+                    IDomainEvent @event;
+                    if (payload is null)
                     {
-                        message.MarkAsProcessed();
+                        await _outbox.MarkAsProcessedAsync(message.Id, stoppingToken);
 
-                        _logger.LogError(
-                            "Deserialized payload is null for OutboxMessage {Id} of type {Type}",
-                            message.Id,
-                            message.Type
-                        );
+                        _logger.LogWarning("Null payload for OutboxMessage {Id}.", message.Id);
 
                         continue;
                     }
+                    @event = (IDomainEvent)payload;
 
                     try
                     {
-                        await publisher.Publish(body, messageType, stoppingToken);
+                        await _publisher.PublishAsync(@event, stoppingToken);
 
-                        message.MarkAsProcessed();
+                        await _outbox.MarkAsProcessedAsync(message.Id, stoppingToken);
                     }
                     catch (Exception ex)
                     {
-                        _logger.LogError(
-                            ex,
-                            "MassTransit failed to publish OutboxMessage {Id} of type {Type}",
-                            message.Id,
-                            message.Type
-                        );
+                        _logger.LogError(ex, "MassTransit failed to publish OutboxMessage {Id} of type {Type}", message.Id, message.Type);
                     }
                 }
-
-                await dbContext.SaveChangesAsync(stoppingToken);
             }
             catch (OperationCanceledException) when (stoppingToken.IsCancellationRequested)
             {
@@ -124,7 +104,5 @@ public sealed class MassTransitOutboxBackgroundService(
 
             await Task.Delay(500, stoppingToken);
         }
-
-        _logger.LogInformation("Outbox Dispatcher stopped");
     }
 }

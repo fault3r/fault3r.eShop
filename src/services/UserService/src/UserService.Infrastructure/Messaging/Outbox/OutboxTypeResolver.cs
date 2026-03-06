@@ -8,9 +8,9 @@ public static class OutboxTypeResolver
 {
     private static readonly Dictionary<string, Type> _types = new()
     {
-        ["UserRegisteredEvent"] = typeof(UserRegisteredEvent),
-        ["UserFullNameChangedEvent"] = typeof(UserFullNameChangedEvent),
-        ["UserPasswordChangedEvent"] = typeof(UserPasswordChangedEvent)
+        [nameof(UserRegisteredEvent)] = typeof(UserRegisteredEvent),
+        [nameof(UserFullNameChangedEvent)] = typeof(UserFullNameChangedEvent),
+        [nameof(UserPasswordChangedEvent)] = typeof(UserPasswordChangedEvent),
     };
 
     public static Type? Resolve(string typeName)
