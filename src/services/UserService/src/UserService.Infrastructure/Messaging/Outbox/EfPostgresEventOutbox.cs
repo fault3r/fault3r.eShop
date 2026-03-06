@@ -34,7 +34,7 @@ public sealed class EfPostgresEventOutbox(
     }
 
     public async Task<IEnumerable<OutboxMessage>> DequeueAsync(
-        int count,
+        int count = 1,
         CancellationToken cancellationToken = default)
     {
         return await _dbContext.OutboxMessages

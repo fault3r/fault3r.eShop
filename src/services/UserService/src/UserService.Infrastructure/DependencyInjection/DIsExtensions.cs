@@ -6,7 +6,6 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using UserService.Application.CrossCutting;
 using UserService.Application.Interfaces;
-using UserService.Application.Messaging.Notification;
 using UserService.Application.UseCases.Commands.LoginUserUseCase;
 using UserService.Application.UseCases.Commands.LogoutUserUseCase;
 using UserService.Application.UseCases.Commands.RefreshAuthUseCase;
@@ -14,13 +13,12 @@ using UserService.Application.UseCases.Commands.RegisterUserUseCase;
 using UserService.Application.UseCases.Queries.UserProfileUseCase;
 using UserService.Domain.DomainServices;
 using UserService.Domain.Interfaces;
-using UserService.Domain.Messaging.Notification;
 using UserService.Domain.Messaging.Outbox;
 using UserService.Domain.Repositories;
 using UserService.Domain.Security;
 using UserService.Domain.UnitOfWork;
 using UserService.Infrastructure.CrossCutting;
-using UserService.Infrastructure.Messaging.Notification;
+using UserService.Infrastructure.Messaging.Bus;
 using UserService.Infrastructure.Messaging.Outbox;
 using UserService.Infrastructure.Repositories;
 using UserService.Infrastructure.Security;
@@ -59,10 +57,7 @@ public static class DIsExtensions
 
         services.AddScoped<IEventOutbox, EfPostgresEventOutbox>();
 
-        services.AddSingleton<RedisNotificationOutbox>();
-
-        services.AddSingleton<INotificationOutbox>(sp =>
-            sp.GetRequiredService<RedisNotificationOutbox>());
+        services.AddScoped<IMessageBus, MassTransitMessageBus>();
 
         services.AddScoped<IUserRepository, EfUserRepository>();
 
@@ -71,10 +66,6 @@ public static class DIsExtensions
         services.AddSingleton<ICorrelationContext, CorrelationContext>();
 
         services.AddSingleton<IPasswordHasher, Argon2PasswordHasher>();
-
-        services.AddSingleton<INotificationFactory, NotificationFactory>();
-        
-        // services.AddHostedService<MediatorNotificationPublisherBackgroundService>();
 
         services.AddHostedService<DIsInitializerHostedService>();
 
