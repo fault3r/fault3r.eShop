@@ -25,9 +25,8 @@ public static class MassTransitExtensions
         {
             config.AddEntityFrameworkOutbox<EfPostgresDbContext>(cfg =>
             {
-                cfg.QueryDelay = TimeSpan.FromSeconds(1);
                 cfg.UsePostgres();
-                cfg.UseBusOutbox(); 
+                cfg.UseBusOutbox();
             });
 
             config.UsingRabbitMq((ctx, cfg) =>
@@ -36,6 +35,11 @@ public static class MassTransitExtensions
                 {
                     c.Username(settings.UserName);
                     c.Password(settings.Password);
+                });
+
+                cfg.UseDelayedRedelivery(delay =>
+                {
+                    delay.Interval(5, TimeSpan.FromSeconds(30));
                 });
             });
         });
