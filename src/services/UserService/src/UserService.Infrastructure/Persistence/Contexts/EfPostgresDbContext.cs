@@ -1,5 +1,7 @@
 
 using System;
+using MassTransit;
+using MassTransit.EntityFrameworkCoreIntegration;
 using Microsoft.EntityFrameworkCore;
 using UserService.Domain.Aggregates.UserAggregate;
 using UserService.Domain.Messaging.Outbox;
@@ -12,13 +14,20 @@ public sealed class EfPostgresDbContext(
 {
     public DbSet<User> Users => Set<User>();
 
-    public DbSet<OutboxMessage> OutboxMessages => Set<OutboxMessage>();
+    public DbSet<Domain.Messaging.Outbox.OutboxMessage> OutboxMessages => Set<Domain.Messaging.Outbox.OutboxMessage>();
+
+
+    public DbSet<InboxState> InboxStates { get; set; }
+    public DbSet<OutboxState> OutboxStates { get; set; }
 
     protected override void OnModelCreating(ModelBuilder builder)
     {
         base.OnModelCreating(builder);
-        
+
         builder.ApplyConfigurationsFromAssembly(
-            typeof(EfPostgresDbContext).Assembly);            
+            typeof(EfPostgresDbContext).Assembly);
+
+        builder.AddInboxStateEntity();
+        builder.AddOutboxStateEntity();
     }
 }

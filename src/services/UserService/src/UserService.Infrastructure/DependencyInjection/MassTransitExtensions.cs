@@ -36,11 +36,6 @@ public static class MassTransitExtensions
                     c.Username(settings.UserName);
                     c.Password(settings.Password);
                 });
-
-                cfg.UseDelayedRedelivery(delay =>
-                {
-                    delay.Interval(5, TimeSpan.FromSeconds(30));
-                });
             });
         });
 

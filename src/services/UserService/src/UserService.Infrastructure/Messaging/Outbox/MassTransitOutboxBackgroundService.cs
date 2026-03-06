@@ -99,7 +99,7 @@ public sealed class MassTransitOutboxBackgroundService(
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "Outbox Dispatcher failed unexpectedly.");
+                _logger.LogError(ex, "An unexpected exception occurred!");
             }
 
             await Task.Delay(500, stoppingToken);

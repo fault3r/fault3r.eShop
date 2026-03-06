@@ -1,6 +1,5 @@
 
 using System;
-using UserService.Application.Messaging.Notification;
 using UserService.Domain.Interfaces;
 
 namespace UserService.Application.Interfaces;

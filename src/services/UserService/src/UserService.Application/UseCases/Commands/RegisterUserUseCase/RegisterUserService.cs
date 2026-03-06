@@ -19,7 +19,6 @@ public sealed class RegisterUserService(
     IUserDomainService userDomainService,
     ICorrelationContext correlation,
     IPasswordHasher passwordHasher,
-    INotificationSender notificationSender,
     ILogger<RegisterUserService> logger
 ) : IRegisterUserService
 {
@@ -27,7 +26,6 @@ public sealed class RegisterUserService(
     private readonly IUserDomainService _userService = userDomainService;
     private readonly ICorrelationContext _correlation = correlation;
     private readonly IPasswordHasher _hasher = passwordHasher;
-    private readonly INotificationSender _notificationSender = notificationSender;
     private readonly ILogger<RegisterUserService> _logger = logger;
 
     public async Task<Result<RegisterUserResult>> ExecuteAsync(

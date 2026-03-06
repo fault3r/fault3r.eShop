@@ -68,6 +68,8 @@ public static class DIsExtensions
         services.AddSingleton<IPasswordHasher, Argon2PasswordHasher>();
 
         services.AddHostedService<DIsInitializerHostedService>();
+        
+        services.AddHostedService<MassTransitOutboxBackgroundService>();
 
         return services;
     }
