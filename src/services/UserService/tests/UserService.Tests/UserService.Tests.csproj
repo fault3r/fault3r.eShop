@@ -37,12 +37,10 @@
     <PackageReference Include="Serilog.Sinks.File" Version="7.0.0" />
   </ItemGroup>
 
-
   <ItemGroup>
     <ProjectReference Include="../../src/UserService.Domain/UserService.Domain.csproj" />
     <ProjectReference Include="../../src/UserService.Infrastructure/UserService.Infrastructure.csproj" />
   </ItemGroup>
-
 
   <ItemGroup>
     <Folder Include="UnitTests/" />
