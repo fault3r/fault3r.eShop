@@ -2,11 +2,6 @@
 using System;
 using Polly;
 using Polly.Timeout;
-using Serilog;
-using StackExchange.Redis;
-using UserService.Application.Messaging.Notification;
-using UserService.Domain.Aggregates.UserAggregate.Events;
-using UserService.Domain.ValueObjects;
 
 namespace UserService.Tests;
 
