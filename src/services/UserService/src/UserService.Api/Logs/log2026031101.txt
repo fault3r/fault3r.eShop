@@ -33,4 +33,28 @@
  [2026-03-11 01:05:43 INF] UserService.Application.UseCases.Commands.RegisterUserUseCase.RegisterUserService 2b81ca96-25aa-4d20-9a53-a83cb4eb651b Registering user with 'string@teppppppst.com' email… 
  [2026-03-11 01:05:46 INF] UserService.Application.UseCases.Commands.RegisterUserUseCase.RegisterUserService 2b81ca96-25aa-4d20-9a53-a83cb4eb651b User successfully registered with '848320ec98444f659e8fbcc4fbcf9e02' identity. 
  [2026-03-11 01:05:54 INF]  2b81ca96-25aa-4d20-9a53-a83cb4eb651b Completed request POST /api/v1/auth/register with status code 201. 
+ [2026-03-11 01:10:21 DBG] MassTransit.Transports.BusDepot  Starting bus instances: IBus 
+ [2026-03-11 01:10:21 DBG] MassTransit  Starting bus: "rabbitmq://localhost/" 
+ [2026-03-11 01:10:22 DBG] MassTransit  Connect: fault3r@localhost:5672/ 
+ [2026-03-11 01:10:22 DBG] MassTransit  Connected: fault3r@localhost:5672/ (address: amqp://localhost:5672, local: 46260) 
+ [2026-03-11 01:10:22 DBG] MassTransit  Endpoint Ready: "rabbitmq://localhost/fault3r_UserServiceApi_bus_ztpyyybugekbgfrbbdx875pbrn?temporary=true" 
+ [2026-03-11 01:10:22 INF] MassTransit  Bus started: "rabbitmq://localhost/" 
+ [2026-03-11 01:15:00 DBG] MassTransit.Transports.BusDepot  Starting bus instances: IBus 
+ [2026-03-11 01:15:00 DBG] MassTransit  Starting bus: "rabbitmq://localhost/" 
+ [2026-03-11 01:15:00 DBG] MassTransit  Connect: fault3r@localhost:5672/ 
+ [2026-03-11 01:15:01 DBG] MassTransit  Connected: fault3r@localhost:5672/ (address: amqp://localhost:5672, local: 59234) 
+ [2026-03-11 01:15:01 DBG] MassTransit  Endpoint Ready: "rabbitmq://localhost/fault3r_UserServiceApi_bus_dptyyybugekb8uumbdx87518ro?temporary=true" 
+ [2026-03-11 01:15:01 INF] MassTransit  Bus started: "rabbitmq://localhost/" 
+ [2026-03-11 01:16:26 DBG] MassTransit.Transports.BusDepot  Starting bus instances: IBus 
+ [2026-03-11 01:16:26 DBG] MassTransit  Starting bus: "rabbitmq://localhost/" 
+ [2026-03-11 01:16:26 DBG] MassTransit  Connect: fault3r@localhost:5672/ 
+ [2026-03-11 01:16:27 DBG] MassTransit  Connected: fault3r@localhost:5672/ (address: amqp://localhost:5672, local: 54388) 
+ [2026-03-11 01:16:27 DBG] MassTransit  Endpoint Ready: "rabbitmq://localhost/fault3r_UserServiceApi_bus_s71yyybugekbggoebdx875u4g9?temporary=true" 
+ [2026-03-11 01:16:27 INF] MassTransit  Bus started: "rabbitmq://localhost/" 
+ [2026-03-11 01:21:51 DBG] MassTransit.Transports.BusDepot  Starting bus instances: IBus 
+ [2026-03-11 01:21:51 DBG] MassTransit  Starting bus: "rabbitmq://localhost/" 
+ [2026-03-11 01:21:51 DBG] MassTransit  Connect: fault3r@localhost:5672/ 
+ [2026-03-11 01:21:51 DBG] MassTransit  Connected: fault3r@localhost:5672/ (address: amqp://localhost:5672, local: 50864) 
+ [2026-03-11 01:21:51 DBG] MassTransit  Endpoint Ready: "rabbitmq://localhost/fault3r_UserServiceApi_bus_gjsoyybugekb8y4ibdx8753hdr?temporary=true" 
+ [2026-03-11 01:21:51 INF] MassTransit  Bus started: "rabbitmq://localhost/" 
  

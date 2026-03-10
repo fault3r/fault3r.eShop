@@ -19,8 +19,6 @@ public sealed class MassTransitOutboxBackgroundService(
     private readonly IServiceProvider _provider = serviceProvider;
     private readonly ILogger<MassTransitOutboxBackgroundService> _logger = logger;
 
-    private readonly JsonSerializerOptions jsonOptions = SharedJsonOptions.DefaultOptions;
-
     protected override async Task ExecuteAsync(CancellationToken stoppingToken)
     {
         while (!stoppingToken.IsCancellationRequested)
@@ -61,7 +59,7 @@ public sealed class MassTransitOutboxBackgroundService(
                     object? payload;
                     try
                     {
-                        payload = JsonSerializer.Deserialize(message.Payload, messageType, jsonOptions);
+                        payload = JsonSerializer.Deserialize(message.Payload, messageType, SharedJsonOptions.DefaultOptions);
                     }
                     catch (Exception ex)
                     {
