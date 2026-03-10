@@ -4,6 +4,7 @@ using System.Text.Json;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using UserService.Domain.Contracts;
 using UserService.Domain.Interfaces;
 using UserService.Domain.Messaging.Outbox;
 using UserService.Infrastructure.Messaging.Bus;
@@ -17,6 +18,8 @@ public sealed class MassTransitOutboxBackgroundService(
 {
     private readonly IServiceProvider _provider = serviceProvider;
     private readonly ILogger<MassTransitOutboxBackgroundService> _logger = logger;
+
+    private readonly JsonSerializerOptions jsonOptions = SharedJsonOptions.DefaultOptions;
 
     protected override async Task ExecuteAsync(CancellationToken stoppingToken)
     {
@@ -58,7 +61,7 @@ public sealed class MassTransitOutboxBackgroundService(
                     object? payload;
                     try
                     {
-                        payload = JsonSerializer.Deserialize(message.Payload, messageType);
+                        payload = JsonSerializer.Deserialize(message.Payload, messageType, jsonOptions);
                     }
                     catch (Exception ex)
                     {

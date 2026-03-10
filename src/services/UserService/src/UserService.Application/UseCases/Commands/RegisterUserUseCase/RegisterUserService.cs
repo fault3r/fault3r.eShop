@@ -64,8 +64,8 @@ public sealed class RegisterUserService(
             return Result<RegisterUserResult>.Failure(ex.Message);
         }
 
-        var canCreate = await _userService.VerifyCanCreateAsync(voEmail, cancellationToken);
-        if (!canCreate)
+        var allowed = await _userService.VerifyCanCreateAsync(voEmail, cancellationToken);
+        if (!allowed)
         {
             _logger.LogWarning("User with this email address already exists!");
 

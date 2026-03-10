@@ -28,7 +28,7 @@ public sealed class EfUnitOfWork(
         {
             await using var transaction = await _dbContext.Database
                 .BeginTransactionAsync(cancellationToken);
-            Console.WriteLine("trying..");
+            
             var result = await _dbContext.SaveChangesAsync(cancellationToken);
 
             await transaction.CommitAsync(cancellationToken);
