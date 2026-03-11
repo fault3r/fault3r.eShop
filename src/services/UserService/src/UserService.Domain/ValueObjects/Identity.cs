@@ -1,5 +1,6 @@
 
 using System;
+using System.Text.Json.Serialization;
 using UserService.Domain.Abstractions;
 using UserService.Domain.Exceptions.Identity;
 
@@ -8,7 +9,7 @@ namespace UserService.Domain.ValueObjects;
 public sealed class Identity : ValueObject<Identity>
 {
     public Guid Value { get; }
-
+    
     private Identity(Guid guid)
     {
         if (guid == Guid.Empty)

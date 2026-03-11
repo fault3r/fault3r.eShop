@@ -59,7 +59,7 @@ public sealed class MassTransitOutboxBackgroundService(
                     object? payload;
                     try
                     {
-                        payload = JsonSerializer.Deserialize(message.Payload, messageType, SharedJsonOptions.DefaultOptions);
+                        payload = JsonSerializer.Deserialize(message.Payload, messageType, SharedJsonSerializer.DefaultOptions);
                     }
                     catch (Exception ex)
                     {

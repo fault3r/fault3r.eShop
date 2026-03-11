@@ -18,7 +18,7 @@ public sealed class RedisSessionService(
     private readonly SessionSettings _settings = settings;
 
     private readonly JsonSerializerOptions jsonOptions
-        = SharedJsonOptions.DefaultOptions;
+        = SharedJsonSerializer.DefaultOptions;
         
     public async Task CreateAsync(
         SessionData session,

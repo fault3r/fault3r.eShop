@@ -24,7 +24,7 @@ public class MainTests
 
         var @event = user.Events.First();
 
-        var jsonOptions = SharedJsonOptions.DefaultOptions;
+        var jsonOptions = SharedJsonSerializer.DefaultOptions;
 
         var type = OutboxTypeResolver.Resolve(@event.GetType().Name)!;
 

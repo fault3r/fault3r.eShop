@@ -53,13 +53,13 @@ public sealed class UserConfiguration : IEntityTypeConfiguration<User>
             )
             .IsRequired();                        
 
-        builder.OwnsOne(p => p.FullName, ownBuilder =>
+        builder.OwnsOne(p => p.FullName, b =>
         {            
-            ownBuilder.Property(p => p.FirstName)
+            b.Property(p => p.FirstName)
                 .HasColumnName("FirstName")
                 .IsRequired();
 
-            ownBuilder.Property(p => p.LastName)
+            b.Property(p => p.LastName)
                 .HasColumnName("LastName")
                 .IsRequired();
         })

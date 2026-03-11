@@ -65,7 +65,7 @@ public sealed class AuthenticationMiddleware(
 
         var errorResponse = new { errorMessage };
         await context.Response.WriteAsync(
-            JsonSerializer.Serialize(errorResponse, SharedJsonOptions.DefaultOptions));
+            JsonSerializer.Serialize(errorResponse, SharedJsonSerializer.DefaultOptions));
     }
 }
 
