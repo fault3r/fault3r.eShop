@@ -54,7 +54,7 @@ public sealed class Identity : ValueObject<Identity>
     }
 
     public override string ToString()
-        => Value.ToString("N");
+        => Value.ToString();
 
     public static implicit operator string(Identity identity)
         => identity.ToString();

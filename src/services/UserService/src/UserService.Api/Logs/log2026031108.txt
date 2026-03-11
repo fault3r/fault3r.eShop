@@ -1,0 +1,30 @@
+[2026-03-11 08:42:52 DBG] MassTransit.Transports.BusDepot  Starting bus instances: IBus 
+ [2026-03-11 08:42:52 DBG] MassTransit  Starting bus: "rabbitmq://localhost/" 
+ [2026-03-11 08:42:52 DBG] MassTransit  Connect: fault3r@localhost:5672/ 
+ [2026-03-11 08:42:52 DBG] MassTransit  Connected: fault3r@localhost:5672/ (address: amqp://localhost:5672, local: 46044) 
+ [2026-03-11 08:42:52 DBG] MassTransit  Endpoint Ready: "rabbitmq://localhost/fault3r_UserServiceApi_bus_3rsyyybugekb8psmbdx86mganw?temporary=true" 
+ [2026-03-11 08:42:52 INF] MassTransit  Bus started: "rabbitmq://localhost/" 
+ [2026-03-11 08:42:57 WRN] UserService.Infrastructure.Messaging.Outbox.MassTransitOutboxBackgroundService  Failed to deserialize payload for OutboxMessage "1501c4fe-8cbb-49d5-8fb9-b6cd01277552". 
+ System.NotSupportedException: Deserialization of types without a parameterless constructor, a singular parameterized constructor, or a parameterized constructor annotated with 'JsonConstructorAttribute' is not supported. Type 'UserService.Domain.ValueObjects.Identity'. Path: $.userId | LineNumber: 0 | BytePositionInLine: 11.
+ ---> System.NotSupportedException: Deserialization of types without a parameterless constructor, a singular parameterized constructor, or a parameterized constructor annotated with 'JsonConstructorAttribute' is not supported. Type 'UserService.Domain.ValueObjects.Identity'.
+   --- End of inner exception stack trace ---
+   at System.Text.Json.ThrowHelper.ThrowNotSupportedException(ReadStack& state, Utf8JsonReader& reader, Exception innerException)
+   at System.Text.Json.ThrowHelper.ThrowNotSupportedException_DeserializeNoConstructor(JsonTypeInfo typeInfo, Utf8JsonReader& reader, ReadStack& state)
+   at System.Text.Json.Serialization.Converters.ObjectDefaultConverter`1.OnTryRead(Utf8JsonReader& reader, Type typeToConvert, JsonSerializerOptions options, ReadStack& state, T& value)
+   at System.Text.Json.Serialization.JsonConverter`1.TryRead(Utf8JsonReader& reader, Type typeToConvert, JsonSerializerOptions options, ReadStack& state, T& value, Boolean& isPopulatedValue)
+   at System.Text.Json.Serialization.Converters.SmallObjectWithParameterizedConstructorConverter`5.TryRead[TArg](ReadStack& state, Utf8JsonReader& reader, JsonParameterInfo jsonParameterInfo, TArg& arg)
+   at System.Text.Json.Serialization.Converters.SmallObjectWithParameterizedConstructorConverter`5.ReadAndCacheConstructorArgument(ReadStack& state, Utf8JsonReader& reader, JsonParameterInfo jsonParameterInfo)
+   at System.Text.Json.Serialization.Converters.ObjectWithParameterizedConstructorConverter`1.OnTryRead(Utf8JsonReader& reader, Type typeToConvert, JsonSerializerOptions options, ReadStack& state, T& value)
+   at System.Text.Json.Serialization.JsonConverter`1.TryRead(Utf8JsonReader& reader, Type typeToConvert, JsonSerializerOptions options, ReadStack& state, T& value, Boolean& isPopulatedValue)
+   at System.Text.Json.Serialization.JsonConverter`1.ReadCore(Utf8JsonReader& reader, T& value, JsonSerializerOptions options, ReadStack& state)
+   at System.Text.Json.Serialization.Metadata.JsonTypeInfo`1.Deserialize(Utf8JsonReader& reader, ReadStack& state)
+   at System.Text.Json.Serialization.Metadata.JsonTypeInfo`1.DeserializeAsObject(Utf8JsonReader& reader, ReadStack& state)
+   at System.Text.Json.JsonSerializer.ReadFromSpanAsObject(ReadOnlySpan`1 utf8Json, JsonTypeInfo jsonTypeInfo, Nullable`1 actualByteCount)
+   at System.Text.Json.JsonSerializer.ReadFromSpanAsObject(ReadOnlySpan`1 json, JsonTypeInfo jsonTypeInfo)
+   at System.Text.Json.JsonSerializer.Deserialize(String json, Type returnType, JsonSerializerOptions options)
+   at UserService.Infrastructure.Messaging.Outbox.MassTransitOutboxBackgroundService.ExecuteAsync(CancellationToken stoppingToken) in /home/hamed-damavandi/Documents/fault3r.eShop/src/services/UserService/src/UserService.Infrastructure/Messaging/Outbox/MassTransitOutboxBackgroundService.cs:line 62
+[2026-03-11 08:44:33 INF]  b3b27f91-5d64-4b03-869d-2efb1ded8df1 Incoming request POST /api/v1/auth/register. 
+ [2026-03-11 08:44:33 INF] UserService.Application.UseCases.Commands.RegisterUserUseCase.RegisterUserService b3b27f91-5d64-4b03-869d-2efb1ded8df1 Registering user with 'string@test.com' email… 
+ [2026-03-11 08:44:34 WRN] UserService.Application.UseCases.Commands.RegisterUserUseCase.RegisterUserService b3b27f91-5d64-4b03-869d-2efb1ded8df1 User with this email address already exists! 
+ [2026-03-11 08:44:34 INF]  b3b27f91-5d64-4b03-869d-2efb1ded8df1 Completed request POST /api/v1/auth/register with status code 409. 
+ 

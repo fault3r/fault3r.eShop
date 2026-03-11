@@ -1,5 +1,6 @@
 
 using System;
+using System.Text.Json.Serialization;
 using UserService.Domain.Abstractions;
 using UserService.Domain.ValueObjects;
 
@@ -19,7 +20,7 @@ public sealed record UserRegisteredEvent : DomainEvent
         ArgumentNullException.ThrowIfNull(userId);
         ArgumentNullException.ThrowIfNull(email);
         ArgumentNullException.ThrowIfNull(fullName);
-        
+
         UserId = userId;
         Email = email;
         FullName = fullName;
