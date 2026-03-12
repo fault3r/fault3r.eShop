@@ -17,5 +17,9 @@
     <PackageReference Include="StackExchange.Redis" Version="2.10.1" />
     <PackageReference Include="Serilog.Extensions.Logging" Version="10.0.0" />
   </ItemGroup>
+  
+  <ItemGroup>
+    <Folder Include="Services/JsonSerializer/" />
+  </ItemGroup>
 
 </Project>

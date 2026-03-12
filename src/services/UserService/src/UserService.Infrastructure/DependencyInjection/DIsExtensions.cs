@@ -73,8 +73,6 @@ public static class DIsExtensions
 
         services.AddHostedService<MassTransitOutboxBackgroundService>();
 
-        SharedJsonSerializer.DefaultOptions.Converters.Add(new IdentityJsonConverter());
-
         return services;
     }
 
