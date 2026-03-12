@@ -4,7 +4,7 @@ using System.Text.Json;
 using System.Text.Json.Serialization;
 using UserService.Domain.ValueObjects;
 
-namespace UserService.Infrastructure.CrossCutting.JsonConverters;
+namespace UserService.Infrastructure.Services.JsonSerializer.Converters;
 
 public sealed class IdentityJsonConverter : JsonConverter<Identity>
 {

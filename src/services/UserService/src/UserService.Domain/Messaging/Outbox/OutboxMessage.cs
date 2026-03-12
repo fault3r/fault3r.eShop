@@ -1,44 +1,17 @@
 
 using System;
-using System.Text.Json;
-using UserService.Domain.Contracts;
-using UserService.Domain.Interfaces;
 
 namespace UserService.Domain.Messaging.Outbox;
 
 public sealed class OutboxMessage
 {
-    public Guid Id { get; private set; }
-    public string Type { get; private set; }
-    public string Payload { get; private set; }
-    public DateTimeOffset Timestamp { get; private set; }
-    public bool Processed { get; private set; }
-    public DateTimeOffset ProcessedAt { get; private set; }
-    public string CorrelationId { get; private set; }
-
-    public OutboxMessage(
-        IDomainEvent domainEvent,
-        string correlationId)
-    {
-        ArgumentNullException.ThrowIfNull(domainEvent);
-        ArgumentException.ThrowIfNullOrEmpty(correlationId);
-
-        Id = domainEvent.EventId;
-        Type = domainEvent.GetType().Name;
-        Payload = JsonSerializer.Serialize(
-            domainEvent, domainEvent.GetType(), SharedJsonSerializer.DefaultOptions);
-        Timestamp = domainEvent.OccurredOn;
-        Processed = false;
-        ProcessedAt = Timestamp;
-        CorrelationId = correlationId;
-    }
-
-    public static OutboxMessage FromEvent(
-        IDomainEvent domainEvent,
-        string correlationId)
-    {
-        return new(domainEvent, correlationId);
-    }
+    public Guid Id { get; set; }
+    public string Type { get; set; }
+    public string Payload { get; set; }
+    public DateTimeOffset Timestamp { get; set; }
+    public bool Processed { get; set; }
+    public DateTimeOffset ProcessedAt { get; set; }
+    public string CorrelationId { get; set; }
 
     public void MarkAsProcessed()
     {

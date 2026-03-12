@@ -2,7 +2,7 @@
 using System;
 using System.Text.Json;
 using UserService.Application.Services.JsonSerializer;
-using UserService.Infrastructure.CrossCutting.JsonConverters;
+using UserService.Infrastructure.Services.JsonSerializer.Converters;
 
 namespace UserService.Infrastructure.Services.JsonSerializer;
 

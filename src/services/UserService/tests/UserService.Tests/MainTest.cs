@@ -6,6 +6,7 @@ using UserService.Domain.Contracts;
 using UserService.Domain.Factories;
 using UserService.Domain.ValueObjects;
 using UserService.Infrastructure.Messaging.Outbox;
+using UserService.Infrastructure.Services.JsonSerializer;
 
 namespace UserService.Tests;
 
@@ -24,7 +25,7 @@ public class MainTests
 
         var @event = user.Events.First();
 
-        var jsonOptions = SharedJsonSerializer.DefaultOptions;        
+        var jsonOptions = new NetJsonSerializer().DefaultOptions;   
 
         var type = OutboxTypeResolver.Resolve(@event.GetType().Name)!;
 

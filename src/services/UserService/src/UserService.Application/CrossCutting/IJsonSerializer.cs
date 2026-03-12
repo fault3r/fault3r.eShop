@@ -2,7 +2,7 @@
 using System;
 using System.Text.Json;
 
-namespace UserService.Application.Services.JsonSerializer;
+namespace UserService.Application.CrossCutting;
 
 public interface IJsonSerializer
 {

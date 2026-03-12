@@ -1,6 +1,8 @@
 
 using System;
+using System.Text.Json;
 using Microsoft.EntityFrameworkCore;
+using UserService.Application.CrossCutting;
 using UserService.Domain.Interfaces;
 using UserService.Domain.Messaging.Outbox;
 using UserService.Infrastructure.Persistence.Contexts;
@@ -8,10 +10,12 @@ using UserService.Infrastructure.Persistence.Contexts;
 namespace UserService.Infrastructure.Messaging.Outbox;
 
 public sealed class EfPostgresEventOutbox(
-    IDatabaseContext dbContext
+    IDatabaseContext dbContext,
+    IJsonSerializer jsonSerializer
 ) : IEventOutbox
 {
     private readonly IDatabaseContext _dbContext = dbContext;
+    private readonly IJsonSerializer _jsonSerializer = jsonSerializer;
 
     public async Task EnqueueAsync(
         IEnumerable<IDomainEvent> events,
@@ -27,7 +31,16 @@ public sealed class EfPostgresEventOutbox(
             throw new ArgumentException($"{nameof(events)} contains null element");
 
         var messages = events
-            .Select(e => OutboxMessage.FromEvent(e, correlationId));
+            .Select(e => new OutboxMessage
+            {
+                Id = e.EventId,
+                Type = e.GetType().Name,
+                Payload = JsonSerializer.Serialize(e, e.GetType(), _jsonSerializer.DefaultOptions),
+                Timestamp = e.OccurredOn,
+                Processed = false,
+                ProcessedAt = e.OccurredOn,
+                CorrelationId = correlationId,
+            });
 
         await _dbContext.OutboxMessages
             .AddRangeAsync(messages, cancellationToken);
