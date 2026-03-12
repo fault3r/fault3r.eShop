@@ -1,6 +1,5 @@
 
 using System;
-using System.Text.Json.Serialization;
 using UserService.Domain.Abstractions;
 using UserService.Domain.ValueObjects;
 

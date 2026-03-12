@@ -11,6 +11,7 @@ using UserService.Application.UseCases.Commands.LogoutUserUseCase;
 using UserService.Application.UseCases.Commands.RefreshAuthUseCase;
 using UserService.Application.UseCases.Commands.RegisterUserUseCase;
 using UserService.Application.UseCases.Queries.UserProfileUseCase;
+using UserService.Domain.Contracts;
 using UserService.Domain.DomainServices;
 using UserService.Domain.Interfaces;
 using UserService.Domain.Messaging.Outbox;
@@ -18,6 +19,7 @@ using UserService.Domain.Repositories;
 using UserService.Domain.Security;
 using UserService.Domain.UnitOfWork;
 using UserService.Infrastructure.CrossCutting;
+using UserService.Infrastructure.CrossCutting.JsonConverters;
 using UserService.Infrastructure.Messaging.Bus;
 using UserService.Infrastructure.Messaging.Outbox;
 using UserService.Infrastructure.Repositories;
@@ -68,8 +70,10 @@ public static class DIsExtensions
         services.AddSingleton<IPasswordHasher, Argon2PasswordHasher>();
 
         services.AddHostedService<DIsInitializerHostedService>();
-        
+
         services.AddHostedService<MassTransitOutboxBackgroundService>();
+
+        SharedJsonSerializer.DefaultOptions.Converters.Add(new IdentityJsonConverter());
 
         return services;
     }

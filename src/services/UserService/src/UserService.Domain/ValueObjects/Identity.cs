@@ -10,6 +10,7 @@ public sealed class Identity : ValueObject<Identity>
 {
     public Guid Value { get; }
     
+    [JsonConstructor]
     private Identity(Guid guid)
     {
         if (guid == Guid.Empty)
