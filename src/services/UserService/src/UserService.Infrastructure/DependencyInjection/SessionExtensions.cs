@@ -3,6 +3,7 @@ using System;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using StackExchange.Redis;
+using UserService.Application.CrossCutting;
 using UserService.Domain.Security.Authentication;
 using UserService.Infrastructure.Exceptions.DependencyInjection;
 using UserService.Infrastructure.Security.Authentication;
@@ -24,7 +25,8 @@ public static class SessionExtensions
         services.AddSingleton<ISessionService>(sp =>
         {
             var connection = sp.GetRequiredService<IDatabase>();
-            return new RedisSessionService(connection, settings);
+            var serializer = sp.GetRequiredService<IJsonSerializer>();
+            return new RedisSessionService(connection, settings, serializer);
         });
         
         return services;

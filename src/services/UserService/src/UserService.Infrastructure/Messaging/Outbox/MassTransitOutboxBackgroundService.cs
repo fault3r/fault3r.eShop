@@ -4,6 +4,7 @@ using System.Text.Json;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using UserService.Application.CrossCutting;
 using UserService.Domain.Interfaces;
 using UserService.Domain.Messaging.Outbox;
 using UserService.Infrastructure.Messaging.Bus;
@@ -27,6 +28,7 @@ public sealed class MassTransitOutboxBackgroundService(
                 using var scope = _provider.CreateScope();
                 var _outbox = scope.ServiceProvider.GetRequiredService<IEventOutbox>();
                 var _publisher = scope.ServiceProvider.GetRequiredService<IMessageBus>();
+                var _serializer = scope.ServiceProvider.GetRequiredService<IJsonSerializer>();
 
                 var messages = await _outbox.DequeueAsync(
                     count: 5,
@@ -58,7 +60,7 @@ public sealed class MassTransitOutboxBackgroundService(
                     object? payload;
                     try
                     {
-                        payload = JsonSerializer.Deserialize(message.Payload, messageType, SharedJsonSerializer.DefaultOptions);
+                        payload = JsonSerializer.Deserialize(message.Payload, messageType, _serializer.DefaultOptions);
                     }
                     catch (Exception ex)
                     {

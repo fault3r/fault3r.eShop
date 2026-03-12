@@ -1,12 +1,11 @@
 
 using System;
 using System.Text.Json;
-using UserService.Domain.Aggregates.UserAggregate.Events;
 using UserService.Domain.Contracts;
 using UserService.Domain.Factories;
 using UserService.Domain.ValueObjects;
+using UserService.Infrastructure.CrossCutting.JsonSerializer;
 using UserService.Infrastructure.Messaging.Outbox;
-using UserService.Infrastructure.Services.JsonSerializer;
 
 namespace UserService.Tests;
 

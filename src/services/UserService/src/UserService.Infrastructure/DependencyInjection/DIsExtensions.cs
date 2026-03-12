@@ -6,7 +6,6 @@ using FluentValidation;
 using MediatR;
 using UserService.Application.CrossCutting;
 using UserService.Application.Interfaces;
-using UserService.Application.Services.JsonSerializer;
 using UserService.Application.UseCases.Commands.LoginUserUseCase;
 using UserService.Application.UseCases.Commands.LogoutUserUseCase;
 using UserService.Application.UseCases.Commands.RefreshAuthUseCase;
@@ -23,8 +22,8 @@ using UserService.Infrastructure.Messaging.Bus;
 using UserService.Infrastructure.Messaging.Outbox;
 using UserService.Infrastructure.Repositories;
 using UserService.Infrastructure.Security;
-using UserService.Infrastructure.Services.JsonSerializer;
 using UserService.Infrastructure.UnitOfWork;
+using UserService.Infrastructure.CrossCutting.JsonSerializer;
 
 namespace UserService.Infrastructure.DependencyInjection;
 

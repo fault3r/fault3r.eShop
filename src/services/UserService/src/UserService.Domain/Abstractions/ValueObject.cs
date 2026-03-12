@@ -1,9 +1,10 @@
 
 using System;
+using UserService.Domain.Interfaces;
 
 namespace UserService.Domain.Abstractions;
 
-public abstract class ValueObject<T> : IEquatable<T>
+public abstract class ValueObject<T> : IEquatable<T>, IValueObject
     where T : ValueObject<T>
 {
     protected abstract IEnumerable<object> GetEqualityComponents();
