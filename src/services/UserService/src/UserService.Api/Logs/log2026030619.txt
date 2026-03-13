@@ -1,7 +1,0 @@
-[2026-03-06 19:57:43 DBG] MassTransit.Transports.BusDepot  Starting bus instances: IBus 
- [2026-03-06 19:57:43 DBG] MassTransit  Starting bus: "rabbitmq://localhost/" 
- [2026-03-06 19:57:43 DBG] MassTransit  Connect: fault3r@localhost:5672/ 
- [2026-03-06 19:57:43 DBG] MassTransit  Connected: fault3r@localhost:5672/ (address: amqp://localhost:5672, local: 55548) 
- [2026-03-06 19:57:43 DBG] MassTransit  Endpoint Ready: "rabbitmq://localhost/fault3r_UserServiceApi_bus_du7oyybugekbgauebdx8z8kk8s?temporary=true" 
- [2026-03-06 19:57:43 INF] MassTransit  Bus started: "rabbitmq://localhost/" 
- 

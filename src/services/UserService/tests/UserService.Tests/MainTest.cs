@@ -24,7 +24,7 @@ public class MainTests
 
         var @event = user.Events.First();
 
-        var jsonOptions = new NetJsonSerializer().DefaultOptions;   
+        var jsonOptions = new NetJsonSerializer().DefaultOptions;
 
         var type = OutboxTypeResolver.Resolve(@event.GetType().Name)!;
 

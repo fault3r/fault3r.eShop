@@ -68,11 +68,11 @@ public static class DIsExtensions
 
         services.AddSingleton<IPasswordHasher, Argon2PasswordHasher>();
 
+        services.AddSingleton<IJsonSerializer, NetJsonSerializer>();
+
         services.AddHostedService<DIsInitializerHostedService>();
 
         services.AddHostedService<MassTransitOutboxBackgroundService>();
-
-        services.AddSingleton<IJsonSerializer, NetJsonSerializer>();
 
         return services;
     }
