@@ -1,9 +1,9 @@
 
 using System;
 using System.Text.Json;
-using UserService.Domain.Contracts;
 using UserService.Domain.Factories;
 using UserService.Domain.ValueObjects;
+using UserService.Infrastructure.CrossCutting;
 using UserService.Infrastructure.CrossCutting.JsonSerializer;
 using UserService.Infrastructure.Messaging.Outbox;
 
@@ -11,6 +11,18 @@ namespace UserService.Tests;
 
 public class MainTests
 {
+    [Fact]
+    public void TestName()
+    {
+        var id = Identity.From(Guid.NewGuid());
+
+        var serializer = new NetJsonSerializer();
+
+        var d = JsonSerializer.Serialize(id, serializer.DefaultOptions);
+        var c = JsonSerializer.Serialize(id, serializer.FullOptions);
+
+        Assert.True(true);
+    }
 
     [Fact]
     public void MainTest()

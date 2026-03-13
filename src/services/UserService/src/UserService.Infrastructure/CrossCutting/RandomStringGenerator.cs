@@ -2,7 +2,7 @@
 using System;
 using System.Security.Cryptography;
 
-namespace UserService.Domain.Contracts;
+namespace UserService.Infrastructure.CrossCutting;
 
 public static class RandomStringGenerator
 {

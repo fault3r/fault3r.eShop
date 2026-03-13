@@ -6,5 +6,5 @@ namespace UserService.Application.CrossCutting;
 
 public interface IJsonSerializer
 {
-    JsonSerializerOptions DefaultOptions { get; }
+    JsonSerializerOptions Options { get; }
 }

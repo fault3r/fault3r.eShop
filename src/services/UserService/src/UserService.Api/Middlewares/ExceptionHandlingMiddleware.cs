@@ -2,7 +2,6 @@
 using System;
 using System.Text.Json;
 using Serilog;
-using UserService.Domain.Contracts;
 
 namespace UserService.Api.Middlewares;
 

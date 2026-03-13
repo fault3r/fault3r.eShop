@@ -11,8 +11,15 @@ public sealed class ValueObjectJsonConverter<TValueObject> : JsonConverter<TValu
 {
     public override TValueObject? Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
     {
-        var mapper = typeToConvert.GetMethod("Parse", [typeof(string)])!;
-        return (TValueObject?)mapper.Invoke(null, [reader.GetString()]);
+        var json = reader.GetString();
+
+        if (string.IsNullOrEmpty(json))
+            return default;
+
+        var parser = typeToConvert.GetMethod("Parse", [typeof(string)])
+            ?? throw new JsonException($"parse method not found for type '{typeToConvert.Name}'");
+            
+        return (TValueObject?)parser.Invoke(default, [reader.GetString()]);
     }
 
     public override void Write(Utf8JsonWriter writer, TValueObject value, JsonSerializerOptions options)

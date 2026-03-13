@@ -1,7 +1,6 @@
 
 using System;
 using System.Text.Json;
-using UserService.Domain.Contracts;
 using UserService.Domain.Security.Authentication;
 
 namespace UserService.Api.Middlewares;

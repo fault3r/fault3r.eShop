@@ -3,8 +3,8 @@ using System;
 using System.Security.Cryptography;
 using System.Text;
 using Konscious.Security.Cryptography;
-using UserService.Domain.Contracts;
 using UserService.Domain.Security;
+using UserService.Infrastructure.CrossCutting;
 
 namespace UserService.Infrastructure.Security;
 
