@@ -1,0 +1,98 @@
+[2026-03-14 17:10:59 DBG] MassTransit.Transports.BusDepot  Starting bus instances: IBus 
+ [2026-03-14 17:10:59 DBG] MassTransit  Starting bus: "rabbitmq://localhost/" 
+ [2026-03-14 17:10:59 DBG] MassTransit  Connect: fault3r@localhost:5672/ 
+ [2026-03-14 17:10:59 DBG] MassTransit  Connected: fault3r@localhost:5672/ (address: amqp://localhost:5672, local: 51752) 
+ [2026-03-14 17:10:59 DBG] MassTransit  Endpoint Ready: "rabbitmq://localhost/fault3r_UserServiceApi_bus_8geoyybugekb884nbdxedu4urq?temporary=true" 
+ [2026-03-14 17:10:59 INF] MassTransit  Bus started: "rabbitmq://localhost/" 
+ [2026-03-14 17:11:02 ERR] UserService.Infrastructure.Messaging.Outbox.MassTransitOutboxBackgroundService  Failed to publish message '"c33a583e-0329-40bd-a793-66a47ff426c8"'. 
+ System.InvalidOperationException: Cannot create a DbSet for 'OutboxMessage' because this type is not included in the model for the context.
+   at Microsoft.EntityFrameworkCore.Internal.InternalDbSet`1.get_EntityType()
+   at Microsoft.EntityFrameworkCore.Internal.InternalDbSet`1.EntryWithoutDetectChanges(TEntity entity)
+   at Microsoft.EntityFrameworkCore.Internal.InternalDbSet`1.AddAsync(TEntity entity, CancellationToken cancellationToken)
+   at MassTransit.EntityFrameworkCoreIntegration.EntityFrameworkOutboxExtensions.AddSend[T](DbSet`1 collection, SendContext`1 context, IObjectDeserializer deserializer, Nullable`1 inboxMessageId, Nullable`1 inboxConsumerId, Nullable`1 outboxId) in /_/src/Persistence/MassTransit.EntityFrameworkCoreIntegration/EntityFrameworkCoreIntegration/EntityFrameworkOutboxExtensions.cs:line 60
+   at MassTransit.Middleware.Outbox.OutboxSendEndpoint.AddSend[T](SendContext`1 context) in /_/src/MassTransit/Middleware/Outbox/OutboxSendEndpoint.cs:line 183
+   at MassTransit.Middleware.Outbox.OutboxSendEndpoint.Send[T](T message, CancellationToken cancellationToken) in /_/src/MassTransit/Middleware/Outbox/OutboxSendEndpoint.cs:line 52
+   at UserService.Infrastructure.Messaging.Bus.MassTransitMessageBus.PublishAsync(IDomainEvent event, CancellationToken cancellationToken) in /home/hamed-damavandi/Documents/fault3r.eShop/src/services/UserService/src/UserService.Infrastructure/Messaging/Bus/MassTransitMessageBus.cs:line 20
+   at UserService.Infrastructure.Messaging.Outbox.MassTransitOutboxBackgroundService.ExecuteAsync(CancellationToken stoppingToken) in /home/hamed-damavandi/Documents/fault3r.eShop/src/services/UserService/src/UserService.Infrastructure/Messaging/Outbox/MassTransitOutboxBackgroundService.cs:line 88
+[2026-03-14 17:11:03 ERR] UserService.Infrastructure.Messaging.Outbox.MassTransitOutboxBackgroundService  Failed to publish message '"c33a583e-0329-40bd-a793-66a47ff426c8"'. 
+ System.InvalidOperationException: Cannot create a DbSet for 'OutboxMessage' because this type is not included in the model for the context.
+   at Microsoft.EntityFrameworkCore.Internal.InternalDbSet`1.get_EntityType()
+   at Microsoft.EntityFrameworkCore.Internal.InternalDbSet`1.EntryWithoutDetectChanges(TEntity entity)
+   at Microsoft.EntityFrameworkCore.Internal.InternalDbSet`1.AddAsync(TEntity entity, CancellationToken cancellationToken)
+   at MassTransit.EntityFrameworkCoreIntegration.EntityFrameworkOutboxExtensions.AddSend[T](DbSet`1 collection, SendContext`1 context, IObjectDeserializer deserializer, Nullable`1 inboxMessageId, Nullable`1 inboxConsumerId, Nullable`1 outboxId) in /_/src/Persistence/MassTransit.EntityFrameworkCoreIntegration/EntityFrameworkCoreIntegration/EntityFrameworkOutboxExtensions.cs:line 60
+   at MassTransit.Middleware.Outbox.OutboxSendEndpoint.AddSend[T](SendContext`1 context) in /_/src/MassTransit/Middleware/Outbox/OutboxSendEndpoint.cs:line 183
+   at MassTransit.Middleware.Outbox.OutboxSendEndpoint.Send[T](T message, CancellationToken cancellationToken) in /_/src/MassTransit/Middleware/Outbox/OutboxSendEndpoint.cs:line 52
+   at UserService.Infrastructure.Messaging.Bus.MassTransitMessageBus.PublishAsync(IDomainEvent event, CancellationToken cancellationToken) in /home/hamed-damavandi/Documents/fault3r.eShop/src/services/UserService/src/UserService.Infrastructure/Messaging/Bus/MassTransitMessageBus.cs:line 20
+   at UserService.Infrastructure.Messaging.Outbox.MassTransitOutboxBackgroundService.ExecuteAsync(CancellationToken stoppingToken) in /home/hamed-damavandi/Documents/fault3r.eShop/src/services/UserService/src/UserService.Infrastructure/Messaging/Outbox/MassTransitOutboxBackgroundService.cs:line 88
+[2026-03-14 17:11:03 ERR] UserService.Infrastructure.Messaging.Outbox.MassTransitOutboxBackgroundService  Failed to publish message '"c33a583e-0329-40bd-a793-66a47ff426c8"'. 
+ System.InvalidOperationException: Cannot create a DbSet for 'OutboxMessage' because this type is not included in the model for the context.
+   at Microsoft.EntityFrameworkCore.Internal.InternalDbSet`1.get_EntityType()
+   at Microsoft.EntityFrameworkCore.Internal.InternalDbSet`1.EntryWithoutDetectChanges(TEntity entity)
+   at Microsoft.EntityFrameworkCore.Internal.InternalDbSet`1.AddAsync(TEntity entity, CancellationToken cancellationToken)
+   at MassTransit.EntityFrameworkCoreIntegration.EntityFrameworkOutboxExtensions.AddSend[T](DbSet`1 collection, SendContext`1 context, IObjectDeserializer deserializer, Nullable`1 inboxMessageId, Nullable`1 inboxConsumerId, Nullable`1 outboxId) in /_/src/Persistence/MassTransit.EntityFrameworkCoreIntegration/EntityFrameworkCoreIntegration/EntityFrameworkOutboxExtensions.cs:line 60
+   at MassTransit.Middleware.Outbox.OutboxSendEndpoint.AddSend[T](SendContext`1 context) in /_/src/MassTransit/Middleware/Outbox/OutboxSendEndpoint.cs:line 183
+   at MassTransit.Middleware.Outbox.OutboxSendEndpoint.Send[T](T message, CancellationToken cancellationToken) in /_/src/MassTransit/Middleware/Outbox/OutboxSendEndpoint.cs:line 52
+   at UserService.Infrastructure.Messaging.Bus.MassTransitMessageBus.PublishAsync(IDomainEvent event, CancellationToken cancellationToken) in /home/hamed-damavandi/Documents/fault3r.eShop/src/services/UserService/src/UserService.Infrastructure/Messaging/Bus/MassTransitMessageBus.cs:line 20
+   at UserService.Infrastructure.Messaging.Outbox.MassTransitOutboxBackgroundService.ExecuteAsync(CancellationToken stoppingToken) in /home/hamed-damavandi/Documents/fault3r.eShop/src/services/UserService/src/UserService.Infrastructure/Messaging/Outbox/MassTransitOutboxBackgroundService.cs:line 88
+[2026-03-14 17:11:04 ERR] UserService.Infrastructure.Messaging.Outbox.MassTransitOutboxBackgroundService  Failed to publish message '"c33a583e-0329-40bd-a793-66a47ff426c8"'. 
+ System.InvalidOperationException: Cannot create a DbSet for 'OutboxMessage' because this type is not included in the model for the context.
+   at Microsoft.EntityFrameworkCore.Internal.InternalDbSet`1.get_EntityType()
+   at Microsoft.EntityFrameworkCore.Internal.InternalDbSet`1.EntryWithoutDetectChanges(TEntity entity)
+   at Microsoft.EntityFrameworkCore.Internal.InternalDbSet`1.AddAsync(TEntity entity, CancellationToken cancellationToken)
+   at MassTransit.EntityFrameworkCoreIntegration.EntityFrameworkOutboxExtensions.AddSend[T](DbSet`1 collection, SendContext`1 context, IObjectDeserializer deserializer, Nullable`1 inboxMessageId, Nullable`1 inboxConsumerId, Nullable`1 outboxId) in /_/src/Persistence/MassTransit.EntityFrameworkCoreIntegration/EntityFrameworkCoreIntegration/EntityFrameworkOutboxExtensions.cs:line 60
+   at MassTransit.Middleware.Outbox.OutboxSendEndpoint.AddSend[T](SendContext`1 context) in /_/src/MassTransit/Middleware/Outbox/OutboxSendEndpoint.cs:line 183
+   at MassTransit.Middleware.Outbox.OutboxSendEndpoint.Send[T](T message, CancellationToken cancellationToken) in /_/src/MassTransit/Middleware/Outbox/OutboxSendEndpoint.cs:line 52
+   at UserService.Infrastructure.Messaging.Bus.MassTransitMessageBus.PublishAsync(IDomainEvent event, CancellationToken cancellationToken) in /home/hamed-damavandi/Documents/fault3r.eShop/src/services/UserService/src/UserService.Infrastructure/Messaging/Bus/MassTransitMessageBus.cs:line 20
+   at UserService.Infrastructure.Messaging.Outbox.MassTransitOutboxBackgroundService.ExecuteAsync(CancellationToken stoppingToken) in /home/hamed-damavandi/Documents/fault3r.eShop/src/services/UserService/src/UserService.Infrastructure/Messaging/Outbox/MassTransitOutboxBackgroundService.cs:line 88
+[2026-03-14 17:11:04 ERR] UserService.Infrastructure.Messaging.Outbox.MassTransitOutboxBackgroundService  Failed to publish message '"c33a583e-0329-40bd-a793-66a47ff426c8"'. 
+ System.InvalidOperationException: Cannot create a DbSet for 'OutboxMessage' because this type is not included in the model for the context.
+   at Microsoft.EntityFrameworkCore.Internal.InternalDbSet`1.get_EntityType()
+   at Microsoft.EntityFrameworkCore.Internal.InternalDbSet`1.EntryWithoutDetectChanges(TEntity entity)
+   at Microsoft.EntityFrameworkCore.Internal.InternalDbSet`1.AddAsync(TEntity entity, CancellationToken cancellationToken)
+   at MassTransit.EntityFrameworkCoreIntegration.EntityFrameworkOutboxExtensions.AddSend[T](DbSet`1 collection, SendContext`1 context, IObjectDeserializer deserializer, Nullable`1 inboxMessageId, Nullable`1 inboxConsumerId, Nullable`1 outboxId) in /_/src/Persistence/MassTransit.EntityFrameworkCoreIntegration/EntityFrameworkCoreIntegration/EntityFrameworkOutboxExtensions.cs:line 60
+   at MassTransit.Middleware.Outbox.OutboxSendEndpoint.AddSend[T](SendContext`1 context) in /_/src/MassTransit/Middleware/Outbox/OutboxSendEndpoint.cs:line 183
+   at MassTransit.Middleware.Outbox.OutboxSendEndpoint.Send[T](T message, CancellationToken cancellationToken) in /_/src/MassTransit/Middleware/Outbox/OutboxSendEndpoint.cs:line 52
+   at UserService.Infrastructure.Messaging.Bus.MassTransitMessageBus.PublishAsync(IDomainEvent event, CancellationToken cancellationToken) in /home/hamed-damavandi/Documents/fault3r.eShop/src/services/UserService/src/UserService.Infrastructure/Messaging/Bus/MassTransitMessageBus.cs:line 20
+   at UserService.Infrastructure.Messaging.Outbox.MassTransitOutboxBackgroundService.ExecuteAsync(CancellationToken stoppingToken) in /home/hamed-damavandi/Documents/fault3r.eShop/src/services/UserService/src/UserService.Infrastructure/Messaging/Outbox/MassTransitOutboxBackgroundService.cs:line 88
+[2026-03-14 17:11:05 ERR] UserService.Infrastructure.Messaging.Outbox.MassTransitOutboxBackgroundService  Failed to publish message '"c33a583e-0329-40bd-a793-66a47ff426c8"'. 
+ System.InvalidOperationException: Cannot create a DbSet for 'OutboxMessage' because this type is not included in the model for the context.
+   at Microsoft.EntityFrameworkCore.Internal.InternalDbSet`1.get_EntityType()
+   at Microsoft.EntityFrameworkCore.Internal.InternalDbSet`1.EntryWithoutDetectChanges(TEntity entity)
+   at Microsoft.EntityFrameworkCore.Internal.InternalDbSet`1.AddAsync(TEntity entity, CancellationToken cancellationToken)
+   at MassTransit.EntityFrameworkCoreIntegration.EntityFrameworkOutboxExtensions.AddSend[T](DbSet`1 collection, SendContext`1 context, IObjectDeserializer deserializer, Nullable`1 inboxMessageId, Nullable`1 inboxConsumerId, Nullable`1 outboxId) in /_/src/Persistence/MassTransit.EntityFrameworkCoreIntegration/EntityFrameworkCoreIntegration/EntityFrameworkOutboxExtensions.cs:line 60
+   at MassTransit.Middleware.Outbox.OutboxSendEndpoint.AddSend[T](SendContext`1 context) in /_/src/MassTransit/Middleware/Outbox/OutboxSendEndpoint.cs:line 183
+   at MassTransit.Middleware.Outbox.OutboxSendEndpoint.Send[T](T message, CancellationToken cancellationToken) in /_/src/MassTransit/Middleware/Outbox/OutboxSendEndpoint.cs:line 52
+   at UserService.Infrastructure.Messaging.Bus.MassTransitMessageBus.PublishAsync(IDomainEvent event, CancellationToken cancellationToken) in /home/hamed-damavandi/Documents/fault3r.eShop/src/services/UserService/src/UserService.Infrastructure/Messaging/Bus/MassTransitMessageBus.cs:line 20
+   at UserService.Infrastructure.Messaging.Outbox.MassTransitOutboxBackgroundService.ExecuteAsync(CancellationToken stoppingToken) in /home/hamed-damavandi/Documents/fault3r.eShop/src/services/UserService/src/UserService.Infrastructure/Messaging/Outbox/MassTransitOutboxBackgroundService.cs:line 88
+[2026-03-14 17:11:05 ERR] UserService.Infrastructure.Messaging.Outbox.MassTransitOutboxBackgroundService  Failed to publish message '"c33a583e-0329-40bd-a793-66a47ff426c8"'. 
+ System.InvalidOperationException: Cannot create a DbSet for 'OutboxMessage' because this type is not included in the model for the context.
+   at Microsoft.EntityFrameworkCore.Internal.InternalDbSet`1.get_EntityType()
+   at Microsoft.EntityFrameworkCore.Internal.InternalDbSet`1.EntryWithoutDetectChanges(TEntity entity)
+   at Microsoft.EntityFrameworkCore.Internal.InternalDbSet`1.AddAsync(TEntity entity, CancellationToken cancellationToken)
+   at MassTransit.EntityFrameworkCoreIntegration.EntityFrameworkOutboxExtensions.AddSend[T](DbSet`1 collection, SendContext`1 context, IObjectDeserializer deserializer, Nullable`1 inboxMessageId, Nullable`1 inboxConsumerId, Nullable`1 outboxId) in /_/src/Persistence/MassTransit.EntityFrameworkCoreIntegration/EntityFrameworkCoreIntegration/EntityFrameworkOutboxExtensions.cs:line 60
+   at MassTransit.Middleware.Outbox.OutboxSendEndpoint.AddSend[T](SendContext`1 context) in /_/src/MassTransit/Middleware/Outbox/OutboxSendEndpoint.cs:line 183
+   at MassTransit.Middleware.Outbox.OutboxSendEndpoint.Send[T](T message, CancellationToken cancellationToken) in /_/src/MassTransit/Middleware/Outbox/OutboxSendEndpoint.cs:line 52
+   at UserService.Infrastructure.Messaging.Bus.MassTransitMessageBus.PublishAsync(IDomainEvent event, CancellationToken cancellationToken) in /home/hamed-damavandi/Documents/fault3r.eShop/src/services/UserService/src/UserService.Infrastructure/Messaging/Bus/MassTransitMessageBus.cs:line 20
+   at UserService.Infrastructure.Messaging.Outbox.MassTransitOutboxBackgroundService.ExecuteAsync(CancellationToken stoppingToken) in /home/hamed-damavandi/Documents/fault3r.eShop/src/services/UserService/src/UserService.Infrastructure/Messaging/Outbox/MassTransitOutboxBackgroundService.cs:line 88
+[2026-03-14 17:11:06 ERR] UserService.Infrastructure.Messaging.Outbox.MassTransitOutboxBackgroundService  Failed to publish message '"c33a583e-0329-40bd-a793-66a47ff426c8"'. 
+ System.InvalidOperationException: Cannot create a DbSet for 'OutboxMessage' because this type is not included in the model for the context.
+   at Microsoft.EntityFrameworkCore.Internal.InternalDbSet`1.get_EntityType()
+   at Microsoft.EntityFrameworkCore.Internal.InternalDbSet`1.EntryWithoutDetectChanges(TEntity entity)
+   at Microsoft.EntityFrameworkCore.Internal.InternalDbSet`1.AddAsync(TEntity entity, CancellationToken cancellationToken)
+   at MassTransit.EntityFrameworkCoreIntegration.EntityFrameworkOutboxExtensions.AddSend[T](DbSet`1 collection, SendContext`1 context, IObjectDeserializer deserializer, Nullable`1 inboxMessageId, Nullable`1 inboxConsumerId, Nullable`1 outboxId) in /_/src/Persistence/MassTransit.EntityFrameworkCoreIntegration/EntityFrameworkCoreIntegration/EntityFrameworkOutboxExtensions.cs:line 60
+   at MassTransit.Middleware.Outbox.OutboxSendEndpoint.AddSend[T](SendContext`1 context) in /_/src/MassTransit/Middleware/Outbox/OutboxSendEndpoint.cs:line 183
+   at MassTransit.Middleware.Outbox.OutboxSendEndpoint.Send[T](T message, CancellationToken cancellationToken) in /_/src/MassTransit/Middleware/Outbox/OutboxSendEndpoint.cs:line 52
+   at UserService.Infrastructure.Messaging.Bus.MassTransitMessageBus.PublishAsync(IDomainEvent event, CancellationToken cancellationToken) in /home/hamed-damavandi/Documents/fault3r.eShop/src/services/UserService/src/UserService.Infrastructure/Messaging/Bus/MassTransitMessageBus.cs:line 20
+   at UserService.Infrastructure.Messaging.Outbox.MassTransitOutboxBackgroundService.ExecuteAsync(CancellationToken stoppingToken) in /home/hamed-damavandi/Documents/fault3r.eShop/src/services/UserService/src/UserService.Infrastructure/Messaging/Outbox/MassTransitOutboxBackgroundService.cs:line 88
+[2026-03-14 17:28:45 DBG] MassTransit.Transports.BusDepot  Starting bus instances: IBus 
+ [2026-03-14 17:28:45 DBG] MassTransit  Starting bus: "rabbitmq://localhost/" 
+ [2026-03-14 17:28:45 DBG] MassTransit  Connect: fault3r@localhost:5672/ 
+ [2026-03-14 17:28:45 DBG] MassTransit  Connected: fault3r@localhost:5672/ (address: amqp://localhost:5672, local: 44940) 
+ [2026-03-14 17:28:45 DBG] MassTransit  Endpoint Ready: "rabbitmq://localhost/fault3r_UserServiceApi_bus_ek4yyybugekbgptkbdxedwqxyp?temporary=true" 
+ [2026-03-14 17:28:45 INF] MassTransit  Bus started: "rabbitmq://localhost/" 
+ [2026-03-14 17:28:57 INF]  cb84347e-35cf-48b2-8fd1-ae58c369e3dc Incoming request POST /api/v1/auth/register. 
+ [2026-03-14 17:28:57 INF] UserService.Application.UseCases.Commands.RegisterUserUseCase.RegisterUserService cb84347e-35cf-48b2-8fd1-ae58c369e3dc Registering user with 'string@ddd.com' email… 
+ [2026-03-14 17:28:58 INF] UserService.Application.UseCases.Commands.RegisterUserUseCase.RegisterUserService cb84347e-35cf-48b2-8fd1-ae58c369e3dc User successfully registered with '621c88b3-10c4-429a-812c-1308f41108df' identity. 
+ [2026-03-14 17:28:58 INF]  cb84347e-35cf-48b2-8fd1-ae58c369e3dc Completed request POST /api/v1/auth/register with status code 201. 
+ [2026-03-14 17:28:58 INF] UserService.Infrastructure.Messaging.Outbox.MassTransitOutboxBackgroundService  Message '"b6aed71d-7363-4f08-9eaf-f3a4a31817c7"' published. 
+ 

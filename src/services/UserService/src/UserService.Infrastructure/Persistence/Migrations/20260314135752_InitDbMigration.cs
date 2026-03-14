@@ -7,7 +7,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace UserService.Infrastructure.Persistence.Migrations
 {
     /// <inheritdoc />
-    public partial class InitialDbMigration : Migration
+    public partial class InitDbMigration : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -53,6 +53,37 @@ namespace UserService.Infrastructure.Persistence.Migrations
                 {
                     table.PrimaryKey("PK_InboxStates", x => x.Id);
                     table.UniqueConstraint("AK_InboxStates_MessageId_ConsumerId", x => new { x.MessageId, x.ConsumerId });
+                });
+
+            migrationBuilder.CreateTable(
+                name: "OutboxMessages",
+                columns: table => new
+                {
+                    MessageId = table.Column<Guid>(type: "uuid", nullable: false),
+                    EnqueueTime = table.Column<DateTime>(type: "timestamp with time zone", nullable: true),
+                    SentTime = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
+                    Headers = table.Column<string>(type: "text", nullable: true),
+                    Properties = table.Column<string>(type: "text", nullable: true),
+                    InboxMessageId = table.Column<Guid>(type: "uuid", nullable: true),
+                    InboxConsumerId = table.Column<Guid>(type: "uuid", nullable: true),
+                    OutboxId = table.Column<Guid>(type: "uuid", nullable: true),
+                    SequenceNumber = table.Column<long>(type: "bigint", nullable: false),
+                    ContentType = table.Column<string>(type: "text", nullable: false),
+                    MessageType = table.Column<string>(type: "text", nullable: false),
+                    Body = table.Column<string>(type: "text", nullable: false),
+                    ConversationId = table.Column<Guid>(type: "uuid", nullable: true),
+                    CorrelationId = table.Column<Guid>(type: "uuid", nullable: true),
+                    InitiatorId = table.Column<Guid>(type: "uuid", nullable: true),
+                    RequestId = table.Column<Guid>(type: "uuid", nullable: true),
+                    SourceAddress = table.Column<string>(type: "text", nullable: true),
+                    DestinationAddress = table.Column<string>(type: "text", nullable: true),
+                    ResponseAddress = table.Column<string>(type: "text", nullable: true),
+                    FaultAddress = table.Column<string>(type: "text", nullable: true),
+                    ExpirationTime = table.Column<DateTime>(type: "timestamp with time zone", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_OutboxMessages", x => x.MessageId);
                 });
 
             migrationBuilder.CreateTable(
@@ -119,6 +150,9 @@ namespace UserService.Infrastructure.Persistence.Migrations
 
             migrationBuilder.DropTable(
                 name: "InboxStates");
+
+            migrationBuilder.DropTable(
+                name: "OutboxMessages");
 
             migrationBuilder.DropTable(
                 name: "OutboxStates");

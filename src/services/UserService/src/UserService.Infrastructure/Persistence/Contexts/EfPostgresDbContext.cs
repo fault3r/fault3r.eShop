@@ -15,6 +15,7 @@ public sealed class EfPostgresDbContext(
     public DbSet<User> Users => Set<User>();
     public DbSet<EventMessage> Events => Set<EventMessage>();
 
+    public DbSet<OutboxMessage> OutboxMessages { get; set; }
     public DbSet<InboxState> InboxStates { get; set; }
     public DbSet<OutboxState> OutboxStates { get; set; }
 
@@ -25,7 +26,9 @@ public sealed class EfPostgresDbContext(
         builder.ApplyConfigurationsFromAssembly(
             typeof(EfPostgresDbContext).Assembly);
 
+        builder.Entity<OutboxMessage>().HasKey(p => p.MessageId);
         builder.AddInboxStateEntity();
         builder.AddOutboxStateEntity();
+
     }
 }

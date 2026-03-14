@@ -5,6 +5,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using UserService.Application.CrossCutting;
+using UserService.Domain.Aggregates.UserAggregate.Events;
 using UserService.Domain.Interfaces;
 using UserService.Domain.Messaging.Outbox;
 using UserService.Infrastructure.Messaging.Bus;
@@ -52,54 +53,58 @@ public sealed class MassTransitOutboxBackgroundService(
                     {
                         await _outbox.MarkAsProcessedAsync(message.Id, stoppingToken);
 
-                        _logger.LogWarning("Unknown message type: {Type} for EventMessage {Id}", message.Type, message.Id);
+                        _logger.LogInformation("Unknown message type '{Type}' for message '{Id}'.", message.Type, message.Id);
 
                         continue;
                     }
 
-                    object? payload;
+                    object? deserialized;
                     try
                     {
-                        payload = JsonSerializer.Deserialize(message.Payload, messageType, _serializer.Options);
+                        deserialized = JsonSerializer.Deserialize(message.Payload, messageType, _serializer.Options);
                     }
                     catch (Exception ex)
                     {
                         await _outbox.MarkAsProcessedAsync(message.Id, stoppingToken);
 
-                        _logger.LogWarning(ex, "Failed to deserialize payload for EventMessage {Id}.", message.Id);
+                        _logger.LogInformation(ex, "Unknown payload for message '{Id}'.", message.Id);
 
                         continue;
                     }
 
-                    IDomainEvent @event;
-                    if (payload is null)
+                    if (deserialized is null)
                     {
                         await _outbox.MarkAsProcessedAsync(message.Id, stoppingToken);
 
-                        _logger.LogWarning("Null payload for EventMessage {Id}.", message.Id);
+                        _logger.LogInformation("Null payload for message '{Id}'.", message.Id);
 
                         continue;
                     }
-                    @event = (IDomainEvent)payload;
 
                     try
                     {
+                        var @event = (IDomainEvent)deserialized;
+
                         await _publisher.PublishAsync(@event, stoppingToken);
 
                         await _outbox.MarkAsProcessedAsync(message.Id, stoppingToken);
 
-                        _logger.LogInformation("Message successfully published.");
+                        _logger.LogInformation("Message '{Id}' published.", message.Id);
                     }
                     catch (Exception ex)
                     {
-                        _logger.LogError(ex, "MassTransit failed to publish EventMessage {Id} of type {Type}", message.Id, message.Type);
+                        _logger.LogError(ex, "Failed to publish message '{Id}'.", message.Id);
                     }
                 }
             }
             catch (OperationCanceledException) when (stoppingToken.IsCancellationRequested)
             {
-                _logger.LogInformation("Outbox Dispatcher is stopping due to cancellation.");
+                _logger.LogInformation("Stopping due to cancellation…");
                 break;
+            }
+            catch(Microsoft.EntityFrameworkCore.Storage.RetryLimitExceededException)
+            {
+                _logger.LogInformation("Failed to fetch messages, Reconnecting…");
             }
             catch (Exception ex)
             {

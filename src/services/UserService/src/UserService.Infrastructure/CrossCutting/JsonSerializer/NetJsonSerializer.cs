@@ -1,7 +1,6 @@
 
 using System;
 using System.Text.Json;
-using System.Text.Json.Serialization;
 using UserService.Application.CrossCutting;
 using UserService.Domain.ValueObjects;
 
@@ -13,23 +12,17 @@ public sealed class NetJsonSerializer : IJsonSerializer
 
     private static readonly JsonSerializerOptions options = new()
     {
-        PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
         WriteIndented = false,
+        PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
+        Converters =
+        {
+            new ValueObjectJsonConverter<Identity>(),
+            new ValueObjectJsonConverter<Email>(),
+            new ValueObjectJsonConverter<PasswordHash>(),
+            new ValueObjectJsonConverter<PasswordSalt>(),
+            new ValueObjectJsonConverter<FullName>(),
+            new ValueObjectJsonConverter<Role>(),
+            new ValueObjectJsonConverter<Status>()
+        },
     };
-
-    public NetJsonSerializer()
-    {
-        foreach (var conv in converters)
-            options.Converters.Add(conv);
-    }
-
-    private readonly IEnumerable<JsonConverter> converters = [
-        new ValueObjectJsonConverter<Identity>(),
-        new ValueObjectJsonConverter<Email>(),
-        new ValueObjectJsonConverter<PasswordHash>(),
-        new ValueObjectJsonConverter<PasswordSalt>(),
-        new ValueObjectJsonConverter<FullName>(),
-        new ValueObjectJsonConverter<Role>(),
-        new ValueObjectJsonConverter<Status>()
-    ];
 }

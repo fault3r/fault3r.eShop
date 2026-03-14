@@ -16,8 +16,8 @@ public interface IDatabaseContext
 
      ChangeTracker ChangeTracker { get; }
      DatabaseFacade Database { get; }
-     EntityEntry Entry(object entity);
 
+     DbSet<OutboxMessage> OutboxMessages { get; }
      DbSet<InboxState> InboxStates { get; }
      DbSet<OutboxState> OutboxStates { get; }
 
