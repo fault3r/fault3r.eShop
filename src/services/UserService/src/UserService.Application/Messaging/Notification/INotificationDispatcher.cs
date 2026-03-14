@@ -2,11 +2,11 @@
 using System;
 using UserService.Domain.Interfaces;
 
-namespace UserService.Application.Interfaces;
+namespace UserService.Application.Messaging.Notification;
 
-public interface INotificationSender
+public interface INotificationDispatcher
 {
-    Task PublishAsync(
+    Task DispatchAsync(
         IDomainEvent @event,
         string correlationId,
         CancellationToken cancellationToken = default

@@ -10,13 +10,14 @@ public sealed class EventMessage
     public string Payload { get; set; }
     public DateTimeOffset Timestamp { get; set; }
     public bool Processed { get; set; }
-    public DateTimeOffset ProcessedAt { get; set; }
+    public bool Published { get; set; }
+    public DateTimeOffset PublishedAt { get; set; }
     public string CorrelationId { get; set; }
 
-    public void MarkAsProcessed()
+    public void MarkAsPublished()
     {
-        Processed = true;
-        ProcessedAt = DateTimeOffset.UtcNow;
+        Published = true;
+        PublishedAt = DateTimeOffset.UtcNow;
     }
     
     #region ⤚EFCore

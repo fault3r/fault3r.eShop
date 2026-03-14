@@ -37,8 +37,8 @@ public sealed class EfPostgresEventOutbox(
                 Type = e.GetType().Name,
                 Payload = JsonSerializer.Serialize(e, e.GetType(), _jsonSerializer.Options),
                 Timestamp = e.OccurredOn,
-                Processed = false,
-                ProcessedAt = e.OccurredOn,
+                Published = false,
+                PublishedAt = e.OccurredOn,
                 CorrelationId = correlationId,
             });
 
@@ -51,22 +51,22 @@ public sealed class EfPostgresEventOutbox(
         CancellationToken cancellationToken = default)
     {
         return await _dbContext.Events
-            .Where(p => !p.Processed)
+            .Where(p => !p.Published)
             .OrderBy(p => p.Timestamp)
             .Take(count)
             .ToListAsync(cancellationToken);
     }
 
-    public async Task MarkAsProcessedAsync(
+    public async Task MarkAsPublishedAsync(
         Guid messageId,
         CancellationToken cancellationToken = default)
     {
         var message = await _dbContext.Events
             .FirstOrDefaultAsync(p => p.Id == messageId, cancellationToken);
 
-        if (message is not null && !message.Processed)
+        if (message is not null && !message.Published)
         {
-            message.MarkAsProcessed();
+            message.MarkAsPublished();
             await _dbContext.SaveChangesAsync(cancellationToken);
         }
     }

@@ -17,7 +17,7 @@ public interface IEventOutbox
         CancellationToken cancellationToken
     );
 
-    Task MarkAsProcessedAsync(
+    Task MarkAsPublishedAsync(
         Guid messageId,
         CancellationToken cancellationToken
     );

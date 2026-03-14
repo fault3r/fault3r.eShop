@@ -10,7 +10,10 @@ public abstract class NotificationMessage : INotification
     public DateTimeOffset Timestamp { get; init; }
     public string CorrelationId { get; init; }
 
-    protected NotificationMessage(string userId, DateTimeOffset timestamp, string correlationId)
+    protected NotificationMessage(
+        string userId,
+        DateTimeOffset timestamp,
+        string correlationId)
     {
         ArgumentException.ThrowIfNullOrWhiteSpace(userId);
         ArgumentException.ThrowIfNullOrWhiteSpace(correlationId);

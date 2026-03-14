@@ -35,9 +35,13 @@ public sealed class EventMessageConfiguration : IEntityTypeConfiguration<EventMe
         builder.Property(p => p.Processed)
             .HasColumnName("Processed")
             .IsRequired();
+
+        builder.Property(p => p.Published)
+            .HasColumnName("Published")
+            .IsRequired();
             
-        builder.Property(p => p.ProcessedAt)
-            .HasColumnName("ProcessedAt")
+        builder.Property(p => p.PublishedAt)
+            .HasColumnName("PublishedAt")
             .IsRequired();
 
         builder.Property(p => p.CorrelationId)

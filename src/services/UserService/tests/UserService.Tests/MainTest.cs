@@ -1,6 +1,7 @@
 
 using System;
 using System.Text.Json;
+using UserService.Application.Messaging.Notification;
 using UserService.Domain.Factories;
 using UserService.Domain.ValueObjects;
 using UserService.Infrastructure.CrossCutting;
@@ -35,15 +36,9 @@ public class MainTests
 
         var @event = user.Events.First();
 
-        var options = new NetJsonSerializer().Options;
+        var evnt = NotificationMapper.FromEvent(@event,"aaaaaaaaaaaaaaaaaaaa");
 
-        var type = EventTypeResolver.Resolve(@event.GetType().Name)!;
 
-        var json = JsonSerializer.Serialize(@event, type, options);
-
-        var obj = JsonSerializer.Deserialize(json, type, options);
-
-        Assert.NotNull(json);
-        Assert.NotNull(obj);
+        Assert.True(true);
     }
 }

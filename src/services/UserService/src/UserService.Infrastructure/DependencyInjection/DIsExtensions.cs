@@ -72,7 +72,7 @@ public static class DIsExtensions
 
         services.AddHostedService<DIsInitializerHostedService>();
 
-        services.AddHostedService<MassTransitOutboxBackgroundService>();
+        services.AddHostedService<MassTransitEventOutboxBackgroundService>();
 
         return services;
     }

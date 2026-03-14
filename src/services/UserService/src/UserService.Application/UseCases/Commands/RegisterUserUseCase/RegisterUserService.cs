@@ -11,6 +11,7 @@ using Microsoft.Extensions.Logging;
 using UserService.Domain.Interfaces;
 using UserService.Domain.Security;
 using UserService.Application.CrossCutting;
+using UserService.Application.Messaging.Notification;
 
 namespace UserService.Application.UseCases.Commands.RegisterUserUseCase;
 
@@ -19,6 +20,7 @@ public sealed class RegisterUserService(
     IUserDomainService userDomainService,
     ICorrelationContext correlation,
     IPasswordHasher passwordHasher,
+    INotificationDispatcher notificationDispatcher,
     ILogger<RegisterUserService> logger
 ) : IRegisterUserService
 {
@@ -26,6 +28,7 @@ public sealed class RegisterUserService(
     private readonly IUserDomainService _userService = userDomainService;
     private readonly ICorrelationContext _correlation = correlation;
     private readonly IPasswordHasher _hasher = passwordHasher;
+    private readonly INotificationDispatcher _notification = notificationDispatcher;
     private readonly ILogger<RegisterUserService> _logger = logger;
 
     public async Task<Result<RegisterUserResult>> ExecuteAsync(
@@ -75,6 +78,15 @@ public sealed class RegisterUserService(
         await _uow.UserRepository.CreateAsync(user, cancellationToken);
         await _uow.EventOutbox.EnqueueAsync(user.Events, _correlation.CorrelationId, cancellationToken);
         await _uow.CommitAsync(cancellationToken);
+
+        try
+        {
+            await _notification.DispatchAsync(user.Events.First(), _correlation.CorrelationId, cancellationToken);
+        }
+        catch
+        {
+            _logger.LogError("Failed to dispatch notification {Notification}", user.Events.First().ToString());
+        }
 
         user.ClearEvents();
 

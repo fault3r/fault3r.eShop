@@ -5,7 +5,7 @@
  [2026-03-14 17:55:10 DBG] MassTransit  Endpoint Ready: "rabbitmq://localhost/fault3r_UserServiceApi_bus_e9ooyybugekb836wbdxedim9rd?temporary=true" 
  [2026-03-14 17:55:10 INF] MassTransit  Bus started: "rabbitmq://localhost/" 
  [2026-03-14 17:55:19 ERR] Microsoft.EntityFrameworkCore.Database.Command  Failed executing DbCommand (56ms) [Parameters=[@__p_0='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
-SELECT e."Id", e."CorrelationId", e."Payload", e."Processed", e."ProcessedAt", e."Timestamp", e."Type"
+SELECT e."Id", e."CorrelationId", e."Payload", e."Processed", e."PublishedAt", e."Timestamp", e."Type"
 FROM "Events" AS e
 WHERE NOT (e."Processed")
 ORDER BY e."Timestamp"

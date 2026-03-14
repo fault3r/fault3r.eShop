@@ -11,13 +11,13 @@ using UserService.Infrastructure.Messaging.Bus;
 
 namespace UserService.Infrastructure.Messaging.Outbox;
 
-public sealed class MassTransitOutboxBackgroundService(
+public sealed class MassTransitEventOutboxBackgroundService(
     IServiceProvider serviceProvider,
-    ILogger<MassTransitOutboxBackgroundService> logger
+    ILogger<MassTransitEventOutboxBackgroundService> logger
 ) : BackgroundService
 {
     private readonly IServiceProvider _provider = serviceProvider;
-    private readonly ILogger<MassTransitOutboxBackgroundService> _logger = logger;
+    private readonly ILogger<MassTransitEventOutboxBackgroundService> _logger = logger;
 
     protected override async Task ExecuteAsync(CancellationToken stoppingToken)
     {
@@ -50,7 +50,7 @@ public sealed class MassTransitOutboxBackgroundService(
 
                     if (messageType is null)
                     {
-                        await _outbox.MarkAsProcessedAsync(message.Id, stoppingToken);
+                        await _outbox.MarkAsPublishedAsync(message.Id, stoppingToken);
 
                         _logger.LogInformation("{Correlation} Unknown message type {Type} for message {Id}.",
                             message.CorrelationId, message.Type, message.Id);
@@ -65,7 +65,7 @@ public sealed class MassTransitOutboxBackgroundService(
                     }
                     catch (Exception ex)
                     {
-                        await _outbox.MarkAsProcessedAsync(message.Id, stoppingToken);
+                        await _outbox.MarkAsPublishedAsync(message.Id, stoppingToken);
 
                         _logger.LogInformation(ex, "{Correlation} Unknown payload for message {Id}.",
                             message.CorrelationId, message.Id);
@@ -75,7 +75,7 @@ public sealed class MassTransitOutboxBackgroundService(
 
                     if (deserialized is null)
                     {
-                        await _outbox.MarkAsProcessedAsync(message.Id, stoppingToken);
+                        await _outbox.MarkAsPublishedAsync(message.Id, stoppingToken);
 
                         _logger.LogInformation("{Correlation} Null payload for message {Id}.",
                             message.CorrelationId, message.Id);
@@ -89,7 +89,7 @@ public sealed class MassTransitOutboxBackgroundService(
 
                         await _publisher.PublishAsync(@event, stoppingToken);
 
-                        await _outbox.MarkAsProcessedAsync(message.Id, stoppingToken);
+                        await _outbox.MarkAsPublishedAsync(message.Id, stoppingToken);
 
                         _logger.LogInformation("{Correlation} Message {Id} {Type} published.",
                             message.CorrelationId, message.Id, message.Type);
