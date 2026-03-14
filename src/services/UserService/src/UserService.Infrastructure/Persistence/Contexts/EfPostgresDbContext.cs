@@ -29,6 +29,5 @@ public sealed class EfPostgresDbContext(
         builder.Entity<OutboxMessage>().HasKey(p => p.MessageId);
         builder.AddInboxStateEntity();
         builder.AddOutboxStateEntity();
-
     }
 }

@@ -5,7 +5,6 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using UserService.Application.CrossCutting;
-using UserService.Domain.Aggregates.UserAggregate.Events;
 using UserService.Domain.Interfaces;
 using UserService.Domain.Messaging.Outbox;
 using UserService.Infrastructure.Messaging.Bus;
@@ -49,11 +48,12 @@ public sealed class MassTransitOutboxBackgroundService(
 
                     var messageType = EventTypeResolver.Resolve(message.Type);
 
-                    if (messageType == null)
+                    if (messageType is null)
                     {
                         await _outbox.MarkAsProcessedAsync(message.Id, stoppingToken);
 
-                        _logger.LogInformation("Unknown message type '{Type}' for message '{Id}'.", message.Type, message.Id);
+                        _logger.LogInformation("{Correlation} Unknown message type {Type} for message {Id}.",
+                            message.CorrelationId, message.Type, message.Id);
 
                         continue;
                     }
@@ -67,7 +67,8 @@ public sealed class MassTransitOutboxBackgroundService(
                     {
                         await _outbox.MarkAsProcessedAsync(message.Id, stoppingToken);
 
-                        _logger.LogInformation(ex, "Unknown payload for message '{Id}'.", message.Id);
+                        _logger.LogInformation(ex, "{Correlation} Unknown payload for message {Id}.",
+                            message.CorrelationId, message.Id);
 
                         continue;
                     }
@@ -76,7 +77,8 @@ public sealed class MassTransitOutboxBackgroundService(
                     {
                         await _outbox.MarkAsProcessedAsync(message.Id, stoppingToken);
 
-                        _logger.LogInformation("Null payload for message '{Id}'.", message.Id);
+                        _logger.LogInformation("{Correlation} Null payload for message {Id}.",
+                            message.CorrelationId, message.Id);
 
                         continue;
                     }
@@ -89,22 +91,21 @@ public sealed class MassTransitOutboxBackgroundService(
 
                         await _outbox.MarkAsProcessedAsync(message.Id, stoppingToken);
 
-                        _logger.LogInformation("Message '{Id}' published.", message.Id);
+                        _logger.LogInformation("{Correlation} Message {Id} {Type} published.",
+                            message.CorrelationId, message.Id, message.Type);
                     }
                     catch (Exception ex)
                     {
-                        _logger.LogError(ex, "Failed to publish message '{Id}'.", message.Id);
+                        _logger.LogError(ex, "{Correlation} Failed to publish message {Id}.",
+                            message.CorrelationId, message.Id);
                     }
                 }
             }
             catch (OperationCanceledException) when (stoppingToken.IsCancellationRequested)
             {
-                _logger.LogInformation("Stopping due to cancellation…");
+                _logger.LogInformation("Stopping due to cancellation.");
+
                 break;
-            }
-            catch(Microsoft.EntityFrameworkCore.Storage.RetryLimitExceededException)
-            {
-                _logger.LogInformation("Failed to fetch messages, Reconnecting…");
             }
             catch (Exception ex)
             {
