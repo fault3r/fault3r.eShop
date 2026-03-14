@@ -9,24 +9,18 @@ namespace UserService.Infrastructure.CrossCutting.JsonSerializer;
 
 public sealed class NetJsonSerializer : IJsonSerializer
 {
-    public static JsonSerializerOptions DefaultOptions => new()
+    public JsonSerializerOptions Options => options;
+
+    private static readonly JsonSerializerOptions options = new()
     {
         PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
         WriteIndented = false,
     };
 
-    public JsonSerializerOptions Options { get; }
-
     public NetJsonSerializer()
     {
-        Options = new()
-        {
-            PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
-            WriteIndented = false,
-        };
-
-        foreach (var converter in converters)
-            Options.Converters.Add(converter);
+        foreach (var conv in converters)
+            options.Converters.Add(conv);
     }
 
     private readonly IEnumerable<JsonConverter> converters = [

@@ -6,11 +6,11 @@ using UserService.Domain.Messaging.Outbox;
 
 namespace UserService.Infrastructure.Messaging.Outbox;
 
-public sealed class OutboxMessageConfiguration : IEntityTypeConfiguration<OutboxMessage>
+public sealed class EventMessageConfiguration : IEntityTypeConfiguration<EventMessage>
 {
-    public void Configure(EntityTypeBuilder<OutboxMessage> builder)
+    public void Configure(EntityTypeBuilder<EventMessage> builder)
     {
-        builder.ToTable("OuboxMessages");
+        builder.ToTable("Events");
 
         builder.HasKey(p => p.Id);
 

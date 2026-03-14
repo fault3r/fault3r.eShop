@@ -12,7 +12,7 @@ namespace UserService.Infrastructure.Persistence.Contexts;
 public interface IDatabaseContext
 {
      DbSet<User> Users { get; }
-     DbSet<Domain.Messaging.Outbox.OutboxMessage> OutboxMessages { get; }
+     DbSet<EventMessage> Events { get; }
 
      ChangeTracker ChangeTracker { get; }
      DatabaseFacade Database { get; }

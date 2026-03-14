@@ -46,13 +46,13 @@ public sealed class MassTransitOutboxBackgroundService(
                     if (stoppingToken.IsCancellationRequested)
                         break;
 
-                    var messageType = OutboxTypeResolver.Resolve(message.Type);
+                    var messageType = EventTypeResolver.Resolve(message.Type);
 
                     if (messageType == null)
                     {
                         await _outbox.MarkAsProcessedAsync(message.Id, stoppingToken);
 
-                        _logger.LogWarning("Unknown message type: {Type} for OutboxMessage {Id}", message.Type, message.Id);
+                        _logger.LogWarning("Unknown message type: {Type} for EventMessage {Id}", message.Type, message.Id);
 
                         continue;
                     }
@@ -60,13 +60,13 @@ public sealed class MassTransitOutboxBackgroundService(
                     object? payload;
                     try
                     {
-                        payload = JsonSerializer.Deserialize(message.Payload, messageType, _serializer.DefaultOptions);
+                        payload = JsonSerializer.Deserialize(message.Payload, messageType, _serializer.Options);
                     }
                     catch (Exception ex)
                     {
                         await _outbox.MarkAsProcessedAsync(message.Id, stoppingToken);
 
-                        _logger.LogWarning(ex, "Failed to deserialize payload for OutboxMessage {Id}.", message.Id);
+                        _logger.LogWarning(ex, "Failed to deserialize payload for EventMessage {Id}.", message.Id);
 
                         continue;
                     }
@@ -76,7 +76,7 @@ public sealed class MassTransitOutboxBackgroundService(
                     {
                         await _outbox.MarkAsProcessedAsync(message.Id, stoppingToken);
 
-                        _logger.LogWarning("Null payload for OutboxMessage {Id}.", message.Id);
+                        _logger.LogWarning("Null payload for EventMessage {Id}.", message.Id);
 
                         continue;
                     }
@@ -87,10 +87,12 @@ public sealed class MassTransitOutboxBackgroundService(
                         await _publisher.PublishAsync(@event, stoppingToken);
 
                         await _outbox.MarkAsProcessedAsync(message.Id, stoppingToken);
+
+                        _logger.LogInformation("Message successfully published.");
                     }
                     catch (Exception ex)
                     {
-                        _logger.LogError(ex, "MassTransit failed to publish OutboxMessage {Id} of type {Type}", message.Id, message.Type);
+                        _logger.LogError(ex, "MassTransit failed to publish EventMessage {Id} of type {Type}", message.Id, message.Type);
                     }
                 }
             }

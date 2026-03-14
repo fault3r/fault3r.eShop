@@ -3,7 +3,7 @@ using System;
 
 namespace UserService.Domain.Messaging.Outbox;
 
-public sealed class OutboxMessage
+public sealed class EventMessage
 {
     public Guid Id { get; set; }
     public string Type { get; set; }
@@ -20,7 +20,7 @@ public sealed class OutboxMessage
     }
     
     #region ⤚EFCore
-    public OutboxMessage()
+    public EventMessage()
     {
         Type = null!;
         Payload = null!;

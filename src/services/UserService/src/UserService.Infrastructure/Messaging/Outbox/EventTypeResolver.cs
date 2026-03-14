@@ -4,7 +4,7 @@ using UserService.Domain.Aggregates.UserAggregate.Events;
 
 namespace UserService.Infrastructure.Messaging.Outbox;
 
-public static class OutboxTypeResolver
+public static class EventTypeResolver
 {
     private static readonly Dictionary<string, Type> _types = new()
     {

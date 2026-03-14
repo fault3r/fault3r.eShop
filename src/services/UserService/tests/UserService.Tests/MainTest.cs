@@ -18,8 +18,7 @@ public class MainTests
 
         var serializer = new NetJsonSerializer();
 
-        var d = JsonSerializer.Serialize(id, serializer.DefaultOptions);
-        var c = JsonSerializer.Serialize(id, serializer.FullOptions);
+        var d = JsonSerializer.Serialize(id, serializer.Options);
 
         Assert.True(true);
     }
@@ -36,13 +35,13 @@ public class MainTests
 
         var @event = user.Events.First();
 
-        var jsonOptions = new NetJsonSerializer().DefaultOptions;
+        var options = new NetJsonSerializer().Options;
 
-        var type = OutboxTypeResolver.Resolve(@event.GetType().Name)!;
+        var type = EventTypeResolver.Resolve(@event.GetType().Name)!;
 
-        var json = JsonSerializer.Serialize(@event, type, jsonOptions);
+        var json = JsonSerializer.Serialize(@event, type, options);
 
-        var obj = JsonSerializer.Deserialize(json, type, jsonOptions);
+        var obj = JsonSerializer.Deserialize(json, type, options);
 
         Assert.NotNull(json);
         Assert.NotNull(obj);

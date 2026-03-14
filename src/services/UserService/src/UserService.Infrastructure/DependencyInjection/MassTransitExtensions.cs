@@ -1,7 +1,6 @@
 
 using System;
 using MassTransit;
-using MassTransit.EntityFrameworkCoreIntegration;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using UserService.Infrastructure.Exceptions.DependencyInjection;

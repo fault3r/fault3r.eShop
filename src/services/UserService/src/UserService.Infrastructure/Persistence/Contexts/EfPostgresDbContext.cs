@@ -13,9 +13,7 @@ public sealed class EfPostgresDbContext(
 ) : DbContext(dbcOptions), IDatabaseContext
 {
     public DbSet<User> Users => Set<User>();
-
-    public DbSet<Domain.Messaging.Outbox.OutboxMessage> OutboxMessages => Set<Domain.Messaging.Outbox.OutboxMessage>();
-
+    public DbSet<EventMessage> Events => Set<EventMessage>();
 
     public DbSet<InboxState> InboxStates { get; set; }
     public DbSet<OutboxState> OutboxStates { get; set; }

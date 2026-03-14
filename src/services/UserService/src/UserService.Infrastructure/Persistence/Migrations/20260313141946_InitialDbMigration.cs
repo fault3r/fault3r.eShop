@@ -7,13 +7,30 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace UserService.Infrastructure.Persistence.Migrations
 {
     /// <inheritdoc />
-    public partial class InitDbMigration : Migration
+    public partial class InitialDbMigration : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.AlterDatabase()
                 .Annotation("Npgsql:PostgresExtension:citext", ",,");
+
+            migrationBuilder.CreateTable(
+                name: "Events",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uuid", nullable: false),
+                    Type = table.Column<string>(type: "text", nullable: false),
+                    Payload = table.Column<string>(type: "text", nullable: false),
+                    Timestamp = table.Column<DateTimeOffset>(type: "timestamp with time zone", nullable: false),
+                    Processed = table.Column<bool>(type: "boolean", nullable: false),
+                    ProcessedAt = table.Column<DateTimeOffset>(type: "timestamp with time zone", nullable: false),
+                    CorrelationId = table.Column<string>(type: "text", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Events", x => x.Id);
+                });
 
             migrationBuilder.CreateTable(
                 name: "InboxStates",
@@ -36,23 +53,6 @@ namespace UserService.Infrastructure.Persistence.Migrations
                 {
                     table.PrimaryKey("PK_InboxStates", x => x.Id);
                     table.UniqueConstraint("AK_InboxStates_MessageId_ConsumerId", x => new { x.MessageId, x.ConsumerId });
-                });
-
-            migrationBuilder.CreateTable(
-                name: "OuboxMessages",
-                columns: table => new
-                {
-                    Id = table.Column<Guid>(type: "uuid", nullable: false),
-                    Type = table.Column<string>(type: "text", nullable: false),
-                    Payload = table.Column<string>(type: "text", nullable: false),
-                    Timestamp = table.Column<DateTimeOffset>(type: "timestamp with time zone", nullable: false),
-                    Processed = table.Column<bool>(type: "boolean", nullable: false),
-                    ProcessedAt = table.Column<DateTimeOffset>(type: "timestamp with time zone", nullable: false),
-                    CorrelationId = table.Column<string>(type: "text", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_OuboxMessages", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -90,14 +90,14 @@ namespace UserService.Infrastructure.Persistence.Migrations
                 });
 
             migrationBuilder.CreateIndex(
+                name: "IX_Events_Timestamp",
+                table: "Events",
+                column: "Timestamp");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_InboxStates_Delivered",
                 table: "InboxStates",
                 column: "Delivered");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_OuboxMessages_Timestamp",
-                table: "OuboxMessages",
-                column: "Timestamp");
 
             migrationBuilder.CreateIndex(
                 name: "IX_OutboxStates_Created",
@@ -115,10 +115,10 @@ namespace UserService.Infrastructure.Persistence.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "InboxStates");
+                name: "Events");
 
             migrationBuilder.DropTable(
-                name: "OuboxMessages");
+                name: "InboxStates");
 
             migrationBuilder.DropTable(
                 name: "OutboxStates");

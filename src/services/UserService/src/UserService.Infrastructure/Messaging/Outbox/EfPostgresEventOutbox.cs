@@ -31,26 +31,26 @@ public sealed class EfPostgresEventOutbox(
             throw new ArgumentException($"{nameof(events)} contains null element");
 
         var messages = events
-            .Select(e => new OutboxMessage
+            .Select(e => new EventMessage
             {
                 Id = e.EventId,
                 Type = e.GetType().Name,
-                Payload = JsonSerializer.Serialize(e, e.GetType(), _jsonSerializer.DefaultOptions),
+                Payload = JsonSerializer.Serialize(e, e.GetType(), _jsonSerializer.Options),
                 Timestamp = e.OccurredOn,
                 Processed = false,
                 ProcessedAt = e.OccurredOn,
                 CorrelationId = correlationId,
             });
 
-        await _dbContext.OutboxMessages
+        await _dbContext.Events
             .AddRangeAsync(messages, cancellationToken);
     }
 
-    public async Task<IEnumerable<OutboxMessage>> DequeueAsync(
-        int count = 1,
+    public async Task<IEnumerable<EventMessage>> DequeueAsync(
+        int count = 5,
         CancellationToken cancellationToken = default)
     {
-        return await _dbContext.OutboxMessages
+        return await _dbContext.Events
             .Where(p => !p.Processed)
             .OrderBy(p => p.Timestamp)
             .Take(count)
@@ -61,7 +61,7 @@ public sealed class EfPostgresEventOutbox(
         Guid messageId,
         CancellationToken cancellationToken = default)
     {
-        var message = await _dbContext.OutboxMessages
+        var message = await _dbContext.Events
             .FirstOrDefaultAsync(p => p.Id == messageId, cancellationToken);
 
         if (message is not null && !message.Processed)

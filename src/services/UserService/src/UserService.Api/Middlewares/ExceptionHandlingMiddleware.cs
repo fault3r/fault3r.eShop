@@ -2,6 +2,7 @@
 using System;
 using System.Text.Json;
 using Serilog;
+using UserService.Application.CrossCutting;
 
 namespace UserService.Api.Middlewares;
 
@@ -9,15 +10,18 @@ public sealed class ExceptionHandlingMiddleware
 {
     private readonly RequestDelegate _next;
     private readonly string correlationHeader;
+    private readonly IJsonSerializer _serializer;
 
     public ExceptionHandlingMiddleware(
         RequestDelegate next,
-        string correlationHeader)
+        string correlationHeader,
+        IJsonSerializer jsonSerializer)
     {
         ArgumentException.ThrowIfNullOrEmpty(correlationHeader);
 
         _next = next;
         this.correlationHeader = correlationHeader;
+        _serializer = jsonSerializer;
     }
 
     public async Task InvokeAsync(HttpContext context)
@@ -44,7 +48,7 @@ public sealed class ExceptionHandlingMiddleware
             context.Response.StatusCode = StatusCodes.Status500InternalServerError;
             context.Response.ContentType = "application/json";
             await context.Response.WriteAsync(
-                JsonSerializer.Serialize(response, SharedJsonSerializer.DefaultOptions));
+                JsonSerializer.Serialize(response, _serializer.Options));
         }
     }
 }

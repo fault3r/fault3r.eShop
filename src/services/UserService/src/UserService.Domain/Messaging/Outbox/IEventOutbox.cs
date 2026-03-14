@@ -12,7 +12,7 @@ public interface IEventOutbox
         CancellationToken cancellationToken
     );
 
-    Task<IEnumerable<OutboxMessage>> DequeueAsync(
+    Task<IEnumerable<EventMessage>> DequeueAsync(
         int count,
         CancellationToken cancellationToken
     );

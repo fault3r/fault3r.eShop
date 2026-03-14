@@ -12,8 +12,8 @@ using UserService.Infrastructure.Persistence.Contexts;
 namespace UserService.Infrastructure.Persistence.Migrations
 {
     [DbContext(typeof(EfPostgresDbContext))]
-    [Migration("20260306162442_InitDbMigration")]
-    partial class InitDbMigration
+    [Migration("20260313141946_InitialDbMigration")]
+    partial class InitialDbMigration
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -144,7 +144,7 @@ namespace UserService.Infrastructure.Persistence.Migrations
                     b.ToTable("Users", (string)null);
                 });
 
-            modelBuilder.Entity("UserService.Domain.Messaging.Outbox.OutboxMessage", b =>
+            modelBuilder.Entity("UserService.Domain.Messaging.Outbox.EventMessage", b =>
                 {
                     b.Property<Guid>("Id")
                         .HasColumnType("uuid")
@@ -181,7 +181,7 @@ namespace UserService.Infrastructure.Persistence.Migrations
 
                     b.HasIndex("Timestamp");
 
-                    b.ToTable("OuboxMessages", (string)null);
+                    b.ToTable("Events", (string)null);
                 });
 
             modelBuilder.Entity("UserService.Domain.Aggregates.UserAggregate.User", b =>

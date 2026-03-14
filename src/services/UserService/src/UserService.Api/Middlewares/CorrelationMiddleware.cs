@@ -27,7 +27,7 @@ public sealed class CorrelationMiddleware
     {
         var correlationId = context.Request.Headers[correlationHeader]
             .FirstOrDefault()
-            ?? Guid.NewGuid().ToString();
+        ?? Guid.NewGuid().ToString();
 
         correlationContext.Set(correlationId);
 

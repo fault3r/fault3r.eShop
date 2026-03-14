@@ -27,7 +27,7 @@ public sealed class RedisSessionService(
 
         await EnforceSessionLimitAsync(session.UserId, cancellationToken);
 
-        var payload = JsonSerializer.Serialize(session, _serializer.DefaultOptions);
+        var payload = JsonSerializer.Serialize(session, _serializer.Options);
 
         var expires = session.RefreshTokenExpiresAt - DateTimeOffset.UtcNow;
         if (expires <= TimeSpan.Zero) expires = TimeSpan.FromMinutes(1);
@@ -63,7 +63,7 @@ public sealed class RedisSessionService(
             if (payload.IsNullOrEmpty)
                 continue;
 
-            var session = JsonSerializer.Deserialize<SessionData>(payload!, _serializer.DefaultOptions);
+            var session = JsonSerializer.Deserialize<SessionData>(payload!, _serializer.Options);
             if (session != null)
                 sessions.Add((id!, session));
         }
@@ -97,7 +97,7 @@ public sealed class RedisSessionService(
 
         if (payload.IsNullOrEmpty) return null;
 
-        return JsonSerializer.Deserialize<SessionData>(payload!, _serializer.DefaultOptions)!;
+        return JsonSerializer.Deserialize<SessionData>(payload!, _serializer.Options)!;
     }
 
     public async Task<bool> ExistsAsync(
@@ -117,7 +117,7 @@ public sealed class RedisSessionService(
     {
         ArgumentNullException.ThrowIfNull(session);
 
-        var payload = JsonSerializer.Serialize(session, _serializer.DefaultOptions);
+        var payload = JsonSerializer.Serialize(session, _serializer.Options);
 
         var expires = session.RefreshTokenExpiresAt - DateTimeOffset.UtcNow;
         if (expires <= TimeSpan.Zero) expires = TimeSpan.FromMinutes(1);
@@ -146,7 +146,7 @@ public sealed class RedisSessionService(
 
         if (payload.IsNullOrEmpty) return;
 
-        var session = JsonSerializer.Deserialize<SessionData>(payload!, _serializer.DefaultOptions);
+        var session = JsonSerializer.Deserialize<SessionData>(payload!, _serializer.Options);
 
         var userSessionsKey = GetUserSessionsKey(session!.UserId);
 

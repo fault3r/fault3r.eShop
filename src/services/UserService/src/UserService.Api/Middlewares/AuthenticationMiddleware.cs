@@ -1,6 +1,7 @@
 
 using System;
 using System.Text.Json;
+using UserService.Application.CrossCutting;
 using UserService.Domain.Security.Authentication;
 
 namespace UserService.Api.Middlewares;
@@ -8,11 +9,13 @@ namespace UserService.Api.Middlewares;
 public sealed class AuthenticationMiddleware(
     RequestDelegate next,
     ITokenService tokenService,
-    ISessionService sessionService)
+    ISessionService sessionService,
+    IJsonSerializer jsonSerializer)
 {
     private readonly RequestDelegate _next = next;
-    private readonly ITokenService _tokenService = tokenService;
-    private readonly ISessionService _sessionService = sessionService;
+    private readonly ITokenService _token = tokenService;
+    private readonly ISessionService _session = sessionService;
+    private readonly IJsonSerializer _serializer = jsonSerializer;
     private const string TokenPrefix = "Bearer ";
 
     public async Task InvokeAsync(HttpContext context)
@@ -32,7 +35,7 @@ public sealed class AuthenticationMiddleware(
         }
         var token = authHeader[TokenPrefix.Length..].Trim();
 
-        var claims = _tokenService.ReadAccessTokenClaims(token);
+        var claims = _token.ReadAccessTokenClaims(token);
         if (claims is null)
         {
             await WriteResponseErrorAsync(context, "Invalid token!");
@@ -46,7 +49,7 @@ public sealed class AuthenticationMiddleware(
             return;
         }
 
-        var session = await _sessionService.ExistsAsync(sessionId, context.RequestAborted);
+        var session = await _session.ExistsAsync(sessionId, context.RequestAborted);
         if (!session)
         {
             await WriteResponseErrorAsync(context, "Invalidated session!");
@@ -56,7 +59,8 @@ public sealed class AuthenticationMiddleware(
         context.User = claims;
         await _next(context);
     }
-    private static async Task WriteResponseErrorAsync(
+
+    private async Task WriteResponseErrorAsync(
         HttpContext context, string errorMessage)
     {
         context.Response.StatusCode = StatusCodes.Status401Unauthorized;
@@ -64,7 +68,7 @@ public sealed class AuthenticationMiddleware(
 
         var errorResponse = new { errorMessage };
         await context.Response.WriteAsync(
-            JsonSerializer.Serialize(errorResponse, SharedJsonSerializer.DefaultOptions));
+            JsonSerializer.Serialize(errorResponse, _serializer.Options));
     }
 }
 
