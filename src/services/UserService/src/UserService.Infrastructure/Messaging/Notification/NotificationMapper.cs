@@ -15,12 +15,10 @@ public static class NotificationMapper
     };
 
     public static NotificationMessage? FromEvent(IDomainEvent @event, string correlationId)
-    {
+    {        
         if (_mappers.TryGetValue(@event.GetType(), out var mapper))
-        {
             return mapper.Invoke(@event, correlationId);
-        }
-        else
-            return null;
+
+        return null;
     }
 }

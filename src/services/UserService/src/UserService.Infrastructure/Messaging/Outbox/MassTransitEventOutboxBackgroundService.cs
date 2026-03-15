@@ -1,6 +1,5 @@
 
 using System;
-using System.Text.Json;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
@@ -61,7 +60,7 @@ public sealed class MassTransitEventOutboxBackgroundService(
                     object? deserialized;
                     try
                     {
-                        deserialized = JsonSerializer.Deserialize(message.Payload, messageType, _serializer.Options);
+                        deserialized = _serializer.Deserialize(message.Payload, messageType);
                     }
                     catch (Exception ex)
                     {

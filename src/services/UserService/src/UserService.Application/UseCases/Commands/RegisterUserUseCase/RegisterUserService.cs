@@ -83,9 +83,9 @@ public sealed class RegisterUserService(
         {
             await _notification.DispatchAsync(user.Events.First(), _correlation.CorrelationId, cancellationToken);
         }
-        catch
+        catch(Exception ex)
         {
-            _logger.LogError("Failed to dispatch notification {Notification}", user.Events.First().ToString());
+            _logger.LogError(ex, "Failed to dispatch notification {Notification}", user.Events.First().ToString());
         }
 
         user.ClearEvents();

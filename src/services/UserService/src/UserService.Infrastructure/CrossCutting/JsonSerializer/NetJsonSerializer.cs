@@ -25,4 +25,16 @@ public sealed class NetJsonSerializer : IJsonSerializer
             new ValueObjectJsonConverter<Status>()
         },
     };
+
+    public string Serialize(object value)
+        => System.Text.Json.JsonSerializer.Serialize(value, options);
+
+    public string Serialize(object value, Type inputType)
+        => System.Text.Json.JsonSerializer.Serialize(value, inputType, options);
+
+    public object? Deserialize(string json, Type returnType)
+        => System.Text.Json.JsonSerializer.Deserialize(json, returnType, options);
+
+    public TReturnType? Deserialize<TReturnType>(string json)
+        => System.Text.Json.JsonSerializer.Deserialize<TReturnType>(json, options);
 }

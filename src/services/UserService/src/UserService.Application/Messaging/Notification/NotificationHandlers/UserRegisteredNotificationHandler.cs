@@ -32,6 +32,6 @@ public sealed class UserRegisteredNotificationHandler(
             subject: "Wewlcome",
             body: body,
             cancellationToken: cancellationToken
-        ); 
+        );
     }
 }

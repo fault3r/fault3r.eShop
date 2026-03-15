@@ -1,6 +1,8 @@
 
 using System;
 using FluentEmail.Core;
+using Polly;
+using Polly.Timeout;
 using UserService.Application.Services.EmailService;
 using UserService.Domain.Contracts;
 using UserService.Infrastructure.Exceptions.Services.EmailService;
@@ -23,14 +25,21 @@ public sealed class FluentEmailSender(
         ArgumentException.ThrowIfNullOrEmpty(subject);
         ArgumentException.ThrowIfNullOrEmpty(body);
 
-        var response = await _fluentEmail
-            .To(to)
-            .Subject(subject)
-            .Body(body, isHtml: true)
-            .SendAsync(cancellationToken);
+        var timeoutPolicy = Policy.TimeoutAsync(
+            seconds: 10,
+            timeoutStrategy: TimeoutStrategy.Pessimistic);
 
-        if (!response.Successful)
-            throw new CannotSendEmailException(to);
+        await timeoutPolicy.ExecuteAsync(async (ct) =>
+        {
+            var response = await _fluentEmail
+                .To(to)
+                .Subject(subject)
+                .Body(body, isHtml: true)
+                .SendAsync(cancellationToken);
+
+            if (!response.Successful)
+                throw new CannotSendEmailException(to);
+        }, cancellationToken);
 
         return Result.Success();
     }

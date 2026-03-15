@@ -1,11 +1,13 @@
 
 using System;
 using System.Text.Json;
+using Microsoft.CodeAnalysis.CSharp.Syntax;
 using UserService.Application.Messaging.Notification;
 using UserService.Domain.Factories;
 using UserService.Domain.ValueObjects;
 using UserService.Infrastructure.CrossCutting;
 using UserService.Infrastructure.CrossCutting.JsonSerializer;
+using UserService.Infrastructure.Messaging.Notification;
 using UserService.Infrastructure.Messaging.Outbox;
 
 namespace UserService.Tests;
@@ -13,32 +15,30 @@ namespace UserService.Tests;
 public class MainTests
 {
     [Fact]
-    public void TestName()
+    public async void TestName()
     {
-        var id = Identity.From(Guid.NewGuid());
+        var ct = new CancellationToken();
+        var tt = new CancellationTokenSource(TimeSpan.FromSeconds(5));
 
-        var serializer = new NetJsonSerializer();
+        var token = CancellationTokenSource.CreateLinkedTokenSource(ct, tt.Token);
 
-        var d = JsonSerializer.Serialize(id, serializer.Options);
+        try
+        {
+            await TestClass.Download(token.Token);
+        }
+        catch
+        {
+            
+        }
 
-        Assert.True(true);
     }
+}
 
-    [Fact]
-    public void MainTest()
+public class TestClass
+{
+    public static Task Download(CancellationToken ct)
     {
-        var email = Email.Parse("example@email.com");
-        var hash = PasswordHash.Parse("$argon2id$v=19$m=65536,t=3,p=4$tq1euaOqS1ZcbrcLRLFb5w==$FULw8GEzOhG3YO1n54CSXk4pRl4yfALFRquP1Tn2UGE=");
-        var salt = PasswordSalt.Parse(RandomStringGenerator.GetString(4));
-        var name = FullName.From("Hamed", "Damaavandi");
-
-        var user = UserFactory.Create(email, hash, salt, name);
-
-        var @event = user.Events.First();
-
-        var evnt = NotificationMapper.FromEvent(@event,"aaaaaaaaaaaaaaaaaaaa");
-
-
-        Assert.True(true);
+        Task.Delay(7000, ct);
+        throw new Exception("could not download!");
     }
 }

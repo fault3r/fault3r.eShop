@@ -48,7 +48,7 @@ public sealed class ExceptionHandlingMiddleware
             context.Response.StatusCode = StatusCodes.Status500InternalServerError;
             context.Response.ContentType = "application/json";
             await context.Response.WriteAsync(
-                JsonSerializer.Serialize(response, _serializer.Options));
+                _serializer.Serialize(response));
         }
     }
 }

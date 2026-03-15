@@ -24,6 +24,8 @@ using UserService.Infrastructure.Repositories;
 using UserService.Infrastructure.Security;
 using UserService.Infrastructure.UnitOfWork;
 using UserService.Infrastructure.CrossCutting.JsonSerializer;
+using UserService.Application.Messaging.Notification;
+using UserService.Infrastructure.Messaging.Notification;
 
 namespace UserService.Infrastructure.DependencyInjection;
 
@@ -56,9 +58,11 @@ public static class DIsExtensions
 
         services.AddScoped<IUnitOfWork, EfUnitOfWork>();
 
+        services.AddScoped<IMessageBus, MassTransitMessageBus>();
+
         services.AddScoped<IEventOutbox, EfPostgresEventOutbox>();
 
-        services.AddScoped<IMessageBus, MassTransitMessageBus>();
+        services.AddScoped<INotificationDispatcher, MediatorNotificationDispatcher>();
 
         services.AddScoped<IUserRepository, EfUserRepository>();
 

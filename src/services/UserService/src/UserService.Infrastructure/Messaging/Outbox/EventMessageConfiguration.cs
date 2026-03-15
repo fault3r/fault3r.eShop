@@ -32,10 +32,6 @@ public sealed class EventMessageConfiguration : IEntityTypeConfiguration<EventMe
             .HasColumnName("Payload")
             .IsRequired();
 
-        builder.Property(p => p.Processed)
-            .HasColumnName("Processed")
-            .IsRequired();
-
         builder.Property(p => p.Published)
             .HasColumnName("Published")
             .IsRequired();

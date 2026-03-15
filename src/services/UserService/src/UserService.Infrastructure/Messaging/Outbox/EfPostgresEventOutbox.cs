@@ -35,7 +35,7 @@ public sealed class EfPostgresEventOutbox(
             {
                 Id = e.EventId,
                 Type = e.GetType().Name,
-                Payload = JsonSerializer.Serialize(e, e.GetType(), _jsonSerializer.Options),
+                Payload = _jsonSerializer.Serialize(e),
                 Timestamp = e.OccurredOn,
                 Published = false,
                 PublishedAt = e.OccurredOn,

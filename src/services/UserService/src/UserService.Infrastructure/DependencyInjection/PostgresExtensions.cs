@@ -34,8 +34,6 @@ public static class PostgresExtensions
                     maxRetryDelay: TimeSpan.FromSeconds(5),
                     errorCodesToAdd: null
                 );
-
-                cfg.CommandTimeout(30);
             });
         });
 
