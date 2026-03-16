@@ -11,9 +11,11 @@ public class IdentityTests
     public void ParseFrom_WithValidIdentity_ReturnsIdentity()
     {
         var guid = Guid.NewGuid();
-        var identity = Identity.From(guid);
+        var identityFrom = Identity.From(guid);
+        var identityParse = Identity.Parse(guid.ToString());
 
-        Assert.Equal(guid, identity.Value);
+        Assert.Equal(identityFrom.Value, guid);
+        Assert.Equal(identityFrom, identityParse);
     }
 
     [Theory]

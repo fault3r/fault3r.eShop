@@ -8,6 +8,14 @@ namespace UserService.Domain.ValueObjects;
 public sealed class Identity : ValueObject<Identity>
 {
     public Guid Value { get; }
+
+    private Identity(Guid guid)
+    {
+        if (guid == Guid.Empty)
+            throw new InvalidIdentityException(guid.ToString());
+
+        Value = guid;
+    }
     
     private Identity(string value)
     {
@@ -26,7 +34,7 @@ public sealed class Identity : ValueObject<Identity>
         => Guid.TryParse(value, out var guid) && guid != Guid.Empty;
 
     public static Identity From(Guid guid)
-        => new(guid.ToString());
+        => new(guid);
 
     public static Identity Parse(string value)
         => new(value);

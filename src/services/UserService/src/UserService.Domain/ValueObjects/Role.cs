@@ -17,9 +17,7 @@ public sealed class Role : ValueObject<Role>
     public RoleType Value { get; }
 
     private Role(RoleType roleType)
-    {
-        Value = roleType;
-    }
+        => Value = roleType;
 
     private Role(string value)
     {
@@ -28,13 +26,13 @@ public sealed class Role : ValueObject<Role>
 
         value = value.Trim();
 
-        if (!IsValid(value, out RoleType role))
+        if (!TryGetRole(value, out RoleType role))
             throw new UnsupportedRoleException(value);
 
         Value = role;
     }
 
-    private static bool IsValid(string value, out RoleType roleType)
+    private static bool TryGetRole(string value, out RoleType roleType)
     {
         if (!Enum.TryParse(value, ignoreCase: true, out roleType))
             return false;
