@@ -34,7 +34,7 @@ public sealed class CorrelationMiddleware
         context.Items[correlationHeader] = correlationId;
         context.Response.Headers[correlationHeader] = correlationId;
 
-        using (LogContext.PushProperty("CorrelationId", correlationContext.CorrelationId))
+        using (LogContext.PushProperty("CorrelationId", correlationId))
         {
             Log.Information("Incoming request {Method} {Path}.",
                 context.Request.Method, context.Request.Path);

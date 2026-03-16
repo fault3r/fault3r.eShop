@@ -1,6 +1,5 @@
 
 using System;
-using System.Text.Json.Serialization;
 using UserService.Domain.Abstractions;
 using UserService.Domain.Exceptions.Identity;
 
@@ -10,19 +9,10 @@ public sealed class Identity : ValueObject<Identity>
 {
     public Guid Value { get; }
     
-    [JsonConstructor]
-    private Identity(Guid guid)
-    {
-        if (guid == Guid.Empty)
-            throw new EmptyIdentityException();
-
-        Value = guid;
-    }
-
     private Identity(string value)
     {
         if (string.IsNullOrWhiteSpace(value))
-            throw new EmptyIdentityException();
+            throw new MissingIdentityException();
 
         value = value.Trim();
 
@@ -36,7 +26,7 @@ public sealed class Identity : ValueObject<Identity>
         => Guid.TryParse(value, out var guid) && guid != Guid.Empty;
 
     public static Identity From(Guid guid)
-        => new(guid);
+        => new(guid.ToString());
 
     public static Identity Parse(string value)
         => new(value);

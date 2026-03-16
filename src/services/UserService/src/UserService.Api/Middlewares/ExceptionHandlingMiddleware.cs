@@ -3,6 +3,7 @@ using System;
 using System.Text.Json;
 using Serilog;
 using UserService.Application.CrossCutting;
+using UserService.Infrastructure.DependencyInjection;
 
 namespace UserService.Api.Middlewares;
 
@@ -38,17 +39,16 @@ public sealed class ExceptionHandlingMiddleware
         catch (Exception ex)
         {
             Log.Error(ex, "An unhandled exception occurred!");
-
-            var response = new
+            
+            context.Response.StatusCode = StatusCodes.Status500InternalServerError;
+            context.Response.ContentType = "application/json";
+            var response = _serializer.Serialize(new
             {
                 errorMessage = "Internal Server Error",
                 correlationId = context.Items[correlationHeader],
-            };
+            });
 
-            context.Response.StatusCode = StatusCodes.Status500InternalServerError;
-            context.Response.ContentType = "application/json";
-            await context.Response.WriteAsync(
-                _serializer.Serialize(response));
+            await context.Response.WriteAsync(response, context.RequestAborted);
         }
     }
 }
