@@ -10,7 +10,7 @@ public class EmailTests
     [Fact]
     public void Parse_WithValidEmail_ReturnsNormalizedEmail()
     {
-        var email = Email.Parse("Email@Example.Com");
+        var email = Email.Parse("Email@Example.COM");
 
         Assert.Equal("Email@example.com", email.ToString());
     }

@@ -26,13 +26,13 @@ public sealed class Role : ValueObject<Role>
 
         value = value.Trim();
 
-        if (!TryGetRole(value, out RoleType role))
+        if (!TryGetValue(value, out RoleType role))
             throw new UnsupportedRoleException(value);
 
         Value = role;
     }
 
-    private static bool TryGetRole(string value, out RoleType roleType)
+    private static bool TryGetValue(string value, out RoleType roleType)
     {
         if (!Enum.TryParse(value, ignoreCase: true, out roleType))
             return false;

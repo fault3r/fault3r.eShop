@@ -18,9 +18,7 @@ public sealed class Status : ValueObject<Status>
     public StatusType Value { get; }
 
     private Status(StatusType statusType)
-    {
-        Value = statusType;
-    }
+        => Value = statusType;
 
     private Status(string value)
     {
@@ -29,13 +27,13 @@ public sealed class Status : ValueObject<Status>
 
         value = value.Trim();
 
-        if (!IsValid(value, out StatusType status))
+        if (!TryGetValue(value, out StatusType status))
             throw new UnsupportedStatusException(value);
 
         Value = status;
     }
 
-    private static bool IsValid(string value, out StatusType statusType)
+    private static bool TryGetValue(string value, out StatusType statusType)
     {
         if (!Enum.TryParse(value, ignoreCase: true, out statusType))
             return false;
