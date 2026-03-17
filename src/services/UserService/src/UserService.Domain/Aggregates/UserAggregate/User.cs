@@ -54,6 +54,17 @@ public sealed class User : AggregateRoot<User, Identity>
         return user;
     }
 
+    public void ChangePassword(PasswordHash newPasswordHash)
+    {
+        ArgumentNullException.ThrowIfNull(newPasswordHash);
+
+        if (newPasswordHash == PasswordHash)
+            return;
+
+        PasswordHash = newPasswordHash;
+        RaiseEvent(new UserPasswordChangedEvent(Id, Email, FullName));
+    }
+
     public void ChangeFullName(FullName newFullName)
     {
         ArgumentNullException.ThrowIfNull(newFullName);
@@ -65,15 +76,40 @@ public sealed class User : AggregateRoot<User, Identity>
         RaiseEvent(new UserFullNameChangedEvent(Id, Email, FullName));
     }
 
-    public void ChangePassword(PasswordHash newPasswordHash)
+    public void PromoteToAdmin()
     {
-        ArgumentNullException.ThrowIfNull(newPasswordHash);
-
-        if (newPasswordHash == PasswordHash)
+        if (Role.IsAdmin)
             return;
 
-        PasswordHash = newPasswordHash;
-        RaiseEvent(new UserPasswordChangedEvent(Id, Email, FullName));
+        Role = Role.Admin;
+        RaiseEvent(new UserRoleChangedEvent(Id, Email, Role));
+    }
+
+    public void DemoteToUser()
+    {
+        if (Role.IsUser)
+            return;
+
+        Role = Role.User;
+        RaiseEvent(new UserRoleChangedEvent(Id, Email, Role));
+    }
+
+    public void LockUser()
+    {
+        if (Status.IsLocked)
+            return;
+
+        Status = Status.Locked;
+        RaiseEvent(new UserStatusChangedEvent(Id, Email, Status));
+    }
+
+    public void ActiveUser()
+    {
+        if (Status.IsActive)
+            return;
+
+        Status = Status.Active;
+        RaiseEvent(new UserStatusChangedEvent(Id, Email, Status));
     }
 
     #region ⤚EFCore
