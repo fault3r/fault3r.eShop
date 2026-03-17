@@ -40,7 +40,7 @@ public sealed class User : AggregateRoot<User, Identity>
         Status = status;
     }
 
-    internal static User Create(
+    public static User Create(
         Identity id,
         Email email,
         PasswordHash passwordHash,

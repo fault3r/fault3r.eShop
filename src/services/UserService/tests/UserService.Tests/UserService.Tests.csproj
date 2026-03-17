@@ -42,4 +42,8 @@
     <ProjectReference Include="../../src/UserService.Infrastructure/UserService.Infrastructure.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="UnitTests/Domain.Tests/Aggregates/" />
+  </ItemGroup>
+
 </Project>
