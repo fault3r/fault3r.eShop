@@ -1,6 +1,5 @@
 
 using System;
-using System.Threading.Tasks;
 using Moq;
 using UserService.Domain.Aggregates.UserAggregate;
 using UserService.Domain.DomainServices;
@@ -16,7 +15,6 @@ public class UserDomainServiceTests
     private readonly Mock<IPasswordHasher> _mockHasher;
     private readonly UserDomainService _domainService;
     private readonly Email email = Email.Parse("test@example.com");
-    private readonly CancellationToken ct;
 
     public UserDomainServiceTests()
     {
@@ -28,13 +26,13 @@ public class UserDomainServiceTests
     [Fact]
     public async Task VerifyCanCreateAsync_WhenEmailDoesNotExist_ReturnsTrue()
     {
-        _mockRepository.Setup(r => r.GetByEmailAsync(email, ct))
+        _mockRepository.Setup(x => x.GetByEmailAsync(email, default))
             .ReturnsAsync((User?)null);
 
-        var canCreate = await _domainService.VerifyCanCreateAsync(email, ct);
+        var canCreate = await _domainService.VerifyCanCreateAsync(email, default);
 
         Assert.True(canCreate);
-        _mockRepository.Verify(r => r.GetByEmailAsync(email, ct), Times.Once);
+        _mockRepository.Verify(x => x.GetByEmailAsync(email, default), Times.Once);
     }
 
     [Fact]
@@ -42,22 +40,22 @@ public class UserDomainServiceTests
     {
         var user = new User(Identity.From(Guid.NewGuid()));
 
-        _mockRepository.Setup(r => r.GetByEmailAsync(email, ct))
+        _mockRepository.Setup(x => x.GetByEmailAsync(email, default))
             .ReturnsAsync(user);
 
-        var canCreate = await _domainService.VerifyCanCreateAsync(email, ct);
+        var canCreate = await _domainService.VerifyCanCreateAsync(email, default);
 
         Assert.False(canCreate);
-        _mockRepository.Verify(r => r.GetByEmailAsync(email, ct), Times.Once);        
+        _mockRepository.Verify(x => x.GetByEmailAsync(email, default), Times.Once);        
     }
 
     [Fact]
     public async Task VerifyCanCreateAsync_WhenEmailIsNull_ThrowsArgumentNullException()
     {
-        async Task act() => await _domainService.VerifyCanCreateAsync(null!, ct);
+        async Task act() => await _domainService.VerifyCanCreateAsync(null!, default);
 
         await Assert.ThrowsAsync<ArgumentNullException>(act);
 
-        _mockRepository.Verify(repo => repo.GetByEmailAsync(It.IsAny<Email>(), It.IsAny<CancellationToken>()), Times.Never);
+        _mockRepository.Verify(x => x.GetByEmailAsync(It.IsAny<Email>(), It.IsAny<CancellationToken>()), Times.Never);
     }
 }
