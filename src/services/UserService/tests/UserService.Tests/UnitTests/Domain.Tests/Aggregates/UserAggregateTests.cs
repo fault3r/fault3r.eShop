@@ -8,13 +8,13 @@ namespace UserService.Tests.UnitTests.Domain.Tests.Aggregates;
 
 public class UserAggregateTests
 {
-    private static readonly Identity id = Identity.From(Guid.NewGuid());
-    private static readonly Email email = Email.Parse("test@example.com");
-    private static readonly PasswordHash hash = PasswordHash.Parse("xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx");
-    private static readonly PasswordSalt salt = PasswordSalt.Parse("salt");
-    private static readonly FullName fullname = FullName.From("Hamed", "Damaavandi");
-    private static readonly Role role = Role.User;
-    private static readonly Status status = Status.Pending;
+    private readonly Identity id = Identity.From(Guid.NewGuid());
+    private readonly Email email = Email.Parse("test@example.com");
+    private readonly PasswordHash hash = PasswordHash.Parse("xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx");
+    private readonly PasswordSalt salt = PasswordSalt.Parse("salt");
+    private readonly FullName fullname = FullName.From("Hamed", "Damaavandi");
+    private readonly Role role = Role.User;
+    private readonly Status status = Status.Pending;
 
     [Fact]
     public void Create_WithValidInputs_SetPropertiesAndRaiseEvent()
@@ -124,7 +124,7 @@ public class UserAggregateTests
         Assert.Equal(email, @event.Email);
         Assert.Equal(user.Status, @event.NewStatus);
     }
-    
+
     [Fact]
     public void ActiveUser_ChangeStatusToActivedAndRaiseEvent()
     {
@@ -138,6 +138,6 @@ public class UserAggregateTests
         Assert.NotEqual(DateTimeOffset.MinValue, @event.OccurredOn);
         Assert.Equal(id, @event.UserId);
         Assert.Equal(email, @event.Email);
-        Assert.Equal(user.Status, @event.NewStatus);        
+        Assert.Equal(user.Status, @event.NewStatus);
     }
 }
