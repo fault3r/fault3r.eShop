@@ -14,7 +14,7 @@ public class UserAggregateTests
     private static readonly PasswordSalt salt = PasswordSalt.Parse("salt");
     private static readonly FullName fullname = FullName.From("Hamed", "Damaavandi");
     private static readonly Role role = Role.User;
-    private static readonly Status status = Status.Active;
+    private static readonly Status status = Status.Pending;
 
     [Fact]
     public void Create_WithValidInputs_SetPropertiesAndRaiseEvent()
@@ -96,6 +96,7 @@ public class UserAggregateTests
     public void DemoteToUser_ChangeRoleToUserAndRaiseEvent()
     {
         var user = User.Create(id, email, hash, salt, fullname, role, status);
+        user.PromoteToAdmin();
         user.ClearEvents();
 
         user.DemoteToUser();
@@ -105,6 +106,38 @@ public class UserAggregateTests
         Assert.NotEqual(DateTimeOffset.MinValue, @event.OccurredOn);
         Assert.Equal(id, @event.UserId);
         Assert.Equal(email, @event.Email);
-        Assert.Equal(user.Role, @event.NewRole);        
+        Assert.Equal(user.Role, @event.NewRole);
+    }
+
+    [Fact]
+    public void LockUser_ChangeStatusToLockedAndRaiseEvent()
+    {
+        var user = User.Create(id, email, hash, salt, fullname, role, status);
+        user.ClearEvents();
+
+        user.LockUser();
+        var @event = Assert.IsType<UserStatusChangedEvent>(user.Events.First());
+
+        Assert.NotEqual(Guid.Empty, @event.EventId);
+        Assert.NotEqual(DateTimeOffset.MinValue, @event.OccurredOn);
+        Assert.Equal(id, @event.UserId);
+        Assert.Equal(email, @event.Email);
+        Assert.Equal(user.Status, @event.NewStatus);
+    }
+    
+    [Fact]
+    public void ActiveUser_ChangeStatusToActivedAndRaiseEvent()
+    {
+        var user = User.Create(id, email, hash, salt, fullname, role, status);
+        user.ClearEvents();
+
+        user.ActiveUser();
+        var @event = Assert.IsType<UserStatusChangedEvent>(user.Events.First());
+
+        Assert.NotEqual(Guid.Empty, @event.EventId);
+        Assert.NotEqual(DateTimeOffset.MinValue, @event.OccurredOn);
+        Assert.Equal(id, @event.UserId);
+        Assert.Equal(email, @event.Email);
+        Assert.Equal(user.Status, @event.NewStatus);        
     }
 }
