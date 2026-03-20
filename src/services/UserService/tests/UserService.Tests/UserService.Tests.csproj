@@ -42,4 +42,9 @@
     <ProjectReference Include="../../src/UserService.Infrastructure/UserService.Infrastructure.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="UnitTests/Infrastructure.Tests/" />
+    <Folder Include="UnitTests/Infrastructure.Tests/Repositories/" />
+  </ItemGroup>
+
 </Project>
