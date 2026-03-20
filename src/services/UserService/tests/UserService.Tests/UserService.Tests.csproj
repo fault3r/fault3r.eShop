@@ -44,7 +44,6 @@
 
   <ItemGroup>
     <Folder Include="UnitTests/Infrastructure.Tests/" />
-    <Folder Include="UnitTests/Infrastructure.Tests/Repositories/" />
   </ItemGroup>
 
 </Project>
