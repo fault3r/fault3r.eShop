@@ -1,31 +1,24 @@
 ﻿
 using System;
-using Polly;
-using Polly.Timeout;
+using System.Runtime.CompilerServices;
 
 namespace JIT;
 
 internal class Program
 {
-    public static async Task Main(string[] args)
+    public static void Main(string[] args)
     {
-        var cancellationToken = new CancellationToken();
-
         Console.WriteLine("started.");
-        var tp = Policy.TimeoutAsync(3);
 
-        try
-        {
-            await tp.ExecuteAsync(async (ct) =>
-            {
-                await Downloader.Download(ct);
+        void Subscriber1(object? sender, string url) => Console.WriteLine($"subscriber1: received.");
+        void Subscriber2(object? sender, string url) => Console.WriteLine($"subscriber2: received.");
 
-            }, cancellationToken);
-        }
-        catch(TimeoutRejectedException)
-        {
-            Console.WriteLine("could send in 3 secs.");
-        }
+        var loader = new Downloader();
+
+        loader.DownloadComplete += Subscriber1;
+        loader.DownloadComplete += Subscriber2;
+
+        loader.Download("test.txt");
 
         Console.WriteLine("ended.");
     }
@@ -33,11 +26,20 @@ internal class Program
 
 public class Downloader
 {
-    public static async Task<string> Download(CancellationToken cancellationToken)
+    public void Download(string url)
     {
-        Console.WriteLine("downloading..");
+        Console.WriteLine("downloading…");
 
-        await Task.Delay(5000, cancellationToken);
-        return "data";
+        Thread.Sleep(3000);
+
+        Console.WriteLine($"file {url} downloaded.");
+
+        OnDownloadComplete(url);
     }
+
+    protected virtual void OnDownloadComplete(string url)
+        => DownloadComplete?.Invoke(this, url);
+
+    public event EventHandler<string>? DownloadComplete;
 }
+

@@ -1,6 +1,5 @@
 
 using System;
-using System.Text.Json;
 using Microsoft.EntityFrameworkCore;
 using UserService.Application.CrossCutting;
 using UserService.Domain.Interfaces;
