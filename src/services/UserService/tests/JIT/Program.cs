@@ -1,45 +1,40 @@
 ﻿
 using System;
-using System.Runtime.CompilerServices;
 
 namespace JIT;
 
 internal class Program
 {
-    public static void Main(string[] args)
+    public static async Task Main(string[] args)
     {
-        Console.WriteLine("started.");
-
-        void Subscriber1(object? sender, string url) => Console.WriteLine($"subscriber1: received.");
-        void Subscriber2(object? sender, string url) => Console.WriteLine($"subscriber2: received.");
+        var ct = new CancellationToken();
 
         var loader = new Downloader();
+        loader.DownloadComplete += (sender, url) =>
+        {
+            Console.WriteLine("Successfully downloaded");
+        };
 
-        loader.DownloadComplete += Subscriber1;
-        loader.DownloadComplete += Subscriber2;
-
-        loader.Download("test.txt");
-
-        Console.WriteLine("ended.");
+        await loader.DownloadAsync("filename.txt", ct);
     }
 }
 
+
 public class Downloader
 {
-    public void Download(string url)
+    public async Task<string> DownloadAsync(string url, CancellationToken cancellationToken)
     {
-        Console.WriteLine("downloading…");
+        Console.WriteLine("downlading..");
 
-        Thread.Sleep(3000);
+        await Task.Delay(2000, cancellationToken);
 
-        Console.WriteLine($"file {url} downloaded.");
+        Console.WriteLine("data downloaded.");
 
-        OnDownloadComplete(url);
+        return $"data: {url}";
     }
 
-    protected virtual void OnDownloadComplete(string url)
+    protected virtual void OnDownloadComplete(object? sender, string url)
         => DownloadComplete?.Invoke(this, url);
 
     public event EventHandler<string>? DownloadComplete;
 }
-
