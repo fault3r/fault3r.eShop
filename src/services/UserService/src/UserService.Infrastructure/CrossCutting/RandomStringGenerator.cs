@@ -12,12 +12,14 @@ public static class RandomStringGenerator
     public static string GetString(int length = 8)
     {
         var buffer = new byte[length];
+
         RandomNumberGenerator.Fill(buffer);
 
         var generated = new char[length];
+
         for (int i = 0; i < length; i++)
             generated[i] = Characters[buffer[i] % Length];
 
-        return new string(generated);
+        return string.Concat(generated);
     }
 }

@@ -6,7 +6,7 @@ namespace UserService.Tests;
 public class MainTests
 {
     [Fact]
-    public async void TestName()
+    public void Test()
     {
 
     }
