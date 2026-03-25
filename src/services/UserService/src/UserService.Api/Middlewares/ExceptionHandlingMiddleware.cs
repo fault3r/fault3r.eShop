@@ -39,14 +39,14 @@ public sealed class ExceptionHandlingMiddleware
         catch (Exception ex)
         {
             Log.Error(ex, "An unhandled exception occurred!");
-            
+
             context.Response.StatusCode = StatusCodes.Status500InternalServerError;
             context.Response.ContentType = "application/json";
-            var response = _serializer.Serialize(new
+            var response = JsonSerializer.Serialize(new
             {
                 errorMessage = "Internal Server Error",
                 correlationId = context.Items[correlationHeader],
-            });
+            }, _serializer.DefaultOptions);
 
             await context.Response.WriteAsync(response, context.RequestAborted);
         }

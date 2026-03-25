@@ -1,5 +1,6 @@
 
 using System;
+using System.Text.Json;
 using UserService.Application.CrossCutting;
 using UserService.Domain.Security.Authentication;
 
@@ -70,7 +71,7 @@ public sealed class AuthenticationMiddleware(
     {
         context.Response.StatusCode = StatusCodes.Status401Unauthorized;
         context.Response.ContentType = "application/json";
-        var responseBody = _serializer.Serialize(new { errorMessage });
+        var responseBody = JsonSerializer.Serialize(new { errorMessage }, _serializer.DefaultOptions);
 
         await context.Response.WriteAsync(responseBody, cancellationToken);
     }

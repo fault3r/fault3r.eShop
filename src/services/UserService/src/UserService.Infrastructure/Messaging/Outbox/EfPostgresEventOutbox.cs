@@ -1,5 +1,6 @@
 
 using System;
+using System.Text.Json;
 using Microsoft.EntityFrameworkCore;
 using UserService.Application.CrossCutting;
 using UserService.Domain.Interfaces;
@@ -14,7 +15,7 @@ public sealed class EfPostgresEventOutbox(
 ) : IEventOutbox
 {
     private readonly IDatabaseContext _dbContext = dbContext;
-    private readonly IJsonSerializer _jsonSerializer = jsonSerializer;
+    private readonly IJsonSerializer _serializer = jsonSerializer;
 
     public async Task EnqueueAsync(
         IEnumerable<IDomainEvent> events,
@@ -34,7 +35,7 @@ public sealed class EfPostgresEventOutbox(
             {
                 Id = e.EventId,
                 Type = e.GetType().Name,
-                Payload = _jsonSerializer.Serialize(e),
+                Payload = JsonSerializer.Serialize(e, _serializer.DefaultOptions),
                 Timestamp = e.OccurredOn,
                 Published = false,
                 PublishedAt = e.OccurredOn,
