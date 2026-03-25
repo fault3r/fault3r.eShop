@@ -12,7 +12,7 @@ using UserService.Infrastructure.Persistence.Contexts;
 namespace UserService.Infrastructure.Persistence.Migrations
 {
     [DbContext(typeof(EfPostgresDbContext))]
-    [Migration("20260315102022_InitDbMigration")]
+    [Migration("20260325190826_InitDbMigration")]
     partial class InitDbMigration
     {
         /// <inheritdoc />

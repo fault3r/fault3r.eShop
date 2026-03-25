@@ -35,6 +35,8 @@ public static class MassTransitExtensions
                     c.Username(settings.UserName);
                     c.Password(settings.Password);
                 });
+
+                cfg.ConfigureEndpoints(ctx);
             });
         });
 

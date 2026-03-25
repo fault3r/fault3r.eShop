@@ -3,7 +3,6 @@ using System;
 using System.Text.Json;
 using Serilog;
 using UserService.Application.CrossCutting;
-using UserService.Infrastructure.DependencyInjection;
 
 namespace UserService.Api.Middlewares;
 

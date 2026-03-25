@@ -17,7 +17,7 @@ public sealed class ValueObjectJsonConverter<TValueObject> : JsonConverter<TValu
             return default;
 
         var parser = typeToConvert.GetMethod("Parse", [typeof(string)])
-            ?? throw new JsonException($"parse method not found for type '{typeToConvert.Name}'");
+            ?? throw new JsonException($"parse method not found for type {typeToConvert.Name}.");
             
         return (TValueObject?)parser.Invoke(default, [reader.GetString()]);
     }
