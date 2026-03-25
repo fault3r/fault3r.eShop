@@ -30,6 +30,8 @@ public class Downloader
 
         Console.WriteLine("data downloaded.");
 
+        OnDownloadComplete(this, url);
+
         return $"data: {url}";
     }
 
