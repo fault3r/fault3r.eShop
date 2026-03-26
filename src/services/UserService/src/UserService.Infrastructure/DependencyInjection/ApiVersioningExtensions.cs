@@ -33,9 +33,7 @@ public static class ApiVersioningExtensions
         {
             config.DefaultApiVersion = new ApiVersion(major, minor);
             config.AssumeDefaultVersionWhenUnspecified = true;
-
             config.ReportApiVersions = true;
-
             config.ApiVersionReader = ApiVersionReader.Combine(
                 new UrlSegmentApiVersionReader(),
                 new QueryStringApiVersionReader(settings.VersionParameter),

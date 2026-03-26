@@ -25,10 +25,10 @@ public sealed class EmailTemplateRenderer : IEmailTemplateRenderer
         {
             string token = "{{" + prop.Name + "}}";
             
-            var value = prop.GetValue(model)
+            var value = prop.GetValue(model) as string
                 ?? throw new CannotRenderEmailTemplateException();
 
-            rendered = rendered.Replace(token, value as string);
+            rendered = rendered.Replace(token, value);
         }
 
         return Task.FromResult(rendered);

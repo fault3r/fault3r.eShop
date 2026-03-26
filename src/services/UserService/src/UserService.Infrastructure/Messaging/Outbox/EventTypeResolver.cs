@@ -6,7 +6,7 @@ namespace UserService.Infrastructure.Messaging.Outbox;
 
 public static class EventTypeResolver
 {
-    private static readonly Dictionary<string, Type> _types = new()
+    private static readonly Dictionary<string, Type> types = new()
     {
         [nameof(UserRegisteredEvent)] = typeof(UserRegisteredEvent),
         [nameof(UserFullNameChangedEvent)] = typeof(UserFullNameChangedEvent),
@@ -14,5 +14,5 @@ public static class EventTypeResolver
     };
 
     public static Type? Resolve(string typeName)
-        => _types.TryGetValue(typeName, out var type) ? type : null;
+        => types.TryGetValue(typeName, out var type) ? type : null;
 }

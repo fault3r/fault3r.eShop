@@ -4,7 +4,6 @@ using Microsoft.EntityFrameworkCore;
 using UserService.Domain.Messaging.Outbox;
 using UserService.Domain.Repositories;
 using UserService.Domain.UnitOfWork;
-using UserService.Infrastructure.Persistence;
 using UserService.Infrastructure.Persistence.Contexts;
 
 namespace UserService.Infrastructure.UnitOfWork;
