@@ -1,7 +1,7 @@
 
 using System;
 using UserService.Domain.Aggregates.UserAggregate;
-using UserService.Domain.Contracts;
+using UserService.Domain.Common;
 using UserService.Domain.Interfaces;
 using UserService.Domain.Repositories;
 using UserService.Domain.Security;

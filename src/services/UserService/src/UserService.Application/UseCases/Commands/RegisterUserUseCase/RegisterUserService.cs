@@ -2,7 +2,7 @@
 using System;
 using UserService.Application.Interfaces;
 using UserService.Domain.Aggregates.UserAggregate;
-using UserService.Domain.Contracts;
+using UserService.Domain.Common;
 using UserService.Domain.Exceptions;
 using UserService.Domain.Factories;
 using UserService.Domain.UnitOfWork;

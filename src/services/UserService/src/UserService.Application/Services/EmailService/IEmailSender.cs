@@ -1,6 +1,6 @@
 
 using System;
-using UserService.Domain.Contracts;
+using UserService.Domain.Common;
 
 namespace UserService.Application.Services.EmailService;
 

@@ -4,7 +4,7 @@ using FluentValidation;
 using MediatR;
 using Microsoft.Extensions.Logging;
 using UserService.Application.Interfaces;
-using UserService.Domain.Contracts;
+using UserService.Domain.Common;
 
 namespace UserService.Application.UseCases.Commands.RefreshAuthUseCase;
 

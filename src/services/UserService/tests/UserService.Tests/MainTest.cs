@@ -27,7 +27,7 @@ public class MainTests
 
         var @event = user.Events.FirstOrDefault();
 
-        var serialized = JsonSerializer.Serialize(@event, @event.GetType(), options);
+        var serialized = JsonSerializer.Serialize(@event, @event!.GetType(), options);
 
         var obj = JsonSerializer.Deserialize(serialized,  @event.GetType(), options);
 

@@ -4,7 +4,7 @@ using FluentEmail.Core;
 using Polly;
 using Polly.Timeout;
 using UserService.Application.Services.EmailService;
-using UserService.Domain.Contracts;
+using UserService.Domain.Common;
 using UserService.Infrastructure.Exceptions.Services.EmailService;
 
 namespace UserService.Infrastructure.Services.EmailService;

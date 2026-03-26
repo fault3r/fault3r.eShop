@@ -1,7 +1,7 @@
 
 using System;
 using MediatR;
-using UserService.Domain.Contracts;
+using UserService.Domain.Common;
 
 namespace UserService.Application.UseCases.Commands.RefreshAuthUseCase;
 

@@ -2,7 +2,7 @@
 using System;
 using Microsoft.Extensions.Logging;
 using UserService.Application.Interfaces;
-using UserService.Domain.Contracts;
+using UserService.Domain.Common;
 using UserService.Domain.Security.Authentication;
 
 namespace UserService.Application.UseCases.Commands.LogoutUserUseCase;
