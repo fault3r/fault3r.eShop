@@ -40,7 +40,6 @@ public static class FluentEmailExtensions
                         userName: settings.Email,
                         password: settings.Password
                     ),
-                    Timeout = 10000,
                 }
             );
 

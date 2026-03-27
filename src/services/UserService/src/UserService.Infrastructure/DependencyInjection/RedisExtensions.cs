@@ -21,8 +21,7 @@ public static class RedisExtensions
 
         services.AddSingleton<IConnectionMultiplexer>(_ =>
         {
-            string connectionString = settings.ConnectionString;
-            return ConnectionMultiplexer.Connect(connectionString);
+            return ConnectionMultiplexer.Connect(settings.ConnectionString);
         });
 
         services.AddSingleton<IDatabase>(sp =>
