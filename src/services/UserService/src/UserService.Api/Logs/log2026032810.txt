@@ -1,0 +1,69 @@
+[2026-03-28 10:33:46 DBG] MassTransit.Transports.BusDepot  Starting bus instances: IBus 
+ [2026-03-28 10:33:46 DBG] MassTransit  Starting bus: "rabbitmq://localhost/" 
+ [2026-03-28 10:33:46 DBG] MassTransit  Connect: fault3r@localhost:5672/ 
+ [2026-03-28 10:33:46 DBG] MassTransit  Connected: fault3r@localhost:5672/ (address: amqp://localhost:5672, local: 41428) 
+ [2026-03-28 10:33:46 DBG] MassTransit  Endpoint Ready: "rabbitmq://localhost/fault3r_UserServiceApi_bus_9hxyyybugekb86xgbdxe3gb8d6?temporary=true" 
+ [2026-03-28 10:33:46 INF] MassTransit  Bus started: "rabbitmq://localhost/" 
+ [2026-03-28 10:34:32 INF]  2b25a125-7839-41da-87fa-d1764313ffc9 Incoming request POST /api/v1/auth/register. 
+ [2026-03-28 10:35:52 INF] UserService.Application.UseCases.Commands.RegisterUserUseCase.RegisterUserService 2b25a125-7839-41da-87fa-d1764313ffc9 Registering user with 'test1@example.com' email… 
+ [2026-03-28 10:36:03 ERR] UserService.Application.UseCases.Commands.RegisterUserUseCase.RegisterUserService 2b25a125-7839-41da-87fa-d1764313ffc9 Failed to dispatch notification [2026-03-28T07:05:53.6463341+00:00] UserRegisteredEvent (EventId=221aba4a-3d76-41fc-bcd3-7f5b0c5d34a8) | UserId=7e86e16b-f8e7-40e2-b740-5fd4e2ff24ea, Email=test1@example.com, FullName=hamed damavandi 
+ System.Net.Mail.SmtpException: Failure sending mail.
+ ---> System.Net.Sockets.SocketException (11): Resource temporarily unavailable
+   at System.Net.Sockets.Socket.AwaitableSocketAsyncEventArgs.ThrowException(SocketError error, CancellationToken cancellationToken)
+   at System.Net.Sockets.Socket.AwaitableSocketAsyncEventArgs.System.Threading.Tasks.Sources.IValueTaskSource.GetResult(Int16 token)
+   at System.Threading.Tasks.ValueTask.ValueTaskSourceAsTask.<>c.<.cctor>b__4_0(Object state)
+--- End of stack trace from previous location ---
+   at System.Threading.Tasks.TaskToAsyncResult.End(IAsyncResult asyncResult)
+   at System.Net.Sockets.TcpClient.EndConnect(IAsyncResult asyncResult)
+   at System.Net.Mail.SmtpConnection.ConnectAndHandshakeAsyncResult.InitializeConnectionCallback(IAsyncResult result)
+--- End of stack trace from previous location ---
+   at System.Net.Mail.SmtpClient.ConnectCallback(IAsyncResult result)
+   --- End of inner exception stack trace ---
+   at FluentEmail.Smtp.SendMailEx.SendMailExImplAsync(SmtpClient client, MailMessage message, CancellationToken token)
+   at FluentEmail.Smtp.SmtpSender.SendAsync(IFluentEmail email, Nullable`1 token)
+   at UserService.Infrastructure.Services.EmailService.FluentEmailSender.<>c__DisplayClass2_0.<<SendAsync>b__0>d.MoveNext() in /home/hamed-damavandi/Documents/fault3r.eShop/src/services/UserService/src/UserService.Infrastructure/Services/EmailService/FluentEmailSender.cs:line 34
+--- End of stack trace from previous location ---
+   at Polly.AsyncPolicy.<>c__DisplayClass44_0.<<ImplementationAsync>b__0>d.MoveNext()
+--- End of stack trace from previous location ---
+   at Polly.Timeout.AsyncTimeoutEngine.ImplementationAsync[TResult](Func`3 action, Context context, Func`2 timeoutProvider, TimeoutStrategy timeoutStrategy, Func`5 onTimeoutAsync, Boolean continueOnCapturedContext, CancellationToken cancellationToken)
+   at Polly.Timeout.AsyncTimeoutEngine.ImplementationAsync[TResult](Func`3 action, Context context, Func`2 timeoutProvider, TimeoutStrategy timeoutStrategy, Func`5 onTimeoutAsync, Boolean continueOnCapturedContext, CancellationToken cancellationToken)
+   at Polly.AsyncPolicy.ExecuteInternalAsync(Func`3 action, Context context, Boolean continueOnCapturedContext, CancellationToken cancellationToken)
+   at UserService.Infrastructure.Services.EmailService.FluentEmailSender.SendAsync(String to, String subject, String body, CancellationToken cancellationToken) in /home/hamed-damavandi/Documents/fault3r.eShop/src/services/UserService/src/UserService.Infrastructure/Services/EmailService/FluentEmailSender.cs:line 32
+   at UserService.Application.Messaging.Notification.NotificationHandlers.UserRegisteredNotificationHandler.Handle(UserRegisteredNotification notification, CancellationToken cancellationToken) in /home/hamed-damavandi/Documents/fault3r.eShop/src/services/UserService/src/UserService.Application/Messaging/Notification/NotificationHandlers/UserRegisteredNotificationHandler.cs:line 30
+   at MediatR.Mediator.PublishCore(IEnumerable`1 allHandlers, INotification notification, CancellationToken cancellationToken)
+   at UserService.Infrastructure.Messaging.Notification.MediatorNotificationDispatcher.DispatchAsync(IDomainEvent event, String correlationId, CancellationToken cancellationToken) in /home/hamed-damavandi/Documents/fault3r.eShop/src/services/UserService/src/UserService.Infrastructure/Messaging/Notification/MediatorNotificationDispatcher.cs:line 26
+   at UserService.Application.UseCases.Commands.RegisterUserUseCase.RegisterUserService.ExecuteAsync(String email, String password, String fullName, CancellationToken cancellationToken) in /home/hamed-damavandi/Documents/fault3r.eShop/src/services/UserService/src/UserService.Application/UseCases/Commands/RegisterUserUseCase/RegisterUserService.cs:line 84
+[2026-03-28 10:36:03 INF] UserService.Application.UseCases.Commands.RegisterUserUseCase.RegisterUserService 2b25a125-7839-41da-87fa-d1764313ffc9 User successfully registered with '7e86e16b-f8e7-40e2-b740-5fd4e2ff24ea' identity. 
+ [2026-03-28 10:36:04 INF]  2b25a125-7839-41da-87fa-d1764313ffc9 Completed request POST /api/v1/auth/register with status code 201. 
+ [2026-03-28 10:36:12 INF]  877cbc28-04c9-4cf8-84e1-0fe679b5512a Incoming request POST /api/v1/auth/register. 
+ [2026-03-28 10:37:49 INF] UserService.Application.UseCases.Commands.RegisterUserUseCase.RegisterUserService 877cbc28-04c9-4cf8-84e1-0fe679b5512a Registering user with 'test2@example.com' email… 
+ [2026-03-28 10:39:07 ERR] UserService.Application.UseCases.Commands.RegisterUserUseCase.RegisterUserService 877cbc28-04c9-4cf8-84e1-0fe679b5512a Failed to dispatch notification [2026-03-28T07:08:46.3744889+00:00] UserRegisteredEvent (EventId=0cf8a9fb-482f-4884-87ec-afaa16b37d40) | UserId=5c21267f-d384-4036-96ce-1aa61fea867f, Email=test2@example.com, FullName=hamed damavandi 
+ System.Net.Mail.SmtpException: Failure sending mail.
+ ---> System.Net.Sockets.SocketException (11): Resource temporarily unavailable
+   at System.Net.Sockets.Socket.AwaitableSocketAsyncEventArgs.ThrowException(SocketError error, CancellationToken cancellationToken)
+   at System.Net.Sockets.Socket.AwaitableSocketAsyncEventArgs.System.Threading.Tasks.Sources.IValueTaskSource.GetResult(Int16 token)
+   at System.Threading.Tasks.ValueTask.ValueTaskSourceAsTask.<>c.<.cctor>b__4_0(Object state)
+--- End of stack trace from previous location ---
+   at System.Threading.Tasks.TaskToAsyncResult.End(IAsyncResult asyncResult)
+   at System.Net.Sockets.TcpClient.EndConnect(IAsyncResult asyncResult)
+   at System.Net.Mail.SmtpConnection.ConnectAndHandshakeAsyncResult.InitializeConnectionCallback(IAsyncResult result)
+--- End of stack trace from previous location ---
+   at System.Net.Mail.SmtpClient.ConnectCallback(IAsyncResult result)
+   --- End of inner exception stack trace ---
+   at FluentEmail.Smtp.SendMailEx.SendMailExImplAsync(SmtpClient client, MailMessage message, CancellationToken token)
+   at FluentEmail.Smtp.SmtpSender.SendAsync(IFluentEmail email, Nullable`1 token)
+   at UserService.Infrastructure.Services.EmailService.FluentEmailSender.<>c__DisplayClass2_0.<<SendAsync>b__0>d.MoveNext() in /home/hamed-damavandi/Documents/fault3r.eShop/src/services/UserService/src/UserService.Infrastructure/Services/EmailService/FluentEmailSender.cs:line 34
+--- End of stack trace from previous location ---
+   at Polly.AsyncPolicy.<>c__DisplayClass44_0.<<ImplementationAsync>b__0>d.MoveNext()
+--- End of stack trace from previous location ---
+   at Polly.Timeout.AsyncTimeoutEngine.ImplementationAsync[TResult](Func`3 action, Context context, Func`2 timeoutProvider, TimeoutStrategy timeoutStrategy, Func`5 onTimeoutAsync, Boolean continueOnCapturedContext, CancellationToken cancellationToken)
+   at Polly.Timeout.AsyncTimeoutEngine.ImplementationAsync[TResult](Func`3 action, Context context, Func`2 timeoutProvider, TimeoutStrategy timeoutStrategy, Func`5 onTimeoutAsync, Boolean continueOnCapturedContext, CancellationToken cancellationToken)
+   at Polly.AsyncPolicy.ExecuteInternalAsync(Func`3 action, Context context, Boolean continueOnCapturedContext, CancellationToken cancellationToken)
+   at UserService.Infrastructure.Services.EmailService.FluentEmailSender.SendAsync(String to, String subject, String body, CancellationToken cancellationToken) in /home/hamed-damavandi/Documents/fault3r.eShop/src/services/UserService/src/UserService.Infrastructure/Services/EmailService/FluentEmailSender.cs:line 32
+   at UserService.Application.Messaging.Notification.NotificationHandlers.UserRegisteredNotificationHandler.Handle(UserRegisteredNotification notification, CancellationToken cancellationToken) in /home/hamed-damavandi/Documents/fault3r.eShop/src/services/UserService/src/UserService.Application/Messaging/Notification/NotificationHandlers/UserRegisteredNotificationHandler.cs:line 30
+   at MediatR.Mediator.PublishCore(IEnumerable`1 allHandlers, INotification notification, CancellationToken cancellationToken)
+   at UserService.Infrastructure.Messaging.Notification.MediatorNotificationDispatcher.DispatchAsync(IDomainEvent event, String correlationId, CancellationToken cancellationToken) in /home/hamed-damavandi/Documents/fault3r.eShop/src/services/UserService/src/UserService.Infrastructure/Messaging/Notification/MediatorNotificationDispatcher.cs:line 26
+   at UserService.Application.UseCases.Commands.RegisterUserUseCase.RegisterUserService.ExecuteAsync(String email, String password, String fullName, CancellationToken cancellationToken) in /home/hamed-damavandi/Documents/fault3r.eShop/src/services/UserService/src/UserService.Application/UseCases/Commands/RegisterUserUseCase/RegisterUserService.cs:line 84
+[2026-03-28 10:39:07 INF] UserService.Application.UseCases.Commands.RegisterUserUseCase.RegisterUserService 877cbc28-04c9-4cf8-84e1-0fe679b5512a User successfully registered with '5c21267f-d384-4036-96ce-1aa61fea867f' identity. 
+ [2026-03-28 10:39:07 INF]  877cbc28-04c9-4cf8-84e1-0fe679b5512a Completed request POST /api/v1/auth/register with status code 201. 
+ 

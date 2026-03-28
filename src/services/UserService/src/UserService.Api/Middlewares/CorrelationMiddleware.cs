@@ -30,7 +30,6 @@ public sealed class CorrelationMiddleware
         ?? Guid.NewGuid().ToString();
 
         correlationContext.Set(correlationId);
-
         context.Items[correlationHeader] = correlationId;
         context.Response.Headers[correlationHeader] = correlationId;
 

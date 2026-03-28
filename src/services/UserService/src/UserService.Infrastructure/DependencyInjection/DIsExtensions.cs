@@ -35,6 +35,9 @@ public static class DIsExtensions
         this IServiceCollection services,
         IConfiguration configuration)
     {
+        services.AddControllers(config =>
+            config.SuppressAsyncSuffixInActionNames = false);
+
         services.AddEfPostgresDbContext(configuration);
 
         services.AddJwtAuthentication(configuration);
@@ -50,11 +53,6 @@ public static class DIsExtensions
         services.AddMassTransitMessaging(configuration);
 
         services.AddFluentEmailService(configuration);
-
-        services.AddControllers(config =>
-            config.SuppressAsyncSuffixInActionNames = false);
-
-        services.AddUseCases();
 
         services.AddScoped<IUnitOfWork, EfUnitOfWork>();
 
@@ -76,7 +74,9 @@ public static class DIsExtensions
 
         services.AddHostedService<DIsInitializerHostedService>();
 
-        services.AddHostedService<MassTransitEventOutboxBackgroundService>();
+        // services.AddHostedService<MassTransitEventOutboxBackgroundService>();
+
+        services.AddUseCases();
 
         return services;
     }
