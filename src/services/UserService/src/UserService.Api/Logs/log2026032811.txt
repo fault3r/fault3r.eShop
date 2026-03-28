@@ -1,0 +1,27 @@
+[2026-03-28 11:00:27 DBG] MassTransit.Transports.BusDepot  Starting bus instances: IBus 
+ [2026-03-28 11:00:28 DBG] MassTransit  Starting bus: "rabbitmq://localhost/" 
+ [2026-03-28 11:00:28 DBG] MassTransit  Connect: fault3r@localhost:5672/ 
+ [2026-03-28 11:00:28 DBG] MassTransit  Connected: fault3r@localhost:5672/ (address: amqp://localhost:5672, local: 49468) 
+ [2026-03-28 11:00:28 DBG] MassTransit  Endpoint Ready: "rabbitmq://localhost/fault3r_UserServiceApi_bus_f7royybugekbgjosbdxe3g9nba?temporary=true" 
+ [2026-03-28 11:00:28 INF] MassTransit  Bus started: "rabbitmq://localhost/" 
+ [2026-03-28 11:01:14 INF]  7a2dbade-0f2e-4d35-9986-265ff8f23014 Incoming request POST /api/v1/auth/login. 
+ [2026-03-28 11:01:19 INF] UserService.Application.UseCases.Commands.LoginUserUseCase.LoginUserService 7a2dbade-0f2e-4d35-9986-265ff8f23014 Logging in user with 'test2@example.com' identity… 
+ [2026-03-28 11:01:21 INF] UserService.Application.UseCases.Commands.LoginUserUseCase.LoginUserService 7a2dbade-0f2e-4d35-9986-265ff8f23014 User successfully logged in with '21b8fb31eb194f77b7b75248cfc3a8eb' session. 
+ [2026-03-28 11:01:21 INF]  7a2dbade-0f2e-4d35-9986-265ff8f23014 Completed request POST /api/v1/auth/login with status code 200. 
+ [2026-03-28 11:01:49 INF]  c031e224-b845-46a3-b69d-9b0e2a1bc4bc Incoming request GET /api/v1/users/me. 
+ [2026-03-28 11:02:23 DBG] MassTransit.Transports.BusDepot  Starting bus instances: IBus 
+ [2026-03-28 11:02:23 DBG] MassTransit  Starting bus: "rabbitmq://localhost/" 
+ [2026-03-28 11:02:23 DBG] MassTransit  Connect: fault3r@localhost:5672/ 
+ [2026-03-28 11:02:24 DBG] MassTransit  Connected: fault3r@localhost:5672/ (address: amqp://localhost:5672, local: 43920) 
+ [2026-03-28 11:02:24 DBG] MassTransit  Endpoint Ready: "rabbitmq://localhost/fault3r_UserServiceApi_bus_bjgoyybugekb8dejbdxe38b8bx?temporary=true" 
+ [2026-03-28 11:02:24 INF] MassTransit  Bus started: "rabbitmq://localhost/" 
+ [2026-03-28 11:02:30 INF]  535b5a67-9426-47be-af9e-167646f8c3da Incoming request GET /api/v1/users/me. 
+ [2026-03-28 11:07:03 DBG] MassTransit.Transports.BusDepot  Starting bus instances: IBus 
+ [2026-03-28 11:07:03 DBG] MassTransit  Starting bus: "rabbitmq://localhost/" 
+ [2026-03-28 11:07:03 DBG] MassTransit  Connect: fault3r@localhost:5672/ 
+ [2026-03-28 11:07:03 DBG] MassTransit  Connected: fault3r@localhost:5672/ (address: amqp://localhost:5672, local: 47928) 
+ [2026-03-28 11:07:04 DBG] MassTransit  Endpoint Ready: "rabbitmq://localhost/fault3r_UserServiceApi_bus_p3kyyybugekb868ebdxe38gpgi?temporary=true" 
+ [2026-03-28 11:07:04 INF] MassTransit  Bus started: "rabbitmq://localhost/" 
+ [2026-03-28 11:07:07 INF]  cf3d3c7e-b7c5-4626-8864-615bebf15cb8 Incoming request GET /api/v1/users/me. 
+ [2026-03-28 11:07:49 INF]  cf3d3c7e-b7c5-4626-8864-615bebf15cb8 Completed request GET /api/v1/users/me with status code 401. 
+ 

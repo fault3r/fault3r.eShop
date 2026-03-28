@@ -16,25 +16,25 @@ public sealed class AuthenticationMiddleware(
     private readonly ITokenService _token = tokenService;
     private readonly ISessionService _session = sessionService;
     private readonly IJsonSerializer _serializer = jsonSerializer;
-    private const string TokenPrefix = "Bearer ";
 
     public async Task InvokeAsync(HttpContext context)
     {
-        var authHeader = context.Request.Headers.Authorization.FirstOrDefault();
+        var jwtAuth = context.Request.Headers.Authorization.FirstOrDefault();
 
-        if (string.IsNullOrWhiteSpace(authHeader))
+        if (string.IsNullOrWhiteSpace(jwtAuth))
         {
             await _next(context);
+
             return;
         }
 
-        if (!authHeader.StartsWith(TokenPrefix))
+        if (!jwtAuth.StartsWith("Bearer "))
         {
             await WriteResponseErrorAsync(context, "Invalid authorization!", context.RequestAborted);
             return;
         }
 
-        var token = authHeader[TokenPrefix.Length..].Trim();
+        var token = jwtAuth["Bearer ".Length..].Trim();
 
         var claims = _token.ReadAccessTokenClaims(token);
 
@@ -52,15 +52,16 @@ public sealed class AuthenticationMiddleware(
             return;
         }
 
-        var validate = await _session.ExistsAsync(sessionId, context.RequestAborted);
+        var sessionValidate = await _session.ExistsAsync(sessionId, context.RequestAborted);
 
-        if (!validate)
+        if (!sessionValidate)
         {
             await WriteResponseErrorAsync(context, "Invalidated session!", context.RequestAborted);
             return;
         }
 
         context.User = claims;
+        
         await _next(context);
     }
 
@@ -69,11 +70,12 @@ public sealed class AuthenticationMiddleware(
         string errorMessage,
         CancellationToken cancellationToken)
     {
+        var response = JsonSerializer.Serialize(
+            new { errorMessage }, _serializer.DefaultOptions);
+
         context.Response.StatusCode = StatusCodes.Status401Unauthorized;
         context.Response.ContentType = "application/json";
-        var responseBody = JsonSerializer.Serialize(new { errorMessage }, _serializer.DefaultOptions);
-
-        await context.Response.WriteAsync(responseBody, cancellationToken);
+        await context.Response.WriteAsync(response, cancellationToken);
     }
 }
 

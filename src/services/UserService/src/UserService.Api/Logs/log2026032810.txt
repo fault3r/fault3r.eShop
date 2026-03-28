@@ -66,4 +66,11 @@
    at UserService.Application.UseCases.Commands.RegisterUserUseCase.RegisterUserService.ExecuteAsync(String email, String password, String fullName, CancellationToken cancellationToken) in /home/hamed-damavandi/Documents/fault3r.eShop/src/services/UserService/src/UserService.Application/UseCases/Commands/RegisterUserUseCase/RegisterUserService.cs:line 84
 [2026-03-28 10:39:07 INF] UserService.Application.UseCases.Commands.RegisterUserUseCase.RegisterUserService 877cbc28-04c9-4cf8-84e1-0fe679b5512a User successfully registered with '5c21267f-d384-4036-96ce-1aa61fea867f' identity. 
  [2026-03-28 10:39:07 INF]  877cbc28-04c9-4cf8-84e1-0fe679b5512a Completed request POST /api/v1/auth/register with status code 201. 
+ [2026-03-28 10:44:38 DBG] MassTransit.Transports.BusDepot  Starting bus instances: IBus 
+ [2026-03-28 10:44:38 DBG] MassTransit  Starting bus: "rabbitmq://localhost/" 
+ [2026-03-28 10:44:38 DBG] MassTransit  Connect: fault3r@localhost:5672/ 
+ [2026-03-28 10:44:38 DBG] MassTransit  Connected: fault3r@localhost:5672/ (address: amqp://localhost:5672, local: 41232) 
+ [2026-03-28 10:44:38 DBG] MassTransit  Endpoint Ready: "rabbitmq://localhost/fault3r_UserServiceApi_bus_1aayyybugekb8gxgbdxe3gpcyo?temporary=true" 
+ [2026-03-28 10:44:38 INF] MassTransit  Bus started: "rabbitmq://localhost/" 
+ [2026-03-28 10:46:59 INF]  f5f9e077-a0bb-4713-bdd9-2f6d60f83ae3 Incoming request GET /api/v1/users/me. 
  

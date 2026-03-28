@@ -25,18 +25,16 @@ public sealed class JwtTokenService(
         ArgumentException.ThrowIfNullOrWhiteSpace(sessionId);
         ArgumentException.ThrowIfNullOrWhiteSpace(userId);
 
-        var now = DateTime.UtcNow;
-
-        var expires = now.AddMinutes(_settings.TokenLifetimeMinutes);
-
         var claims = new List<Claim>
         {
             new(JwtRegisteredClaimNames.Sub, userId),
             new(JwtRegisteredClaimNames.Jti, sessionId),
         };
 
-        var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_settings.SigningKey));
+        var now = DateTime.UtcNow;
+        var expires = now.AddMinutes(_settings.TokenLifetimeMinutes);
 
+        var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_settings.SigningKey));
         var credential = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
 
         var token = new JwtSecurityToken(
@@ -62,11 +60,12 @@ public sealed class JwtTokenService(
 
         try
         {
-            var claims = handler.ValidateToken(token, _tokenValidation, out _);
-
-            return claims;
+            return handler.ValidateToken(token, _tokenValidation, out _);
         }
-        catch { return null; }
+        catch
+        {
+            return null;
+        }
     }
 
     public string GenerateRefreshToken()
