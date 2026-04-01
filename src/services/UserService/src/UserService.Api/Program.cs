@@ -68,6 +68,7 @@ app.UseAuthenticationMiddleware();
 app.UseAuthorization();
 
 app.MapControllers();
+
 app.MapGet("/", () => settings.Service);
 
 app.Run();
