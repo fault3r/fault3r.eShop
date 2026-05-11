@@ -53,4 +53,3 @@ public static class CorrelationMiddlewareExtensions
         string correlationHeader)
     => builder.UseMiddleware<CorrelationMiddleware>(correlationHeader);
 }
-
