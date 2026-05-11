@@ -57,3 +57,4 @@ public readonly struct Result<T>
         return new(false, error, null);
     }
 }
+
