@@ -19,7 +19,13 @@ internal class Program
 
         Console.WriteLine("run second test..");
 
+        var ct2 = new CancellationTokenSource();
 
+        var downloadTask = XDownloader.Download("url", ct2.Token);
+
+        ct2.Cancel();
+
+        string data = await downloadTask;        
     }
 }
 
@@ -29,12 +35,23 @@ public sealed class XDownloader
         string url = "default",
         CancellationToken cancellationToken = default)
     {
-        await Task.Delay(3000, cancellationToken);
 
-        
+        try
+        {
+            Console.WriteLine("downloading..");
 
-        return ""
-        ;
+            await Task.Delay(3000, cancellationToken);
+
+            Console.WriteLine("downloaded.");
+
+            return "data";
+        }
+        catch (OperationCanceledException)
+        {
+            Console.WriteLine("canceled!");
+
+            return string.Empty;
+        }
     }
 }
 
