@@ -16,6 +16,25 @@ internal class Program
         };
 
         await loader.DownloadAsync("filename.txt", ct);
+
+        Console.WriteLine("run second test..");
+
+
+    }
+}
+
+public sealed class XDownloader
+{
+    public static async Task<string> Download(
+        string url = "default",
+        CancellationToken cancellationToken = default)
+    {
+        await Task.Delay(3000, cancellationToken);
+
+        
+
+        return ""
+        ;
     }
 }
 
