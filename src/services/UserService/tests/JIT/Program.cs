@@ -23,9 +23,13 @@ internal class Program
 
         var downloadTask = XDownloader.Download("url", ct2.Token);
 
-        ct2.Cancel();
+        // ct2.Cancel();
 
-        string data = await downloadTask;        
+        string data = await downloadTask;
+
+        data = data == string.Empty ? "nothing" : data;
+
+        Console.WriteLine($"downloaded data: {data}");
     }
 }
 
