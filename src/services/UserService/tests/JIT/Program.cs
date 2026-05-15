@@ -39,7 +39,6 @@ public sealed class XDownloader
         string url = "default",
         CancellationToken cancellationToken = default)
     {
-
         try
         {
             Console.WriteLine("downloading..");
