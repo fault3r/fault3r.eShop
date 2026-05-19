@@ -2,7 +2,6 @@
 using System;
 using System.Text.Json;
 using UserService.Domain.Aggregates.UserAggregate;
-using UserService.Domain.Aggregates.UserAggregate.Events;
 using UserService.Domain.ValueObjects;
 using UserService.Infrastructure.CrossCutting.JsonSerializer;
 
