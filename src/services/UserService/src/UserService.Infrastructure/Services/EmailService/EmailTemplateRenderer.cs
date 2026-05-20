@@ -7,7 +7,7 @@ namespace UserService.Infrastructure.Services.EmailService;
 
 public sealed class EmailTemplateRenderer : IEmailTemplateRenderer
 {
-    public Task<string> RenderAsync<T>(
+    public string RenderAsync<T>(
         string template,
         T model,
         CancellationToken cancellationToken = default)
@@ -31,6 +31,6 @@ public sealed class EmailTemplateRenderer : IEmailTemplateRenderer
             rendered = rendered.Replace(token, value);
         }
 
-        return Task.FromResult(rendered);
+        return rendered;
     }
 }

@@ -5,7 +5,7 @@ namespace UserService.Application.Services.EmailService;
 
 public interface IEmailTemplateRenderer
 {
-    Task<string> RenderAsync<T>(
+    string RenderAsync<T>(
         string template,
         T model,
         CancellationToken cancellationToken

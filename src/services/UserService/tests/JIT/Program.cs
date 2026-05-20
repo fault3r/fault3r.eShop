@@ -11,19 +11,16 @@ internal class Program
 
         var downloader = new Downloader();
 
-        downloader.OnComplete += OnDownloadComplete;
+        downloader.OnComplete += (sender, e) =>
+        {
+            Console.WriteLine($"{e.Filename} saved");
+        };
 
         var result = await downloader.Download("filename.tst");
 
         Console.WriteLine("everything is ended.");
     }
-
-    private static void OnDownloadComplete(object? sender, DownloadEventArgs e)
-    {
-        Console.WriteLine($"{e.Filename} saved");
-    }
 }
-
 
 public class DownloadEventArgs(string filename) : EventArgs
 {
@@ -42,7 +39,7 @@ public sealed class Downloader
 
         Console.WriteLine("downloaded.");
 
-        OnComplete?.Invoke(this,new DownloadEventArgs(url));
+        OnComplete?.Invoke(this, new DownloadEventArgs(url));
 
         return "data";
     }
