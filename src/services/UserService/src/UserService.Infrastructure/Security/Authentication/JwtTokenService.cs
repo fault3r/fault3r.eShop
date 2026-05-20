@@ -53,14 +53,14 @@ public sealed class JwtTokenService(
     {
         ArgumentException.ThrowIfNullOrWhiteSpace(token);
 
-        var handler = new JwtSecurityTokenHandler
+        var jwt = new JwtSecurityTokenHandler
         {
             MapInboundClaims = false,
         };
 
         try
         {
-            return handler.ValidateToken(token, _tokenValidation, out _);
+            return jwt.ValidateToken(token, _tokenValidation, out _);
         }
         catch
         {
