@@ -9,7 +9,18 @@ internal class Program
     {
         Console.WriteLine("app started.");
 
+        var downloader = new Downloader();
+
+        downloader.OnComplete += OnDownloadComplete;
+
+        var result = await downloader.Download("filename.tst");
+
         Console.WriteLine("everything is ended.");
+    }
+
+    private static void OnDownloadComplete(object? sender, DownloadEventArgs e)
+    {
+        Console.WriteLine($"{e.Filename} saved");
     }
 }
 
@@ -25,13 +36,13 @@ public sealed class Downloader
 
     public async Task<string> Download(string url)
     {
-        Console.WriteLine($"downloading {url}...");
+        Console.WriteLine("downloading...");
 
         await Task.Delay(3000);
 
         Console.WriteLine("downloaded.");
 
-        OnComplete?.Invoke(this,new DownloadEventArgs("test.file"));
+        OnComplete?.Invoke(this,new DownloadEventArgs(url));
 
         return "data";
     }
