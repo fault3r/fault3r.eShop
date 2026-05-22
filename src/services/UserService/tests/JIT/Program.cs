@@ -9,6 +9,8 @@ internal class Program
     {
         Console.WriteLine("app started.");
 
+        var me = new Fault3r();
+        Console.WriteLine($"{me.Name}, {me.Gender.Value}");
 
         Console.WriteLine("everything is ended.");
     }
@@ -23,19 +25,18 @@ public enum GenderType
 public class Gender(GenderType type)
 {
     public GenderType Value { get; init; } = type;
+
+    public static readonly Gender Male = new(GenderType.Male);
 }
 
 public class Human
 {
-    public Gender Gender { get; set; } = gender;
+    public Gender Gender { get; set; }
+     = Gender.Male;
 }
 
-public sealed class Fault3r :  Human
+public sealed class Fault3r : Human
 {
-    public const string Name = "Hamed Damavandi";
-
-    public Fault3r(Gender gender) : base(gender)
-    {
-        
-    }
+    public string Name { get; set; }
+        = "Hamed Damavandi";
 }
