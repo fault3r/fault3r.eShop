@@ -20,8 +20,22 @@ public enum GenderType
     Female = 0,
 }
 
-public sealed class Gender(GenderType type)
+public class Gender(GenderType type)
 {
     public GenderType Value { get; init; } = type;
 }
 
+public class Human
+{
+    public Gender Gender { get; set; } = gender;
+}
+
+public sealed class Fault3r :  Human
+{
+    public const string Name = "Hamed Damavandi";
+
+    public Fault3r(Gender gender) : base(gender)
+    {
+        
+    }
+}
