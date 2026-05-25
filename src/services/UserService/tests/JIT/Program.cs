@@ -8,19 +8,20 @@ class Program
 {
     public static async Task Main(string[] args)
     {
-        Console.WriteLine("\napp started.");
+        Console.WriteLine("app started.\n");
 
-        var user = User.Create("fault3r@mail.com");
+        var user = UserFactory.CreateUser("test@mail.com");
+
+        user.ChangeEmail("fault3r@mail.com");
 
         Console.WriteLine($"Email: {user.Email}");
+        
         foreach (var item in user.Events)
-            Console.WriteLine($"{item.Id} : {item.Message}");
+            Console.WriteLine(item.Message);
 
         Console.WriteLine("\neverything is ended.");
     }
 }
-
-
 
 #region  Domain
 
@@ -32,36 +33,52 @@ public sealed class EmailValueObject(
     string email
 ) : ValueObject
 {
-    public string Email { get; init; } = email;
+    public string Value { get; set; } = email;
 
-    public override string ToString() => Email;
+    public override string ToString() => Value;
 }
 
-public record DomainEvent(Guid Id, string Message);
+public record DomainEvent(string Message);
 
-public class Entity
+public class Entity(
+    Guid id
+)
 {
-    public Guid Id { get; init; }
+    public Guid Id { get; init; } = id;
 }
 
-public abstract class AggregateRoot : Entity
+public abstract class AggregateRoot(Guid id) : Entity(id)
 {
-    public List<DomainEvent> Events = [];
+    private readonly List<DomainEvent> events = [];
+
+    public IReadOnlyCollection<DomainEvent> Events => [..events];
+
+    public void RaiseEvent(DomainEvent @event) => events.Add(@event);
+
+    protected void ClearEvents() => events.Clear();
 }
 
-public class User(
+public sealed class User(
     EmailValueObject email
-) : AggregateRoot
+) : AggregateRoot(Guid.NewGuid())
 {
-    public EmailValueObject Email { get; init; } = email;
+    public EmailValueObject Email { get; private set; } = email;
 
-    public static User Create(string email)
+    public void ChangeEmail(string email)
+    {
+        Email.Value = email;
+        RaiseEvent(new DomainEvent($"Email {Id} changed to {email}."));        
+    }
+}
+
+public static class UserFactory
+{
+    public static User CreateUser(string email)
     {
         var user = new User(new EmailValueObject(email));
-        user.Events.Add(new DomainEvent(Guid.NewGuid(), "User Created!"));
+        user.RaiseEvent(new DomainEvent($"User {user.Id} Created!"));
         return user;
     }
-
 }
 
 #endregion
