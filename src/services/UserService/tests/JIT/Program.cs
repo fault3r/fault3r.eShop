@@ -15,7 +15,7 @@ class Program
         user.ChangeEmail("fault3r@mail.com");
 
         Console.WriteLine($"Email: {user.Email}");
-        
+
         foreach (var item in user.Events)
             Console.WriteLine(item.Message);
 
@@ -38,7 +38,13 @@ public sealed class EmailValueObject(
     public override string ToString() => Value;
 }
 
-public record DomainEvent(string Message);
+public sealed record DomainEvent
+{
+    public string Message { get; init; }
+
+    public DomainEvent(string message)
+        => Message = $"[{DateTime.Now}] " + message;
+}
 
 public class Entity(
     Guid id
@@ -47,11 +53,13 @@ public class Entity(
     public Guid Id { get; init; } = id;
 }
 
-public abstract class AggregateRoot(Guid id) : Entity(id)
+public interface IAggregateRoot { }
+
+public abstract class AggregateRoot(Guid id) : Entity(id), IAggregateRoot
 {
     private readonly List<DomainEvent> events = [];
 
-    public IReadOnlyCollection<DomainEvent> Events => [..events];
+    public IReadOnlyCollection<DomainEvent> Events => [.. events];
 
     public void RaiseEvent(DomainEvent @event) => events.Add(@event);
 
@@ -59,15 +67,16 @@ public abstract class AggregateRoot(Guid id) : Entity(id)
 }
 
 public sealed class User(
+    Guid id,
     EmailValueObject email
-) : AggregateRoot(Guid.NewGuid())
+) : AggregateRoot(id)
 {
     public EmailValueObject Email { get; private set; } = email;
 
     public void ChangeEmail(string email)
     {
         Email.Value = email;
-        RaiseEvent(new DomainEvent($"Email {Id} changed to {email}."));        
+        RaiseEvent(new DomainEvent($"{Id} email changed to {email}."));
     }
 }
 
@@ -75,8 +84,8 @@ public static class UserFactory
 {
     public static User CreateUser(string email)
     {
-        var user = new User(new EmailValueObject(email));
-        user.RaiseEvent(new DomainEvent($"User {user.Id} Created!"));
+        var user = new User(Guid.NewGuid(), new EmailValueObject(email));
+        user.RaiseEvent(new DomainEvent($"{user.Id} created with email {user.Email}."));
         return user;
     }
 }
