@@ -23,15 +23,15 @@ public sealed class UserRegisteredNotificationHandler(
     {
         ArgumentNullException.ThrowIfNull(notification);
 
-        var template = await _resolver.ResolveAsync(EmailTemplateType.Welcome, cancellationToken);
-        var model = new WelcomeModel(notification.FullName);
-        var body = await _renderer.RenderAsync(template, model, cancellationToken);
+        // var template = await _resolver.ResolveAsync(EmailTemplateType.Welcome, cancellationToken);
+        // var model = new WelcomeModel(notification.FullName);
+        // var body = await _renderer.RenderAsync(template, model, cancellationToken);
 
-        await _sender.SendAsync(
-            to: notification.Email,
-            subject: "Wewlcome",
-            body: body,
-            cancellationToken: cancellationToken
-        );
+        // await _sender.SendAsync(
+        //     to: notification.Email,
+        //     subject: "Wewlcome",
+        //     body: body,
+        //     cancellationToken: cancellationToken
+        // );
     }
 }
