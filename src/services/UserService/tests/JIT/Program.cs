@@ -9,6 +9,8 @@ class Program
     {
         Console.WriteLine("app started.\n");
 
+        var writer = new Writer();
+
 
 
         Console.WriteLine("\neverything is ended.");
@@ -22,6 +24,7 @@ public sealed class Writer
     public async Task StartWrite(string quote)
     {
         int x = new Random().Next(0, Characters.Length);
+
 
     }
 }
