@@ -9,8 +9,6 @@ class Program
     {
         Console.WriteLine("app started.\n");
 
-        var writer = new Writer();
-
 
 
         Console.WriteLine("\neverything is ended.");
