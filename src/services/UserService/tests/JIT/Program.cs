@@ -9,8 +9,6 @@ class Program
     {
         Console.WriteLine("app started.\n");
 
-
-
         Console.WriteLine("\neverything is ended.");
     }
 }
