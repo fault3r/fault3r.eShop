@@ -12,7 +12,7 @@ class Program
 
         var writer = new ConsoleWriter();
 
-        await writer.WriteAsync("fault3r");
+        await writer.WriteAsync("fault3r",0,0);
 
         Console.WriteLine("\neverything is ended.");
     }
@@ -20,15 +20,22 @@ class Program
 
 public sealed class ConsoleWriter
 {
-    private const string Dummy = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+    private const string Chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
 
-    public async Task WriteAsync(string quote)
+    public async Task WriteAsync(string quote, int xPos, int yPos)
     {
-        byte[] bytes = new byte[Dummy.Length];
-        RandomNumberGenerator.
-        for (int i = 0; i < 10; i++)
-            x = new Random().Next(0, Dummy.Length);
+        int d = 100;
 
+        byte[] buffer = new byte[d];
+        RandomNumberGenerator.Fill(buffer);
 
+        foreach(byte b in buffer)
+        {
+            char c = Chars[b % Chars.Length];
+
+            Console.Write(c);
+
+            await Task.Delay(b);
+        }
     }
 }
