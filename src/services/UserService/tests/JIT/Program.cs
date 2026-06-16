@@ -15,7 +15,7 @@ class Program
 
 public sealed class Writer
 {
-    private const string Characters = "abcdefghi";
+    private const string Characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
 
     public async Task StartWrite(string quote)
     {
