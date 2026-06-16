@@ -1,6 +1,5 @@
 ﻿
 using System;
-using System.Security.Cryptography;
 
 namespace JIT;
 
@@ -8,7 +7,8 @@ class Program
 {
     public static async Task Main(string[] args)
     {
-        string text = args[0] is null ? "" : args[0];
+        Console.Write("enter your text: ");
+        string text ="Hamed Damaavandi fault3r";
         var writer = new ConsoleWriter();
         await writer.WriteAsync(text);
     }
@@ -21,6 +21,8 @@ public sealed class ConsoleWriter
 
     public async Task WriteAsync(string text)
     {
+        Console.WriteLine();
+
         foreach (char c in text)
         {
             (int left, int top) = Console.GetCursorPosition();
@@ -33,10 +35,12 @@ public sealed class ConsoleWriter
                 Console.Write(d);
                 Console.SetCursorPosition(left, top);
 
-                await Task.Delay(random.Next(0,80));
+                await Task.Delay(random.Next(0, 50));
             }
 
             Console.Write(c);
         }
+        
+        Console.WriteLine();
     }
 }
