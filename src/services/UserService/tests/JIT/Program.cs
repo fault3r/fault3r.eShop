@@ -8,7 +8,9 @@ public class Program
     public static async Task Main(string[] args)
     {
         Console.Write("enter your text: ");
+
         string text = Console.ReadLine() ?? "";
+        
         var writer = new ConsoleWriter();
         await writer.WriteAsync(text);
     }
