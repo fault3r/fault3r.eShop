@@ -7,7 +7,7 @@ public class Program
 {
     public static async Task Main(string[] args)
     {
-        Console.Write("enter your text: ");
+        Console.Write("ConsoleWriter: Enter your text: ");
 
         string text = Console.ReadLine() ?? "";
         
