@@ -33,7 +33,7 @@ public sealed class ExceptionHandlingMiddleware
         catch (OperationCanceledException)
         {
             Log.Warning("Operation was canceled!");
-            throw; // 🛈/dev/null
+            throw;
         }
         catch (Exception ex)
         {
