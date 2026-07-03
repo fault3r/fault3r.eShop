@@ -74,7 +74,7 @@ public static class DIsExtensions
 
         services.AddHostedService<DIsInitializerHostedService>();
 
-        // services.AddHostedService<MassTransitEventOutboxBackgroundService>();
+        services.AddHostedService<MassTransitEventOutboxBackgroundService>();
 
         services.AddUseCases();
 
