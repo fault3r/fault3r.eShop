@@ -36,3 +36,5 @@ for sln in "${solutions[@]}"; do
     echo "Solution file $sln not found!"
   fi
 done
+
+
