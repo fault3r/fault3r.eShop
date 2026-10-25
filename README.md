@@ -1,4 +1,3 @@
-# fault3r.eShop
 
 ### A .NET Microservices Architecture Showcase
 
