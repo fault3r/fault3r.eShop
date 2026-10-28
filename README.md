@@ -1,7 +1,7 @@
 
 ### A .NET Microservices Architecture Showcase
 
-`fault3r.eShop` is a learning-oriented software project designed to demonstrate software architecture concepts, backend technologies, and the organization of a distributed application using the .NET ecosystem.
+a learning-oriented software project designed to demonstrate software architecture concepts, backend technologies, and the organization of a distributed application using the .NET ecosystem.
 
 Rather than focusing only on application features, this project aims to make the underlying architecture visible: how services are organized, how infrastructure is configured, and how different technologies can work together in a microservices-based system.
 
