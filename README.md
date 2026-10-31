@@ -1,4 +1,3 @@
-
 ### A .NET Microservices Architecture Showcase
 
 a learning-oriented software project designed to demonstrate software architecture concepts, backend technologies, and the organization of a distributed application using the .NET ecosystem.
