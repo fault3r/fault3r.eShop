@@ -4,6 +4,7 @@ a learning-oriented software project designed to demonstrate software architectu
 
 Rather than focusing only on application features, this project aims to make the underlying architecture visible: how services are organized, how infrastructure is configured, and how different technologies can work together in a microservices-based system.
 
+
 ## 🎯 Project Goals
 
 - Explore modern software architecture patterns in the .NET ecosystem.
