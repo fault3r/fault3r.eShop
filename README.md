@@ -24,3 +24,4 @@ fault3r.eShop/
 ├── .env
 └── .gitignore
 ```
+
